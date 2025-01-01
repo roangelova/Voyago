@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <Folder Include="Entities\Contracts\" />
-    <Folder Include="Entities\NewFolder\" />
     <Folder Include="Enum\" />
     <Folder Include="Constants\" />
     <Folder Include="Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Contracts\" />
-    <Folder Include="Enum\" />
-    <Folder Include="Constants\" />
     <Folder Include="Configurations\" />
   </ItemGroup>
 

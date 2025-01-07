@@ -24,6 +24,9 @@ namespace GetMyTicket.Common.Entities
 
         public Vehicle Vehicle { get; set; }
 
+        public int Capacity => this.Vehicle.Capacity;
+
+        [Required]
         [ForeignKey(nameof(Vehicle))]
         public Guid VehicleId { get; set; }
 
@@ -35,6 +38,8 @@ namespace GetMyTicket.Common.Entities
 
         [Required]
         public double Price { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; }
 
     }
 }

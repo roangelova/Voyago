@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
     {
         [Required]
         [MaxLength(NameMaxLength)]
@@ -22,9 +23,6 @@ namespace GetMyTicket.Common.Entities
         public string? Address { get; set; }
 
         public DateOnly RegistrationDate { get; set; }
-
-
-
 
     }
 }

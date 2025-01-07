@@ -8,6 +8,8 @@ namespace GetMyTicket.Common.Entities
 {
     public class TransportationProvider
     {
+        public Guid TransportationProviderId { get; set; } 
+
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }

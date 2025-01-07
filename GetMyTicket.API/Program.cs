@@ -15,7 +15,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
 (builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityCore<User>()
+builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
 

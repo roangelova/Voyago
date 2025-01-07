@@ -2,13 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
+
 namespace GetMyTicket.Common.Entities
 {
     public class BaggageItem
     {
-        public Guid BaggageItemId { get; set; } = Guid.CreateVersion7();
+        public Guid BaggageItemId { get; set; } 
 
         [Required]
+        [Range(0, MaxBaggageSize)]
         public int Size { get; set; }
 
         public Passenger Passenger { get; set; }

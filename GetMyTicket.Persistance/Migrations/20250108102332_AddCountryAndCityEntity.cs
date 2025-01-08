@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GetMyTicket.Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCountyAndCityEntity : Migration
+    public partial class AddCountryAndCityEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -83,16 +83,14 @@ namespace GetMyTicket.Persistance.Migrations
                 table: "Tips",
                 column: "EndCityId",
                 principalTable: "Cities",
-                principalColumn: "CityId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "CityId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Tips_Cities_StartCityId",
                 table: "Tips",
                 column: "StartCityId",
                 principalTable: "Cities",
-                principalColumn: "CityId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "CityId");
         }
 
         /// <inheritdoc />

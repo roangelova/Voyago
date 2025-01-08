@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetMyTicket.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250108091301_AddCountyAndCityEntity")]
-    partial class AddCountyAndCityEntity
+    [Migration("20250108102332_AddCountryAndCityEntity")]
+    partial class AddCountryAndCityEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -610,13 +610,11 @@ namespace GetMyTicket.Persistance.Migrations
                     b.HasOne("GetMyTicket.Common.Entities.City", "EndCity")
                         .WithMany()
                         .HasForeignKey("EndCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GetMyTicket.Common.Entities.City", "StartCity")
                         .WithMany()
                         .HasForeignKey("StartCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GetMyTicket.Common.Entities.TransportationProvider", "TransportationProvider")

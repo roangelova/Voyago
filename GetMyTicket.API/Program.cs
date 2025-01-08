@@ -25,6 +25,19 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var DbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await DbContext.Database.EnsureCreatedAsync();
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

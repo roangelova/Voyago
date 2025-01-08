@@ -607,13 +607,11 @@ namespace GetMyTicket.Persistance.Migrations
                     b.HasOne("GetMyTicket.Common.Entities.City", "EndCity")
                         .WithMany()
                         .HasForeignKey("EndCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GetMyTicket.Common.Entities.City", "StartCity")
                         .WithMany()
                         .HasForeignKey("StartCityId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GetMyTicket.Common.Entities.TransportationProvider", "TransportationProvider")

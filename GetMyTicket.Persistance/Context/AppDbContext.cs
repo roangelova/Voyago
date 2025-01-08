@@ -3,10 +3,8 @@ using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GetMyTicket.Persistance.Context
 {
@@ -54,14 +52,26 @@ namespace GetMyTicket.Persistance.Context
                 .HasDefaultValue(Currency.EUR)
                 .HasSentinel(Currency.BGN);
 
+            builder.Entity<Trip>()
+                .HasOne(x => x.StartCity)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            builder.Entity<Trip>()
+                .HasOne(x => x.EndCity)
+                .WithMany()
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSeeding((Context, _) =>
+            optionsBuilder
+                .UseSeeding((context, _) =>
             {
+
                 var Germany = new Country
                 {
                     CountryId = Guid.CreateVersion7(),
@@ -97,7 +107,7 @@ namespace GetMyTicket.Persistance.Context
                     TransportationProviderId = Guid.CreateVersion7(),
                     Name = "TransAvia",
                     Address = "Germany, 81539 Munich, Bayerstr. 18",
-                    Email = "transavia_management@gmail.com",
+                    Email = "transavia@gmail.com",
                     Description = "TransAvis is a leading airline in Europe, connection more than 400 destinations in 15 countries."
                 };
 
@@ -108,21 +118,107 @@ namespace GetMyTicket.Persistance.Context
                     AirplaneManufacturer = Common.Enum.AirplaneManufacturer.Airbus,
                     Model = "A-320",
                     Capacity = 180,
-                    ManufacturingDate = new DateOnly(10, 10, 2022)
+                    ManufacturingDate = new DateOnly(2022, 10, 10)
                 };
 
                 var OurFirstTrip = new Trip
                 {
                     TransportationProviderId = TransportationProvider.TransportationProviderId,
                     VehicleId = airplane1.VehicleId,
-                    StartTime = new DateTime(18, 05, 2025, 18, 00, 00),
-                    EndTime = new DateTime(18, 05, 2025, 20, 20, 00),
+                    StartTime = new DateTime(2025, 5, 18, 18, 00, 00),
+                    EndTime = new DateTime(2025, 5, 18, 20, 20, 00),
                     StartCity = Germany.Destinations.First(),
                     EndCity = Bulgaria.Destinations.First(),
                     Price = 220
                 };
 
-            });
+                context.Set<Country>().Add(Bulgaria);
+                context.Set<Country>().Add(Germany);
+                context.Set<TransportationProvider>().Add(TransportationProvider);
+                context.Set<Vehicle>().Add(airplane1);
+                context.Set<Trip>().Add(OurFirstTrip);
+
+                context.SaveChangesAsync();
+
+            })
+                .UseAsyncSeeding(async (context, _, cancellationToken) =>
+                {
+                    if (!context.Set<Country>().Any() &&
+                    !context.Set<TransportationProvider>().Any() &&
+                    !context.Set<Vehicle>().Any() &&
+                    !context.Set<Trip>().Any()
+                    )
+                    {
+                        var Germany = new Country
+                        {
+                            CountryId = Guid.CreateVersion7(),
+                            Name = "Germany",
+                            Destinations = new List<City>()
+                     {
+                         new City
+                         {
+                             CityId = Guid.CreateVersion7(),
+                             CityName = "Munich",
+                             IATA_Code = "MUC"
+                         }
+                     }
+                        };
+
+                        var Bulgaria = new Country
+                        {
+                            CountryId = Guid.CreateVersion7(),
+                            Name = "Bulgaria",
+                            Destinations = new List<City>()
+                     {
+                         new City
+                         {
+                             CityId = Guid.CreateVersion7(),
+                             CityName = "Varna",
+                             IATA_Code = "VAR"
+                         }
+                     }
+                        };
+
+                        var TransportationProvider = new TransportationProvider
+                        {
+                            TransportationProviderId = Guid.CreateVersion7(),
+                            Name = "TransAvia",
+                            Address = "Germany, 81539 Munich, Bayerstr. 18",
+                            Email = "transavia@gmail.com",
+                            Description = "TransAvis is a leading airline in Europe, connection more than 400 destinations in 15 countries."
+                        };
+
+                        var airplane1 = new Airplane
+                        {
+                            VehicleId = Guid.CreateVersion7(),
+                            TransportationProvideriD = TransportationProvider.TransportationProviderId,
+                            AirplaneManufacturer = Common.Enum.AirplaneManufacturer.Airbus,
+                            Model = "A-320",
+                            Capacity = 180,
+                            ManufacturingDate = new DateOnly(2022, 10, 10)
+                        };
+
+                        var OurFirstTrip = new Trip
+                        {
+                            TransportationProviderId = TransportationProvider.TransportationProviderId,
+                            VehicleId = airplane1.VehicleId,
+                            StartTime = new DateTime(2025, 05, 25, 18, 00, 00),
+                            EndTime = new DateTime(2025, 05, 25, 20, 20, 00),
+                            StartCity = Germany.Destinations.First(),
+                            EndCity = Bulgaria.Destinations.First(),
+                            Price = 220
+                        };
+
+
+                        context.Set<Country>().Add(Bulgaria);
+                        context.Set<Country>().Add(Germany);
+                        context.Set<TransportationProvider>().Add(TransportationProvider);
+                        context.Set<Vehicle>().Add(airplane1);
+                        context.Set<Trip>().Add(OurFirstTrip);
+                    }
+
+                    await context.SaveChangesAsync(cancellationToken);
+                });
         }
     }
 }

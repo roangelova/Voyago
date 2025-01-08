@@ -8,5 +8,7 @@
         public const int AddressMaxLength = 50;
         
         public const int MaxBaggageSize = 40;
+
+        public const int IATA_CodeMaxLength = 3;
     }
 }

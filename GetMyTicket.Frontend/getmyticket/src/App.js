@@ -1,8 +1,12 @@
-import logo from './assets/images/logo.png';
+import Header from './components/Header';
 
 function App() {
   return (
     <div >
+
+      <Header>
+
+      </Header>
 
 
 

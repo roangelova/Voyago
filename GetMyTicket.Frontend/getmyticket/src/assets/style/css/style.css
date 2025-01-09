@@ -1,0 +1,84 @@
+/*  
+PROJECT COLORS 
+#53b8dd
+#2e7399
+#215779
+
+#101d2c
+#f9f7f6;
+#aaa;
+*/
+
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+
+}
+
+
+.header {
+    height: 70vh;
+    background-image: url(../../images/header.jpg);
+    background-size: cover;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    max-height: 70px;
+}
+
+.LogoAndHeading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.heading-primary {
+    display: inline-block;
+    text-align: center;
+
+    color: #444;
+    font-size: 18px;
+}
+
+.navigation {
+    display: flex;
+    gap: 32rem;
+    justify-content: space-between;
+
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+}
+
+.nav-elements {
+    display: flex;
+    gap: 1rem;
+    justify-self: left;
+
+    font-size: 18px;
+}
+
+.login {
+    justify-self: end;
+
+    font-size: 18px;
+    padding: 5px;
+}

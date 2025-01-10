@@ -28,11 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\GetMyTicket.Persistance\GetMyTicket.Persistance.csproj" />
+    <ProjectReference Include="..\GetMyTicket.Services\GetMyTicket.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,10 @@
 ﻿using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Persistance.Generic_Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GetMyTicket.Persistance.UnitOfWork
 {
-    internal interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork:IDisposable
     {
         IGenericRepository<TransportationProvider> TransportationProviders { get; }
         IGenericRepository<Passenger> Passengers { get; }

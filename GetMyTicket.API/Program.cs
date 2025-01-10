@@ -1,3 +1,4 @@
+using GetMyTicket.API.ServiceExtensions;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Persistance.Context;
 using Microsoft.AspNetCore.Authentication;
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
 builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
+
+builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

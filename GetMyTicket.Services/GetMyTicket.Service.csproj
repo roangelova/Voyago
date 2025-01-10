@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GetMyTicket.Common\GetMyTicket.Common.csproj" />
+    <ProjectReference Include="..\GetMyTicket.Persistance\GetMyTicket.Persistance.csproj" />
+  </ItemGroup>
+
 </Project>

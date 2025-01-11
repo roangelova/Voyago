@@ -11,7 +11,7 @@ function Header() {
                     </img>
                 </div>
                 <div className='heading-primary'>
-                    <h1>Get my ticket</h1>
+                    <h1>Tickify</h1>
                 </div>
             </div>
             <div className='navigation'>
@@ -26,7 +26,7 @@ function Header() {
                         Flights
                     </a>
                 </div>
-                <div className='login'>
+                <div className='user-nav'>
                     <a href="http://localhost:3000/">
                         Login | Sign up
                     </a>

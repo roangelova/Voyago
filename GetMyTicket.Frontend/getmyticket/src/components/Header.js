@@ -3,19 +3,18 @@ import '../assets/style/css/style.css';
 
 function Header() {
     return (
-        <header className="header">
-
-            <div className='LogoAndHeading'>
-                <div className="logo-box">
-                    <img src={logo} alt="Logo" className="logo">
+        <header className='header'>
+            <div className='header__logoBox'>
+                <div>
+                    <img src={logo} alt="Logo" className="header__logo">
                     </img>
                 </div>
-                <div className='heading-primary'>
+                <div className='header__heading'>
                     <h1>Tickify</h1>
                 </div>
             </div>
-            <div className='navigation'>
-                <div className="nav-elements">
+            <div className='header__navigation'>
+                <div className="header__navigation-browse">
                     <a href="http://localhost:3000/"  >
                         Trains
                     </ a>
@@ -26,7 +25,7 @@ function Header() {
                         Flights
                     </a>
                 </div>
-                <div className='user-nav'>
+                <div className='header__navigation-user'>
                     <a href="http://localhost:3000/">
                         Login | Sign up
                     </a>

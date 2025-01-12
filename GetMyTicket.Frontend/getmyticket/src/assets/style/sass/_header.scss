@@ -1,0 +1,50 @@
+.header {
+    height: 70vh;
+    background-image: url(../../images/header.jpg);
+    background-size: cover;
+
+    display: flex;
+    justify-content: space-between;
+
+    &__logo {
+        max-height: 70px;
+    }
+
+    &__logoBox {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__heading {
+        display: inline-block;
+        text-align: center;
+
+        color: #444;
+    }
+
+    &__navigation {
+        display: flex;
+        gap: 32rem;
+        justify-content: space-between;
+        flex: 0 0 80%;
+
+        padding-right: 1rem;
+        padding-top: 0.5rem;
+
+        &-browse {
+            display: flex;
+            gap: 1rem;
+            justify-self: left;
+
+            font-size: 18px;
+        }
+
+        &-user {
+            justify-self: end;
+
+            font-size: 18px;
+            padding: 5px;
+        }
+    }
+}

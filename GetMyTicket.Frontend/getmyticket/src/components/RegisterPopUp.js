@@ -3,19 +3,19 @@ import referee_program from "../assets/images/referee_cta.webp"
 function RegisterPopUp() {
 
     return (
-        <div className="parent-container">
-            <div className="register_container">
-                <div className="left-side">
+        <div className="register">
+            <div className="register__container">
+                <div className="register__left-side">
                     <img src={referee_program}
                         alt="A promo for our referee program"
-                        className="refereeImg"
+                        className="register__cta-img"
                     />
                     <h3>Get the full experience.</h3>
                     <p>Enjoy bonus points with our referee program now! </p>
                 </div>
 
-                <div className="right-side">
-                    <div className="registration-options">
+                <div className="register__right-side">
+                    <div className="register__options">
                         <a href="#" >
                             Continue with Facebook
                         </a>

@@ -1,14 +1,3 @@
-/*  
-PROJECT COLORS 
-#53b8dd
-#2e7399
-#215779
-
-#101d2c
-#f9f7f6;
-#aaa;
-*/
-
 *,
 *::after,
 *::before {
@@ -23,6 +12,11 @@ body {
     font-size: 16px;
     line-height: 1.7;
     color: #333;
+}
+
+h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
 }
 
 a {
@@ -56,13 +50,13 @@ a {
     text-align: center;
 
     color: #444;
-    font-size: 18px;
 }
 
 .navigation {
     display: flex;
     gap: 32rem;
     justify-content: space-between;
+    flex: 0 0 80%;
 
     padding-right: 1rem;
     padding-top: 0.5rem;
@@ -73,12 +67,91 @@ a {
     gap: 1rem;
     justify-self: left;
 
+
     font-size: 18px;
 }
 
-.login {
+.user-nav {
     justify-self: end;
 
     font-size: 18px;
     padding: 5px;
+}
+
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.register_container {
+    display: block;
+    height: 70vh;
+    width: 60vw;
+    background-color: #ffff;
+
+    display: flex;
+    flex-direction: row;
+
+    border-radius: 10px;
+    box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+    overflow: hidden;
+}
+
+.left-side {
+    background-color: #a7b2b5;
+
+    width: 30vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-side p {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 14px;
+}
+
+.refereeImg {
+    width: 100%;
+    max-height: 300px;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    text-align: center;
+    margin: 10px;
+}
+
+.registration-options {
+    margin-top: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-items: space-between;
+    gap: 1.5rem;
+    background-color: #fff;
+
+    text-align: center;
+}
+
+.registration-options a {
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #4267b2;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: inherit;
+
+    border: none;
 }

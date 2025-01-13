@@ -8,3 +8,4 @@ The Get My Ticket website aims to provide users with the possibility of booking 
 ##### List of functionalities supported 
 - User registration 
  
+IMPORTANT NOTICE; This project aims to adhere to the best practices used in software development. However, this may not always be possible due to lack of resources. For example, at this stage of development, I have not found a SVG sprite provider that I can use FOC. Therefore, icons are used as a separate SVG file. 

@@ -25,7 +25,7 @@
     }
 
     &__left-side {
-        background-color: #a7b2b5;
+        background-color: $color-grey-light-2;
 
         width: 30vw;
 
@@ -61,10 +61,19 @@
 
         text-align: center;
 
-        & a {
-            display: inline-block;
-            padding: 10px 10px;
-            background-color: #4267b2;
+        &-logo {
+            max-width: 25px;
+            max-height: 25px;
+            margin-right: 10px;
+        }
+
+        & div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 10px;
+            background-color: #93b3da;
             border-radius: 10px;
             color: #fff;
 
@@ -73,6 +82,12 @@
             font-weight: inherit;
 
             border: none;
+
+            & a {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 }

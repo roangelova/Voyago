@@ -1,5 +1,9 @@
 import referee_program from "../assets/images/referee_cta.webp"
 
+import facebookLogo from "../assets/icons/facebook.svg";
+import googleLogo from "../assets/icons/google.svg";
+import appleLogo from "../assets/icons/apple.svg";
+
 function RegisterPopUp() {
 
     return (
@@ -16,18 +20,42 @@ function RegisterPopUp() {
 
                 <div className="register__right-side">
                     <div className="register__options">
-                        <a href="#" >
-                            Continue with Facebook
-                        </a>
-                        <a href="#">
-                            Continue with Google
-                        </a>
-                        <a href="#">
-                            Continue with Apple
-                        </a>
-                        <a href="#">
-                            Continue to registration form
-                        </a>
+                        <div>
+                            <img src={facebookLogo}
+                                alt="Facebook logo"
+                                className="register__options-logo" >
+                            </img>
+                            <a href="#" >
+                                Continue with Facebook
+                            </a>
+                        </div>
+
+                        <div>
+                            <img src={googleLogo}
+                                alt="Google logo"
+                                className="register__options-logo">
+                            </img>
+                            <a href="#">
+                                Continue with Google
+                            </a>
+                        </div>
+
+                        <div>
+                            <img src={appleLogo}
+                                alt="Apple logo"
+                                className="register__options-logo">
+                            </img>
+                            <a href="#">
+                                Continue with Apple
+                            </a>
+
+                        </div>
+                        <div>
+                            <a href="#">
+                                Continue to registration form
+                            </a>
+                        </div>
+
                     </div>
                     <p>
                         By creating an account you agree to our

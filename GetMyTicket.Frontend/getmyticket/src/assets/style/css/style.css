@@ -6,6 +6,9 @@
   box-sizing: border-box;
 }
 
+/*
+TODO: DEFINE PRIMARY COLORS
+*/
 body {
   font-family: "Lato", sans-serif;
   font-weight: 400;
@@ -115,16 +118,28 @@ h1 {
   background-color: #fff;
   text-align: center;
 }
-.register__options a {
-  display: inline-block;
-  padding: 10px 10px;
-  background-color: #4267b2;
+.register__options-logo {
+  max-width: 25px;
+  max-height: 25px;
+  margin-right: 10px;
+}
+.register__options div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #93b3da;
   border-radius: 10px;
   color: #fff;
   font-family: inherit;
   font-size: 14px;
   font-weight: inherit;
   border: none;
+}
+.register__options div a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

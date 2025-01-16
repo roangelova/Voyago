@@ -90,4 +90,78 @@
             }
         }
     }
+
+
+    &__form {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+    }
+
+    &__row {
+        width: 100%;
+
+        display: flex;
+        justify-content: space-around;
+        margin: 1rem 0;
+
+
+
+        & input,
+        label {
+            display: block;
+
+            font-family: inherit;
+            color: inherit;
+
+            &::placeholder {
+                font-family: inherit;
+            }
+
+        }
+
+        &-address {
+            width: 100%;
+
+            margin: 1rem 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 1rem;
+
+            & input {
+                width: 80%;
+            }
+        }
+
+        &-checkbox {
+            text-align: center;
+
+            & input {
+                margin: 0 0 1rem 2rem;
+            }
+        }
+
+    }
+
+    &__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & button {
+            max-width: 30%;
+            padding: 1rem 1rem;
+            font-family: inherit;
+            margin-bottom: auto;
+            cursor: pointer;
+
+            border-radius: 15px;
+            border: none;
+            box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+        }
+
+    }
 }

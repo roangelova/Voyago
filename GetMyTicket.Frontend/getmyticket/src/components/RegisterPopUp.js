@@ -51,7 +51,7 @@ function RegisterPopUp() {
 
                         </div>
                         <div>
-                            <a href="#">
+                            <a href="/register-form">
                                 Continue to registration form
                             </a>
                         </div>

@@ -6,7 +6,7 @@ namespace GetMyTicket.API.Controllers
 {
     [ApiController]
     [Route("tp")]
-    public class TransportationProviderController : Controller
+    public class TransportationProviderController : ControllerBase
     {
       private readonly ITransportationProviderService transportationProviderService;
 

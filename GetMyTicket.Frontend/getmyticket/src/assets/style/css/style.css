@@ -24,7 +24,8 @@ a {
 
 h1 {
   font-weight: 400;
-  font-size: 2.5rem;
+  font-size: 2srem;
+  text-transform: uppercase;
 }
 
 .header {
@@ -40,7 +41,7 @@ h1 {
 .header__logoBox {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .header__heading {
   display: inline-block;
@@ -140,6 +141,59 @@ h1 {
   display: block;
   width: 100%;
   height: 100%;
+}
+.register__form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.register__row {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+}
+.register__row input,
+.register__row label {
+  display: block;
+  font-family: inherit;
+  color: inherit;
+}
+.register__row input::placeholder,
+.register__row label::placeholder {
+  font-family: inherit;
+}
+.register__row-address {
+  width: 100%;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 1rem;
+}
+.register__row-address input {
+  width: 80%;
+}
+.register__row-checkbox {
+  text-align: center;
+}
+.register__row-checkbox input {
+  margin: 0 0 1rem 2rem;
+}
+.register__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.register__btn button {
+  max-width: 30%;
+  padding: 1rem 1rem;
+  font-family: inherit;
+  margin-bottom: auto;
+  cursor: pointer;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 }
 
 /*# sourceMappingURL=style.css.map */

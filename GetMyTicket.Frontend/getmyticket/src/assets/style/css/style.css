@@ -74,6 +74,8 @@ h1 {
   align-items: center;
   height: 100vh;
   width: 100vw;
+  background-image: url(../../images/blue_background.png);
+  background-size: cover;
 }
 .register__container {
   display: block;

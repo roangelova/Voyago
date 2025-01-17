@@ -26,7 +26,7 @@ function Header() {
                     </a>
                 </div>
                 <div className='header__navigation-user'>
-                    <a href="http://localhost:3000/">
+                    <a href='/register'>
                         Login | Sign up
                     </a>
                 </div>

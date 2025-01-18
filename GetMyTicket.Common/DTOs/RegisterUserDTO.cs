@@ -4,7 +4,6 @@
         string FirstName,
         string LastName,
         string Email,
-        string Username,
         string Password,
         string DOB,
         bool IsSubscribedForNewsletter,

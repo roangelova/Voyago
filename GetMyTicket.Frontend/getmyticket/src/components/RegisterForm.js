@@ -1,32 +1,49 @@
+import { Account } from "../services/accountService";
+
 import { useActionState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+
+
 function RegisterForm() {
-    let userData = {
+
+    let initialUserData = {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
+        dob: '',
+        isSubscribedForNewsletter: true,
         address: '',
-        subscribedToNewsletter: true
     };
 
     const registerUser = (formData) => {
-        console.log(formData.get('firstName'));
-        console.log(formData.get('lastName'));
-        console.log(formData.get('email'));
-        console.log(formData.get('address'));
-        console.log(formData.get('newsletterCheckbox'));
+        isPending = true;
+
+        let password = formData.get('password');
+        let confirmPassword = formData.get('confirmPassword');
+
+        //perfom validation
+        if (password !== confirmPassword) {
+            toast("Password and confirm password do not match!")
+        }
+
+        //IF VALIDATION FAILED - RETURN AND ADD TOAST
+
+        //TODO: implement registration
+
+
+        //if successful
+        isPending = false;
     }
 
-    //TODO: implement registration
-
-
-    //const [state, formAction, isPending] = useActionState(userData, registerUser, false);
+    let [state, formAction, isPending] = useActionState(initialUserData, registerUser, false);
 
 
     return (
 
         <div className="register">
+            <ToastContainer />
             <form action={registerUser} className="register__container register__form">
 
                 <div className="register__row">
@@ -68,6 +85,14 @@ function RegisterForm() {
                         <label htmlFor="password" >Password</label>
                         <input
                             name="password"
+                            type="password"
+                        ></input>
+                    </div>
+
+                    <div>
+                        <label htmlFor="confirmPassword" >Confirm password</label>
+                        <input
+                            name="confirmPassword"
                             type="password"
                         ></input>
                     </div>

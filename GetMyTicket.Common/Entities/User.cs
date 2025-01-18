@@ -15,6 +15,8 @@ namespace GetMyTicket.Common.Entities
         [MaxLength(NameMaxLength)]
         public string LastName { get; set; }
 
+        public override string? UserName { get; set; }
+
         public DateOnly? DOB {  get; set; }
 
         public bool IsSubscribedForNewsletter { get; set; } = true;

@@ -17,6 +17,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
 (builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//TODO: once we have a sufficient custom implementation, remove Identity Api endpoints; 
+
 builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints()
@@ -25,6 +27,16 @@ builder.Services.AddIdentity<User, ApplicationRole>()
 builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("React Frontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000/") 
+              .AllowAnyHeader()                                              
+              .AllowAnyMethod();                                            
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -41,6 +53,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+app.UseCors("React Frontend");
 
 if (app.Environment.IsDevelopment())
 {

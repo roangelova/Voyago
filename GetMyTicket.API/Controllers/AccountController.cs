@@ -5,18 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IUserService userService;
 
-        public UserController(IUserService userService)
+        public AccountController(IUserService userService)
         {
             this.userService = userService;
         }
 
-        [HttpPost("registerUser")]
+        [HttpPost("register")]
         public IActionResult RegisterUser(RegisterUserDTO registerUserDTO)
         {
            var result = userService.RegisterUserAsync(registerUserDTO);

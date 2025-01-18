@@ -28,15 +28,20 @@ namespace GetMyTicket.Service.Services
                 });
             }
 
+            //TODO: write unittest to check this method 
+
+            //TODO: decide on a way to bypass username validation OR Decide if a username is actually needed
+
             var user = new User()
             {
                 FirstName = registerUserDTO.FirstName,
                 LastName = registerUserDTO.LastName,
                 Email = registerUserDTO.Email,
-                UserName = registerUserDTO.Username,
                 IsSubscribedForNewsletter = registerUserDTO.IsSubscribedForNewsletter,
                 DOB = result,
-                Address = registerUserDTO.Address
+                UserName = registerUserDTO.Email,
+                Address = registerUserDTO.Address,
+                RegistrationDate = DateOnly.FromDateTime(DateTime.UtcNow)
             };
 
             //CREATE USER

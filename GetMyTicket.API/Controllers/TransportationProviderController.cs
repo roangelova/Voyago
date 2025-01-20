@@ -1,4 +1,4 @@
-﻿using GetMyTicket.Common.DTOs;
+﻿using GetMyTicket.Common.DTOs.TP;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +8,7 @@ namespace GetMyTicket.API.Controllers
     [Route("tp")]
     public class TransportationProviderController : ControllerBase
     {
-      private readonly ITransportationProviderService transportationProviderService;
+        private readonly ITransportationProviderService transportationProviderService;
 
         public TransportationProviderController(
             ITransportationProviderService transportationProviderService)
@@ -17,10 +17,19 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IEnumerable<GetTransportationProviderDTO>> GetAll() {
+        public async Task<IEnumerable<GetTransportationProviderDTO>> GetAll()
+        {
 
-          return await transportationProviderService.GetAll();
+            return await transportationProviderService.GetAll();
         }
 
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(AddTpDTO data)
+        {
+
+           var entity = await transportationProviderService.Add(data);
+
+            return CreatedAtAction(nameof(Add), new { entity.Name, entity.Email, entity.Description, entity.Address});
+        }
     }
 }

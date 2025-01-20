@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.DTOs;
+﻿using GetMyTicket.Common.DTOs.TP;
+using GetMyTicket.Common.Entities;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -13,16 +14,48 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
+        public async Task<TransportationProvider> Add(AddTpDTO addTpDTO)
+        {
+            try
+            {
+                var entity = new TransportationProvider
+                {
+                    TransportationProviderId = Guid.CreateVersion7(),
+                    Name = addTpDTO.Name,
+                    Description = addTpDTO.Description,
+                    Address = addTpDTO.Address,
+                    Email = addTpDTO.Email
+                };
+
+                await unitOfWork.TransportationProviders.AddAsync(entity);
+                await unitOfWork.SaveChangesAsync();
+
+                return entity;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         public async Task<IEnumerable<GetTransportationProviderDTO>> GetAll()
         {
-            var data = await unitOfWork.TransportationProviders.GetAllAsync();
+            try
+            {
+                var data = await unitOfWork.TransportationProviders.GetAllAsync();
 
-            return data.Select(x => new GetTransportationProviderDTO(
+                return data.Select(x => new GetTransportationProviderDTO(
 
-               x.TransportationProviderId.ToString(),
-                 x.Name,
-                x.Description
-            ));
+                   x.TransportationProviderId.ToString(),
+                     x.Name,
+                    x.Description
+                ));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

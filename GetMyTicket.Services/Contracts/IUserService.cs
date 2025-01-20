@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs;
+using GetMyTicket.Common.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace GetMyTicket.Service.Contracts

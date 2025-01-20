@@ -1,4 +1,4 @@
-﻿namespace GetMyTicket.Common.DTOs
+﻿namespace GetMyTicket.Common.DTOs.User
 {
     public record RegisterUserDTO(
         string FirstName,
@@ -9,5 +9,5 @@
         bool NewsletterSubscribtion,
         string Address
         );
-   
+
 }

@@ -1,4 +1,4 @@
-﻿using GetMyTicket.Common.DTOs;
+﻿using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -46,8 +46,6 @@ namespace GetMyTicket.Service.Services
 
             //CREATE USER
             return await userManager.CreateAsync(user, registerUserDTO.Password);
-
-            //RETURN AN ANSWER
         }
     }
 }

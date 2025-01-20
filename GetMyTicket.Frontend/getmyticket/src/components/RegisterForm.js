@@ -1,15 +1,17 @@
 import { Account } from "../services/accountService";
-
+import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterForm() {
+
+    let [dob, setDob] = useState("2000-01-01");
 
     let initialUserData = {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        dob: '',
+        dob: dob,
         newsletterSubscribtion: true,
         address: '',
     };
@@ -44,7 +46,6 @@ function RegisterForm() {
         initialUserData.address = address;
         initialUserData.newsletterSubscribtion = checkboxValue;
         initialUserData.password = password;
-        initialUserData.dob = "01.01.1997";
 
         Account.register(initialUserData).then(res => {
             if (res.succeeded) {
@@ -52,6 +53,12 @@ function RegisterForm() {
             }
         });
     }
+
+    const handleDateChange = (event) => {
+        const date = event.target.value;
+        setDob(date);
+    };
+
 
     return (
 
@@ -118,6 +125,19 @@ function RegisterForm() {
                         className="register__row-address"
                         name="address"
                         type="address"></input>
+                </div>
+
+                <div className="register__row">
+                    <label
+                        htmlFor="dob">Date of birth</label>
+                    <input
+                        name="dob"
+                        type="date"
+                        value={dob}
+                        min="1940-01-01"
+                        max="2007-01-21"
+                        onChange={handleDateChange}
+                    ></input>
                 </div>
 
                 <div className="register__row-checkbox">

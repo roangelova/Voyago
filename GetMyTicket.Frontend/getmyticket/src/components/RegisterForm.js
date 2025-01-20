@@ -1,7 +1,5 @@
 import { Account } from "../services/accountService";
 
-import { useActionState } from "react";
-
 import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterForm() {
@@ -17,8 +15,6 @@ function RegisterForm() {
     };
 
     const registerUser = async (formData) => {
-        isPending = true;
-
         let firstName = formData.get('firstName');
         let lastName = formData.get('lastName');
         let email = formData.get('email');
@@ -55,13 +51,7 @@ function RegisterForm() {
                 toast.success("Registration successful. You can now log in and plan a trip!")
             }
         });
-
-        //if successful
-        isPending = false;
     }
-
-    let [state, formAction, isPending] = useActionState(initialUserData, registerUser, false);
-
 
     return (
 

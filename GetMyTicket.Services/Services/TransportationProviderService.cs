@@ -57,5 +57,20 @@ namespace GetMyTicket.Service.Services
                 throw;
             }
         }
+
+        public async Task<GetTransportationProviderDTO> GetById(object Id)
+        {
+          var entity = await unitOfWork.TransportationProviders.GetByIdAsync(Id);
+
+            if (entity != null)
+            {
+                return new GetTransportationProviderDTO(
+                    entity.TransportationProviderId.ToString(),
+                    entity.Name,
+                    entity.Description);
+            }
+
+            return null;
+        }
     }
 }

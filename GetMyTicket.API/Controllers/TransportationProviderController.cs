@@ -27,9 +27,26 @@ namespace GetMyTicket.API.Controllers
         public async Task<IActionResult> Add(AddTpDTO data)
         {
 
-           var entity = await transportationProviderService.Add(data);
+            var entity = await transportationProviderService.Add(data);
 
-            return CreatedAtAction(nameof(Add), new { entity.Name, entity.Email, entity.Description, entity.Address});
+            return CreatedAtAction(
+                nameof(GetById), 
+                new { id = entity.TransportationProviderId.ToString() },
+                new { entity.Name, entity.Email, entity.Description, entity.Address });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById([FromQuery] Guid Id)
+        {
+            var entity = await transportationProviderService.GetById(Id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(entity);
+
         }
     }
 }

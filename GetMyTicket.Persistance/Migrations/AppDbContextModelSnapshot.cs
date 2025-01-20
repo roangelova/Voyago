@@ -80,7 +80,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("BaggageItem");
+                    b.ToTable("BaggageItem", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Booking", b =>
@@ -102,7 +102,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.City", b =>
@@ -128,7 +128,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Contracts.Passenger", b =>
@@ -147,7 +147,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("PassengerId");
 
-                    b.ToTable("Passenger");
+                    b.ToTable("Passenger", (string)null);
 
                     b.HasDiscriminator().HasValue("Passenger");
 
@@ -175,7 +175,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TransportationProvideriD");
 
-                    b.ToTable("Vehicle");
+                    b.ToTable("Vehicle", (string)null);
 
                     b.HasDiscriminator().HasValue("Vehicle");
 
@@ -195,7 +195,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.TransportationProvider", b =>
@@ -226,7 +226,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("TransportationProviderId");
 
-                    b.ToTable("TransportationProviders");
+                    b.ToTable("TransportationProviders", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Trip", b =>
@@ -274,7 +274,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Tips");
+                    b.ToTable("Tips", (string)null);
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
@@ -378,7 +378,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.ToTable("PassengerBookingMap");
+                    b.ToTable("PassengerBookingMap", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

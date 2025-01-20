@@ -4,7 +4,6 @@ import { useActionState } from "react";
 
 import { ToastContainer, toast } from 'react-toastify';
 
-
 function RegisterForm() {
 
     let initialUserData = {
@@ -13,25 +12,49 @@ function RegisterForm() {
         email: '',
         password: '',
         dob: '',
-        isSubscribedForNewsletter: true,
+        newsletterSubscribtion: true,
         address: '',
     };
 
-    const registerUser = (formData) => {
+    const registerUser = async (formData) => {
         isPending = true;
 
+        let firstName = formData.get('firstName');
+        let lastName = formData.get('lastName');
+        let email = formData.get('email');
         let password = formData.get('password');
         let confirmPassword = formData.get('confirmPassword');
+        let newsletterSubscribtion = formData.get('newsletterCheckbox');
+        let address = formData.get('address');
 
         //perfom validation
-        if (password !== confirmPassword) {
-            toast("Password and confirm password do not match!")
+        //TODO -> extends validation to check if email is indeed email, name only characters etc; 
+
+        if (lastName == '' || firstName == '' || email == '' || address == '') {
+            toast.error("All fields are required for registration! Please, try again.");
+            return;
         }
 
-        //IF VALIDATION FAILED - RETURN AND ADD TOAST
+        if (password !== confirmPassword) {
+            toast.error("Password and confirm password do not match!")
+            return;
+        }
 
-        //TODO: implement registration
+        let checkboxValue = newsletterSubscribtion === 'on' ? true : false;
 
+        initialUserData.firstName = firstName;
+        initialUserData.lastName = lastName;
+        initialUserData.email = email;
+        initialUserData.address = address;
+        initialUserData.newsletterSubscribtion = checkboxValue;
+        initialUserData.password = password;
+        initialUserData.dob = "01.01.1997";
+
+        Account.register(initialUserData).then(res => {
+            if (res.succeeded) {
+                toast.success("Registration successful. You can now log in and plan a trip!")
+            }
+        });
 
         //if successful
         isPending = false;

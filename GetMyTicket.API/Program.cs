@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +31,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("React Frontend", policy =>
+    options.AddPolicy("ReactFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000/") 
-              .AllowAnyHeader()                                              
-              .AllowAnyMethod();                                            
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -54,7 +55,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.UseCors("React Frontend");
+app.UseCors("ReactFrontend");
 
 if (app.Environment.IsDevelopment())
 {

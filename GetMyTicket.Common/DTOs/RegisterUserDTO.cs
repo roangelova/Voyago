@@ -5,8 +5,8 @@
         string LastName,
         string Email,
         string Password,
-        string DOB,
-        bool IsSubscribedForNewsletter,
+        string Dob,
+        bool NewsletterSubscribtion,
         string Address
         );
    

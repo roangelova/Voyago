@@ -17,7 +17,7 @@ namespace GetMyTicket.Service.Services
         public async Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserDTO)
         {
             //check and convert DOB
-            bool parseResult = DateOnly.TryParse(registerUserDTO.DOB, out DateOnly result);
+            bool parseResult = DateOnly.TryParse(registerUserDTO.Dob, out DateOnly result);
 
             if (!parseResult)
             {
@@ -37,7 +37,7 @@ namespace GetMyTicket.Service.Services
                 FirstName = registerUserDTO.FirstName,
                 LastName = registerUserDTO.LastName,
                 Email = registerUserDTO.Email,
-                IsSubscribedForNewsletter = registerUserDTO.IsSubscribedForNewsletter,
+                IsSubscribedForNewsletter = registerUserDTO.NewsletterSubscribtion,
                 DOB = result,
                 UserName = registerUserDTO.Email,
                 Address = registerUserDTO.Address,

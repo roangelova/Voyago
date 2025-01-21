@@ -43,6 +43,8 @@ namespace GetMyTicket.Service.Services
         {
             try
             {
+                //TODO ; validation
+
                 var data = await unitOfWork.TransportationProviders.GetAllAsync();
 
                 return data.Select(x => new GetTransportationProviderDTO(

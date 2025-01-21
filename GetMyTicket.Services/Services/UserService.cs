@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.DTOs.User;
+﻿using GetMyTicket.Common.DTOs.TP;
+using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
@@ -21,16 +22,20 @@ namespace GetMyTicket.Service.Services
 
             if (!parseResult)
             {
-                return IdentityResult.Failed(new IdentityError
-                {
-                    Code = "Invalid date of birth",
-                    Description = "The type of the provided DOB is incorrect."
-                });
+                throw new InvalidDataException("Invalid date of birth");
             }
 
             //TODO: write unittest to check this method 
 
             //TODO: decide on a way to bypass username validation OR Decide if a username is actually needed
+
+            if (string.IsNullOrWhiteSpace(registerUserDTO.FirstName) ||
+                   string.IsNullOrWhiteSpace(registerUserDTO.LastName) ||
+                   string.IsNullOrWhiteSpace(registerUserDTO.Email) ||
+                   string.IsNullOrWhiteSpace(registerUserDTO.Address))
+            {
+                throw new ArgumentException("A required field was empty.");
+            }
 
             var user = new User()
             {

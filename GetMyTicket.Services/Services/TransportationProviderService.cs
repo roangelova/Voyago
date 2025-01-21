@@ -18,6 +18,15 @@ namespace GetMyTicket.Service.Services
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(addTpDTO.Name) ||
+                    string.IsNullOrWhiteSpace(addTpDTO.Description) ||
+                    string.IsNullOrWhiteSpace(addTpDTO.Email) ||
+                    string.IsNullOrWhiteSpace(addTpDTO.Address))
+                {
+                    throw new ArgumentException("A required field was empty.");
+                }
+
+
                 var entity = new TransportationProvider
                 {
                     TransportationProviderId = Guid.CreateVersion7(),
@@ -43,8 +52,6 @@ namespace GetMyTicket.Service.Services
         {
             try
             {
-                //TODO ; validation
-
                 var data = await unitOfWork.TransportationProviders.GetAllAsync();
 
                 return data.Select(x => new GetTransportationProviderDTO(

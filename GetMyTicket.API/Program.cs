@@ -1,3 +1,4 @@
+using GetMyTicket.API.ExceptionHandler;
 using GetMyTicket.API.ServiceExtensions;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Persistance.Context;
@@ -10,6 +11,9 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -72,6 +76,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var DbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        //ADD DB sync
         await DbContext.Database.EnsureCreatedAsync();
     }
     catch (Exception)
@@ -87,6 +92,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
 
 app.UseAuthorization();
 

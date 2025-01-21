@@ -23,6 +23,17 @@ namespace GetMyTicket.Service.Services
                 if (Enum.TryParse<AirplaneManufacturer>(airplaneDTO.Manufacturer, 
                         out AirplaneManufacturer manufacturer))
                 {
+
+                    if(airplaneDTO.Capacity <= 0)
+                    {
+                        throw new ArgumentOutOfRangeException("Capacity can't be null");
+                    }
+
+                    if (string.IsNullOrWhiteSpace(airplaneDTO.Model))
+                    {
+                        throw new ArgumentException("Invalid aircraft model");
+                    }
+
                     var entity = new Airplane()
                     {
                         VehicleId = Guid.CreateVersion7(),

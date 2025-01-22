@@ -26,8 +26,11 @@ function Header() {
                     </a>
                 </div>
                 <div className='header__navigation-user'>
+                    <a href='/login' className='header__navigation-login'>
+                        Login
+                    </a>
                     <a href='/register'>
-                        Login | Sign up
+                        Sign up
                     </a>
                 </div>
             </div>

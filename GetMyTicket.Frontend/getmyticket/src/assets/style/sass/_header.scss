@@ -32,6 +32,15 @@
         padding-right: 1rem;
         padding-top: 0.5rem;
 
+        &-login::after {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 1em;
+            background-color: #333;
+            margin: 0 4px;
+        }
+
         &-browse {
             display: flex;
             gap: 1rem;

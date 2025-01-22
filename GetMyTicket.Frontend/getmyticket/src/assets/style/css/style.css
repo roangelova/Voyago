@@ -29,7 +29,7 @@ h1 {
 }
 
 .header {
-  height: 70vh;
+  height: 60vh;
   background-image: url(../../images/header.jpg);
   background-size: cover;
   display: flex;

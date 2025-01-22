@@ -1,4 +1,4 @@
-import { Account } from "../services/accountService";
+import { Account } from "../../services/accountService";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 

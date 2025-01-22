@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
 
-import Header from './components/Header';
-import RegisterForm from './components/RegisterForm';
-import RegisterPopUp from './components/RegisterPopUp';
+import Header from './components/common/Header';
+import RegisterForm from './components/account/RegisterForm';
+import RegisterPopUp from './components/account/RegisterPopUp';
 
 function App() {
   return (
@@ -21,3 +21,14 @@ function App() {
 }
 
 export default App;
+
+
+//Structure (HOMEPAGE): 
+//
+//Header 60VH 
+// Search Bar -> should overlap a tiny portion of the header
+// CTA section Logos -> display provider logos and link to main booking page
+// WHY US SECTION -> 3 reasons to choose us
+// ..
+// ..
+//ABOUT US & FOOTER 

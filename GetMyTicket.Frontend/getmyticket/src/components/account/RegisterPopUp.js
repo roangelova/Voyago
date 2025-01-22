@@ -1,8 +1,8 @@
-import referee_program from "../assets/images/referee_cta.webp"
+import referee_program from "../../assets/images/referee_cta.webp"
 
-import facebookLogo from "../assets/icons/facebook.svg";
-import googleLogo from "../assets/icons/google.svg";
-import appleLogo from "../assets/icons/apple.svg";
+import facebookLogo from "../../assets/icons/facebook.svg";
+import googleLogo from "../../assets/icons/google.svg";
+import appleLogo from "../../assets/icons/apple.svg";
 
 function RegisterPopUp() {
 

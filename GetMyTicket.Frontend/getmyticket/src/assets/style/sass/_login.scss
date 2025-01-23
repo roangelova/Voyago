@@ -1,0 +1,50 @@
+.login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__form {
+        min-height: 40vh;
+        min-width: 40vw;
+
+        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        background-color: #fff;
+        overflow: hidden;
+    }
+
+    &__row {
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        margin: 1rem 0;
+
+        & div label {
+            display: inline-block;
+            margin-right: 3px;
+        }
+    }
+
+    &__btn {
+        padding: 0.5rem 1rem;
+        margin-bottom: auto;
+        cursor: pointer;
+
+        border-radius: 15px;
+        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+    }
+}

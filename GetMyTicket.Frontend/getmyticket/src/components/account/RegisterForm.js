@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterForm() {
 
+    //TODO -> add as an actual popup and make background blurry
+
     let [dob, setDob] = useState("2000-01-01");
 
     let initialUserData = {

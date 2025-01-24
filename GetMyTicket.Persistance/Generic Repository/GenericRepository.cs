@@ -1,6 +1,8 @@
 ﻿
 using GetMyTicket.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace GetMyTicket.Persistance.Generic_Repository
 {
@@ -25,9 +27,29 @@ namespace GetMyTicket.Persistance.Generic_Repository
             DbSet.Remove(entity);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(
+          Expression<Func<T, bool>>? filter = null,
+          Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+          params Expression<Func<T, object>>[] includes)
         {
-            return await DbSet.ToListAsync();
+            IQueryable<T> query = DbSet;
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(object id)

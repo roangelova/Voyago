@@ -2,6 +2,7 @@
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 using GetMyTicket.Service.Services;
+using GetMyTicket.Service.Authorization;
 
 namespace GetMyTicket.API.ServiceExtensions
 {
@@ -12,6 +13,8 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<JwtTokenService>();
 
             //ENTITY SERVICES
             services.AddScoped<ITransportationProviderService, TransportationProviderService>();

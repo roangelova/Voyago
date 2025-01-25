@@ -15,15 +15,16 @@ namespace GetMyTicket.Service.Authorization
 
         public TokenService(IConfiguration configuration)
         {
+            this.configuration = configuration;
         }
 
-        public string GenerateAccessToken(string email)
+        public string GenerateAccessToken(Guid userId)
         {
             var jwtSettings = configuration.GetSection("Jwt");
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

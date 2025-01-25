@@ -51,6 +51,11 @@ builder.Services.AddIdentity<User, ApplicationRole>()
 
 builder.Services.AddApplicationServices();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
@@ -64,15 +69,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Get my ticket",
-        Version = "v1",
-        Description = "An example API for .NET 9"
-    });
-});
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

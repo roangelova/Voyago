@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.Framework;
-using GetMyTicket.Service.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
-using GetMyTicket.Common.DTOs.User;
+﻿using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.JwtToken;
+using GetMyTicket.Service.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace GetMyTicket.API.Controllers
 {
@@ -12,24 +11,76 @@ namespace GetMyTicket.API.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
+        private readonly IDistributedCache RedisInstance;
 
         private readonly TokenService TokenService;
 
+        public AuthenticationController(
+            IDistributedCache redisInstance,
+            TokenService tokenService)
+        {
+            RedisInstance = redisInstance;
+            TokenService = tokenService;
+        }
+
+        [HttpPost("refreshToken")]
+        public async Task<IActionResult> RefreshToken (string refreshToken, Guid userId)
+        {
+            if(await RedisInstance.GetAsync(refreshToken) == null)
+            {
+                return BadRequest("Something went wrong. Please proceed to log in");
+            }
+
+            var tokenModel = GenerateTokens(userId);
+
+            return Ok(tokenModel);
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(LoginDTO data)
+        public async Task<IActionResult> Login(LoginDTO data)
         {
             //TODO -> validate login data
             //ignore for now for test purposes
 
-            string accessToken = TokenService.GenerateAccessToken(data.Email);
-            string refreshToken = TokenService.GenerateRefreshToken();
+            //TODO -> get userId
+            Guid userId = Guid.CreateVersion7();
 
-            var token = new JwtTokenModel(accessToken, refreshToken);
+           var tokenModel = GenerateTokens(userId);
 
-            return Ok(token);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes
+                    (JwtTokenModel._RefreshTokenTokenExpiration) 
+            };
+
+            //TODO - encrypt token and store encrypted value
+            //TODO - > fix connection bug - PROVIDE CREDENTIALS
+            await RedisInstance.SetStringAsync(tokenModel.RefreshToken, data.Email );
+
+            return Ok(tokenModel);
 
         }
 
-        //TODO IMPLEMENT LOGOUT 
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(string refreshToken)
+        {
+            await RedisInstance.RemoveAsync(refreshToken);
+
+            return Ok("Successfully logged out.");
+        }
+
+
+        private JwtTokenModel GenerateTokens(Guid userId) {
+
+            string accessToken = TokenService.GenerateAccessToken(userId);
+            string refreshToken = TokenService.GenerateRefreshToken();
+
+            var tokenModel = new JwtTokenModel(accessToken, refreshToken);
+
+            return tokenModel;
+
+        }
+
     }
 }

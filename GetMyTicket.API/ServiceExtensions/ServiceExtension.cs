@@ -14,7 +14,7 @@ namespace GetMyTicket.API.ServiceExtensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<JwtTokenService>();
+            services.AddScoped<TokenService>();
 
             //ENTITY SERVICES
             services.AddScoped<ITransportationProviderService, TransportationProviderService>();

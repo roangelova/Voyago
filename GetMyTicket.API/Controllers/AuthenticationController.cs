@@ -4,6 +4,7 @@ using Microsoft.Build.Framework;
 using GetMyTicket.Service.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using GetMyTicket.Common.DTOs.User;
+using GetMyTicket.Common.JwtToken;
 
 namespace GetMyTicket.API.Controllers
 {
@@ -12,15 +13,21 @@ namespace GetMyTicket.API.Controllers
     public class AuthenticationController : ControllerBase
     {
 
-        private readonly JwtTokenService jwtTokenService;
+        private readonly TokenService TokenService;
 
         [HttpPost("login")]
         public IActionResult Login(LoginDTO data)
         {
-           
-                var token = jwtTokenService.GenerateAccessToken(data.Email);
-                return Ok(new { Token = token });
-            
+            //TODO -> validate login data
+            //ignore for now for test purposes
+
+            string accessToken = TokenService.GenerateAccessToken(data.Email);
+            string refreshToken = TokenService.GenerateRefreshToken();
+
+            var token = new JwtTokenModel(accessToken, refreshToken);
+
+            return Ok(token);
+
         }
 
         //TODO IMPLEMENT LOGOUT 

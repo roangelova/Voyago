@@ -2,18 +2,19 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace GetMyTicket.Service.Authorization
 {
-    public class JwtTokenService
+    public class TokenService
     {
-
+        private static readonly RandomNumberGenerator randomNumberGenerator 
+            = RandomNumberGenerator.Create();
         private readonly IConfiguration configuration;
 
-        public JwtTokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration)
         {
-            configuration = configuration;
         }
 
         public string GenerateAccessToken(string email)
@@ -43,9 +44,10 @@ namespace GetMyTicket.Service.Authorization
 
         public string GenerateRefreshToken()
         {
-            //TODO - IMPLEMENT 
+            var bytes = new byte[32]; 
+            randomNumberGenerator.GetBytes(bytes);
 
-            return "refreshtoken";
+            return Convert.ToBase64String(bytes);
         }
     }
 

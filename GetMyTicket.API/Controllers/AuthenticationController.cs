@@ -18,18 +18,14 @@ namespace GetMyTicket.API.Controllers
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
-        //TODO: Explore the full capabilities of SignInManager and implement whats needed accordingly;
 
         private readonly TokenService tokenService;
 
         public AuthenticationController(
             TokenService tokenService,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            UserManager<User> userManager)
         {
             this.tokenService = tokenService;
-            this.signInManager = signInManager;
             this.userManager = userManager;
 
             //TODO - implement safe storage of credentials;
@@ -39,7 +35,7 @@ namespace GetMyTicket.API.Controllers
             {
                 EndPoints = { { "redis-12612.c282.east-us-mz.azure.redns.redis-cloud.com", 12612 } },
                 User = "default",
-                Password = "***"
+                Password = "**"
             }
             );
 
@@ -82,8 +78,6 @@ namespace GetMyTicket.API.Controllers
                 return BadRequest(ErrorMessages.InvalidCredentials);
             }
 
-            await signInManager.SignInAsync(user, false);
-
             var tokenModel = GenerateTokens(user.Id);
 
             //TODO - encrypt token and store encrypted value
@@ -98,8 +92,6 @@ namespace GetMyTicket.API.Controllers
         public async Task<IActionResult> Logout(string refreshToken)
         {
             var result = await RedisDb.KeyDeleteAsync(refreshToken);
-
-            await signInManager.SignOutAsync();
 
             if (!result)
             {

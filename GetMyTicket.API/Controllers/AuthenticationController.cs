@@ -4,34 +4,52 @@ using GetMyTicket.Service.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+   
+ public class AuthenticationController : ControllerBase
     {
-        private readonly IDistributedCache RedisInstance;
+        private readonly ConnectionMultiplexer muxer;
+        private readonly IDatabase RedisDb;
 
         private readonly TokenService TokenService;
 
         public AuthenticationController(
-            IDistributedCache redisInstance,
             TokenService tokenService)
         {
-            RedisInstance = redisInstance;
             TokenService = tokenService;
+
+            //TODO - safely store this and other connection credentials
+
+            muxer = ConnectionMultiplexer.Connect(
+            new ConfigurationOptions
+            {
+                EndPoints = { { "redis-12612.c282.east-us-mz.azure.redns.redis-cloud.com", 12612 } },
+                User = "default",
+                Password = "*******"
+            }
+            );
+
+            RedisDb = muxer.GetDatabase();
         }
 
         [HttpPost("refreshToken")]
-        public async Task<IActionResult> RefreshToken (string refreshToken, Guid userId)
+        public async Task<IActionResult> RefreshToken(string refreshToken, Guid userId)
         {
-            if(await RedisInstance.GetAsync(refreshToken) == null)
+            var tokenExists = await RedisDb.KeyExistsAsync(refreshToken);
+
+            if (!tokenExists)
             {
                 return BadRequest("Something went wrong. Please proceed to log in");
             }
 
             var tokenModel = GenerateTokens(userId);
+
+            await RedisDb.KeyRenameAsync(refreshToken, tokenModel.RefreshToken);
 
             return Ok(tokenModel);
         }
@@ -46,17 +64,11 @@ namespace GetMyTicket.API.Controllers
             //TODO -> get userId
             Guid userId = Guid.CreateVersion7();
 
-           var tokenModel = GenerateTokens(userId);
-
-            var options = new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes
-                    (JwtTokenModel._RefreshTokenTokenExpiration) 
-            };
+            var tokenModel = GenerateTokens(userId);
 
             //TODO - encrypt token and store encrypted value
-            //TODO - > fix connection bug - PROVIDE CREDENTIALS
-            await RedisInstance.SetStringAsync(tokenModel.RefreshToken, data.Email );
+            //TODO - > CAN WE OPTIMIZE THIS? Its kinda slow
+            await RedisDb.SetAddAsync(tokenModel.RefreshToken, data.Email);
 
             return Ok(tokenModel);
 
@@ -65,14 +77,19 @@ namespace GetMyTicket.API.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(string refreshToken)
         {
-            await RedisInstance.RemoveAsync(refreshToken);
+          var result = await RedisDb.KeyDeleteAsync(refreshToken);
+            
+            if (!result)
+            {
+                return BadRequest("Something went wrong.");
+            }
 
             return Ok("Successfully logged out.");
         }
 
 
-        private JwtTokenModel GenerateTokens(Guid userId) {
-
+        private JwtTokenModel GenerateTokens(Guid userId)
+        {
             string accessToken = TokenService.GenerateAccessToken(userId);
             string refreshToken = TokenService.GenerateRefreshToken();
 

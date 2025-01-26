@@ -1,36 +1,45 @@
-﻿using GetMyTicket.Common.DTOs.User;
+﻿using GetMyTicket.Common.Constants;
+using GetMyTicket.Common.DTOs.User;
+using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
 using GetMyTicket.Service.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   
- public class AuthenticationController : ControllerBase
+
+    public class AuthenticationController : ControllerBase
     {
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
+        //TODO: Explore the full capabilities of SignInManager and implement whats needed accordingly;
 
-        private readonly TokenService TokenService;
+        private readonly TokenService tokenService;
 
         public AuthenticationController(
-            TokenService tokenService)
+            TokenService tokenService,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
-            TokenService = tokenService;
+            this.tokenService = tokenService;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
 
-            //TODO - safely store this and other connection credentials
+            //TODO - implement safe storage of credentials;
 
             muxer = ConnectionMultiplexer.Connect(
             new ConfigurationOptions
             {
                 EndPoints = { { "redis-12612.c282.east-us-mz.azure.redns.redis-cloud.com", 12612 } },
                 User = "default",
-                Password = "*******"
+                Password = "***"
             }
             );
 
@@ -44,7 +53,7 @@ namespace GetMyTicket.API.Controllers
 
             if (!tokenExists)
             {
-                return BadRequest("Something went wrong. Please proceed to log in");
+                return BadRequest(ErrorMessages.SomethingWentWrong);
             }
 
             var tokenModel = GenerateTokens(userId);
@@ -58,13 +67,24 @@ namespace GetMyTicket.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO data)
         {
-            //TODO -> validate login data
-            //ignore for now for test purposes
+            var user = await userManager.FindByEmailAsync(data.Email);
 
-            //TODO -> get userId
-            Guid userId = Guid.CreateVersion7();
+            if (user == null)
+            {
+                return BadRequest(ErrorMessages.InvalidCredentials);
+            }
 
-            var tokenModel = GenerateTokens(userId);
+            bool passwordIsCorrect = await userManager.CheckPasswordAsync(
+                user, data.Password);
+
+            if (!passwordIsCorrect)
+            {
+                return BadRequest(ErrorMessages.InvalidCredentials);
+            }
+
+            await signInManager.SignInAsync(user, false);
+
+            var tokenModel = GenerateTokens(user.Id);
 
             //TODO - encrypt token and store encrypted value
             //TODO - > CAN WE OPTIMIZE THIS? Its kinda slow
@@ -77,11 +97,13 @@ namespace GetMyTicket.API.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(string refreshToken)
         {
-          var result = await RedisDb.KeyDeleteAsync(refreshToken);
-            
+            var result = await RedisDb.KeyDeleteAsync(refreshToken);
+
+            await signInManager.SignOutAsync();
+
             if (!result)
             {
-                return BadRequest("Something went wrong.");
+                return BadRequest(ErrorMessages.SomethingWentWrong);
             }
 
             return Ok("Successfully logged out.");
@@ -90,8 +112,8 @@ namespace GetMyTicket.API.Controllers
 
         private JwtTokenModel GenerateTokens(Guid userId)
         {
-            string accessToken = TokenService.GenerateAccessToken(userId);
-            string refreshToken = TokenService.GenerateRefreshToken();
+            string accessToken = tokenService.GenerateAccessToken(userId);
+            string refreshToken = tokenService.GenerateRefreshToken();
 
             var tokenModel = new JwtTokenModel(accessToken, refreshToken);
 

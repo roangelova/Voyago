@@ -3,19 +3,21 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import Header from './components/common/Header';
 import RegisterForm from './components/account/RegisterForm';
 import RegisterPopUp from './components/account/RegisterPopUp';
+import { ToastContainer } from 'react-toastify';
+import NotFoundPage from './components/common/NotFoundPage';
 
 function App() {
   return (
-    <div >
 
+    <div >
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Header />} />
+          <Route index path="/" element={<Header />} />
           <Route path="/register" element={<RegisterPopUp />} />
           <Route path="/register-form" element={<RegisterForm />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
-
     </div >
   );
 }

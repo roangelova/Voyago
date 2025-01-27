@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GetMyTicket.API.Controllers
 {
     [ApiController]
-    [Route("tp")]
+    [Route("api/transportation")]
     public class TransportationProviderController : ControllerBase
     {
         private readonly ITransportationProviderService transportationProviderService;

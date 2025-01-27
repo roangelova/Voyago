@@ -261,4 +261,12 @@ h1 {
   box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 }
 
+.error-page {
+  height: 100vh;
+  width: 100vw;
+  background-image: url(../../images/PageNotFound.png);
+  background-size: cover;
+  background-position: top;
+}
+
 /*# sourceMappingURL=style.css.map */

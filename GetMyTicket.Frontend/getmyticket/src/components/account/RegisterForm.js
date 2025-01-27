@@ -3,7 +3,6 @@ import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterForm() {
-
     //TODO -> add as an actual popup and make background blurry
 
     let [dob, setDob] = useState("2000-01-01");
@@ -19,13 +18,13 @@ function RegisterForm() {
     };
 
     const registerUser = async (formData) => {
-        let firstName = formData.get('firstName');
-        let lastName = formData.get('lastName');
-        let email = formData.get('email');
-        let password = formData.get('password');
-        let confirmPassword = formData.get('confirmPassword');
+        let firstName = formData.get('firstName').trim();
+        let lastName = formData.get('lastName').trim();
+        let email = formData.get('email').trim();
+        let password = formData.get('password').trim();
+        let confirmPassword = formData.get('confirmPassword').trim();
         let newsletterSubscribtion = formData.get('newsletterCheckbox');
-        let address = formData.get('address');
+        let address = formData.get('address').trim();
 
         //perfom validation
         //TODO -> extends validation to check if email is indeed email, name only characters etc; 
@@ -51,9 +50,21 @@ function RegisterForm() {
 
         Account.register(initialUserData).then(res => {
             if (res.succeeded) {
-                toast.success("Registration successful. You can now log in and plan a trip!")
+                toast.success("Registration successful.Taking you to login page in 3, 2, 1 .. ");
+
+                setTimeout(() => {
+                    window.location.href = "/";
+                }
+                    , 3000);
             }
-        });
+        }).catch(err => {
+            let errorMessage = '';
+            err.response.data.forEach(error => {
+                errorMessage += error.description;
+                errorMessage += ' ';
+            })
+            toast.error(errorMessage);
+        })
     }
 
     const handleDateChange = (event) => {

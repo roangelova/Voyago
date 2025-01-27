@@ -14,7 +14,6 @@ function Login() {
         }
 
         Account.login({ email, password }).then(res => {
-            console.log(res)
             //TODO -> STORE TOKENS ADD ADD THEM TO AUTO REQ
             toast.success('Logged in!')
         }).catch(err => {

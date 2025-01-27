@@ -36,7 +36,7 @@ function Header() {
                         </a>
                     </div>
                     <div className='header__navigation-user'>
-                        <a href='/#'
+                        <a href='#'
                             className='header__navigation-login'
                             onClick={handleLoginToggle}
                         >

@@ -44,7 +44,10 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
 
 //TODO: once we have a sufficient custom implementation, remove Identity Api endpoints; 
 
-builder.Services.AddIdentity<User, ApplicationRole>()
+builder.Services.AddIdentity<User, ApplicationRole>(options=>
+{
+    options.User.RequireUniqueEmail = true;
+})
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints()
     .AddDefaultTokenProviders();

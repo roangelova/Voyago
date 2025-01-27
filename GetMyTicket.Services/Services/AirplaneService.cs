@@ -38,7 +38,7 @@ namespace GetMyTicket.Service.Services
                     {
                         VehicleId = Guid.CreateVersion7(),
                         TransportationProvideriD = airplaneDTO.TpProviderId,
-                        Model = airplaneDTO.Model,
+                        Model = airplaneDTO.Model.Trim(),
                         Capacity = airplaneDTO.Capacity,
                         ManufacturingDate = airplaneDTO.ManufacturingDate,
                         AirplaneManufacturer = manufacturer

@@ -30,10 +30,10 @@ namespace GetMyTicket.Service.Services
                 var entity = new TransportationProvider
                 {
                     TransportationProviderId = Guid.CreateVersion7(),
-                    Name = addTpDTO.Name,
-                    Description = addTpDTO.Description,
-                    Address = addTpDTO.Address,
-                    Email = addTpDTO.Email
+                    Name = addTpDTO.Name.Trim(),
+                    Description = addTpDTO.Description.Trim(),
+                    Address = addTpDTO.Address.Trim(),
+                    Email = addTpDTO.Email.Trim()
                 };
 
                 await unitOfWork.TransportationProviders.AddAsync(entity);

@@ -39,13 +39,13 @@ namespace GetMyTicket.Service.Services
 
             var user = new User()
             {
-                FirstName = registerUserDTO.FirstName,
-                LastName = registerUserDTO.LastName,
-                Email = registerUserDTO.Email,
+                FirstName = registerUserDTO.FirstName.Trim(),
+                LastName = registerUserDTO.LastName.Trim(),
+                Email = registerUserDTO.Email.Trim(),
                 IsSubscribedForNewsletter = registerUserDTO.NewsletterSubscribtion,
                 DOB = result,
-                UserName = registerUserDTO.Email,
-                Address = registerUserDTO.Address,
+                UserName = registerUserDTO.Email.Trim(),
+                Address = registerUserDTO.Address.Trim(),
                 RegistrationDate = DateOnly.FromDateTime(DateTime.UtcNow)
             };
 

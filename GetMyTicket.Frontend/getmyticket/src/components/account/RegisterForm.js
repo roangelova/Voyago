@@ -3,18 +3,22 @@ import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 
 function RegisterForm() {
-    //TODO -> add as an actual popup and make background blurry
-
-    let [dob, setDob] = useState("2000-01-01");
-
-    let initialUserData = {
+    const [initialUserData, setInitialUserData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        dob: dob,
+        dob: '2000-01-01',
         newsletterSubscribtion: true,
         address: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setInitialUserData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
     const registerUser = async (formData) => {
@@ -67,12 +71,6 @@ function RegisterForm() {
         })
     }
 
-    const handleDateChange = (event) => {
-        const date = event.target.value;
-        setDob(date);
-    };
-
-
     return (
 
         <div className="register">
@@ -87,6 +85,8 @@ function RegisterForm() {
                             placeholder="First name"
                             autoComplete="on"
                             autoCapitalize="on"
+                            value={initialUserData.firstName}
+                            onChange={handleChange}
                         ></input>
                     </div>
 
@@ -98,6 +98,8 @@ function RegisterForm() {
                             placeholder="Last Name"
                             autoComplete="on"
                             autoCapitalize="on"
+                            value={initialUserData.lastName}
+                            onChange={handleChange}
                         ></input>
                     </div>
                 </div>
@@ -110,6 +112,8 @@ function RegisterForm() {
                             type="email"
                             placeholder="email@gmail.com"
                             autoComplete="on"
+                            value={initialUserData.email}
+                            onChange={handleChange}
                         ></input>
                     </div>
 
@@ -118,6 +122,8 @@ function RegisterForm() {
                         <input
                             name="password"
                             type="password"
+                            value={initialUserData.password}
+                            onChange={handleChange}
                         ></input>
                     </div>
 
@@ -126,6 +132,8 @@ function RegisterForm() {
                         <input
                             name="confirmPassword"
                             type="password"
+                            value={initialUserData.confirmPassword}
+                            onChange={handleChange}
                         ></input>
                     </div>
                 </div>
@@ -136,7 +144,10 @@ function RegisterForm() {
                     <input
                         className="register__row-address"
                         name="address"
-                        type="address"></input>
+                        type="address"
+                        value={initialUserData.address}
+                        onChange={handleChange}
+                    ></input>
                 </div>
 
                 <div className="register__row">
@@ -145,10 +156,10 @@ function RegisterForm() {
                     <input
                         name="dob"
                         type="date"
-                        value={dob}
                         min="1940-01-01"
                         max="2007-01-21"
-                        onChange={handleDateChange}
+                        value={initialUserData.dob}
+                        onChange={handleChange}
                     ></input>
                 </div>
 

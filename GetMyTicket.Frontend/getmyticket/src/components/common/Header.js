@@ -3,13 +3,31 @@ import logo from '../../assets/images/logo.png';
 import '../../assets/style/css/style.css';
 import Login from '../account/Login';
 
+import Cookies from 'js-cookie';
+
 function Header() {
+
+    let isLoggedIn = !!Cookies.get('accessToken');
 
     const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
 
     const handleLoginToggle = () => {
         setLoginPopupVisibility(true);
     };
+
+    const UserNav =
+        <div className='header__navigation-user'>
+            <a href='#'
+                className='header__navigation-login'
+                onClick={handleLoginToggle}
+            >
+                Login
+            </a>
+            <a href='/register'>
+                Sign up
+            </a>
+        </div>
+        ;
 
     return (
         <div className='header__container'>
@@ -35,18 +53,19 @@ function Header() {
                             Flights
                         </a>
                     </div>
-                    <div className='header__navigation-user'>
-                        <a href='#'
-                            className='header__navigation-login'
-                            onClick={handleLoginToggle}
-                        >
-                            Login
-                        </a>
-                        <a href='/register'>
-                            Sign up
-                        </a>
-                    </div>
+
+                    {isLoggedIn ?
+                        <div>
+                            <a href='#' className='header__navigation-user'>
+                                Account
+                            </a>
+                        </div>
+                        :
+                        UserNav
+                    }
+
                 </div>
+
             </div>
 
             {

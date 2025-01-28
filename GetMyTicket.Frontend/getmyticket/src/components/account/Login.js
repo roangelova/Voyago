@@ -37,7 +37,7 @@ function Login() {
                     secure: true, sameSite: false
                 });
 
-            toast.success('Logged in!')
+            toast.success('Logged in! Taking you to the homepage in 3, 2, 1..')
 
             setTimeout(() => {
                 window.location.href = "/";

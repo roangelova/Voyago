@@ -22,10 +22,21 @@ a {
   color: inherit;
 }
 
-button {
+input {
   font-family: inherit;
+  font-weight: inherit;
+}
+
+button,
+select {
+  font-family: inherit;
+  font-weight: inherit;
   cursor: pointer;
   border: none;
+}
+
+#id {
+  position: relative;
 }
 
 h1 {
@@ -44,9 +55,8 @@ h1 {
 }
 .header__container {
   position: relative;
-  height: 100vh;
+  height: 60vh;
   width: 100vw;
-  z-index: 1;
 }
 .header__logo {
   max-height: 70px;
@@ -267,6 +277,39 @@ h1 {
   background-image: url(../../images/PageNotFound.png);
   background-size: cover;
   background-position: top;
+}
+
+.searchBar__button {
+  padding: 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #93b3da;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+}
+.searchBar__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 200;
+  max-width: 70vw;
+  max-height: 40vh;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchBar__container--element {
+  display: inline-block;
+  margin: 15px;
+}
+.searchBar__container--element select,
+.searchBar__container--element input {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f9f7f6;
 }
 
 /*# sourceMappingURL=style.css.map */

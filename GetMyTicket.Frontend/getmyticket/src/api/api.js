@@ -1,7 +1,15 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
+
+let isLoggedIn = !!Cookies.get('accessToken');
+
+if (isLoggedIn) {
+    let accessToken = Cookies.get('accessToken')
+    axios.defaults.headers.common['Authorization'] = `${accessToken.tokenType} ${accessToken.accessToken}`;
+}
 
 const responseBody = (response) => response.data;
 

@@ -4,20 +4,23 @@ import Header from './components/common/Header';
 import RegisterForm from './components/account/RegisterForm';
 import RegisterPopUp from './components/account/RegisterPopUp';
 import NotFoundPage from './components/common/NotFoundPage';
+import MainPage from './components/pages/MainPage';
 
 function App() {
   return (
 
-    <div >
-      <BrowserRouter>
-        <Routes>
-          <Route index path="/" element={<Header />} />
-          <Route path="/register" element={<RegisterPopUp />} />
-          <Route path="/register-form" element={<RegisterForm />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div >
+    //TODO -> how are we gonna structure the use of header?
+    //should always be in the mainpage, not when registering etc
+
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route index path="/" element={<MainPage />} />
+        <Route path="/register" element={<RegisterPopUp />} />
+        <Route path="/register-form" element={<RegisterForm />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

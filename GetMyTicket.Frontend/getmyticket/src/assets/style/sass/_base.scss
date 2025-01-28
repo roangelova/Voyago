@@ -9,7 +9,13 @@
 /*
 TODO: DEFINE PRIMARY COLORS
 */
+//GENERATED COLOR PALETTE:
+$color-primary: #93b3da;
+$color-light-gray: #a0acbd;
+$color-dark-grey: #3c4856;
+$color-pink: #d8a1b4;
 
+//TODO -> KEEP OR DELETE? :
 $color-grey-light-1: #f9f7f6;
 $color-grey-light-2: #a7b2b5;
 
@@ -29,8 +35,19 @@ a {
     color: inherit;
 }
 
-button {
+input {
     font-family: inherit;
+    font-weight: inherit;
+}
+
+button,
+select {
+    font-family: inherit;
+    font-weight: inherit;
     cursor: pointer;
     border: none;
+}
+
+#id {
+    position: relative;
 }

@@ -21,7 +21,7 @@ function RegisterForm() {
         }));
     };
 
-    const registerUser = async (formData) => {
+    const registerUser = (formData) => {
         let firstName = formData.get('firstName').trim();
         let lastName = formData.get('lastName').trim();
         let email = formData.get('email').trim();

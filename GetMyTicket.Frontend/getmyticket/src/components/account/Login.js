@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 function Login() {
 
-    const Login = async (formData) => {
+    const Login = (formData) => {
 
         let email = formData.get('email');
         let password = formData.get('password');
@@ -18,10 +18,31 @@ function Login() {
 
             //TODO - configure CORS
 
-            Cookies.set('accessToken', JSON.stringify({ accessToken: res.accessToken, tokenType: res.tokenType }), { expires: new Date(res.accessTokenExpires), secure: true, sameSite: false });
-            Cookies.set('refreshToken', JSON.stringify({ refreshToken: res.refreshToken }), { expires: new Date(res.refreshTokenExpires), secure: true, sameSite: false });
+            Cookies.set('accessToken',
+                JSON.stringify(
+                    {
+                        accessToken: res.accessToken,
+                        tokenType: res.tokenType
+                    }),
+                {
+                    expires: new Date(res.accessTokenExpires),
+                    secure: true, sameSite: false
+                });
+
+            Cookies.set('refreshToken',
+                JSON.stringify(
+                    { refreshToken: res.refreshToken }),
+                {
+                    expires: new Date(res.refreshTokenExpires),
+                    secure: true, sameSite: false
+                });
 
             toast.success('Logged in!')
+
+            setTimeout(() => {
+                window.location.href = "/";
+            }
+                , 3000);
         }).catch(err => {
             toast.error(err.response.data)
         })

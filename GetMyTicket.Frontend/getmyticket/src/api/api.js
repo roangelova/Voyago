@@ -5,6 +5,7 @@ axios.defaults.withCredentials = true;
 
 const responseBody = (response) => response.data;
 
+
 export const api = {
     get: (url) => axios.get(url).then(responseBody),
     post: (url, body) => axios.post(url, body).then(responseBody),

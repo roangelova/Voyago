@@ -16,22 +16,13 @@ function Login() {
 
         Account.login({ email, password }).then(res => {
 
-            console.log(res)
-
-            let JWT = {
-                accessToken: res.accessToken,
-                refreshToken: res.refreshToken,
-                tokenType: res.TokenType,
-                accessTokenExpires: res.accessTokenExpires
-            }
-
             //TODO - configure CORS
-            //TODO -> FIX BUG -> WHY IS A PART OF THE COOKIE MISSING? COOKIE SIZE IS OK;
-            Cookies.set('JWT', JSON.stringify(JWT), { expires: new Date(res.accessTokenExpires), secure: true, sameSite: false });
+
+            Cookies.set('accessToken', JSON.stringify({ accessToken: res.accessToken, tokenType: res.tokenType }), { expires: new Date(res.accessTokenExpires), secure: true, sameSite: false });
+            Cookies.set('refreshToken', JSON.stringify({ refreshToken: res.refreshToken }), { expires: new Date(res.refreshTokenExpires), secure: true, sameSite: false });
 
             toast.success('Logged in!')
         }).catch(err => {
-            console.log(err)
             toast.error(err.response.data)
         })
     }

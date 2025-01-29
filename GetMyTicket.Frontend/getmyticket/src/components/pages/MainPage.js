@@ -4,11 +4,14 @@ import SearchBar from "../services/SearchBar";
 
 const MainPage = () => {
 
+    //TODO -> amend LoginPopUp so that both header and Searchbar are blurred when login is showing;
     return (
+        <>
+            <Header />
 
-        //TODO -> stricture the app in a way that can also blur SearchBar when Login popup is visible;
-        <SearchBar />
 
+            <SearchBar />
+        </>
     )
 }
 

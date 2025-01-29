@@ -13,7 +13,7 @@ function App() {
     //should always be in the mainpage, not when registering etc
 
     <BrowserRouter>
-      <Header />
+
       <Routes>
         <Route index path="/" element={<MainPage />} />
         <Route path="/register" element={<RegisterPopUp />} />

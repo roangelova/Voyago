@@ -10,6 +10,20 @@
     align-items: center;
     justify-content: center;
 
+    &__iconBox {
+        min-height: 10vh;
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+
+        & svg {
+            max-width: 30px;
+            margin-right: 5px;
+        }
+    }
+
     &__form {
         min-height: 40vh;
         min-width: 40vw;
@@ -17,8 +31,8 @@
         box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
 
         background-color: #fff;
         overflow: hidden;

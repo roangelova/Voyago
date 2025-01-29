@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../../assets/images/logo.png';
 import '../../assets/style/css/style.css';
 import Login from '../account/Login';
 
+
 import Cookies from 'js-cookie';
 
 function Header() {
-
     let isLoggedIn = !!Cookies.get('accessToken');
 
     const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
@@ -14,6 +14,22 @@ function Header() {
     const handleLoginToggle = () => {
         setLoginPopupVisibility(true);
     };
+
+    useEffect(() => {
+        if (LoginPopupVisibility) {
+            window.history.pushState(null, "", window.location.href);
+
+            const handleBackButton = () => {
+                window.history.pushState(null, "", window.location.href);
+            };
+
+            window.addEventListener("popstate", handleBackButton);
+
+            return () => {
+                window.removeEventListener("popstate", handleBackButton);
+            };
+        }
+    }, [LoginPopupVisibility]);
 
     const UserNav =
         <div className='header__navigation-user'>
@@ -70,7 +86,7 @@ function Header() {
 
             {
                 LoginPopupVisibility ?
-                    <div className='login'> <Login />
+                    <div className='login'> <Login setLoginPopupVisibility={setLoginPopupVisibility} />
                     </div> :
                     null
             }

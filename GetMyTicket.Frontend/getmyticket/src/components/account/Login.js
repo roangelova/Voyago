@@ -2,7 +2,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Account } from "../../services/accountService";
 import Cookies from 'js-cookie';
 
-function Login() {
+function Login({ setLoginPopupVisibility }) {
 
     const Login = (formData) => {
 
@@ -50,6 +50,15 @@ function Login() {
 
     return (
         <div className="login__form">
+            <div className="login__iconBox">
+                <svg
+                    onClick={() => setLoginPopupVisibility(false)}
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+
+            </div>
+
             <ToastContainer />
             <form action={Login}>
                 <div className="login__row">

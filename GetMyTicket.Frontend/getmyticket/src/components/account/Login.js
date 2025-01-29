@@ -16,8 +16,6 @@ function Login({ setLoginPopupVisibility }) {
 
         Account.login({ email, password }).then(res => {
 
-            //TODO - configure CORS
-
             Cookies.set('accessToken',
                 JSON.stringify(
                     {

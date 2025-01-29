@@ -31,9 +31,9 @@ builder.Services.AddAuthentication(options =>
          ValidateAudience = true,
          ValidateLifetime = true,
          ValidateIssuerSigningKey = true,
-         ValidIssuer = jwtSettings["Issuer"],
-         ValidAudience = jwtSettings["Audience"],
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+         ValidIssuer = jwtSettings["Jwt:Issuer"],
+         ValidAudience = jwtSettings["Jwt:Audience"],
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Jwt:Key"]))
      };
  });
 
@@ -115,6 +115,7 @@ app.UseHttpsRedirection();
 
 app.UseExceptionHandler();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

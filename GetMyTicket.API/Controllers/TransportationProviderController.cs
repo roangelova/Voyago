@@ -1,9 +1,12 @@
 ﻿using GetMyTicket.Common.DTOs.TP;
 using GetMyTicket.Service.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
 {
+    //AUTHORIZE set for testing purposes;
+    [Authorize]
     [ApiController]
     [Route("api/transportation")]
     public class TransportationProviderController : ControllerBase

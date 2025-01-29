@@ -7,7 +7,7 @@ axios.defaults.withCredentials = true;
 let isLoggedIn = !!Cookies.get('accessToken');
 
 if (isLoggedIn) {
-    let accessToken = Cookies.get('accessToken')
+    let accessToken = JSON.parse(Cookies.get('accessToken'));
     axios.defaults.headers.common['Authorization'] = `${accessToken.tokenType} ${accessToken.accessToken}`;
 }
 

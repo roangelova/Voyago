@@ -18,28 +18,31 @@ namespace GetMyTicket.API.Controllers
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;
+        private readonly IConfiguration configuration;
 
         private readonly TokenService tokenService;
 
         public AuthenticationController(
             TokenService tokenService,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IConfiguration configuration)
         {
             this.tokenService = tokenService;
             this.userManager = userManager;
 
-            //TODO - implement safe storage of credentials;
+            var redisConfig = configuration.GetSection("Redis");
 
             muxer = ConnectionMultiplexer.Connect(
             new ConfigurationOptions
             {
-                EndPoints = { { "redis-12612.c282.east-us-mz.azure.redns.redis-cloud.com", 12612 } },
-                User = "default",
-                Password = "**"
+                EndPoints = { { redisConfig["EndPoints:0:Host"], int.Parse(redisConfig["EndPoints:0:Port"]) } },
+                User = redisConfig["User"],
+                Password = redisConfig["Password"]
             }
             );
 
             RedisDb = muxer.GetDatabase();
+            this.configuration = configuration;
         }
 
         [HttpPost("refreshToken")]
@@ -52,14 +55,14 @@ namespace GetMyTicket.API.Controllers
                 return BadRequest(ErrorMessages.SomethingWentWrong);
             }
 
-            var tokenModel = GenerateTokens(userId);
+            //TODO -> REMOVE OR REFACTOR TO BE USED. Email only for test purposes
+            var tokenModel = GenerateTokens(userId, "someEmial");
 
             await RedisDb.KeyRenameAsync(refreshToken, tokenModel.RefreshToken);
 
             return Ok(tokenModel);
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO data)
         {
@@ -78,7 +81,7 @@ namespace GetMyTicket.API.Controllers
                 return BadRequest(ErrorMessages.InvalidCredentials);
             }
 
-            var tokenModel = GenerateTokens(user.Id);
+            var tokenModel = GenerateTokens(user.Id, user.Email);
 
             //TODO - encrypt token and store encrypted value
             //TODO - > CAN WE OPTIMIZE THIS? Its kinda slow
@@ -102,9 +105,9 @@ namespace GetMyTicket.API.Controllers
         }
 
 
-        private JwtTokenModel GenerateTokens(Guid userId)
+        private JwtTokenModel GenerateTokens(Guid userId, string email)
         {
-            string accessToken = tokenService.GenerateAccessToken(userId);
+            string accessToken = tokenService.GenerateAccessToken(userId, email);
             string refreshToken = tokenService.GenerateRefreshToken();
 
             var tokenModel = new JwtTokenModel(accessToken, refreshToken);

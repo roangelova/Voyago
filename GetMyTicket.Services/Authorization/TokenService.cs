@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using GetMyTicket.Common.JwtToken;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ namespace GetMyTicket.Service.Authorization
 {
     public class TokenService
     {
-        private static readonly RandomNumberGenerator randomNumberGenerator 
+        private static readonly RandomNumberGenerator randomNumberGenerator
             = RandomNumberGenerator.Create();
         private readonly IConfiguration configuration;
 
@@ -24,6 +25,7 @@ namespace GetMyTicket.Service.Authorization
 
             var claims = new[]
             {
+            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -36,7 +38,7 @@ namespace GetMyTicket.Service.Authorization
                 jwtSettings["Audience"],
                 claims,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpitesInXMinutes"])),
+                DateTime.UtcNow.AddMinutes(JwtTokenModel._AccessTokenTokenExpiration),
                 credentials
             );
 
@@ -45,7 +47,7 @@ namespace GetMyTicket.Service.Authorization
 
         public string GenerateRefreshToken()
         {
-            var bytes = new byte[32]; 
+            var bytes = new byte[32];
             randomNumberGenerator.GetBytes(bytes);
 
             return Convert.ToBase64String(bytes);

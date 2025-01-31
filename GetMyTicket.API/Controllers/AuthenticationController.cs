@@ -56,7 +56,7 @@ namespace GetMyTicket.API.Controllers
             }
 
             //TODO -> REMOVE OR REFACTOR TO BE USED. Email only for test purposes
-            var tokenModel = GenerateTokens(userId, "someEmial");
+            var tokenModel = GenerateTokens(userId);
 
             await RedisDb.KeyRenameAsync(refreshToken, tokenModel.RefreshToken);
 
@@ -81,7 +81,7 @@ namespace GetMyTicket.API.Controllers
                 return BadRequest(ErrorMessages.InvalidCredentials);
             }
 
-            var tokenModel = GenerateTokens(user.Id, user.Email);
+            var tokenModel = GenerateTokens(user.Id);
 
             //TODO - encrypt token and store encrypted value
             //TODO - > CAN WE OPTIMIZE THIS? Its kinda slow
@@ -105,9 +105,9 @@ namespace GetMyTicket.API.Controllers
         }
 
 
-        private JwtTokenModel GenerateTokens(Guid userId, string email)
+        private JwtTokenModel GenerateTokens(Guid userId)
         {
-            string accessToken = tokenService.GenerateAccessToken(userId, email);
+            string accessToken = tokenService.GenerateAccessToken(userId);
             string refreshToken = tokenService.GenerateRefreshToken();
 
             var tokenModel = new JwtTokenModel(accessToken, refreshToken);

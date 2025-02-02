@@ -15,6 +15,11 @@ namespace GetMyTicket.Persistance.Context
 
         }
 
+        public AppDbContext() 
+        {
+
+        }
+
         public DbSet<TransportationProvider> TransportationProviders { get; set; }
 
         public DbSet<Airplane> Airplanes { get; set; }

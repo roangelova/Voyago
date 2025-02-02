@@ -30,6 +30,7 @@ namespace GetMyTicket.Persistance.Generic_Repository
         public async Task<IEnumerable<T>> GetAllAsync(
           Expression<Func<T, bool>>? filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+          bool AsNonTracking = false,
           params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = DbSet;
@@ -48,6 +49,12 @@ namespace GetMyTicket.Persistance.Generic_Repository
             {
                 query = orderBy(query);
             }
+
+            if (AsNonTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            
 
             return await query.ToListAsync();
         }

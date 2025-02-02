@@ -17,6 +17,7 @@ namespace GetMyTicket.Persistance.Generic_Repository
         Task<IEnumerable<T>> GetAllAsync(
           Expression<Func<T, bool>>? filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+          bool AsNonTracking = false,
           params Expression<Func<T, object>>[] includes 
    );
     }

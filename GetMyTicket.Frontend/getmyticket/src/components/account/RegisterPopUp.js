@@ -5,9 +5,7 @@ import googleLogo from "../../assets/icons/google.svg";
 import appleLogo from "../../assets/icons/apple.svg";
 
 function RegisterPopUp() {
-
     //TODO -> add as an actual popup and make background blurry
-
     return (
         <div className="register">
             <div className="register__container">

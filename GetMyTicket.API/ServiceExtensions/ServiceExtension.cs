@@ -57,6 +57,7 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped<ITransportationProviderService, TransportationProviderService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAirplaneService, AirplaneService>();
+            services.AddScoped<ICityService, CityService>();
 
             return services;
         }

@@ -1,27 +1,48 @@
+import { Cities } from "../../services/cityService";
+import { useState, useEffect } from "react";
+
 const SearchBar = () => {
 
+    const [cities, setCities] = useState([]);
     //CURRENT BASIC STRUCTURE: 
     //START
     //end
     //START DAY 
     //END DAY 
+    useEffect(() => {
+        Cities.getAll().then(data => {
+            setCities(data);
+        }
+        );
+    }, [])
+
+    let [start, setStart] = useState();
+    let [destination, setDestination] = useState('');
+
+
+
+
 
 
     return (
         <div className="searchBar__container">
             <div className='searchBar__container--element'>
                 <select name="start">
-                    <option value="munich">Munich</option>
-                    <option value="varna">Varna</option>
-                    <option value="Sofia">Sofia</option>
+                    {cities.map((city) => (
+                        <option key={city.cityId} value={city.cityId}>
+                            {city.cityName}
+                        </option>
+                    ))}
                 </select>
             </div>
 
             <div className='searchBar__container--element'>
                 <select name="destination">
-                    <option value="munich">Munich</option>
-                    <option value="varna">Varna</option>
-                    <option value="Sofia">Sofia</option>
+                    {cities.map((city) => (
+                        <option key={city.cityId} value={city.cityId}>
+                            {city.cityName}
+                        </option>
+                    ))}
                 </select>
             </div>
 

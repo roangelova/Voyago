@@ -2,13 +2,10 @@ import { useState, useEffect } from 'react';
 import logo from '../../assets/images/logo.png';
 import '../../assets/style/css/style.css';
 import Login from '../account/Login';
+import NavBar from './NavBar';
 
-
-import Cookies from 'js-cookie';
 
 function Header() {
-    let isLoggedIn = !!Cookies.get('accessToken');
-
     const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
 
     const handleLoginToggle = () => {
@@ -31,19 +28,6 @@ function Header() {
         }
     }, [LoginPopupVisibility]);
 
-    const UserNav =
-        <div className='header__navigation-user'>
-            <a href='#'
-                className='header__navigation-login'
-                onClick={handleLoginToggle}
-            >
-                Login
-            </a>
-            <a href='/register'>
-                Sign up
-            </a>
-        </div>
-        ;
 
     return (
         <div className='header__container'>
@@ -57,30 +41,8 @@ function Header() {
                         <h1>Tickify</h1>
                     </div>
                 </div>
-                <div className='header__navigation'>
-                    <div className="header__navigation-browse">
-                        <a href="http://localhost:3000/"  >
-                            Trains
-                        </ a>
-                        <a href="http://localhost:3000/">
-                            Buses
-                        </ a >
-                        <a href="http://localhost:3000/">
-                            Flights
-                        </a>
-                    </div>
 
-                    {isLoggedIn ?
-                        <div>
-                            <a href='#' className='header__navigation-user'>
-                                Account
-                            </a>
-                        </div>
-                        :
-                        UserNav
-                    }
-
-                </div>
+                <NavBar handleLoginToggle={handleLoginToggle} />
 
             </div>
 

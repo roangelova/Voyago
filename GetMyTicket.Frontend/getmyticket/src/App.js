@@ -5,6 +5,8 @@ import RegisterForm from './components/account/RegisterForm';
 import RegisterPopUp from './components/account/RegisterPopUp';
 import NotFoundPage from './components/common/NotFoundPage';
 import MainPage from './components/pages/MainPage';
+import NavBar from './components/common/NavBar';
+import SearchResultsPage from './components/pages/SearchResultsPage';
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-        <Route index path="/" element={<MainPage />} />
+        <Route index path="/" element={< SearchResultsPage />} />
         <Route path="/register" element={<RegisterPopUp />} />
         <Route path="/register-form" element={<RegisterForm />} />
         <Route path="*" element={<NotFoundPage />} />

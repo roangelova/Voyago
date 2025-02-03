@@ -323,4 +323,12 @@ h1 {
   background-color: #f9f7f6;
 }
 
+.search__container {
+  display: flex;
+}
+.search__image {
+  max-width: 25rem;
+  max-height: 25rem;
+}
+
 /*# sourceMappingURL=style.css.map */

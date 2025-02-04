@@ -12,3 +12,49 @@
 
 
 }
+
+.resultCard {
+    background-color: $color-light-grey;
+    width: 40vw;
+    height: 30vh;
+
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem;
+
+    border-radius: 10px;
+
+    &__provider {
+        display: flex;
+        align-items: center;
+
+        margin: 0.5rem;
+
+        &-logo {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 50%;
+
+            margin-right: 5px;
+        }
+    }
+
+    &__trip {
+
+        & span {
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+    }
+
+    &__price {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+
+        & span {
+            font-size: 25px;
+        }
+    }
+}

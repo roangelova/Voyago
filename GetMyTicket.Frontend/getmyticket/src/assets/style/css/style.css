@@ -331,4 +331,38 @@ h1 {
   max-height: 25rem;
 }
 
+.resultCard {
+  background-color: #a0acbd;
+  width: 40vw;
+  height: 30vh;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1rem;
+  border-radius: 10px;
+}
+.resultCard__provider {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+.resultCard__provider-logo {
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.resultCard__trip span {
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.resultCard__price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+.resultCard__price span {
+  font-size: 25px;
+}
+
 /*# sourceMappingURL=style.css.map */

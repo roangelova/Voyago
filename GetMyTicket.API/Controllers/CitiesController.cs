@@ -6,11 +6,11 @@ namespace GetMyTicket.API.Controllers
 {
     [Route("api/cities")]
     [ApiController]
-    public class CityController : Controller
+    public class CitiesController : Controller
     {
         private readonly ICityService cityService;
 
-        public CityController(ICityService cityService)
+        public CitiesController(ICityService cityService)
         {
             this.cityService = cityService;
         }

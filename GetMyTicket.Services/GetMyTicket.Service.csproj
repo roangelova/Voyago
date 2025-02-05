@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GetMyTicket.Common\GetMyTicket.Common.csproj" />
-    <ProjectReference Include="..\GetMyTicket.Persistance\GetMyTicket.Persistance.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GetMyTicket.Common\GetMyTicket.Common.csproj" />
+		<ProjectReference Include="..\GetMyTicket.Persistance\GetMyTicket.Persistance.csproj" />
+	</ItemGroup>
 
 </Project>

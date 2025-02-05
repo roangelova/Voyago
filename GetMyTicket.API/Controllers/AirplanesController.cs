@@ -7,11 +7,11 @@ namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AirplaneController : ControllerBase
+    public class AirplanesController : ControllerBase
     {
         private readonly IAirplaneService airplaneService;
 
-        public AirplaneController(IAirplaneService airplaneService)
+        public AirplanesController(IAirplaneService airplaneService)
         {
             this.airplaneService = airplaneService;
         }

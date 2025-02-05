@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMyTicket.Persistance", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMyTicket.Service", "GetMyTicket.Services\GetMyTicket.Service.csproj", "{6E9F00A6-383E-4083-AA8A-7CCC9A85173B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMyTicket.Tests", "GetMyTicket.Tests\GetMyTicket.Tests.csproj", "{B57F063A-5235-4657-8517-CB9B9EBB640F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6E9F00A6-383E-4083-AA8A-7CCC9A85173B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E9F00A6-383E-4083-AA8A-7CCC9A85173B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E9F00A6-383E-4083-AA8A-7CCC9A85173B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57F063A-5235-4657-8517-CB9B9EBB640F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57F063A-5235-4657-8517-CB9B9EBB640F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57F063A-5235-4657-8517-CB9B9EBB640F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57F063A-5235-4657-8517-CB9B9EBB640F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

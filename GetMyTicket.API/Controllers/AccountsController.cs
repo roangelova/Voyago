@@ -6,11 +6,11 @@ namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountsController : ControllerBase
     {
         private readonly IUserService userService;
 
-        public AccountController(IUserService userService)
+        public AccountsController(IUserService userService)
         {
             this.userService = userService;
         }

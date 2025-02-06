@@ -57,7 +57,6 @@ function Login({ setLoginPopupVisibility }) {
 
             </div>
 
-            <ToastContainer />
             <form action={Login}>
                 <div className="login__row">
                     <label htmlFor="email" >

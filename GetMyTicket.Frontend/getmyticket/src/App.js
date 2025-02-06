@@ -7,6 +7,7 @@ import NotFoundPage from './components/common/NotFoundPage';
 import MainPage from './components/pages/MainPage';
 import NavBar from './components/common/NavBar';
 import SearchResultsPage from './components/pages/SearchResultsPage';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
     //should always be in the mainpage, not when registering etc
 
     <BrowserRouter>
-
+      <ToastContainer />
       <Routes>
-        <Route index path="/" element={< SearchResultsPage />} />
+        <Route index path="/" element={< MainPage />} />
         <Route path="/register" element={<RegisterPopUp />} />
         <Route path="/register-form" element={<RegisterForm />} />
         <Route path="*" element={<NotFoundPage />} />

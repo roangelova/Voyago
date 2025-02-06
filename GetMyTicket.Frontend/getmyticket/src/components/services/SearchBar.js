@@ -1,5 +1,6 @@
 import { Cities } from "../../services/cityService";
 import { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 const SearchBar = () => {
 
@@ -12,8 +13,8 @@ const SearchBar = () => {
     useEffect(() => {
         Cities.getAll().then(data => {
             setCities(data);
-        }
-        );
+        })
+            .catch(err => toast.error("Failed to get cities."));
     }, [])
 
     let [start, setStart] = useState();

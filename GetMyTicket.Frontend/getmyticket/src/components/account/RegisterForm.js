@@ -75,7 +75,6 @@ function RegisterForm() {
 
         <div className="register">
             <form action={registerUser} className="register__container register__form">
-                <ToastContainer />
                 <div className="register__row">
                     <div>
                         <label htmlFor="firstName">First name</label>

@@ -1,34 +1,47 @@
 import { Cities } from "../../services/cityService";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import { Trips } from "../../services/tripService";
 
 const SearchBar = () => {
 
     const [cities, setCities] = useState([]);
-    //CURRENT BASIC STRUCTURE: 
-    //START
-    //end
-    //START DAY 
-    //END DAY 
+    const [start, setStart] = useState('');
+    const [destination, setDestination] = useState('');
+    const [startDate, setStartDate] = useState('2025-05-10');
+    const [endDate, setEndDate] = useState('2025-05-18');
+
     useEffect(() => {
         Cities.getAll().then(data => {
-            setCities(data);
+            if (data.length > 0) {
+                setCities(data);
+                setStart(data[0].cityId);
+                setDestination(data[1].cityId)
+            }
         })
             .catch(err => toast.error("Failed to get cities."));
     }, [])
 
-    let [start, setStart] = useState();
-    let [destination, setDestination] = useState('');
 
 
-
-
-
+    const handleLogin = () => {
+        //TODO IMPLEMENT
+        Trips.executeFilter({
+            "startDate": startDate,
+            "endDate": endDate,
+            "startCityId": start,
+            "endCityId": destination
+        }).then(data => {
+            console.log(data)
+        }).catch(err => {
+            toast.error('You fucked this up!')
+        })
+    }
 
     return (
         <div className="searchBar__container">
             <div className='searchBar__container--element'>
-                <select name="start">
+                <select name="start" value={start} onChange={(e) => setStart(e.target.value)}>
                     {cities.map((city) => (
                         <option key={city.cityId} value={city.cityId}>
                             {city.cityName}
@@ -38,7 +51,7 @@ const SearchBar = () => {
             </div>
 
             <div className='searchBar__container--element'>
-                <select name="destination">
+                <select name="destination" value={destination} onChange={(e) => setDestination(e.target.value)}>
                     {cities.map((city) => (
                         <option key={city.cityId} value={city.cityId}>
                             {city.cityName}
@@ -51,7 +64,8 @@ const SearchBar = () => {
                 <input
                     name="startDate"
                     type="date"
-                    value='2025-05-10'
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
                 >
                 </input>
             </div>
@@ -60,13 +74,14 @@ const SearchBar = () => {
                 <input
                     name="endDate"
                     type="date"
-                    value='2025-05-18'
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
                 >
                 </input>
             </div>
 
             <div className='searchBar__container--element'>
-                <button className='searchBar__button'>
+                <button onClick={handleLogin} className='searchBar__button'>
                     Search
                 </button>
             </div>

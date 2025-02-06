@@ -31,7 +31,8 @@ namespace GetMyTicket.Common.Entities
         [ForeignKey(nameof(EndCity))]
         public Guid EndCityId { get; set; }
 
-        public int Capacity => this.Vehicle.Capacity;
+        //TODO -> what was I thinking, this does not work like this!! Fix this issue along with other small db changes
+        public int Capacity => 130;
 
         [Required]
         [ForeignKey(nameof(Vehicle))]

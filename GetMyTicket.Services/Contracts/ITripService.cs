@@ -10,6 +10,6 @@ namespace GetMyTicket.Service.Contracts
         /// </summary>
         /// <param name="searchTripsDTO">The data to filter the trips by</param>
         /// <returns>List of trips that match the search criteria</returns>
-        public Task<IEnumerable<Trip>> GetAllSearchResultTrips(SearchTripsDTO data);
+        public Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO data);
     }
 }

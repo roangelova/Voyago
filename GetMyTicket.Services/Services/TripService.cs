@@ -1,11 +1,7 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
-using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
-using System;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
 
 namespace GetMyTicket.Service.Services
 {
@@ -18,7 +14,7 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<Trip>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO)
+        public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO)
         {
             //parse dates
             bool parseDepartureTime = DateOnly.TryParse(searchTripsDTO.StartDate, out DateOnly tripStartTime);
@@ -37,16 +33,33 @@ namespace GetMyTicket.Service.Services
             DateTime ArrivalStartTime = tripEndTime.ToDateTime(TimeOnly.MinValue);
             DateTime ArrivalEndTime = tripEndTime.ToDateTime(TimeOnly.MaxValue);
 
+            //FOR TESTING PURPOSES -> RETURN ALL TRIPS SO WE HAVE MORE DATA TO WORK WITH
+            //TODO -> AZURESQL DB, SEED MORE DATA & PERSIST ALL ADDDATA ENTITIES
             var data = await unitOfWork.Trips.GetAllAsync(
-                x => x.StartCityId == searchTripsDTO.StartCityId &&
-                x.EndCityId == searchTripsDTO.EndCityId &&
-                x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
-                x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
-                x => x.OrderByDescending(t => t.Price),
-                true
+               // x => x.StartCityId == searchTripsDTO.StartCityId &&
+               //  x.EndCityId == searchTripsDTO.EndCityId &&
+               // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
+               // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
+               null,
+               x => x.OrderByDescending(t => t.Price),
+                true,
+               x => x.EndCity,
+               x => x.StartCity,
+               x => x.TransportationProvider
                 );
 
-            return data;
+            var result = data.Select(x => new TripSearchResultDTO
+            {
+                TripId = x.TripId,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime,
+                EndCityName = x.EndCity.CityName,
+                Price = x.Price,
+                StartCityName = x.StartCity.CityName,
+                TransportationProviderName = x.TransportationProvider.Name 
+            }).ToList();
+
+            return result;
         }
     }
 }

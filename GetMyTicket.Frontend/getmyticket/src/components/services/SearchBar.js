@@ -1,9 +1,9 @@
 import { Cities } from "../../services/cityService";
 import { useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Trips } from "../../services/tripService";
 
-const SearchBar = () => {
+const SearchBar = ({ LoginPopupVisibility }) => {
 
     const [cities, setCities] = useState([]);
     const [start, setStart] = useState('');
@@ -39,7 +39,7 @@ const SearchBar = () => {
     }
 
     return (
-        <div className="searchBar__container">
+        <div className={`searchBar__container ${LoginPopupVisibility ? 'blurred' : ''}`}>
             <div className='searchBar__container--element'>
                 <select name="start" value={start} onChange={(e) => setStart(e.target.value)}>
                     {cities.map((city) => (

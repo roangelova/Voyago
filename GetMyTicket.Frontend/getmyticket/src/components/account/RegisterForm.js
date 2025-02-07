@@ -1,6 +1,6 @@
 import { Account } from "../../services/accountService";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function RegisterForm() {
     const [initialUserData, setInitialUserData] = useState({

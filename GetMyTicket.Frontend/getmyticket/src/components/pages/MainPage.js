@@ -2,14 +2,22 @@ import Header from "../common/Header";
 import SearchBar from "../services/SearchBar";
 import Footer from "../common/Footer";
 
+import { useState } from "react";
+
 const MainPage = () => {
-    //TODO -> amend LoginPopUp so that both header and Searchbar are blurred when login is showing;
+    const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
+
+    const handleLoginToggle = () => {
+        setLoginPopupVisibility(true);
+    };
+
     return (
         <>
-            <Header />
-
-
-            <SearchBar />
+            <Header
+                LoginPopupVisibility={LoginPopupVisibility}
+                handleLoginToggle={handleLoginToggle}
+                setLoginPopupVisibility={setLoginPopupVisibility} />
+            <SearchBar LoginPopupVisibility={LoginPopupVisibility} />
 
             <Footer />
         </>

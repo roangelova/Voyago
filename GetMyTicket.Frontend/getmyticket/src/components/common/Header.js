@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import logo from '../../assets/images/logo.png';
 import '../../assets/style/css/style.css';
 import Login from '../account/Login';
 import NavBar from './NavBar';
 
 
-function Header() {
-    const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
-
-    const handleLoginToggle = () => {
-        setLoginPopupVisibility(true);
-    };
+function Header({ LoginPopupVisibility, handleLoginToggle, setLoginPopupVisibility }) {
 
     useEffect(() => {
         if (LoginPopupVisibility) {

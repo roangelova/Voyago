@@ -1,26 +1,21 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Header from './components/common/Header';
 import RegisterForm from './components/account/RegisterForm';
 import RegisterPopUp from './components/account/RegisterPopUp';
 import NotFoundPage from './components/common/NotFoundPage';
 import MainPage from './components/pages/MainPage';
-import NavBar from './components/common/NavBar';
 import SearchResultsPage from './components/pages/SearchResultsPage';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
-
-    //TODO -> how are we gonna structure the use of header?
-    //should always be in the mainpage, not when registering etc
-
     <BrowserRouter>
       <ToastContainer />
       <Routes>
         <Route index path="/" element={< MainPage />} />
         <Route path="/register" element={<RegisterPopUp />} />
         <Route path="/register-form" element={<RegisterForm />} />
+        <Route path="/search-results" element={<SearchResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

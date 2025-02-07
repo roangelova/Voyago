@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Trips } from "../../services/tripService";
 
+import { useNavigate } from "react-router-dom";
+
 const SearchBar = ({ LoginPopupVisibility }) => {
+
+    const navigate = useNavigate();
 
     const [cities, setCities] = useState([]);
     const [start, setStart] = useState('');
@@ -22,19 +26,16 @@ const SearchBar = ({ LoginPopupVisibility }) => {
             .catch(err => toast.error("Failed to get cities."));
     }, [])
 
-
-
-    const handleLogin = () => {
-        //TODO IMPLEMENT
+    const handleSearch = () => {
         Trips.executeFilter({
             "startDate": startDate,
             "endDate": endDate,
             "startCityId": start,
             "endCityId": destination
         }).then(data => {
-            console.log(data)
+            navigate("/search-results", { state: data })
         }).catch(err => {
-            toast.error('You fucked this up!')
+            toast.error('Oops! We could not look up any trips right now.')
         })
     }
 
@@ -81,7 +82,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
             </div>
 
             <div className='searchBar__container--element'>
-                <button onClick={handleLogin} className='searchBar__button'>
+                <button onClick={handleSearch} className='searchBar__button'>
                     Search
                 </button>
             </div>

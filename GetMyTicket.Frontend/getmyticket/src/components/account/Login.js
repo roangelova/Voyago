@@ -1,4 +1,4 @@
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
 import Cookies from 'js-cookie';
 

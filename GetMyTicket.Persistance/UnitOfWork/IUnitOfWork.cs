@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.Generic_Repository;
 
 namespace GetMyTicket.Persistance.UnitOfWork
@@ -15,6 +16,8 @@ namespace GetMyTicket.Persistance.UnitOfWork
         IGenericRepository<City> Cities { get; }
         IGenericRepository<Country> Countries { get; }
         IGenericRepository<User> Users { get; }
+
+        IGenericRepository<PassengerBookingMap> PassengerBookingMap {  get; } 
 
         Task<int> SaveChangesAsync();
     }

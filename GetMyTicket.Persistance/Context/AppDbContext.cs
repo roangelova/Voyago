@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.Entities;
+﻿using System.Reflection.Emit;
+using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Vehicles;
@@ -28,7 +29,7 @@ namespace GetMyTicket.Persistance.Context
 
         public DbSet<Train> Trains { get; set; }
 
-        public DbSet<Trip> Tips { get; set; }
+        public DbSet<Trip> Trips { get; set; }
 
         public DbSet<Booking> Bookings { get; set; }
 
@@ -157,7 +158,8 @@ namespace GetMyTicket.Persistance.Context
                 EndTime = new DateTime(2025, 5, 18, 20, 20, 00),
                 StartCity = Germany.Destinations.First(),
                 EndCity = Bulgaria.Destinations.First(),
-                Price = 220
+                Price = 220,
+                Capacity = airplane1.Capacity
             };
 
             context.Set<Country>().Add(Bulgaria);

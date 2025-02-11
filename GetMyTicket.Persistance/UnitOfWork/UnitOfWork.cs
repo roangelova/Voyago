@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.Context;
 using GetMyTicket.Persistance.Generic_Repository;
 
@@ -28,6 +29,8 @@ namespace GetMyTicket.Persistance.UnitOfWork
 
         public IGenericRepository<User> Users { get; }
 
+        public IGenericRepository<PassengerBookingMap> PassengerBookingMap { get; }
+
         public UnitOfWork(AppDbContext appDbContext)
         {
             AppDbContext = appDbContext;
@@ -41,6 +44,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
             Cities = new GenericRepository<City>(AppDbContext);
             Users = new GenericRepository<User>(AppDbContext);
             BaggageItems = new GenericRepository<BaggageItem>(AppDbContext);
+            PassengerBookingMap = new GenericRepository<PassengerBookingMap>(AppDbContext);
         }
 
         public async Task<int> SaveChangesAsync()

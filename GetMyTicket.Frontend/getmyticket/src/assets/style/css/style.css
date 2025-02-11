@@ -325,20 +325,50 @@ h1 {
 
 .search__container {
   display: flex;
+  width: 100vw;
+  height: 100vh;
   padding: 1rem;
+  justify-content: space-around;
+}
+.search__container__results {
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search__container-destinationCard {
+  width: 700px;
+  height: 800px;
+  object-fit: fill;
+  object-position: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+}
+.search__container-destinationCard p {
+  text-align: center;
+  display: block;
+  padding: 20PX;
 }
 .search__image {
-  max-width: 25rem;
-  max-height: 25rem;
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
+  margin-bottom: 5px;
 }
 
 .resultCard {
   background-color: #a0acbd;
-  width: 40vw;
-  height: 30vh;
+  max-width: 100%;
+  max-height: 30vh;
   display: flex;
   justify-content: space-between;
-  padding-left: 1rem;
+  padding-left: 2rem;
   border-radius: 10px;
 }
 .resultCard:not(:last-child) {

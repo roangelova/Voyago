@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Entities.Passengers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
@@ -25,6 +28,12 @@ namespace GetMyTicket.Common.Entities
         public string Address { get; set; }
 
         public DateOnly RegistrationDate { get; set; }
+
+        public Adult PassengerMap { get; set; }
+
+        [ForeignKey(nameof(Passenger))]
+        public Guid PassengerMapId { get; set; }
+
 
     }
 }

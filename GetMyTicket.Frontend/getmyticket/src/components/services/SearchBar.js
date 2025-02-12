@@ -6,7 +6,7 @@ import { Trips } from "../../services/tripService";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ LoginPopupVisibility }) => {
-
+//TODO -> include countries AND STARTCITY SHOULD NOT BE SHOWN IN DESTINATION LIST
     const navigate = useNavigate();
 
     const [cities, setCities] = useState([]);

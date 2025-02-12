@@ -5,7 +5,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class City
     {
-        public Guid CityId { get; set; }
+        public Guid CityId { get; set; } = Guid.CreateVersion7();
 
         [Required]
         [MaxLength(NameMaxLength)]

@@ -6,7 +6,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class Country
     {
-        public Guid CountryId { get; set; }
+        public Guid CountryId { get; set; } = Guid.CreateVersion7();
 
         [Required]
         [MaxLength(NameMaxLength)]

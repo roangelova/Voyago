@@ -23,4 +23,14 @@
     <ProjectReference Include="..\GetMyTicket.Common\GetMyTicket.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SeedData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SeedData\DestinationsSeed.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

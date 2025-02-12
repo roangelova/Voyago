@@ -1,0 +1,67 @@
+[
+    {
+        "Name": "Germany",
+        "Destinations": [
+            {
+                "CityName": "Berlin",
+                "IATA_Code": "BER"
+            },
+            {
+                "CityName": "Hamburg",
+                "IATA_Code": "HAM"
+            },
+            {
+                "CityName": "Frankfurt",
+                "IATA_Code": "FRA"
+            },
+            {
+                "CityName": "Cologne",
+                "IATA_Code": "CGN"
+            }
+        ]
+
+    },
+    {
+        "Name": "Bulgaria",
+        "Destinations": [
+            {
+                "CityName": "Berlin",
+                "IATA_Code": "BOJ"
+            },
+            {
+                "CityName": "Sofia",
+                "IATA_Code": "SOF"
+            }
+        ]
+
+    },
+    {
+        "Name": "Spain",
+        "Destinations": [
+            {
+                "CityName": "Las Palmas",
+                "IATA_Code": "LPA"
+            },
+            {
+                "CityName": "Fuerteventura",
+                "IATA_Code": "FUE"
+            },
+            {
+                "CityName": "Madrid",
+                "IATA_Code": "MAD"
+            }
+        ]
+
+    },
+    {
+        "Name": "Greece",
+        "Destinations": [
+            {
+                "CityName": "Atina",
+                "IATA_Code": "ATN"
+            }
+        ]
+
+    }
+
+]

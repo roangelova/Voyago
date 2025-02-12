@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Emit;
+using System.Text.Json;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
@@ -17,7 +18,7 @@ namespace GetMyTicket.Persistance.Context
 
         }
 
-        public AppDbContext() 
+        public AppDbContext()
         {
 
         }
@@ -87,11 +88,17 @@ namespace GetMyTicket.Persistance.Context
                 {
                     SeedData(context);
 
+                    //SEED REST OF COUNTRIES AND CITIES;\
+                    string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                    string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
+
+                    await SeedDataFromJSON(context, seedFilePath);
+
                     await context.SaveChangesAsync(cancellationToken);
                 });
         }
 
-        public static void SeedData(DbContext context)
+        private static void SeedData(DbContext context)
         {
             if (context.Set<Country>().Any() &&
                     context.Set<TransportationProvider>().Any() &&
@@ -189,6 +196,17 @@ namespace GetMyTicket.Persistance.Context
             context.Set<Vehicle>().Add(airplane1);
             context.Set<Trip>().Add(OurFirstTrip);
 
+        }
+
+
+        //path: 
+        private static async Task SeedDataFromJSON(DbContext context, string path)
+        {
+            var jsonData = await File.ReadAllTextAsync(path);
+
+            var countries = JsonSerializer.Deserialize<List<Country>>(jsonData);
+
+            await context.Set<Country>().AddRangeAsync(countries);
         }
     }
 }

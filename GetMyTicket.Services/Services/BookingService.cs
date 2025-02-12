@@ -64,9 +64,7 @@ namespace GetMyTicket.Service.Services
 
             await unitOfWork.SaveChangesAsync();
            
-            //return booking Id 
             return booking.BookingId;
-
         }
     }
 }

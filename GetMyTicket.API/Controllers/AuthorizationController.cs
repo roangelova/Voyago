@@ -19,14 +19,14 @@ namespace GetMyTicket.API.Controllers
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
 
-        private readonly AuthorizationService tokenService;
+        private readonly IAuthorizationService authorizationService;
 
         public AuthorizationController(
-            AuthorizationService tokenService,
+            IAuthorizationService authorizationService,
             UserManager<User> userManager,
             IConfiguration configuration)
         {
-            this.tokenService = tokenService;
+            this.authorizationService = authorizationService;
             this.userManager = userManager;
 
             var redisConfig = configuration.GetSection("Redis");
@@ -106,10 +106,10 @@ namespace GetMyTicket.API.Controllers
 
         private JwtTokenModel GenerateTokens(Guid userId)
         {
-            string accessToken = tokenService.GenerateAccessToken(userId);
-            string refreshToken = tokenService.GenerateRefreshToken();
+            string accessToken = authorizationService.GenerateAccessToken(userId);
+            string refreshToken = authorizationService.GenerateRefreshToken();
 
-            var tokenModel = new JwtTokenModel(accessToken, refreshToken);
+            var tokenModel = new JwtTokenModel(accessToken, refreshToken, userId);
 
             return tokenModel;
 

@@ -50,13 +50,20 @@
 }
 
 .resultCard {
+    transition: all .3s;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+
     background-color: $color-light-grey;
     max-width: 100%;
     max-height: 30vh;
 
     display: flex;
     justify-content: space-between;
-    padding-left: 2rem;
+    padding: 1rem;
 
     border-radius: 10px;
 

@@ -8,9 +8,10 @@ namespace GetMyTicket.Common.JwtToken
         public const int _RefreshTokenTokenExpiration = 120;
         public const string _TokenType = "Bearer";
 
-        public JwtTokenModel(string accessToken, string refreshToken)
+        public JwtTokenModel(string accessToken, string refreshToken, Guid userId)
         {
             TokenType = _TokenType;
+            UserId = userId;
             AccessToken = accessToken;
             RefreshToken = refreshToken;
             AccessTokenExpires = DateTime.UtcNow.AddMinutes(_AccessTokenTokenExpiration);
@@ -18,6 +19,8 @@ namespace GetMyTicket.Common.JwtToken
         }
 
         public string TokenType { get; set; }
+
+        public Guid UserId { get; set; }
 
         public string AccessToken { get; set; }
 

@@ -1,9 +1,31 @@
+import { toast } from 'react-toastify';
 import transavia_logo from '../../assets/images/transavia_logo.PNG'
+import { Booking } from '../../services/bookingService';
+
 
 function SearchResultCard({ trip }) {
 
+    const handleBookTrip = () => {
+        const userId = sessionStorage.getItem('userId');
+
+        if (!userId) {
+            toast.error('Ugh oh.. Seems like you need tp log in again, in order to book this trip.')
+            return;
+        }
+
+        Booking.bookTrip({
+            tripId: trip.tripId,
+            userId: userId
+        }).then(res => {
+            toast.success(`Yey! Yout trip is booked. Your booking number is ${res}.`)
+        }
+        ).catch(err => {
+            toast.error(err.response.data.detail)
+        })
+    }
+
     return (
-        <div className="resultCard">
+        <div className="resultCard" onClick={handleBookTrip}>
             <div>
 
                 <div className="resultCard__provider">

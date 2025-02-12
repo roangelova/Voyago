@@ -16,6 +16,8 @@ function Login({ setLoginPopupVisibility }) {
 
         Account.login({ email, password }).then(res => {
 
+            sessionStorage.setItem("userId", res.userId);
+
             Cookies.set('accessToken',
                 JSON.stringify(
                     {

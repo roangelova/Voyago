@@ -363,13 +363,18 @@ h1 {
 }
 
 .resultCard {
+  transition: all 0.3s;
   background-color: #a0acbd;
   max-width: 100%;
   max-height: 30vh;
   display: flex;
   justify-content: space-between;
-  padding-left: 2rem;
+  padding: 1rem;
   border-radius: 10px;
+}
+.resultCard:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }
 .resultCard:not(:last-child) {
   margin-bottom: 1rem;

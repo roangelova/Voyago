@@ -168,10 +168,12 @@ namespace GetMyTicket.Persistance.Context
             {
                 Id = Guid.CreateVersion7(),
                 Email = "test@test.com",
+                NormalizedEmail = "TEST@TEST.COM",
                 FirstName = "Test",
                 LastName = "Testov",
                 DOB = new DateOnly(2000, 10, 10),
                 UserName = "TestGuy",
+                NormalizedUserName = "TESTGUY",
                 Address = "Varna 9000 BG"
             };
 

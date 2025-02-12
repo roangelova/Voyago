@@ -30,8 +30,8 @@ namespace GetMyTicket.API.Controllers
                 new { manufacturer, entity.Model });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetById (Guid Id)
+        [HttpGet(nameof(GetById))]
+        public async Task<IActionResult> GetById ([FromQuery] Guid Id)
         {
             var entity = await airplaneService.GetById(Id);
 

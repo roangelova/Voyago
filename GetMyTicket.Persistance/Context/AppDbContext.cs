@@ -88,7 +88,6 @@ namespace GetMyTicket.Persistance.Context
                 {
                     SeedData(context);
 
-                    //SEED REST OF COUNTRIES AND CITIES;\
                     string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
                     string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
 

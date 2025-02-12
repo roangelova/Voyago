@@ -90,6 +90,7 @@ namespace GetMyTicket.API.Controllers
 
         }
 
+        //REFACTOR: SHOULD NOT NEED REFRESH TOKEN
         [HttpPost("logout")]
         public async Task<IActionResult> Logout(string refreshToken)
         {

@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs;
+using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
@@ -29,14 +30,14 @@ namespace GetMyTicket.Service.Services
         /// </summary>
         /// <param name="bookTripDTO"></param>
         /// <returns></returns>
-        public async Task<Guid> CreatePassengerData(BookTripDTO bookTripDTO)
+        public async Task<Guid> CreatePassengerData(MapPassengerDTO dto)
         {
-            var user = await unitOfWork.Users.GetByIdAsync(bookTripDTO.UserId);
+            var user = await unitOfWork.Users.GetByIdAsync(dto);
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(bookTripDTO.UserId),
-                    string.Format(ErrorMessages.NotFoundError, nameof(User), bookTripDTO.UserId));
+                throw new ArgumentNullException(nameof(dto.UserId),
+                    string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
             }
 
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -47,11 +48,11 @@ namespace GetMyTicket.Service.Services
 
             Passenger passenger;
 
-            var parseResult = Enum.TryParse<Gender>(bookTripDTO.Gender, out Gender gender);
+            var parseResult = Enum.TryParse<Gender>(dto.Gender, out Gender gender);
 
             if (!parseResult)
             {
-                throw new ArgumentException("Could not parse gender", nameof(bookTripDTO.Gender));
+                throw new ArgumentException("Could not parse gender", nameof(dto.Gender));
             }
 
             if (age > 18)

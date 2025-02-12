@@ -10,5 +10,7 @@
         public const string NotFoundError = "{0} with Id {1} was not found.";
 
         public const string UserUnderage = "No solo undearage travellers supported at this time";
+
+        public const string SoldOut = "Uh oh! The itinerary is no longer available. Please, choose a different connection!";
     }
 }

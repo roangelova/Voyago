@@ -3,7 +3,6 @@ using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
 using GetMyTicket.Service.Authorization;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
@@ -13,17 +12,17 @@ namespace GetMyTicket.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class AuthenticationController : ControllerBase
+    public class AuthorizationController : ControllerBase
     {
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
 
-        private readonly TokenService tokenService;
+        private readonly AuthorizationService tokenService;
 
-        public AuthenticationController(
-            TokenService tokenService,
+        public AuthorizationController(
+            AuthorizationService tokenService,
             UserManager<User> userManager,
             IConfiguration configuration)
         {

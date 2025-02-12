@@ -4,6 +4,5 @@
     {
         public Guid TripId { get; set; }
         public Guid UserId { get; set; }
-        public string Gender { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -95,7 +96,8 @@ namespace GetMyTicket.Persistance.Context
             if (context.Set<Country>().Any() &&
                     context.Set<TransportationProvider>().Any() &&
                    context.Set<Vehicle>().Any() &&
-                    context.Set<Trip>().Any()
+                    context.Set<Trip>().Any() &&
+                    context.Set<User>().Any()
                     )
             {
                 return;
@@ -162,6 +164,23 @@ namespace GetMyTicket.Persistance.Context
                 Capacity = airplane1.Capacity
             };
 
+            var User = new User
+            {
+                Id = Guid.CreateVersion7(),
+                Email = "test@test.com",
+                FirstName = "Test",
+                LastName = "Testov",
+                DOB = new DateOnly(2000, 10, 10),
+                UserName = "TestGuy",
+                Address = "Varna 9000 BG"
+            };
+
+            var passwordHasher = new PasswordHasher<User>();
+            var hashed = passwordHasher.HashPassword(User, "Passw1rd#");
+
+            User.PasswordHash = hashed;
+
+            context.Set<User>().Add(User);
             context.Set<Country>().Add(Bulgaria);
             context.Set<Country>().Add(Germany);
             context.Set<TransportationProvider>().Add(TransportationProvider);

@@ -8,13 +8,13 @@ using System.Text;
 
 namespace GetMyTicket.Service.Authorization
 {
-    public class TokenService
+    public class AuthorizationService : IAuthorizationService
     {
         private static readonly RandomNumberGenerator randomNumberGenerator
             = RandomNumberGenerator.Create();
         private readonly IConfiguration configuration;
 
-        public TokenService(IConfiguration configuration)
+        public AuthorizationService(IConfiguration configuration)
         {
             this.configuration = configuration;
         }

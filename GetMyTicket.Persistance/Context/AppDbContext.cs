@@ -88,10 +88,14 @@ namespace GetMyTicket.Persistance.Context
                 {
                     SeedData(context);
 
-                    string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                    string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
+                    if (!context.Set<Country>().Any() &&
+                         !context.Set<City>().Any())
+                    {
+                        string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                        string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
 
-                    await SeedDataFromJSON(context, seedFilePath);
+                        await SeedDataFromJSON(context, seedFilePath);
+                    }
 
                     await context.SaveChangesAsync(cancellationToken);
                 });
@@ -102,6 +106,7 @@ namespace GetMyTicket.Persistance.Context
             if (context.Set<Country>().Any() &&
                     context.Set<TransportationProvider>().Any() &&
                    context.Set<Vehicle>().Any() &&
+                   context.Set<City>().Any() &&
                     context.Set<Trip>().Any() &&
                     context.Set<User>().Any()
                     )

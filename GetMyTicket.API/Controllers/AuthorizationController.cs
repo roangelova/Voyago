@@ -90,16 +90,16 @@ namespace GetMyTicket.API.Controllers
 
         }
 
-        //REFACTOR: SHOULD NOT NEED REFRESH TOKEN
+        //TODO REFACTOR: SHOULD NOT NEED REFRESH TOKEN
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout(string refreshToken)
+        public async Task<IActionResult> Logout()
         {
-            var result = await RedisDb.KeyDeleteAsync(refreshToken);
+           // var result = await RedisDb.KeyDeleteAsync(refreshToken);
 
-            if (!result)
-            {
-                return BadRequest(ErrorMessages.SomethingWentWrong);
-            }
+           // if (!result)
+           // {
+           //     return BadRequest(ErrorMessages.SomethingWentWrong);
+           // }
 
             return Ok("Successfully logged out.");
         }

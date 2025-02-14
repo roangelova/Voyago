@@ -29,7 +29,7 @@ axios.interceptors.response.use(function (response) {
     } else if (error.code === "ERR_NETWORK") {
         toast.error("Network error. Please, try again.");
     } else if (error.response.status >= 500 && error.response.status <= 599) {
-        console.error("Something went wrong. Please, try again.");
+        toast.error("Something went wrong. Please, try again.");
     } else if (error.response.status === 404) {
         window.location.href = "/404";
     } else {

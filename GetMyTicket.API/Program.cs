@@ -1,3 +1,5 @@
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using GetMyTicket.API.ExceptionHandler;
 using GetMyTicket.API.ServiceExtensions;
 using GetMyTicket.Common.Entities;
@@ -9,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var keyVaultUri = builder.Configuration["AzureKeyVault:VaultUri"];
+var client = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
@@ -57,8 +62,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
-(builder.Configuration.GetConnectionString("DefaultConnection")));
+KeyVaultSecret secret = await client.GetSecretAsync("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(secret.Value));
 
 builder.Services.AddApplicationServices();
 

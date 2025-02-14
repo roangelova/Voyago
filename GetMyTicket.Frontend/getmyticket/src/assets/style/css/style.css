@@ -39,6 +39,10 @@ select {
   position: relative;
 }
 
+ul {
+  list-style-type: none;
+}
+
 h1 {
   font-weight: 400;
   font-size: 2srem;
@@ -97,6 +101,9 @@ h1 {
   justify-self: end;
   font-size: 18px;
   padding: 5px;
+}
+.header__navigation-user span {
+  margin-right: 5px;
 }
 
 .blurred {
@@ -402,6 +409,24 @@ h1 {
 }
 .resultCard__price span {
   font-size: 25px;
+}
+
+.accountMenu {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+}
+.accountMenu img {
+  margin-right: 5px;
+  height: 24px;
+}
+.accountMenu li {
+  font-size: 16px;
+  padding: 10px;
+}
+.accountMenu__item {
+  display: flex;
+  align-items: center;
 }
 
 /*# sourceMappingURL=style.css.map */

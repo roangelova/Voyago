@@ -1,9 +1,17 @@
 import Cookies from 'js-cookie';
+import AccountMenuDropdown from '../account/AccountMenuDropdown';
+import { useState } from 'react';
+
+import arrowdown from '../../assets/icons/arrowdown.png';
+import arrowup from '../../assets/icons/arrowup.png';
 
 function NavBar({ handleLoginToggle }) {
-    let isLoggedIn = !!Cookies.get('accessToken');
+    let isLoggedIn = true;
+    //!!Cookies.get('accessToken'); --> DISABLE FOR DEVELOPMENT PURPOSES
 
-    const UserNav =
+    const [showUserMenu, setShowUserMenu] = useState(false);
+
+    const NoUserNav =
         <div className='header__navigation-user'>
             <a href='#'
                 className='header__navigation-login'
@@ -31,13 +39,18 @@ function NavBar({ handleLoginToggle }) {
             </div>
 
             {isLoggedIn ?
-                <div>
-                    <a href='#' className='header__navigation-user'>
-                        Account
+                <div className='header__navigation-user'>
+                    <a onClick={() => (setShowUserMenu(!showUserMenu))} href='#' >
+                        <span>Account   </span>
+                        <img src={showUserMenu ? arrowup : arrowdown} alt='arrow up/down' />
                     </a>
+
+                    {showUserMenu ? <AccountMenuDropdown /> : null}
+
                 </div>
                 :
-                UserNav
+                NoUserNav
+
             }
 
         </div>

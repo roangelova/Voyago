@@ -1,0 +1,20 @@
+.accountMenu{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+
+    & img{
+        margin-right: 5px;
+        height: 24px;
+    }
+
+    & li{
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    &__item{
+        display: flex;
+        align-items: center;
+    }
+}

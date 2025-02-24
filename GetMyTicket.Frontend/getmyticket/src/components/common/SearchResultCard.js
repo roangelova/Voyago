@@ -1,27 +1,20 @@
 import { toast } from 'react-toastify';
 import transavia_logo from '../../assets/images/transavia_logo.PNG'
-import { Booking } from '../../services/bookingService';
-
+import { useNavigate } from "react-router-dom";
 
 function SearchResultCard({ trip }) {
+const navigate = useNavigate();
 
     const handleBookTrip = () => {
         const userId = sessionStorage.getItem('userId');
 
-        if (!userId) {
-            toast.error('Ugh oh.. Seems like you need tp log in again, in order to book this trip.')
-            return;
-        }
+        //TODO: DISABLE FOR DEVELOPMENT PURPOSES
+       // if (!userId) {
+       //     toast.error('Ugh oh.. Seems like you need to log in again, in order to book this trip.')
+       //     return;
+       // }
 
-        Booking.bookTrip({
-            tripId: trip.tripId,
-            userId: userId
-        }).then(res => {
-            toast.success(`Yey! Yout trip is booked. Your booking number is ${res}.`)
-        }
-        ).catch(err => {
-            toast.error(err.response.data.detail)
-        })
+        navigate("/cart", { state: { trip: trip } });
     }
 
     return (

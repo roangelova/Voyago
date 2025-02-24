@@ -6,6 +6,7 @@ import NotFoundPage from './components/common/NotFoundPage';
 import MainPage from './components/pages/MainPage';
 import SearchResultsPage from './components/pages/SearchResultsPage';
 import { ToastContainer } from 'react-toastify';
+import Cart from './components/cart/Cart';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route index path="/" element={< MainPage />} />
         <Route path="/register" element={<RegisterPopUp />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/register-form" element={<RegisterForm />} />
         <Route path="/search-results" element={<SearchResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />

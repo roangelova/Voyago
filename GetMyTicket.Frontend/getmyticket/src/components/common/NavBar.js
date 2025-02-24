@@ -6,8 +6,7 @@ import arrowdown from '../../assets/icons/arrowdown.png';
 import arrowup from '../../assets/icons/arrowup.png';
 
 function NavBar({ handleLoginToggle }) {
-    let isLoggedIn = true;
-    //!!Cookies.get('accessToken'); --> DISABLE FOR DEVELOPMENT PURPOSES
+    let isLoggedIn = !!Cookies.get('accessToken'); 
 
     const [showUserMenu, setShowUserMenu] = useState(false);
 

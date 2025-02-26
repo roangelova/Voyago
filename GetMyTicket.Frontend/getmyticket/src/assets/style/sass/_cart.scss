@@ -7,6 +7,8 @@
 
     &-step--container{
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex:1;
         background-color: #fff;
     }
@@ -90,3 +92,33 @@
         }
     }
 }
+
+.trip-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    overflow: hidden;
+  }
+  
+  .trip-details__image {
+    max-width: 520px;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .trip-details__data {
+    padding: 10px;
+    margin-left: 30px;
+  }
+  
+  .trip-details__data h3 {
+    margin: 5px 0;
+    font-size: 24px;
+  }
+  
+  .trip-details__data p {
+    margin: 2px 0;
+    font-size: 18px;
+  }

@@ -2,9 +2,10 @@ import arrowToLeft from '../../assets/icons/arrowToLeft.png';
 import arrowToRight from '../../assets/icons/arrowToRight.png';
 import { toast } from 'react-toastify';
 import { useLocation } from "react-router-dom";
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import NavBar from '../common/NavBar';
 import CartStepContainer from './CartStepContainer';
+import TripDetails from './TripDetails';
 
 //trip obj
 //    "tripId": "9d9bf04e-14f0-4fb9-b3b2-08dd4cdbf0e8",
@@ -25,6 +26,9 @@ const initialState = {
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'setTrip':
+            return { ...state, trip: action.payload };
+
         case 'nextStep':
             return state.activeStep >= 2
                 ? { ...state, activeStep: 3 }
@@ -44,7 +48,14 @@ function Cart() {
 
     const location = useLocation();
     const { trip } = location.state || {};
-    console.log(trip)
+
+    useEffect(function () {
+        if (trip) {
+            dispatch({ type: 'setTrip', payload: trip })
+        }
+
+        //TODO -> set state for userId
+    }, [])
 
     return (
         <>
@@ -63,7 +74,11 @@ function Cart() {
                     </div>
 
                     <CartStepContainer>
-                        <p>render the step component conditionally here</p>
+
+                        {state.activeStep === 1 ?
+                            <TripDetails trip={trip} />
+                            : null}
+
                     </CartStepContainer>
 
                     <div className="cart__container-nav">

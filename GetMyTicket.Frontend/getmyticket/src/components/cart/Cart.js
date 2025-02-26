@@ -46,10 +46,6 @@ function Cart() {
     const { trip } = location.state || {};
     console.log(trip)
 
-
-    //TODO -> fix header style so that it is fully reusable. right now,
-    //the nabvar has the hight of the header;
-    //+ ADD HOME NAV TO NAVBAR
     return (
         <>
 

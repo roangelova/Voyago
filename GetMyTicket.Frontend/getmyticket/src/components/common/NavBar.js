@@ -6,7 +6,7 @@ import arrowdown from '../../assets/icons/arrowdown.png';
 import arrowup from '../../assets/icons/arrowup.png';
 
 function NavBar({ handleLoginToggle }) {
-    let isLoggedIn = !!Cookies.get('accessToken'); 
+    let isLoggedIn = !!Cookies.get('accessToken');
 
     const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -26,6 +26,9 @@ function NavBar({ handleLoginToggle }) {
     return (
         <div className='header__navigation'>
             <div className="header__navigation-browse">
+                <a href="http://localhost:3000/"  >
+                    Home
+                </ a>
                 <a href="http://localhost:3000/"  >
                     Trains
                 </ a>

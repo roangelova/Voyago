@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.Enum;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -56,7 +57,8 @@ namespace GetMyTicket.Service.Services
                 EndCityName = x.EndCity.CityName,
                 Price = x.Price,
                 StartCityName = x.StartCity.CityName,
-                TransportationProviderName = x.TransportationProvider.Name 
+                TransportationProviderName = x.TransportationProvider.Name,
+                Currency =Enum.GetName(x.Currency),
             }).ToList();
 
             return result;

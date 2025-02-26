@@ -38,7 +38,7 @@ const navigate = useNavigate();
 
             </div>
             <div className='resultCard__price'>
-                <span>{trip.price} BGN</span>
+                <span>{trip.price} {trip.currency}</span>
             </div>
         </div>
     )

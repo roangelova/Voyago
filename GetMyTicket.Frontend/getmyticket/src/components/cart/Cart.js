@@ -25,9 +25,17 @@ const initialState = {
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'nextStep':
+            return state.activeStep >= 2
+                ? { ...state, activeStep: 3 }
+                : { ...state, activeStep: state.activeStep + 1 };
+
+        case 'previousStep':
+            return { ...state, activeStep: Math.max(1, state.activeStep - 1) };
 
         default:
             toast.error('DEV ONLY: NO ACTION!');
+            return state;
     }
 }
 
@@ -53,9 +61,9 @@ function Cart() {
 
 
                     <div className="cart__container-step">
-                        <div className="cart__container-step--active">1. Trip details</div>
-                        <div>2. Passenger data</div>
-                        <div>3. Review</div>
+                        <div className={state.activeStep == 1 ? "cart__container-step--activeLeft" : null}>1. Trip details</div>
+                        <div className={state.activeStep == 2 ? "cart__container-step--activeMiddle" : null}>2. Passenger data</div>
+                        <div className={state.activeStep == 3 ? "cart__container-step--activeRight" : null}>3. Review</div>
                     </div>
 
                     <CartStepContainer>
@@ -66,13 +74,17 @@ function Cart() {
                         <a href='#'>
                             <li>
                                 <img className="cart__container-nav--icon" src={arrowToLeft} alt='arrow back icon' />
-                                <span>BACK</span>
+                                <span
+                                    onClick={() => dispatch({ type: 'previousStep' })}
+                                >BACK</span>
                             </li>
                         </a>
                         <a href='#'>
                             <li >
                                 <img className="cart__container-nav--icon" src={arrowToRight} alt='arrow next icon' />
-                                <span>NEXT</span>
+                                <span
+                                    onClick={() => dispatch({ type: 'nextStep' })}
+                                >NEXT</span>
                             </li>
                         </a>
                     </div>

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
 
     &-step--container{
@@ -13,8 +13,9 @@
 
     &__container {
         width: 70vw;
-        height: 70vh;
+        height: 80vh;
         display: flex;
+        
         flex-direction: column; 
 
         border-radius: 10px;
@@ -68,12 +69,22 @@
                 justify-content: center;
                 text-align: center;
                 padding: 10px;
+            }
+
+            &--activeLeft {
+                background-color: $color-grey-light-2;
+                border-top-right-radius: 5px;
+            }
+
+            &--activeMiddle {
+                background-color: $color-grey-light-2;
                 border-top-left-radius: 5px;
                 border-top-right-radius: 5px;
             }
 
-            &--active {
+            &--activeRight {
                 background-color: $color-grey-light-2;
+                border-top-left-radius: 5px;
             }
 
         }

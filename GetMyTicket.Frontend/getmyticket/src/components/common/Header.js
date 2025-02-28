@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import '../../assets/style/css/style.css';
 import Login from '../account/Login';
@@ -29,8 +30,10 @@ function Header({ LoginPopupVisibility, handleLoginToggle, setLoginPopupVisibili
             <div className={`header ${LoginPopupVisibility ? 'blurred' : ''}`}>
                 <div className='header__logoBox'>
                     <div>
-                        <img src={logo} alt="Logo" className="header__logo">
-                        </img>
+                        <Link to='/'>
+                            <img src={logo} alt="Logo" className="header__logo">
+                            </img>
+                        </Link>
                     </div>
                     <div className='header__heading'>
                         <h1>Tickify</h1>

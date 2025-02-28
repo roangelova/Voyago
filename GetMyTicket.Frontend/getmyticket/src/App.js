@@ -18,6 +18,10 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/register-form" element={<RegisterForm />} />
         <Route path="/search-results" element={<SearchResultsPage />} />
+        <Route path='/user' element={<p>User page</p>}>
+          <Route path='bookings' element={<p>my user bookings</p>}/>
+          <Route path='profile' element={<p>my user profile</p>}/>
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

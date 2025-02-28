@@ -39,12 +39,12 @@ builder.Services.AddIdentity<User, ApplicationRole>(options =>
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;  
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
     .AddJwtBearer(options =>
     {
-        options.RequireHttpsMetadata = false; 
+        options.RequireHttpsMetadata = false;
 
         var jwtSettings = builder.Configuration.GetSection("Jwt");
 
@@ -63,7 +63,12 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 KeyVaultSecret secret = await client.GetSecretAsync("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(secret.Value));
+builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(secret.Value, sqlOptions =>
+        sqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null
+        )));
 
 builder.Services.AddApplicationServices();
 
@@ -93,7 +98,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-        options.RoutePrefix = string.Empty; 
+        options.RoutePrefix = string.Empty;
     });
 }
 

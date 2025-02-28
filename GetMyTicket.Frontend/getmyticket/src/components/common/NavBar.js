@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import AccountMenuDropdown from '../account/AccountMenuDropdown';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import arrowdown from '../../assets/icons/arrowdown.png';
 import arrowup from '../../assets/icons/arrowup.png';
@@ -11,51 +12,56 @@ function NavBar({ handleLoginToggle }) {
     const [showUserMenu, setShowUserMenu] = useState(false);
 
     const NoUserNav =
-        <div className='header__navigation-user'>
-            <a href='#'
+        <ul className='header__navigation-user'>
+            <li
                 className='header__navigation-login'
                 onClick={handleLoginToggle}
             >
                 Login
-            </a>
-            <a href='/register'>
-                Sign up
-            </a>
-        </div>
+            </li>
+            <li>
+                <NavLink to='/register'>
+                    Register
+                </NavLink>
+            </li>
+        </ul>
 
     return (
-        <div className='header__navigation'>
-            <div className="header__navigation-browse">
-                <a href="http://localhost:3000/"  >
-                    Home
-                </ a>
-                <a href="http://localhost:3000/"  >
-                    Trains
-                </ a>
-                <a href="http://localhost:3000/">
-                    Buses
-                </ a >
-                <a href="http://localhost:3000/">
-                    Flights
-                </a>
-            </div>
+        <nav className='header__navigation'>
+            <ul className="header__navigation-browse">
+                <li>
+                    <NavLink to='/trains'>
+                        Trains
+                    </NavLink>
+                </ li>
+                <li>
+                    <NavLink to='/buses'>
+                        Buses
+                    </NavLink>
+                </li >
+                <li>
+                    <NavLink to='/flights'>
+                        Flights
+                    </NavLink>
+                </li>
+            </ul>
 
             {isLoggedIn ?
-                <div className='header__navigation-user'>
-                    <a onClick={() => (setShowUserMenu(!showUserMenu))} href='#' >
-                        <span>Account   </span>
+                <ul className='header__navigation-user'>
+                    <li onClick={() => (setShowUserMenu(!showUserMenu))} href='#' >
+                        <span>Account </span>
                         <img src={showUserMenu ? arrowup : arrowdown} alt='arrow up/down' />
-                    </a>
+                    </li>
 
                     {showUserMenu ? <AccountMenuDropdown /> : null}
 
-                </div>
+                </ul>
                 :
                 NoUserNav
 
             }
 
-        </div>
+        </nav>
     )
 }
 

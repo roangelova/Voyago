@@ -1,9 +1,9 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using GetMyTicket.Persistance.Context;
 using GetMyTicket.API.ExceptionHandler;
 using GetMyTicket.API.ServiceExtensions;
 using GetMyTicket.Common.Entities;
-using GetMyTicket.Persistance.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -64,11 +64,7 @@ builder.Services.AddAuthorization();
 
 KeyVaultSecret secret = await client.GetSecretAsync("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(secret.Value, sqlOptions =>
-        sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null
-        )));
+         sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null)));
 
 builder.Services.AddApplicationServices();
 
@@ -107,8 +103,21 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var DbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        //ADD DB sync
-        await DbContext.Database.EnsureCreatedAsync();
+        var strategy = DbContext.Database.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(async () =>
+        {
+            await using var transaction = await DbContext.Database.BeginTransactionAsync();
+            try
+            {
+                await AppDbContext.SeedDataAsync(DbContext);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        });
     }
     catch (Exception)
     {

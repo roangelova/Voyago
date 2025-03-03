@@ -107,6 +107,9 @@ h1 {
 .header__navigation-user span {
   margin-right: 5px;
 }
+.header__navigation-user li {
+  cursor: pointer;
+}
 
 .blurred {
   filter: blur(5px);

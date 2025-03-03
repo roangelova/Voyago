@@ -1,5 +1,4 @@
-﻿using System.Reflection.Emit;
-using System.Text.Json;
+﻿using System.Text.Json;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
@@ -76,29 +75,10 @@ namespace GetMyTicket.Persistance.Context
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder
-                .UseSeeding((context, _) =>
-            {
-                SeedData(context);
-
-                context.SaveChanges();
-
-            })
-                .UseAsyncSeeding(async (context, _, cancellationToken) =>
-                {
-                    SeedData(context);
-
-                    if (!context.Set<Country>().Any() &&
-                         !context.Set<City>().Any())
-                    {
-                        string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                        string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
-
-                        await SeedDataFromJSON(context, seedFilePath);
-                    }
-
-                    await context.SaveChangesAsync(cancellationToken);
-                });
+            optionsBuilder.UseSeeding((context, _) =>
+              {
+                  SeedData(context);
+              });
         }
 
         private static void SeedData(DbContext context)
@@ -201,9 +181,21 @@ namespace GetMyTicket.Persistance.Context
             context.Set<Trip>().Add(OurFirstTrip);
 
         }
+        public static async Task SeedDataAsync(AppDbContext context)
+        {
+            SeedData(context);
 
+            if (!context.Set<Country>().Any() && !context.Set<City>().Any())
+            {
+                string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
 
-        //path: 
+                await SeedDataFromJSON(context, seedFilePath);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
         private static async Task SeedDataFromJSON(DbContext context, string path)
         {
             var jsonData = await File.ReadAllTextAsync(path);

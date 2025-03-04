@@ -77,52 +77,23 @@ namespace GetMyTicket.Persistance.Context
 
             optionsBuilder.UseSeeding((context, _) =>
               {
+                  string seedFilePath = GetSeedDataPath();
+
+                  Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
                   SeedData(context);
               });
         }
 
         private static void SeedData(DbContext context)
         {
-            if (context.Set<Country>().Any() &&
-                    context.Set<TransportationProvider>().Any() &&
+            if (context.Set<TransportationProvider>().Any() &&
                    context.Set<Vehicle>().Any() &&
-                   context.Set<City>().Any() &&
                     context.Set<Trip>().Any() &&
                     context.Set<User>().Any()
                     )
             {
                 return;
             }
-
-            var Germany = new Country
-            {
-                CountryId = Guid.CreateVersion7(),
-                Name = "Germany",
-                Destinations = new List<City>()
-                     {
-                         new City
-                         {
-                             CityId = Guid.CreateVersion7(),
-                             CityName = "Munich",
-                             IATA_Code = "MUC"
-                         }
-                     }
-            };
-
-            var Bulgaria = new Country
-            {
-                CountryId = Guid.CreateVersion7(),
-                Name = "Bulgaria",
-                Destinations = new List<City>()
-                     {
-                         new City
-                         {
-                             CityId = Guid.CreateVersion7(),
-                             CityName = "Varna",
-                             IATA_Code = "VAR"
-                         }
-                     }
-            };
 
             var TransportationProvider = new TransportationProvider
             {
@@ -149,8 +120,8 @@ namespace GetMyTicket.Persistance.Context
                 VehicleId = airplane1.VehicleId,
                 StartTime = new DateTime(2025, 5, 18, 18, 00, 00),
                 EndTime = new DateTime(2025, 5, 18, 20, 20, 00),
-                StartCity = Germany.Destinations.First(),
-                EndCity = Bulgaria.Destinations.First(),
+                StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
+                EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                 Price = 220,
                 Capacity = airplane1.Capacity
             };
@@ -174,35 +145,52 @@ namespace GetMyTicket.Persistance.Context
             User.PasswordHash = hashed;
 
             context.Set<User>().Add(User);
-            context.Set<Country>().Add(Bulgaria);
-            context.Set<Country>().Add(Germany);
             context.Set<TransportationProvider>().Add(TransportationProvider);
             context.Set<Vehicle>().Add(airplane1);
             context.Set<Trip>().Add(OurFirstTrip);
 
         }
+
+        /// <summary>
+        /// Reads data from JSON and seeds some contries with the respective cities; Some have predifined Ids, which are then used to seed a trip
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static async Task SeedDataAsync(AppDbContext context)
         {
+            string seedFilePath = GetSeedDataPath();
+            await SeedDataFromJSON(context, seedFilePath);
+
             SeedData(context);
-
-            if (!context.Set<Country>().Any() && !context.Set<City>().Any())
-            {
-                string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-                string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
-
-                await SeedDataFromJSON(context, seedFilePath);
-            }
 
             await context.SaveChangesAsync();
         }
 
         private static async Task SeedDataFromJSON(DbContext context, string path)
         {
+
+            if (context.Set<Country>().Any() && context.Set<City>().Any())
+            {
+                return;
+            }
+
             var jsonData = await File.ReadAllTextAsync(path);
 
             var countries = JsonSerializer.Deserialize<List<Country>>(jsonData);
 
             await context.Set<Country>().AddRangeAsync(countries);
+        }
+
+        /// <summary>
+        /// Returns the path containing the DestinationsSeed.json
+        /// </summary>
+        /// <returns>string path</returns>
+        private static string GetSeedDataPath()
+        {
+            string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
+
+            return seedFilePath;
         }
     }
 }

@@ -1,7 +1,13 @@
 [
     {
         "Name": "Germany",
+        "CountryId": "01956047-bee9-708d-9704-009c6921a132",
         "Destinations": [
+            {
+                "CityName": "Munich",
+                "IATA_Code": "MUC",
+                "CityId": "0195604c-c607-7d2f-8499-5139550bed23"
+            },
             {
                 "CityName": "Berlin",
                 "IATA_Code": "BER"
@@ -23,9 +29,15 @@
     },
     {
         "Name": "Bulgaria",
+        "CountryId": "01956047-bee9-7a4e-be4b-23576ef4395d",
         "Destinations": [
             {
-                "CityName": "Berlin",
+                "CityName": "Varna",
+                "IATA_Code": "VAR",
+                "CityId": "0195604c-c607-799a-b23c-038c1bd24f08"
+            },
+            {
+                "CityName": "Burgas",
                 "IATA_Code": "BOJ"
             },
             {

@@ -37,6 +37,10 @@ builder.Services.AddIdentity<User, ApplicationRole>(options =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
 
+KeyVaultSecret JwtIssuer = await client.GetSecretAsync("JwtIssuer");
+KeyVaultSecret JwtAudience = await client.GetSecretAsync("JwtAudience");
+KeyVaultSecret JwtKey = await client.GetSecretAsync("JwtKey");
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,17 +50,15 @@ builder.Services.AddAuthentication(options =>
     {
         options.RequireHttpsMetadata = false;
 
-        var jwtSettings = builder.Configuration.GetSection("Jwt");
-
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSettings["Issuer"],
-            ValidAudience = jwtSettings["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
+            ValidIssuer = JwtIssuer.Value,
+            ValidAudience = JwtAudience.Value,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey.Value))
         };
     });
 

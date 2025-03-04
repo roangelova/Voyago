@@ -1,6 +1,9 @@
 ﻿using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities.Contracts
 {
@@ -10,5 +13,13 @@ namespace GetMyTicket.Common.Entities.Contracts
         public Gender Gender { get; set; }
 
         public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; }
+
+        [Required]
+        [MaxLength(MaxNationalityLength)]
+        public string Nationality { get; set; }
+
+        [Required]
+        public DateOnly DOB { get; set; }
+
     }
 }

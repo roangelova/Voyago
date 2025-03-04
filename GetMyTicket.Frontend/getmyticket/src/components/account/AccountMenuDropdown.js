@@ -3,6 +3,7 @@ import bookings from '../../assets/icons/bookings.png';
 import logout from '../../assets/icons/logout.png';
 import profile from '../../assets/icons/profile.png';
 import { Account } from '../../services/accountService';
+import Cookies from "js-cookie";
 
 function AccountMenuDropdown() {
 
@@ -11,13 +12,17 @@ function AccountMenuDropdown() {
             .then(res => {
                 toast.info(res);
 
+                Cookies.remove('accessToken');
+                Cookies.remove('refreshToken');
+                sessionStorage.removeItem('userId');
+
                 setTimeout(() => {
                     window.location.href = "/";
                 }
                     , 3000);
             })
             .catch(err => {
-            console.error(err)
+                console.error(err)
             })
     }
 

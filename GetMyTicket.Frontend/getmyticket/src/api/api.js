@@ -6,19 +6,19 @@ import { toast } from "react-toastify";
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.withCredentials = true;
 
-//DISABLE FOR DEVELOPMENT PURPOSES
-//axios.interceptors.request.use(function (config) {
-//    let isLoggedIn = !!Cookies.get('accessToken');
-//
-//    if (isLoggedIn) {
-//        let accessToken = JSON.parse(Cookies.get('accessToken'));
-//        config.headers.Authorization = `${accessToken.tokenType} ${accessToken.accessToken}`;
-//    }
-//
-//    return config;
-//}, function (error) {
-//    return Promise.reject(error);
-//});
+
+axios.interceptors.request.use(function (config) {
+    let isLoggedIn = !!Cookies.get('accessToken');
+
+    if (isLoggedIn) {
+        let accessToken = JSON.parse(Cookies.get('accessToken'));
+        config.headers.Authorization = `${accessToken.tokenType} ${accessToken.accessToken}`;
+    }
+
+    return config;
+}, function (error) {
+    return Promise.reject(error);
+});
 
 axios.interceptors.response.use(function (response) {
     return response.data;

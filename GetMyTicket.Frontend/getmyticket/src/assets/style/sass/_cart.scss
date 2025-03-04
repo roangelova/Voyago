@@ -5,26 +5,28 @@
     height: 90vh;
     width: 100vw;
 
-    &-step--container{
+    &-step--container {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex:1;
+        flex: 1;
         background-color: #fff;
+
+        padding: 15px;
     }
 
     &__container {
         width: 70vw;
         height: 80vh;
         display: flex;
-        
-        flex-direction: column; 
+
+        flex-direction: column;
 
         border-radius: 10px;
         box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
         background-color: $color-grey-light-1;
 
-        & h2{
+        & h2 {
             text-align: center;
             margin-top: 10px;
             font-weight: 400;
@@ -41,6 +43,13 @@
                 display: flex;
                 align-items: center;
 
+                cursor: pointer;
+                transition: all .4s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
                 & span {
                     font-weight: 600;
                 }
@@ -48,12 +57,6 @@
 
             &--icon {
                 margin-right: 10px;
-
-                transition: all .3s;
-            }
-
-            &--icon:hover {
-                transform: scale(1.2);
             }
         }
 
@@ -99,26 +102,31 @@
     justify-content: center;
     background: white;
     overflow: hidden;
-  }
-  
-  .trip-details__image {
+}
+
+.trip-details__image {
     max-width: 520px;
     max-height: 400px;
     object-fit: cover;
     border-radius: 5px;
-  }
-  
-  .trip-details__data {
+}
+
+.trip-details__data {
     padding: 10px;
     margin-left: 30px;
-  }
-  
-  .trip-details__data h3 {
+}
+
+.trip-details__data h3 {
     margin: 5px 0;
     font-size: 24px;
-  }
-  
-  .trip-details__data p {
+}
+
+.trip-details__data p {
     margin: 2px 0;
     font-size: 18px;
-  }
+}
+
+.passenger-details {
+    display: flex;
+    flex-direction: column;
+}

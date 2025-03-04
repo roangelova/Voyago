@@ -7,6 +7,7 @@ import NavBar from '../common/NavBar';
 import CartStepContainer from './CartStepContainer';
 import TripDetails from './TripDetails';
 import PassengerData from './PassengerData';
+import ReviewCart from './ReviewCart';
 
 //trip obj
 //    "tripId": "9d9bf04e-14f0-4fb9-b3b2-08dd4cdbf0e8",
@@ -54,7 +55,7 @@ function Cart() {
         if (trip) {
             dispatch({ type: 'setTrip', payload: trip })
         }
-    }, [])
+    }, trip)
 
     return (
         <>
@@ -64,7 +65,6 @@ function Cart() {
             <div className="cart">
                 <div className="cart__container">
                     <h2>Booking overview</h2>
-
 
                     <div className="cart__container-step">
                         <div className={state.activeStep == 1 ? "cart__container-step--activeLeft" : null}>1. Trip details</div>
@@ -77,29 +77,25 @@ function Cart() {
                         {state.activeStep === 1 ?
                             <TripDetails trip={state.trip} /> :
                             state.activeStep === 2 ?
-                                <PassengerData trip={state.trip} />
-                                : null}
+                                <PassengerData dispatch={dispatch} /> :
+                                state.activeStep === 3 ?
+                                    <ReviewCart
+                                        trip={state.trip}
+                                        dispatch={dispatch} />
+                                    : null}
 
                     </CartStepContainer>
 
-                    <div className="cart__container-nav">
-                        <a href='#'>
-                            <li>
-                                <img className="cart__container-nav--icon" src={arrowToLeft} alt='arrow back icon' />
-                                <span
-                                    onClick={() => dispatch({ type: 'previousStep' })}
-                                >BACK</span>
-                            </li>
-                        </a>
-                        <a href='#'>
-                            <li >
-                                <img className="cart__container-nav--icon" src={arrowToRight} alt='arrow next icon' />
-                                <span
-                                    onClick={() => dispatch({ type: 'nextStep' })}
-                                >NEXT</span>
-                            </li>
-                        </a>
-                    </div>
+                    <ul className="cart__container-nav">
+                        <li onClick={() => dispatch({ type: 'previousStep' })}>
+                            <img className="cart__container-nav--icon" src={arrowToLeft} alt='arrow back icon' />
+                            <span>BACK</span>
+                        </li>
+                        <li onClick={() => dispatch({ type: 'nextStep' })}>
+                            <img className="cart__container-nav--icon" src={arrowToRight} alt='arrow next icon' />
+                            <span>NEXT</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </>

@@ -447,6 +447,7 @@ h1 {
   justify-content: center;
   flex: 1;
   background-color: #fff;
+  padding: 15px;
 }
 .cart__container {
   width: 70vw;
@@ -472,16 +473,17 @@ h1 {
 .cart__container-nav li {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.cart__container-nav li:hover {
+  transform: scale(1.1);
 }
 .cart__container-nav li span {
   font-weight: 600;
 }
 .cart__container-nav--icon {
   margin-right: 10px;
-  transition: all 0.3s;
-}
-.cart__container-nav--icon:hover {
-  transform: scale(1.2);
 }
 .cart__container-step {
   display: flex;
@@ -540,6 +542,11 @@ h1 {
 .trip-details__data p {
   margin: 2px 0;
   font-size: 18px;
+}
+
+.passenger-details {
+  display: flex;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=style.css.map */

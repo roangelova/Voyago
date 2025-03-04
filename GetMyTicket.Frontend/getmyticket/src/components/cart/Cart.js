@@ -6,6 +6,7 @@ import { useReducer, useEffect } from 'react';
 import NavBar from '../common/NavBar';
 import CartStepContainer from './CartStepContainer';
 import TripDetails from './TripDetails';
+import PassengerData from './PassengerData';
 
 //trip obj
 //    "tripId": "9d9bf04e-14f0-4fb9-b3b2-08dd4cdbf0e8",
@@ -53,8 +54,6 @@ function Cart() {
         if (trip) {
             dispatch({ type: 'setTrip', payload: trip })
         }
-
-        //TODO -> set state for userId
     }, [])
 
     return (
@@ -76,8 +75,10 @@ function Cart() {
                     <CartStepContainer>
 
                         {state.activeStep === 1 ?
-                            <TripDetails trip={trip} />
-                            : null}
+                            <TripDetails trip={state.trip} /> :
+                            state.activeStep === 2 ?
+                                <PassengerData trip={state.trip} />
+                                : null}
 
                     </CartStepContainer>
 

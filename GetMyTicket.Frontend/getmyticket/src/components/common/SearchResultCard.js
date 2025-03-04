@@ -7,12 +7,11 @@ const navigate = useNavigate();
 
     const handleBookTrip = () => {
         const userId = sessionStorage.getItem('userId');
-
-        //TODO: DISABLE FOR DEVELOPMENT PURPOSES
-       // if (!userId) {
-       //     toast.error('Ugh oh.. Seems like you need to log in again, in order to book this trip.')
-       //     return;
-       // }
+        
+       if (!userId) {
+            toast.error('Ugh oh.. Seems like you need to log in again, in order to book this trip.')
+            return;
+        }
 
         navigate("/cart", { state: { trip: trip } });
     }

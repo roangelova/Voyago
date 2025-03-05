@@ -1,27 +1,29 @@
-import arrowToLeft from '../../assets/icons/arrowToLeft.png';
-import arrowToRight from '../../assets/icons/arrowToRight.png';
-import { toast } from 'react-toastify';
 import { useLocation } from "react-router-dom";
 import { useReducer, useEffect } from 'react';
+
+import arrowToLeft from '../../assets/icons/arrowToLeft.png';
+import arrowToRight from '../../assets/icons/arrowToRight.png';
+
+import { toast } from 'react-toastify';
+
 import NavBar from '../common/NavBar';
 import CartStepContainer from './CartStepContainer';
 import TripDetails from './TripDetails';
 import PassengerData from './PassengerData';
 import ReviewCart from './ReviewCart';
 
-//trip obj
-//    "tripId": "9d9bf04e-14f0-4fb9-b3b2-08dd4cdbf0e8",
-//    "startTime": "2025-05-18T18:00:00",
-//    "endTime": "2025-05-18T20:20:00",
-//    "price": 220,
-//    "endCityName": "Varna",
-//    "startCityName": "Munich",
-//    "transportationProviderName": "TransAvia"
-
 const initialState = {
     tripId: null,
     userId: null,
     passenderId: null,
+    passenger: {
+        firstName: '',
+        lastName: '',
+        gender: 'Other',
+        dob: '2000-01-01',
+        documentType: 'Passport',
+        documentId: ''
+    },
     trip: {},
     activeStep: 1
 };
@@ -29,7 +31,7 @@ const initialState = {
 function reducer(state, action) {
     switch (action.type) {
         case 'setTrip':
-            return { ...state, trip: action.payload };
+            return { ...state, trip: action.payload, tripId: action.payload.tripId };
 
         case 'nextStep':
             return state.activeStep >= 2
@@ -38,7 +40,14 @@ function reducer(state, action) {
 
         case 'previousStep':
             return { ...state, activeStep: Math.max(1, state.activeStep - 1) };
-
+        case "setField":
+            return {
+                ...state,
+                passenger: {
+                    ...state.passenger,
+                    [action.field]: action.value
+                }
+            }
         default:
             toast.error('DEV ONLY: NO ACTION!');
             return state;
@@ -55,11 +64,10 @@ function Cart() {
         if (trip) {
             dispatch({ type: 'setTrip', payload: trip })
         }
-    }, trip)
+    }, [])
 
     return (
         <>
-
             <NavBar />
 
             <div className="cart">
@@ -77,11 +85,14 @@ function Cart() {
                         {state.activeStep === 1 ?
                             <TripDetails trip={state.trip} /> :
                             state.activeStep === 2 ?
-                                <PassengerData dispatch={dispatch} /> :
+                                <PassengerData
+                                    dispatch={dispatch}
+                                    passenger={state.passenger} /> :
                                 state.activeStep === 3 ?
                                     <ReviewCart
                                         trip={state.trip}
-                                        dispatch={dispatch} />
+                                        dispatch={dispatch}
+                                    />
                                     : null}
 
                     </CartStepContainer>

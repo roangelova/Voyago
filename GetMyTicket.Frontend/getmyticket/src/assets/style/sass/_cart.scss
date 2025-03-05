@@ -12,7 +12,7 @@
         flex: 1;
         background-color: #fff;
 
-        padding: 15px;
+        padding: 10px 15px;
     }
 
     &__container {
@@ -23,7 +23,7 @@
         flex-direction: column;
 
         border-radius: 10px;
-        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+        box-shadow: 1px 0.5px 1px 1px rgba(0, 0, 0, 0.42);
         background-color: $color-grey-light-1;
 
         & h2 {
@@ -126,7 +126,75 @@
     font-size: 18px;
 }
 
-.passenger-details {
+.passengerDetails {
     display: flex;
     flex-direction: column;
+    height: 100%;
+
+    &__notice {
+        background-color: $color-grey-light-1;
+        border-radius: 5px;
+        margin-top: auto;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    & form {
+        padding: 10px;
+    }
+
+    &__names {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        & label {
+            margin-right: 10px;
+        }
+
+
+    }
+
+    & fieldset {
+        display: flex;
+        margin-bottom: 1rem;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        & div{
+            padding: 5px 0px;
+        }
+        
+        & legend {
+            margin-left: 10px;
+        }
+
+        & input{
+            margin-right: 5px;
+        }
+    }
+
+    &__dob{
+        display: flex;
+
+        & label{
+            margin-right: 10px;
+        }
+
+        & input{
+            text-align: center;
+        }
+    }
+
+    &__docType{
+        margin-bottom: 10px;
+
+        & label{
+            margin-right: 10px;
+        }
+
+    }
+
 }

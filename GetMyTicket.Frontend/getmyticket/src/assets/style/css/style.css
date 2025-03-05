@@ -25,6 +25,8 @@ a {
 input {
   font-family: inherit;
   font-weight: inherit;
+  padding: 3px;
+  margin: 5px 0;
 }
 
 button,
@@ -41,6 +43,15 @@ select {
 
 ul, li {
   list-style-type: none;
+}
+
+input::placeholder {
+  color: #3c4856;
+}
+
+input[type=radio]:checked {
+  background-color: #93b3da;
+  border: 2px solid #93b3da;
 }
 
 h1 {
@@ -137,8 +148,10 @@ h1 {
   overflow: hidden;
 }
 .register__cta-img {
-  width: 100%;
-  max-height: 300px;
+  min-height: 50%;
+  min-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 .register__left-side {
   background-color: #a7b2b5;
@@ -156,18 +169,18 @@ h1 {
 .register__right-side {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin: auto;
   text-align: center;
-  margin: 10px;
+  padding: 10px;
 }
 .register__options {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-items: space-between;
   gap: 1.5rem;
   background-color: #fff;
-  text-align: center;
+  margin-bottom: 20px;
 }
 .register__options-logo {
   max-width: 25px;
@@ -196,6 +209,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  justify-content: center;
 }
 .register__row {
   width: 100%;
@@ -300,6 +314,14 @@ h1 {
   background-image: url(../../images/PageNotFound.png);
   background-size: cover;
   background-position: top;
+}
+
+.btn {
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #93b3da;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 }
 
 .searchBar__button {
@@ -447,7 +469,7 @@ h1 {
   justify-content: center;
   flex: 1;
   background-color: #fff;
-  padding: 15px;
+  padding: 10px 15px;
 }
 .cart__container {
   width: 70vw;
@@ -455,7 +477,7 @@ h1 {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+  box-shadow: 1px 0.5px 1px 1px rgba(0, 0, 0, 0.42);
   background-color: #f9f7f6;
 }
 .cart__container h2 {
@@ -544,9 +566,59 @@ h1 {
   font-size: 18px;
 }
 
-.passenger-details {
+.passengerDetails {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+.passengerDetails__notice {
+  background-color: #f9f7f6;
+  border-radius: 5px;
+  margin-top: auto;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.passengerDetails form {
+  padding: 10px;
+}
+.passengerDetails__names {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.passengerDetails__names label {
+  margin-right: 10px;
+}
+.passengerDetails fieldset {
+  display: flex;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.passengerDetails fieldset div {
+  padding: 5px 0px;
+}
+.passengerDetails fieldset legend {
+  margin-left: 10px;
+}
+.passengerDetails fieldset input {
+  margin-right: 5px;
+}
+.passengerDetails__dob {
+  display: flex;
+}
+.passengerDetails__dob label {
+  margin-right: 10px;
+}
+.passengerDetails__dob input {
+  text-align: center;
+}
+.passengerDetails__docType {
+  margin-bottom: 10px;
+}
+.passengerDetails__docType label {
+  margin-right: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

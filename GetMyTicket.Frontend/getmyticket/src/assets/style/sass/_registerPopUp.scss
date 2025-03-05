@@ -23,8 +23,10 @@
     }
 
     &__cta-img {
-        width: 100%;
-        max-height: 300px;
+        min-height: 50%;
+        min-width: 50%;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     &__left-side {
@@ -47,22 +49,21 @@
     &__right-side {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-around;
+        margin: auto ;
 
         text-align: center;
-        margin: 10px;
+        padding: 10px;
     }
 
     &__options {
-        margin-top: 1rem;
-
         display: flex;
         flex-direction: column;
         justify-items: space-between;
         gap: 1.5rem;
         background-color: #fff;
 
-        text-align: center;
+        margin-bottom: 20px;
 
         &-logo {
             max-width: 25px;
@@ -99,7 +100,7 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
-
+        justify-content: center;
     }
 
     &__row {
@@ -108,8 +109,6 @@
         display: flex;
         justify-content: space-around;
         margin: 1rem 0;
-
-
 
         & input,
         label {

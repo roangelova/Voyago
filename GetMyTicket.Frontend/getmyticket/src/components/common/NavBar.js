@@ -29,6 +29,11 @@ function NavBar({ handleLoginToggle }) {
     return (
         <nav className='header__navigation'>
             <ul className="header__navigation-browse">
+            <li>
+                    <NavLink to='/'>
+                        Home
+                    </NavLink>
+                </ li>
                 <li>
                     <NavLink to='/trains'>
                         Trains

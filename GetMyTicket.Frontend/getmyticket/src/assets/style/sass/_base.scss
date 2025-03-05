@@ -38,6 +38,9 @@ a {
 input {
     font-family: inherit;
     font-weight: inherit;
+
+    padding: 3px;
+    margin: 5px 0;
 }
 
 button,
@@ -55,3 +58,12 @@ select {
 ul, li {
     list-style-type: none;
 }
+
+input::placeholder{
+    color: $color-dark-grey;
+}
+
+input[type="radio"]:checked {
+    background-color: #93b3da;
+    border: 2px solid #93b3da;
+  }

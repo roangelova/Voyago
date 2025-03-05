@@ -1,72 +1,131 @@
-function PassengerData({ dispatch }) {
+function PassengerData({ dispatch, passenger }) {
 
     return (
-        <div className="passenger-details">
-            <h3>My passenger data</h3>
+        <div className="passengerDetails">
             <form>
 
-                <div>
+                <div className="passengerDetails__names">
                     <div>
                         <label htmlFor="firstName">First name:</label>
                         <input
                             name="firstName"
                             type="text"
                             placeholder="First name"
-                            value="my placeholder value 1"
+                            value={passenger.firstName}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "firstName", value: e.target.value })
+                            }
+                        ></input>
+                    </div>
+                    <div>
+
+                        <label htmlFor="lastName">Last name:</label>
+                        <input
+                            name="lastName"
+                            type="text"
+                            placeholder="Last name"
+                            value={passenger.lastName}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "lastName", value: e.target.value })
+                            }
                         ></input>
                     </div>
 
-                    <div>
-                        <label htmlFor="firstName">Last name:</label>
-                        <input
-                            name="firstName"
-                            type="text"
-                            placeholder="First name"
-                            value="my placeholder value 2"
-                        ></input>
-                    </div>
                 </div>
 
                 <fieldset>
                     <legend>Gender:</legend>
-                    <input type="radio" name="gender" value="Male" />
-                    <label for="gender">Male</label>
-                    <input type="radio" name="gender" value="Female" />
-                    <label for="gender">Female</label>
-                    <input type="radio" name="gender" value="Other" />
-                    <label for="gender">Other</label>
+                    <div>
+                        <input
+                            checked={passenger.gender === 'Male'}
+                            type="radio" name="gender" value="Male"
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "gender", value: e.target.value })
+                            }
+                        />
+                        <label htmlFor="gender">Male</label>
+                    </div>
+                    <div>
+                        <input
+                            checked={passenger.gender === 'Female'}
+                            type="radio" name="gender" value="Female"
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "gender", value: e.target.value })
+                            } />
+                        <label htmlFor="gender">Female</label>
+                    </div>
+                    <div>
+                        <input
+                            checked={passenger.gender === 'Other'}
+                            type="radio" name="gender" value="Other"
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "gender", value: e.target.value })
+                            }
+                        />
+                        <label htmlFor="gender">Other</label>
+                    </div>
+
                 </fieldset>
 
-                <div>
+                <div className="passengerDetails__dob">
                     <label htmlFor='dob'>Date of birth:</label>
-                    <input type='date' value={new Date('2000-01-01').toISOString().split('T')[0]} />
+                    <input type='date' name='dob' value={new Date(passenger.dob).toISOString().split('T')[0]}
+                        onChange={(e) =>
+                            dispatch({ type: "setField", field: "dob", value: e.target.value })
+                        }
+                    />
                 </div>
 
-                <div>
+                <div className="passengerDetails__docType">
                     <fieldset>
                         <legend>Document type:</legend>
-                        <input type="radio" name="documentType" value="Passport" />
-                        <label for="documentType">Passport</label>
-                        <input type="radio" name="documentType" value="IdCard" />
-                        <label for="documentType">National ID card</label>
+                        <div>
+                            <input
+                                checked={passenger.documentType === 'Passport'}
+                                type="radio" name="documentType" value="Passport"
+                                onChange={(e) =>
+                                    dispatch({ type: "setField", field: "documentType", value: e.target.value })
+                                }
+                            />
+                            <label htmlFor="documentType">Passport</label>
+                        </div>
+                        <div>
+                            <input
+                                checked={passenger.documentType === 'IdCard'}
+                                type="radio" name="documentType" value="IdCard"
+                                onChange={(e) =>
+                                    dispatch({ type: "setField", field: "documentType", value: e.target.value })
+                                }
+                            />
+                            <label htmlFor="documentType">National ID card</label>
+                        </div>
                     </fieldset>
 
                     <div>
                         <label htmlFor="documentNumber">Document Id:</label>
-                        <input name='documentNumber' type="text" value='12345677' />
+                        <input name='documentNumber'
+                            type="text"
+                            placeholder='N1526'
+                            value={passenger.documentId}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "documentId", value: e.target.value })
+                            }
+                        />
                     </div>
 
                 </div>
 
-                <button>Save</button>
+                <button className="btn">Save</button>
             </form>
 
 
-            <div>
+            <div className="passengerDetails__notice">
                 <h4>Important notice!</h4>
                 <p>
-                    Please not that if your passport is set to expire less than six months after your trip, you could be denied boarding or entry! Always check the current entry regulations for your destination in advance.
-                    If additional documents are required /such as birth sertificates for passengers under 18 years old, visas etc./, you will be asked to provide those at the airport. Please note that failure to do may result in denied bording.
+                    Please not that if your passport is set to expire less than <b>six months</b> after your trip, you could be denied boarding or entry! Always check the current entry regulations for your destination in advance.
+                </p>
+                <p>
+                    If additional documents are required &#40;such as birth sertificates for passengers under 18 years old, visas etc.&#41;, you will be asked to provide those at the airport. Please note that failure to do may result in denied bording.
                 </p>
             </div>
 

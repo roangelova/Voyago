@@ -1,5 +1,4 @@
 ﻿using GetMyTicket.Common.Constants;
-using GetMyTicket.Common.DTOs;
 using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;

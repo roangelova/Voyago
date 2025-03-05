@@ -15,10 +15,10 @@ namespace GetMyTicket.API.Controllers
             this.bookingService = bookingService;
         }
 
-        [HttpPost(nameof(BookTrip))]
-        public async Task<IActionResult> BookTrip(BookTripDTO bookTripDTO)
+        [HttpPost]
+        public async Task<IActionResult> CreateBooking(CreateBookingDTO bookTripDTO)
         {
-            var bookingId = await bookingService.BookTrip(bookTripDTO);
+            var bookingId = await bookingService.CreateBooking(bookTripDTO);
 
             return Ok(bookingId);
         }

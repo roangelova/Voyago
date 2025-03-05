@@ -29,7 +29,7 @@ namespace GetMyTicket.Service.Services
         /// </summary>
         /// <param name="bookTripDTO"></param>
         /// <returns></returns>
-        public async Task<Guid> CreatePassengerData(MapPassengerDTO dto)
+        public async Task<Guid> CreatePassengerData(CreateOrEditPassengerDTO dto)
         {
             var user = await unitOfWork.Users.GetByIdAsync(dto);
 

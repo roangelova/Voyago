@@ -1,4 +1,13 @@
-function PassengerData({ dispatch, passenger }) {
+function PassengerData({ dispatch, passenger, passengerId }) {
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        let result = window.confirm('By submitting this information, you confirm that it is accurate and as per your personal identification documents. Please be advised that in case of inconsistencies, bording might be denied.')
+
+
+        //TODO -> EDIT DATA IF PASSENGER DATA EXIST OR CREATE PASSENGER IF IT DOES NOT
+    }
 
     return (
         <div className="passengerDetails">
@@ -115,7 +124,9 @@ function PassengerData({ dispatch, passenger }) {
 
                 </div>
 
-                <button className="btn">Save</button>
+                <button className="btn"
+                    onClick={handleSubmit}
+                >Update my information </button>
             </form>
 
 

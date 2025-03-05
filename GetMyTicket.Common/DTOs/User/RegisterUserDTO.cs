@@ -1,6 +1,6 @@
 ﻿namespace GetMyTicket.Common.DTOs.User
 {
-    public record RegisterUserDTO(
+    public record CreateUserDTO(
         string FirstName,
         string LastName,
         string Email,

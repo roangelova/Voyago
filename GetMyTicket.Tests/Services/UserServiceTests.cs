@@ -24,7 +24,7 @@ namespace GetMyTicket.Tests.Services
         public async Task RegisterUserAsync_ValidDTO_CreatesUserSuccessfully()
         {
             // Arrange
-            var dto = new RegisterUserDTO(
+            var dto = new CreateUserDTO(
                 "Tourist",
                  "Guy",
                 "touristguy11@gmail.com",
@@ -37,7 +37,7 @@ namespace GetMyTicket.Tests.Services
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act
-            var result = await userService.RegisterUserAsync(dto);
+            var result = await userService.CreateUserAsync(dto);
 
             // Assert
             Assert.True(result.Succeeded);
@@ -47,7 +47,7 @@ namespace GetMyTicket.Tests.Services
         public async Task RegisterUserAsync_InvalidDob_ThrowsError()
         {
             // Arrange
-            var registerUserDTO = new RegisterUserDTO(
+            var registerUserDTO = new CreateUserDTO(
                 "Tourist",
                  "Guy",
                 "touristguy11@gmail.com",
@@ -56,14 +56,14 @@ namespace GetMyTicket.Tests.Services
                 true,
                 "Some address 15");
 
-            await Assert.ThrowsAsync<InvalidDataException>(() => userService.RegisterUserAsync(registerUserDTO));
+            await Assert.ThrowsAsync<InvalidDataException>(() => userService.CreateUserAsync(registerUserDTO));
         }
 
         [Fact]
         public async Task RegisterUserAsync_EmptyRequiredFields_ThrowsException()
         {
             // Arrange
-            var dto = new RegisterUserDTO(
+            var dto = new CreateUserDTO(
                 "",
                  "Guy with no first name",
                 "touristguy11@gmail.com",
@@ -72,14 +72,14 @@ namespace GetMyTicket.Tests.Services
                 true,
                 "Some address 15");
 
-            await Assert.ThrowsAsync<ArgumentException>(() => userService.RegisterUserAsync(dto));
+            await Assert.ThrowsAsync<ArgumentException>(() => userService.CreateUserAsync(dto));
         }
 
         [Fact]
         public async Task RegisterUserAsync_CreationFails_ReturnsIdentityError()
         {
             // Arrange
-            var dto = new RegisterUserDTO(
+            var dto = new CreateUserDTO(
                 "Tourist",
                  "Guy",
                 "touristguy11@gmail.com",
@@ -92,7 +92,7 @@ namespace GetMyTicket.Tests.Services
                 .ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Failed to create user" }));
 
             // Act
-            var result = await userService.RegisterUserAsync(dto);
+            var result = await userService.CreateUserAsync(dto);
 
             // Assert
             Assert.False(result.Succeeded);

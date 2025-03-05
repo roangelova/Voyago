@@ -4,6 +4,6 @@ namespace GetMyTicket.Service.Contracts
 {
     public interface IBookingService
     {
-        public Task<Guid> BookTrip(BookTripDTO bookTripDTO);
+        public Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO);
     }
 }

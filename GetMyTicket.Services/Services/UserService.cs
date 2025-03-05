@@ -15,7 +15,7 @@ namespace GetMyTicket.Service.Services
             this.userManager = userManager;
         }
 
-        public async Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserDTO)
+        public async Task<IdentityResult> CreateUserAsync(CreateUserDTO registerUserDTO)
         {
             //check and convert DOB
             bool parseResult = DateOnly.TryParse(registerUserDTO.Dob, out DateOnly result);

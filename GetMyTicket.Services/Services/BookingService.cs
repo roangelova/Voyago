@@ -1,7 +1,6 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs;
 using GetMyTicket.Common.Entities;
-using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -21,7 +20,7 @@ namespace GetMyTicket.Service.Services
             this.passengerService = passengerService;
         }
 
-        public async Task<Guid> BookTrip(BookTripDTO bookTripDTO)
+        public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)
         {
             //TODO -> EXTAND TO WORK WITH MULTIPLE PASSENGERS PER BOOKING
             //FOR NOW, WE USE A DEFAULT PASSENGERID, AS AT THIS STAGE THE REQUIRMENT FOR WHEN AND HOW THE PASSENGER DATA WILL BE CREATED IS UNCLEAR; 

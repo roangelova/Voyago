@@ -14,7 +14,7 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<TransportationProvider> Add(AddTpDTO addTpDTO)
+        public async Task<TransportationProvider> Add(CreateTransportationProviderDTO addTpDTO)
         {
             try
             {

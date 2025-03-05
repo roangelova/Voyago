@@ -1,6 +1,6 @@
 ﻿namespace GetMyTicket.Common.DTOs.TP
 {
-    public record AddTpDTO(
+    public record CreateTransportationProviderDTO(
         string Name, 
         string Description,
         string Address,

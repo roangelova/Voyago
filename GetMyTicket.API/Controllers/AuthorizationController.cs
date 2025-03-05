@@ -14,6 +14,8 @@ namespace GetMyTicket.API.Controllers
 
     public class AuthorizationController : ControllerBase
     {
+        //TODO: REFACTOR!
+
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;

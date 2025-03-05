@@ -1,6 +1,6 @@
 ﻿namespace GetMyTicket.Common.DTOs.Vehicle
 {
-    public record AddAirplaneDTO(
+    public record CreateAirplaneDTO(
         Guid TpProviderId, 
         string Manufacturer, 
         string Model,

@@ -15,7 +15,7 @@ namespace GetMyTicket.API.Controllers
             this.cityService = cityService;
         }
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<City>> GetAll() 
         {
            var result =  await cityService.GetAll(true);

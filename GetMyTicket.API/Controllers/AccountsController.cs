@@ -15,10 +15,10 @@ namespace GetMyTicket.API.Controllers
             this.userService = userService;
         }
 
-        [HttpPost("register")]
-        public IActionResult RegisterUser(RegisterUserDTO registerUserDTO)
+        [HttpPost]
+        public IActionResult CreateUser(CreateUserDTO registerUserDTO)
         {
-           var result = userService.RegisterUserAsync(registerUserDTO);
+           var result = userService.CreateUserAsync(registerUserDTO);
 
             if (result.Result.Succeeded)
             {

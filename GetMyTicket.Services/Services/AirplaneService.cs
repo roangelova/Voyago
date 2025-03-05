@@ -16,7 +16,7 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Airplane> Add(AddAirplaneDTO airplaneDTO)
+        public async Task<Airplane> Add(CreateAirplaneDTO airplaneDTO)
         {
             try
             {

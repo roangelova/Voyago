@@ -7,6 +7,6 @@ namespace GetMyTicket.Service.Contracts
     {
         public Task<GetAirplaneDTO> GetById (object id);
 
-        public Task<Airplane> Add (AddAirplaneDTO airplaneDTO);
+        public Task<Airplane> Add (CreateAirplaneDTO airplaneDTO);
     }
 }

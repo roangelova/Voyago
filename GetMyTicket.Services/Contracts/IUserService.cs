@@ -6,6 +6,6 @@ namespace GetMyTicket.Service.Contracts
 {
     public interface IUserService
     {
-        public Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserDTO);
+        public Task<IdentityResult> CreateUserAsync(CreateUserDTO registerUserDTO);
     }
 }

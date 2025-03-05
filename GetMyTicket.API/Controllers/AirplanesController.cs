@@ -17,7 +17,7 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add (AddAirplaneDTO data)
+        public async Task<IActionResult> CreateAirplane (CreateAirplaneDTO data)
         {
 
             var entity = await airplaneService.Add(data);
@@ -30,10 +30,10 @@ namespace GetMyTicket.API.Controllers
                 new { manufacturer, entity.Model });
         }
 
-        [HttpGet(nameof(GetById))]
-        public async Task<IActionResult> GetById ([FromQuery] Guid Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById (Guid id)
         {
-            var entity = await airplaneService.GetById(Id);
+            var entity = await airplaneService.GetById(id);
 
             if (entity == null)
             {

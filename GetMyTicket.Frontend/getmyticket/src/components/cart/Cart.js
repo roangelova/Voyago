@@ -12,9 +12,11 @@ import TripDetails from './TripDetails';
 import PassengerData from './PassengerData';
 import ReviewCart from './ReviewCart';
 
+const userId = sessionStorage.getItem('userId');
+
 const initialState = {
     tripId: null,
-    userId: null,
+    userId: userId,
     passenderId: null,
     passenger: {
         firstName: '',
@@ -82,18 +84,24 @@ function Cart() {
 
                     <CartStepContainer>
 
-                        {state.activeStep === 1 ?
-                            <TripDetails trip={state.trip} /> :
-                            state.activeStep === 2 ?
-                                <PassengerData
-                                    dispatch={dispatch}
-                                    passenger={state.passenger} /> :
-                                state.activeStep === 3 ?
-                                    <ReviewCart
-                                        trip={state.trip}
+                        {state.tripId === null ?
+
+                            <h3>Your card is empty</h3>
+                            : (state.activeStep === 1 ?
+                                <TripDetails trip={state.trip} /> :
+                                state.activeStep === 2 ?
+                                    <PassengerData
                                         dispatch={dispatch}
-                                    />
-                                    : null}
+                                        passenger={state.passenger}
+                                        passenderId={state.passenderId} /> :
+                                    state.activeStep === 3 ?
+                                        <ReviewCart
+                                            trip={state.trip}
+                                            dispatch={dispatch}
+                                        />
+                                        : null)
+
+                        }
 
                     </CartStepContainer>
 

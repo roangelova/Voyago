@@ -7,7 +7,7 @@ namespace GetMyTicket.Service.Contracts
     {
         public Task<IEnumerable<GetTransportationProviderDTO>> GetAll();
 
-        public Task<TransportationProvider> Add( AddTpDTO addTpDTO);
+        public Task<TransportationProvider> Add( CreateTransportationProviderDTO addTpDTO);
 
         public Task<GetTransportationProviderDTO> GetById(object Id);
     }

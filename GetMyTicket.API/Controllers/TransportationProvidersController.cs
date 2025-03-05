@@ -19,15 +19,14 @@ namespace GetMyTicket.API.Controllers
             this.transportationProviderService = transportationProviderService;
         }
 
-        [Authorize]
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<IEnumerable<GetTransportationProviderDTO>> GetAll()
         {
             return await transportationProviderService.GetAll();
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> Add(AddTpDTO data)
+        [HttpPost]
+        public async Task<IActionResult> CreateTransportationProvider(CreateTransportationProviderDTO data)
         {
 
             var entity = await transportationProviderService.Add(data);
@@ -38,10 +37,10 @@ namespace GetMyTicket.API.Controllers
                 new { entity.Name, entity.Email, entity.Description, entity.Address });
         }
 
-        [HttpGet(nameof(GetById))]
-        public async Task<IActionResult> GetById([FromQuery] Guid Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById( Guid id)
         {
-            var entity = await transportationProviderService.GetById(Id);
+            var entity = await transportationProviderService.GetById(id);
 
             if (entity == null)
             {

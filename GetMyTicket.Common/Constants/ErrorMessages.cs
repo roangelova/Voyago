@@ -12,5 +12,10 @@
         public const string UserUnderage = "No solo undearage travellers supported at this time";
 
         public const string SoldOut = "Uh oh! The itinerary is no longer available. Please, choose a different connection!";
+
+        public const string InvalidDocumentType = "Invalid document type";
+        public const string InvalidGender = "Gender not reccognized";
+
+        public const string InvalidDateFormat = "The provided date format was incorrect";
     }
 }

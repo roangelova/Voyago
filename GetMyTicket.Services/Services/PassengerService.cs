@@ -18,10 +18,6 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-
-        //TODO: Generate TRIP PASSENGER LIST 
-
-
         /// <summary>
         /// The method creates a passenger entity for the provided User. In order to travel, anyone needs to be a registered passenger. The method 
         /// creates an Adult, Child or Infant, based on the provided age, and returns the id of the created passenger. Currently only 1 passenger per booking
@@ -47,11 +43,23 @@ namespace GetMyTicket.Service.Services
 
             Passenger passenger;
 
-            var parseResult = Enum.TryParse<Gender>(dto.Gender, out Gender gender);
+            var genderParseResult = Enum.TryParse<Gender>(dto.Gender, out Gender gender);
+            var documentTypeParseResult = Enum.TryParse<DocumentType>(dto.DocumentType, out DocumentType documentType);
 
-            if (!parseResult)
+            bool dobParseResult = DateOnly.TryParse(dto.Dob, out DateOnly DateOfBirth);
+            bool DocumentExpirationParseResult = DateOnly.TryParse(dto.DocumentExpirationDate, out DateOnly DocumentExpirationDate);
+
+            if (!genderParseResult)
             {
-                throw new ArgumentException("Could not parse gender", nameof(dto.Gender));
+                throw new ArgumentException(ErrorMessages.InvalidGender, nameof(dto.Gender));
+            }
+            else if (!documentTypeParseResult) 
+            {
+                throw new ArgumentException(ErrorMessages.InvalidDocumentType, nameof(dto.DocumentType));
+            }
+            else if(DocumentExpirationParseResult || dobParseResult)
+            {
+                throw new ArgumentException(ErrorMessages.InvalidDateFormat);
             }
 
             if (age > 18)
@@ -60,7 +68,13 @@ namespace GetMyTicket.Service.Services
                 {
                     PassengerId = Guid.CreateVersion7(),
                     User = user,
-                    Gender = gender
+                    UserId = dto.UserId,
+                    Gender = gender,
+                    DocumentType = documentType,
+                    DocumentId = dto.DocumentId,
+                    ExpirationDate = DocumentExpirationDate, 
+                    DOB = DateOfBirth,
+                    Nationality = dto.Nationality
                 };
             }
             else
@@ -73,9 +87,20 @@ namespace GetMyTicket.Service.Services
             return passenger.PassengerId;
         }
 
+        public Task EditPassengerData(CreateOrEditPassengerDTO createOrEditPassengerDTO)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Guid> GetPassengerIdAsync(Guid userId)
         {
-            var user = await unitOfWork.Users.GetByIdAsync(userId); ;
+            var user = await unitOfWork.Users.GetByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new ArgumentException(string.Format(ErrorMessages.NotFoundError, nameof(User), userId));
+            }
+
             return user.PassengerMapId;
         }
     }

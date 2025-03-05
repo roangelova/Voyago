@@ -1,7 +1,7 @@
 import { api } from "../api/api.js";
 
 export const Account = {
-    register: (data) => api.post('api/Accounts', data),
-    login: (data) => api.post('api/Authorization/login', data), 
-    logout: () => api.post('api/Authorization/logout')
+    register: (data) => api.post('api/accounts', data),
+    login: (data) => api.post('api/authorization/login', data), 
+    logout: () => api.post('api/authorization/logout')
 }

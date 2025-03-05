@@ -24,7 +24,8 @@ const initialState = {
         gender: 'Other',
         dob: '2000-01-01',
         documentType: 'Passport',
-        documentId: ''
+        documentId: '',
+        nationality: ''
     },
     trip: {},
     activeStep: 1

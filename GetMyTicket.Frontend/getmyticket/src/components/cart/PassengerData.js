@@ -110,7 +110,9 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                         </div>
                     </fieldset>
 
-                    <div>
+                </div>
+
+                <div className="passengerDetails__inputDiv">
                         <label htmlFor="documentNumber">Document Id:</label>
                         <input name='documentNumber'
                             type="text"
@@ -122,9 +124,19 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                         />
                     </div>
 
-                </div>
+                    <div  className="passengerDetails__inputDiv">
+                        <label htmlFor="nationality">Nationality:</label>
+                        <input name='nationality'
+                            type="text"
+                            placeholder='bulgarian'
+                            value={passenger.nationality}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "nationality", value: e.target.value })
+                            }
+                        />
+                    </div>
 
-                <button className="btn"
+                <button className="btn passengerDetails__btn"
                     onClick={handleSubmit}
                 >Update my information </button>
             </form>

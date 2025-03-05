@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bookings")]
     [ApiController]
-    public class BookingController : Controller
+    public class BookingsController : Controller
     {
         private readonly IBookingService bookingService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingsController(IBookingService bookingService)
         {
             this.bookingService = bookingService;
         }

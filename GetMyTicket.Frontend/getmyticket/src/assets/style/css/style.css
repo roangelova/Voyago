@@ -490,7 +490,7 @@ h1 {
 .cart__container-nav {
   display: flex;
   justify-content: space-between;
-  padding: 15px;
+  padding: 10px;
 }
 .cart__container-nav li {
   display: flex;
@@ -586,7 +586,7 @@ h1 {
 }
 .passengerDetails__names {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   margin-bottom: 10px;
 }
 .passengerDetails__names label {
@@ -610,6 +610,7 @@ h1 {
 }
 .passengerDetails__dob {
   display: flex;
+  justify-content: center;
 }
 .passengerDetails__dob label {
   margin-right: 10px;
@@ -622,6 +623,20 @@ h1 {
 }
 .passengerDetails__docType label {
   margin-right: 10px;
+}
+.passengerDetails__inputDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.passengerDetails__inputDiv label {
+  margin-right: 10px;
+  width: 120px;
+}
+.passengerDetails__btn {
+  display: flex;
+  justify-self: center;
+  margin-top: 20px;
 }
 
 /*# sourceMappingURL=style.css.map */

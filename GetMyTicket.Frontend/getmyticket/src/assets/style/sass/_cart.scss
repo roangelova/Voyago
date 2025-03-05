@@ -37,7 +37,7 @@
         &-nav {
             display: flex;
             justify-content: space-between;
-            padding: 15px;
+            padding: 10px;
 
             & li {
                 display: flex;
@@ -149,7 +149,7 @@
 
     &__names {
         display: flex;
-        flex-direction: column;
+        justify-content: space-around;
         margin-bottom: 10px;
 
         & label {
@@ -167,38 +167,55 @@
         justify-content: space-around;
         align-items: center;
 
-        & div{
+        & div {
             padding: 5px 0px;
         }
-        
+
         & legend {
             margin-left: 10px;
         }
 
-        & input{
+        & input {
             margin-right: 5px;
         }
     }
 
-    &__dob{
+    &__dob {
         display: flex;
+        justify-content: center;
 
-        & label{
+        & label {
             margin-right: 10px;
         }
 
-        & input{
+        & input {
             text-align: center;
         }
     }
 
-    &__docType{
+    &__docType {
         margin-bottom: 10px;
 
-        & label{
+        & label {
             margin-right: 10px;
         }
 
     }
 
+    &__inputDiv {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & label {
+            margin-right: 10px;
+            width: 120px;
+        }
+    }
+
+    &__btn {
+        display: flex;
+        justify-self: center;
+        margin-top: 20px;
+    }
 }

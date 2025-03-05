@@ -10,10 +10,14 @@
 
         public string Gender { get; set; }
 
-        public DateOnly Dob {  get; set; }
+        public string Dob {  get; set; }
+
+        public string Nationality { get; set; }
 
         public string DocumentType { get; set; }
 
         public string DocumentId { get; set; }
+
+        public string DocumentExpirationDate { get; set; }
     }
 }

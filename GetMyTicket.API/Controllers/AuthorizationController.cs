@@ -9,7 +9,7 @@ using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authorization")]
     [ApiController]
 
     public class AuthorizationController : ControllerBase

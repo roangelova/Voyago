@@ -8,7 +8,7 @@ namespace GetMyTicket.API.Controllers
     //AUTHORIZE set for testing purposes;
 
     [ApiController]
-    [Route("api/transportations")]
+    [Route("api/transportationproviders")]
     public class TransportationProvidersController : ControllerBase
     {
         private readonly ITransportationProviderService transportationProviderService;

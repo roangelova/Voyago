@@ -1,6 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Service.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
@@ -11,9 +10,9 @@ namespace GetMyTicket.API.Controllers
     {
         private readonly IPassengerService passengerService;
 
-        public PassengersController( IPassengerService passengerService)
+        public PassengersController(IPassengerService passengerService)
         {
-            this.passengerService = passengerService; 
+            this.passengerService = passengerService;
         }
 
         /// <summary>
@@ -24,22 +23,26 @@ namespace GetMyTicket.API.Controllers
         [HttpGet("by-user/{id}")]
         public async Task<Guid> GetPassengerId(Guid id)
         {
-          return await passengerService.GetPassengerIdAsync(id);
+            return await passengerService.GetPassengerIdAsync(id);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO)
         {
-            Guid passengerId = await passengerService.CreatePassengerData(createOrEditPassengerDTO);
+            Guid passengerId = await passengerService.CreatePassenger(createOrEditPassengerDTO);
 
-            return CreatedAtAction(nameof(CreatePassenger), passengerId);
+            return CreatedAtAction(nameof(GetPassengerId), new { id = passengerId }, passengerId); ;
         }
 
         [HttpPut("{id}")]
-        public IActionResult EditPassenger(Guid id, CreateOrEditPassengerDTO data)
+        public async Task<IActionResult> EditPassenger(Guid id, CreateOrEditPassengerDTO data)
         {
-            //TODO - IMPLEMENT
-            throw new NotImplementedException();
+            var updatedPassenger = await passengerService.EditPassenger(id, data);
+
+            if (updatedPassenger == null)
+                return BadRequest();
+
+            return Ok(updatedPassenger);
         }
     }
 }

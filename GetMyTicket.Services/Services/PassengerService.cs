@@ -25,15 +25,17 @@ namespace GetMyTicket.Service.Services
         /// </summary>
         /// <param name="bookTripDTO"></param>
         /// <returns></returns>
-        public async Task<Guid> CreatePassengerData(CreateOrEditPassengerDTO dto)
+        public async Task<Guid> CreatePassenger(CreateOrEditPassengerDTO dto)
         {
-            var user = await unitOfWork.Users.GetByIdAsync(dto);
+            var user = await unitOfWork.Users.GetByIdAsync(dto.UserId);
 
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(dto.UserId),
                     string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
             }
+
+            var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
 
             DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
 
@@ -42,25 +44,6 @@ namespace GetMyTicket.Service.Services
                  : null;
 
             Passenger passenger;
-
-            var genderParseResult = Enum.TryParse<Gender>(dto.Gender, out Gender gender);
-            var documentTypeParseResult = Enum.TryParse<DocumentType>(dto.DocumentType, out DocumentType documentType);
-
-            bool dobParseResult = DateOnly.TryParse(dto.Dob, out DateOnly DateOfBirth);
-            bool DocumentExpirationParseResult = DateOnly.TryParse(dto.DocumentExpirationDate, out DateOnly DocumentExpirationDate);
-
-            if (!genderParseResult)
-            {
-                throw new ArgumentException(ErrorMessages.InvalidGender, nameof(dto.Gender));
-            }
-            else if (!documentTypeParseResult) 
-            {
-                throw new ArgumentException(ErrorMessages.InvalidDocumentType, nameof(dto.DocumentType));
-            }
-            else if(DocumentExpirationParseResult || dobParseResult)
-            {
-                throw new ArgumentException(ErrorMessages.InvalidDateFormat);
-            }
 
             if (age > 18)
             {
@@ -71,11 +54,13 @@ namespace GetMyTicket.Service.Services
                     UserId = dto.UserId,
                     Gender = gender,
                     DocumentType = documentType,
-                    DocumentId = dto.DocumentId,
-                    ExpirationDate = DocumentExpirationDate, 
+                    DocumentId = dto.DocumentId.Trim(),
+                    ExpirationDate = DocumentExpirationDate,
                     DOB = DateOfBirth,
-                    Nationality = dto.Nationality
+                    Nationality = dto.Nationality.Trim()
                 };
+
+                user.PassengerMapId = passenger.PassengerId;
             }
             else
             {
@@ -83,13 +68,42 @@ namespace GetMyTicket.Service.Services
             }
 
             await unitOfWork.Passengers.AddAsync(passenger);
+            await unitOfWork.SaveChangesAsync();
 
             return passenger.PassengerId;
         }
 
-        public Task EditPassengerData(CreateOrEditPassengerDTO createOrEditPassengerDTO)
+        public async Task<GetPassengerDTO> EditPassenger(Guid passengerId, CreateOrEditPassengerDTO dto)
         {
-            throw new NotImplementedException();
+            //At this stage, every passenger is an adult; This will change as the application grows
+            Adult passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId) as Adult;
+            if (passenger == null)
+                throw new ArgumentNullException(nameof(passengerId), string.Format(ErrorMessages.NotFoundError, nameof(Passenger), passengerId));
+
+            var user = await unitOfWork.Users.GetByIdAsync(dto.UserId);
+            if (user == null)
+                throw new ArgumentNullException(nameof(dto.UserId), string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
+
+            var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
+            
+            passenger.Gender = gender;
+            passenger.DocumentType = documentType;
+            passenger.DocumentId = dto.DocumentId.Trim();
+            passenger.ExpirationDate = DocumentExpirationDate;
+            passenger.DOB = DateOfBirth;
+            passenger.Nationality = dto.Nationality.Trim();
+
+            unitOfWork.Passengers.Update(passenger);
+            await unitOfWork.SaveChangesAsync();
+
+            //TODO -> add FN LN to passenger obj;
+            return new GetPassengerDTO
+            {
+                PassengerId = passengerId,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                UserId = passenger.UserId
+            };
         }
 
         public async Task<Guid> GetPassengerIdAsync(Guid userId)
@@ -103,5 +117,24 @@ namespace GetMyTicket.Service.Services
 
             return user.PassengerMapId;
         }
+
+        private static (Gender gender, DocumentType documentType, DateOnly DateOfBirth, DateOnly DocumentExpirationDate)
+            ParseAndValidatePassengerData(CreateOrEditPassengerDTO dto)
+        {
+            if (!Enum.TryParse<Gender>(dto.Gender, out Gender gender))
+                throw new ArgumentException(ErrorMessages.InvalidGender, nameof(dto.Gender));
+
+            if (!Enum.TryParse<DocumentType>(dto.DocumentType, out DocumentType documentType))
+                throw new ArgumentException(ErrorMessages.InvalidDocumentType, nameof(dto.DocumentType));
+
+            bool dobParseResult = DateOnly.TryParse(dto.Dob, out DateOnly DateOfBirth);
+            bool documentExpirationParseResult = DateOnly.TryParse(dto.DocumentExpirationDate, out DateOnly DocumentExpirationDate);
+
+            if (!dobParseResult || !documentExpirationParseResult)
+                throw new ArgumentException(ErrorMessages.InvalidDateFormat);
+
+            return (gender, documentType, DateOfBirth, DocumentExpirationDate);
+        }
+
     }
 }

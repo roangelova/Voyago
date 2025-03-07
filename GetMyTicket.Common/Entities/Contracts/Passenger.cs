@@ -10,6 +10,14 @@ namespace GetMyTicket.Common.Entities.Contracts
     public abstract class Passenger
     {
         public Guid PassengerId { get; set; }
+
+        [Required]
+        [MaxLength(NameMaxLength)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(NameMaxLength)]
+        public string LastName { get; set; }
         public Gender Gender { get; set; }
 
         public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; }

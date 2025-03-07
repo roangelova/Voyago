@@ -50,6 +50,8 @@ namespace GetMyTicket.Service.Services
                 passenger = new Adult()
                 {
                     PassengerId = Guid.CreateVersion7(),
+                    FirstName = dto.FirstName.Trim(),
+                    LastName = dto.LastName.Trim(),
                     User = user,
                     UserId = dto.UserId,
                     Gender = gender,
@@ -86,6 +88,8 @@ namespace GetMyTicket.Service.Services
 
             var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
             
+            passenger.FirstName = dto.FirstName.Trim();
+            passenger.LastName = dto.LastName.Trim();
             passenger.Gender = gender;
             passenger.DocumentType = documentType;
             passenger.DocumentId = dto.DocumentId.Trim();
@@ -100,8 +104,8 @@ namespace GetMyTicket.Service.Services
             return new GetPassengerDTO
             {
                 PassengerId = passengerId,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
                 UserId = passenger.UserId
             };
         }

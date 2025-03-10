@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 

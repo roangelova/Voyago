@@ -16,16 +16,11 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(CreateUserDTO registerUserDTO)
+        public async Task<IActionResult> CreateUser(CreateUserDTO registerUserDTO)
         {
-           var result = userService.CreateUserAsync(registerUserDTO);
+            var userId = await userService.CreateUserAsync(registerUserDTO);
 
-            if (result.Result.Succeeded)
-            {
-                return Ok(result.Result);
-            }
-
-            return BadRequest(result.Result.Errors);
+            return Ok(userId);
         }
     }
 }

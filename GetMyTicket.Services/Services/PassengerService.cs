@@ -4,8 +4,10 @@ using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
+using System.Net;
 
 namespace GetMyTicket.Service.Services
 {
@@ -31,7 +33,7 @@ namespace GetMyTicket.Service.Services
 
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(dto.UserId),
+                throw new ApplicationError(
                     string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
             }
 
@@ -66,7 +68,7 @@ namespace GetMyTicket.Service.Services
             }
             else
             {
-                throw new ArgumentException(ErrorMessages.UserUnderage);
+                throw new ApplicationError(ErrorMessages.UserUnderage);
             }
 
             await unitOfWork.Passengers.AddAsync(passenger);
@@ -80,14 +82,14 @@ namespace GetMyTicket.Service.Services
             //At this stage, every passenger is an adult; This will change as the application grows
             Adult passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId) as Adult;
             if (passenger == null)
-                throw new ArgumentNullException(nameof(passengerId), string.Format(ErrorMessages.NotFoundError, nameof(Passenger), passengerId));
+                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(Passenger), passengerId));
 
             var user = await unitOfWork.Users.GetByIdAsync(dto.UserId);
             if (user == null)
-                throw new ArgumentNullException(nameof(dto.UserId), string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
+                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(User), dto.UserId));
 
             var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
-            
+
             passenger.FirstName = dto.FirstName.Trim();
             passenger.LastName = dto.LastName.Trim();
             passenger.Gender = gender;
@@ -116,7 +118,8 @@ namespace GetMyTicket.Service.Services
 
             if (user is null)
             {
-                throw new ArgumentException(string.Format(ErrorMessages.NotFoundError, nameof(User), userId));
+                throw new ApplicationError(
+                     string.Format(ErrorMessages.NotFoundError, nameof(User), userId));
             }
 
             return user.PassengerMapId;
@@ -126,10 +129,10 @@ namespace GetMyTicket.Service.Services
             ParseAndValidatePassengerData(CreateOrEditPassengerDTO dto)
         {
             if (!Enum.TryParse<Gender>(dto.Gender, out Gender gender))
-                throw new ArgumentException(ErrorMessages.InvalidGender, nameof(dto.Gender));
+                throw new ArgumentException(string.Format(ErrorMessages.NotSupported, nameof(dto.Gender)));
 
             if (!Enum.TryParse<DocumentType>(dto.DocumentType, out DocumentType documentType))
-                throw new ArgumentException(ErrorMessages.InvalidDocumentType, nameof(dto.DocumentType));
+                throw new ArgumentException(string.Format(ErrorMessages.NotSupported, nameof(dto.DocumentType)));
 
             bool dobParseResult = DateOnly.TryParse(dto.Dob, out DateOnly DateOfBirth);
             bool documentExpirationParseResult = DateOnly.TryParse(dto.DocumentExpirationDate, out DateOnly DocumentExpirationDate);

@@ -1,7 +1,9 @@
-﻿using GetMyTicket.Common.DTOs.User;
+﻿using GetMyTicket.Common.Constants;
+using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.DTOs.Vehicle;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -18,69 +20,54 @@ namespace GetMyTicket.Service.Services
 
         public async Task<Airplane> Add(CreateAirplaneDTO airplaneDTO)
         {
-            try
+            if (Enum.TryParse<AirplaneManufacturer>(airplaneDTO.Manufacturer,
+                    out AirplaneManufacturer manufacturer))
             {
-                if (Enum.TryParse<AirplaneManufacturer>(airplaneDTO.Manufacturer, 
-                        out AirplaneManufacturer manufacturer))
+
+                if (airplaneDTO.Capacity <= 0)
                 {
-
-                    if(airplaneDTO.Capacity <= 0)
-                    {
-                        throw new ArgumentOutOfRangeException("Capacity can't be null");
-                    }
-
-                    if (string.IsNullOrWhiteSpace(airplaneDTO.Model))
-                    {
-                        throw new ArgumentException("Invalid aircraft model");
-                    }
-
-                    var entity = new Airplane()
-                    {
-                        VehicleId = Guid.CreateVersion7(),
-                        TransportationProvideriD = airplaneDTO.TpProviderId,
-                        Model = airplaneDTO.Model.Trim(),
-                        Capacity = airplaneDTO.Capacity,
-                        ManufacturingDate = airplaneDTO.ManufacturingDate,
-                        AirplaneManufacturer = manufacturer
-                    };
-
-                    await unitOfWork.Vehicles.AddAsync(entity);
-                    await unitOfWork.SaveChangesAsync();
-
-                    return entity;
+                    throw new ApplicationError(string.Format(ErrorMessages.CantBeBull, nameof(airplaneDTO.Capacity)));
                 }
 
-                throw new ArgumentException("Manufacturer not supported.");
+                if (string.IsNullOrWhiteSpace(airplaneDTO.Model))
+                {
+                    throw new ApplicationError(string.Format(ErrorMessages.NotSupported, nameof(airplaneDTO.Model)));
+                }
+
+                var entity = new Airplane()
+                {
+                    VehicleId = Guid.CreateVersion7(),
+                    TransportationProvideriD = airplaneDTO.TpProviderId,
+                    Model = airplaneDTO.Model.Trim(),
+                    Capacity = airplaneDTO.Capacity,
+                    ManufacturingDate = airplaneDTO.ManufacturingDate,
+                    AirplaneManufacturer = manufacturer
+                };
+
+                await unitOfWork.Vehicles.AddAsync(entity);
+                await unitOfWork.SaveChangesAsync();
+
+                return entity;
             }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            throw new ApplicationError(string.Format(ErrorMessages.NotSupported, nameof(airplaneDTO.Manufacturer)));
         }
 
         public async Task<GetAirplaneDTO> GetById(object id)
         {
-            try
+            Airplane entity = (Airplane)await unitOfWork.Vehicles.GetByIdAsync(id);
+
+            if (entity != null)
             {
-                Airplane entity = (Airplane) await unitOfWork.Vehicles.GetByIdAsync(id);
-
-                if(entity  != null)
-                {
-                    return new GetAirplaneDTO(
-                        entity.TransportationProvideriD,
-                        Enum.GetName(entity.AirplaneManufacturer),
-                        entity.Model,
-                        entity.Capacity
-                        );
-                }
-
-                return null;
+                return new GetAirplaneDTO(
+                    entity.TransportationProvideriD,
+                    Enum.GetName(entity.AirplaneManufacturer),
+                    entity.Model,
+                    entity.Capacity
+                    );
             }
-            catch (Exception)
-            {
 
-                throw;
-            }
+            return null;
         }
     }
 }

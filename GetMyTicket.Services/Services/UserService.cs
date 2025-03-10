@@ -1,6 +1,8 @@
-﻿using GetMyTicket.Common.DTOs.TP;
+﻿using GetMyTicket.Common.Constants;
+using GetMyTicket.Common.DTOs.TP;
 using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,7 +24,7 @@ namespace GetMyTicket.Service.Services
 
             if (!parseResult)
             {
-                throw new InvalidDataException("Invalid date of birth");
+                throw new ApplicationError(string.Format(ErrorMessages.Invalid, nameof(registerUserDTO.Dob)));
             }
 
             //TODO: write unittest to check this method 
@@ -34,7 +36,7 @@ namespace GetMyTicket.Service.Services
                    string.IsNullOrWhiteSpace(registerUserDTO.Email) ||
                    string.IsNullOrWhiteSpace(registerUserDTO.Address))
             {
-                throw new ArgumentException("A required field was empty.");
+                throw new ApplicationError(ErrorMessages.AllFieldsRequired);
             }
 
             var user = new User()
@@ -50,7 +52,7 @@ namespace GetMyTicket.Service.Services
             };
 
             //CREATE USER
-            return await userManager.CreateAsync(user, registerUserDTO.Password);
+             return await userManager.CreateAsync(user, registerUserDTO.Password);
         }
     }
 }

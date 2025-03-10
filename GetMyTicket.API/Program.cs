@@ -131,7 +131,7 @@ app.UseAuthentication();
 
 app.Use(async (context, next) =>
 {
-    Console.WriteLine($"User: {context.User.Identity?.Name} - Authenticated: {context.User.Identity?.IsAuthenticated}");
+    Console.WriteLine($"User: {context?.User.Identity?.Name} - Authenticated: {context?.User.Identity?.IsAuthenticated}");
     await next();
 });
 

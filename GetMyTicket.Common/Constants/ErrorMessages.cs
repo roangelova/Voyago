@@ -13,9 +13,13 @@
 
         public const string SoldOut = "Uh oh! The itinerary is no longer available. Please, choose a different connection!";
 
-        public const string InvalidDocumentType = "Invalid document type";
-        public const string InvalidGender = "Gender not reccognized";
+        public const string Invalid = "Invalid {0}";
+        public const string NotSupported = "{0} not supported.";
 
         public const string InvalidDateFormat = "The provided date format was incorrect";
+
+        public const string CantBeBull = "{0} can't be null.";
+
+        public const string AllFieldsRequired = "All fields are required";
     }
 }

@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.DTOs.Passenger;
+﻿using System.Net;
+using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,7 @@ namespace GetMyTicket.API.Controllers
         public async Task<Guid> GetPassengerId(Guid id)
         {
             return await passengerService.GetPassengerIdAsync(id);
+
         }
 
         [HttpPost]
@@ -40,7 +42,7 @@ namespace GetMyTicket.API.Controllers
             var updatedPassenger = await passengerService.EditPassenger(id, data);
 
             if (updatedPassenger == null)
-                return BadRequest();
+                return NotFound();
 
             return Ok(updatedPassenger);
         }

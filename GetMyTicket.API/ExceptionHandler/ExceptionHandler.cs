@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using GetMyTicket.Common.ErrorHandling;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.ExceptionHandler
@@ -14,7 +15,7 @@ namespace GetMyTicket.API.ExceptionHandler
         {
             httpContext.Response.StatusCode = exception switch
             {
-                ApplicationException => StatusCodes.Status400BadRequest,
+                ApplicationError => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
 

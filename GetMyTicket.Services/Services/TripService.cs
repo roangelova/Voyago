@@ -1,6 +1,8 @@
-﻿using GetMyTicket.Common.DTOs.Trip;
+﻿using GetMyTicket.Common.Constants;
+using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -23,7 +25,7 @@ namespace GetMyTicket.Service.Services
 
             if (!parseArrvalTime || !parseDepartureTime)
             {
-                throw new InvalidDataException("Incorrect trip time format.");
+                throw new ApplicationError(ErrorMessages.InvalidDateFormat);
             }
 
             //prepare dates for filter function 

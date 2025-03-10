@@ -1,6 +1,7 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -30,12 +31,12 @@ namespace GetMyTicket.Service.Services
 
             if (trip is null)
             {
-                throw new ArgumentException(string.Format(ErrorMessages.NotFoundError, nameof(Trip), bookTripDTO.TripId));
+                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(Trip), bookTripDTO.TripId));
             }
 
             if(trip.Capacity == 0)
             {
-                throw new InvalidOperationException(ErrorMessages.SoldOut);
+                throw new ApplicationError(ErrorMessages.SoldOut);
             }
 
             //TODO-> ONCE 1+ PASSENGERS ARE SUPPORTED, CALCULATE TOTAL PRICE

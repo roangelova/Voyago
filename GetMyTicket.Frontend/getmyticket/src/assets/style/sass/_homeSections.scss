@@ -1,0 +1,48 @@
+.whyUs_container {
+
+    & h2,
+    h3 {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        color: $color-grey-dark-2;
+    }
+
+    & ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    &__item {
+        padding: 10px;
+        margin: 30px;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(to bottom, rgba($color-primary, 0.3), rgba($color-pink, 0.3));
+        box-shadow: 1px 0.5px 1px 1.5px rgba(0, 0, 0, 0.42);
+        border-radius: 5px;
+        align-items: center;
+        flex: 1;
+
+        & h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        & img {
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+
+        & p {
+            font-size: 18px;
+            text-align: center;
+            padding: 20px 30px 10px 30px;
+        }
+    }
+}

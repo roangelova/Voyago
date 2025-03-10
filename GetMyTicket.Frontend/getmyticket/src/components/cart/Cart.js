@@ -14,6 +14,7 @@ import ReviewCart from './ReviewCart';
 
 import { Passenger } from "../../services/passengerService";
 
+const FAKE_USER_FOR_TESTING = '536e2aeb-f0df-4155-af9a-954277593763';
 const userId = sessionStorage.getItem('userId');
 
 const initialState = {
@@ -21,13 +22,15 @@ const initialState = {
     userId: userId,
     passengerId: null,
     passenger: {
+        userId: userId,
         firstName: '',
         lastName: '',
         gender: '',
         dob: '2000-01-01',
         documentType: '',
         documentId: '',
-        nationality: ''
+        nationality: '',
+        documentExpirationDate: '2000-01-01'
     },
     trip: {},
     activeStep: 1
@@ -58,6 +61,7 @@ function reducer(state, action) {
         case 'setPassenger':
             return {
                 ...state, passenger: {
+                    userId: userId,
                     firstName: action.payload.firstName,
                     lastName: action.payload.lastName,
                     gender: action.payload.gender,
@@ -65,6 +69,7 @@ function reducer(state, action) {
                     documentType: action.payload.documentType,
                     documentId: action.payload.documentId,
                     nationality: action.payload.nationality,
+                    documentExpirationDate: '2000-01-01'
                 }
             }
         default:
@@ -86,12 +91,13 @@ function Cart() {
 
         Passenger.getPassenger(state.userId)
             .then(data => {
-                dispatch({ type: 'setPassengerId', payload: data });
-                dispatch({ type: 'setPassenger', payload: data })
+                if (data) {
+                    dispatch({ type: 'setPassengerId', payload: data });
+                    dispatch({ type: 'setPassenger', payload: data })
+                }
             })
             .catch(err => {
                 console.error(err)
-                //TODO -> how are we gonna handle this? If no data, it is not always an error but passenger is simply not created yet
             })
     }, [])
 
@@ -120,7 +126,7 @@ function Cart() {
                                     <PassengerData
                                         dispatch={dispatch}
                                         passenger={state.passenger}
-                                        passenderId={state.passenderId} /> :
+                                        passengerId={state.passengerId}/> :
                                     state.activeStep === 3 ?
                                         <ReviewCart
                                             trip={state.trip}

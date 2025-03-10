@@ -32,6 +32,8 @@ axios.interceptors.response.use(function (response) {
         toast.error("Something went wrong. Please, try again.");
     } else if (error.response.status === 404) {
         window.location.href = "/404";
+    } else if (error.status === 400) {
+        console.error(error)
     } else {
         console.log("Error:", error.response.data);
     }

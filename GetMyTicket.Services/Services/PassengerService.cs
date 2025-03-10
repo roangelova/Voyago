@@ -105,10 +105,15 @@ namespace GetMyTicket.Service.Services
             //TODO -> add FN LN to passenger obj;
             return new GetPassengerDTO
             {
-                PassengerId = passengerId,
+                UserId = user.Id,
+                PassengerId = passenger.PassengerId,
                 FirstName = passenger.FirstName,
                 LastName = passenger.LastName,
-                UserId = passenger.UserId
+                Gender = passenger.Gender.ToString(),
+                DocumentType = passenger.DocumentType.ToString(),
+                DocumentId = passenger.DocumentId,
+                Dob = passenger.DOB,
+                Nationality = passenger.Nationality
             };
         }
 
@@ -143,9 +148,9 @@ namespace GetMyTicket.Service.Services
 
             var passenger = await unitOfWork.Passengers.GetByIdAsync(user.PassengerMapId) as Adult;
 
-            if(passenger == null)
+            if (passenger == null)
             {
-                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(Passenger), user.PassengerMapId));
+                return null;
             }
 
             return new GetPassengerDTO()

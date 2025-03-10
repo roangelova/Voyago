@@ -1,12 +1,32 @@
+import { Passenger } from "../../services/passengerService";
+import { toast } from "react-toastify";
+
 function PassengerData({ dispatch, passenger, passengerId }) {
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        let result = window.confirm('By submitting this information, you confirm that it is accurate and as per your personal identification documents. Please be advised that in case of inconsistencies, bording might be denied.')
+        let confirmed = window.confirm('By submitting this information, you confirm that it is accurate and as per your personal identification documents. Please be advised that in case of inconsistencies, bording might be denied.')
 
-
-        //TODO -> EDIT DATA IF PASSENGER DATA EXIST OR CREATE PASSENGER IF IT DOES NOT
+        if (confirmed) {
+            if (passengerId !== null || passengerId !== undefined || passengerId !== "") {
+                console.log('IN EDIT', passengerId)
+                Passenger.editPassenger(passengerId, passenger)
+                    .then(updatedPassenger => {
+                        dispatch({ type: 'setPassenger', payload: updatedPassenger })
+                    })
+            } else {
+                Passenger.createPassenger(passenger)
+                    .then(updatedPassenger => {
+                        dispatch({ type: 'setPassenger', payload: updatedPassenger })
+                        dispatch({ type: 'setPassengerId', payload: updatedPassenger })
+                    }).catch(err=> {
+                        toast.error(err.response.data.detail)
+                    })
+            }
+        }else{
+            toast.information('Operation aborted.')
+        }
     }
 
     return (
@@ -113,28 +133,28 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                 </div>
 
                 <div className="passengerDetails__inputDiv">
-                        <label htmlFor="documentNumber">Document Id:</label>
-                        <input name='documentNumber'
-                            type="text"
-                            placeholder='N1526'
-                            value={passenger.documentId}
-                            onChange={(e) =>
-                                dispatch({ type: "setField", field: "documentId", value: e.target.value })
-                            }
-                        />
-                    </div>
+                    <label htmlFor="documentNumber">Document Id:</label>
+                    <input name='documentNumber'
+                        type="text"
+                        placeholder='N1526'
+                        value={passenger.documentId}
+                        onChange={(e) =>
+                            dispatch({ type: "setField", field: "documentId", value: e.target.value })
+                        }
+                    />
+                </div>
 
-                    <div  className="passengerDetails__inputDiv">
-                        <label htmlFor="nationality">Nationality:</label>
-                        <input name='nationality'
-                            type="text"
-                            placeholder='bulgarian'
-                            value={passenger.nationality}
-                            onChange={(e) =>
-                                dispatch({ type: "setField", field: "nationality", value: e.target.value })
-                            }
-                        />
-                    </div>
+                <div className="passengerDetails__inputDiv">
+                    <label htmlFor="nationality">Nationality:</label>
+                    <input name='nationality'
+                        type="text"
+                        placeholder='bulgarian'
+                        value={passenger.nationality}
+                        onChange={(e) =>
+                            dispatch({ type: "setField", field: "nationality", value: e.target.value })
+                        }
+                    />
+                </div>
 
                 <button className="btn passengerDetails__btn"
                     onClick={handleSubmit}

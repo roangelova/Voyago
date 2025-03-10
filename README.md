@@ -1,5 +1,7 @@
 ![snippet_1](https://github.com/user-attachments/assets/4302320d-22fb-4d33-b1dd-3170a47971ba)
-The home page as of [28.01.2025]
+![image](https://github.com/user-attachments/assets/00bd61d9-c132-42ea-b8cb-08bfc447b334)
+
+The home page as of [10.03.2025]
 
 #### Project goals 
 The aim of this project is to combine my passion for the trasportation industry (mostly aviation) and develop an application, which will serve me as a training ground for my skills. As time goes by, the application will be refactored and upgraded to reflect better software development practices and implement more complicated features.  
@@ -7,7 +9,6 @@ The aim of this project is to combine my passion for the trasportation industry 
 DB: Azure SQL 
 Frontend: React, HTML, CSS, JS + SASS
 Backend: .NET 
-+ Azure Key Vault
 
 To be hosted on Azure
 

@@ -16,24 +16,21 @@ namespace GetMyTicket.API.Controllers
             this.passengerService = passengerService;
         }
 
-        /// <summary>
-        /// Returns the passenger Id, associated with the user with the provided id
-        /// </summary>
-        /// <param name="id">The user Id to search by</param>
-        /// <returns></returns>
-        [HttpGet("by-user/{id}")]
-        public async Task<Guid> GetPassengerId(Guid id)
-        {
-            return await passengerService.GetPassengerIdAsync(id);
 
+        [HttpGet("by-user/{userId}")]
+        public async Task<GetPassengerDTO> GetPassenger(Guid userId)
+        {
+            var passenger =  await passengerService.GetPassengerAsync(userId);
+            return passenger;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO)
         {
             Guid passengerId = await passengerService.CreatePassenger(createOrEditPassengerDTO);
 
-            return CreatedAtAction(nameof(GetPassengerId), new { id = passengerId }, passengerId); ;
+            return CreatedAtAction(nameof(GetPassenger), new { id = passengerId }, passengerId); ;
         }
 
         [HttpPut("{id}")]

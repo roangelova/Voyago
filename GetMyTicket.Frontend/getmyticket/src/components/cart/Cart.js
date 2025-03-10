@@ -12,18 +12,20 @@ import TripDetails from './TripDetails';
 import PassengerData from './PassengerData';
 import ReviewCart from './ReviewCart';
 
+import { Passenger } from "../../services/passengerService";
+
 const userId = sessionStorage.getItem('userId');
 
 const initialState = {
     tripId: null,
     userId: userId,
-    passenderId: null,
+    passengerId: null,
     passenger: {
         firstName: '',
         lastName: '',
-        gender: 'Other',
+        gender: '',
         dob: '2000-01-01',
-        documentType: 'Passport',
+        documentType: '',
         documentId: '',
         nationality: ''
     },
@@ -51,6 +53,20 @@ function reducer(state, action) {
                     [action.field]: action.value
                 }
             }
+        case 'setPassengerId':
+            return { ...state, passengerId: action.payload.passengerId }
+        case 'setPassenger':
+            return {
+                ...state, passenger: {
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    gender: action.payload.gender,
+                    dob: action.payload.dob,
+                    documentType: action.payload.documentType,
+                    documentId: action.payload.documentId,
+                    nationality: action.payload.nationality,
+                }
+            }
         default:
             toast.error('DEV ONLY: NO ACTION!');
             return state;
@@ -67,6 +83,16 @@ function Cart() {
         if (trip) {
             dispatch({ type: 'setTrip', payload: trip })
         }
+
+        Passenger.getPassenger(state.userId)
+            .then(data => {
+                dispatch({ type: 'setPassengerId', payload: data });
+                dispatch({ type: 'setPassenger', payload: data })
+            })
+            .catch(err => {
+                console.error(err)
+                //TODO -> how are we gonna handle this? If no data, it is not always an error but passenger is simply not created yet
+            })
     }, [])
 
     return (

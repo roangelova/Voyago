@@ -6,7 +6,7 @@ namespace GetMyTicket.Service.Contracts
 {
     public interface IPassengerService
     {
-        public Task<Guid> GetPassengerIdAsync(Guid userId);
+        public Task<GetPassengerDTO> GetPassengerAsync(Guid userId);
         public Task<Guid> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO);
         public Task<GetPassengerDTO> EditPassenger(Guid passengerId, CreateOrEditPassengerDTO createOrEditPassengerDTO);
     }

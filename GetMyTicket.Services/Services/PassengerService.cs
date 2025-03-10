@@ -112,18 +112,6 @@ namespace GetMyTicket.Service.Services
             };
         }
 
-        public async Task<Guid> GetPassengerIdAsync(Guid userId)
-        {
-            var user = await unitOfWork.Users.GetByIdAsync(userId);
-
-            if (user is null)
-            {
-                throw new ApplicationError(
-                     string.Format(ErrorMessages.NotFoundError, nameof(User), userId));
-            }
-
-            return user.PassengerMapId;
-        }
 
         private static (Gender gender, DocumentType documentType, DateOnly DateOfBirth, DateOnly DocumentExpirationDate)
             ParseAndValidatePassengerData(CreateOrEditPassengerDTO dto)
@@ -143,5 +131,35 @@ namespace GetMyTicket.Service.Services
             return (gender, documentType, DateOfBirth, DocumentExpirationDate);
         }
 
+        public async Task<GetPassengerDTO> GetPassengerAsync(Guid userId)
+        {
+            var user = await unitOfWork.Users.GetByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new ApplicationError(
+                     string.Format(ErrorMessages.NotFoundError, nameof(User), userId));
+            }
+
+            var passenger = await unitOfWork.Passengers.GetByIdAsync(user.PassengerMapId) as Adult;
+
+            if(passenger == null)
+            {
+                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(Passenger), user.PassengerMapId));
+            }
+
+            return new GetPassengerDTO()
+            {
+                UserId = userId,
+                PassengerId = passenger.PassengerId,
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
+                Gender = passenger.Gender.ToString(),
+                DocumentType = passenger.DocumentType.ToString(),
+                DocumentId = passenger.DocumentId,
+                Dob = passenger.DOB,
+                Nationality = passenger.Nationality
+            };
+        }
     }
 }

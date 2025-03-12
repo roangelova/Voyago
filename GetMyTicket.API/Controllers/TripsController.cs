@@ -16,8 +16,8 @@ namespace GetMyTicket.API.Controllers
             this.tripService = tripService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetAllTrips(SearchTripsDTO searchTripsDTO)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetAllTrips([FromQuery]SearchTripsDTO searchTripsDTO)
         {
             var trips = await tripService.GetAllSearchResultTrips(searchTripsDTO);
 

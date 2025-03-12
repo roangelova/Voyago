@@ -384,6 +384,7 @@ h1 {
 .search__container-map {
   width: 50%;
   height: 90%;
+  padding: 2rem;
 }
 .search__image {
   max-width: 100%;

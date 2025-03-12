@@ -1,83 +1,19 @@
 .header {
+    position: relative;
     height: 60vh;
-    background-image: url(../../images/header.jpg);
-    background-size: cover;
-
-    display: flex;
-    justify-content: space-between;
-    z-index: 2;
+    width: 100vw;
 
     &__container {
-        position: relative;
         height: 60vh;
-        width: 100vw;
+        background-image: url(../../images/header.jpg);
+        background-size: cover;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
     }
 
     &__logo {
         max-height: 70px;
     }
-
-    &__logoBox {
-        display: flex;
-        justify-content: space-between;
-        gap: 0.5rem;
-    }
-
-    &__heading {
-        display: inline-block;
-        text-align: center;
-
-        color: #444;
-    }
-
-    &__navigation {
-        display: flex;
-        gap: 32rem;
-        justify-content: space-between;
-        flex: 0 0 80%;
-
-        padding-right: 1rem;
-        padding-top: 0.5rem;
-
-        margin-left: 10px;
-
-        &-login::after {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 1em;
-            background-color: #333;
-            margin: 0 4px;
-        }
-
-        &-browse {
-            display: flex;
-            gap: 1rem;
-            justify-self: left;
-
-            font-size: 18px;
-        }
-
-        &-user {
-            justify-self: end;
-
-            display: flex;
-
-            font-size: 18px;
-            padding: 5px;
-
-            & span{
-                margin-right: 5px;
-            }
-
-            & li{
-                cursor: pointer;
-            }
-        }
-    }
-}
-
-.blurred {
-    filter: blur(5px);
-    transition: filter 0.4s ease-out;
 }

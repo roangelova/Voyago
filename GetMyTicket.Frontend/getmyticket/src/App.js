@@ -5,10 +5,12 @@ import NotFoundPage from './features/common/NotFoundPage';
 import RegisterForm from './features/account/RegisterForm';
 import MainPage from './features/pages/MainPage';
 import SearchResultsPage from './features/pages/SearchResultsPage';
-import { ToastContainer } from 'react-toastify';
 import Cart from './features/cart/Cart';
 
+import { ToastContainer } from 'react-toastify';
+
 function App() {
+
   return (
     <BrowserRouter>
       <ToastContainer />
@@ -29,14 +31,3 @@ function App() {
 }
 
 export default App;
-
-
-//Structure (HOMEPAGE): 
-//
-//Header 60VH 
-// Search Bar -> should overlap a tiny portion of the header
-// CTA section Logos -> display provider logos and link to main booking page
-// WHY US SECTION -> 3 reasons to choose us
-// ..
-// ..
-//ABOUT US & FOOTER 

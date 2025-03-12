@@ -1,8 +1,27 @@
+import { useEffect } from "react";
+
 import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
 import Cookies from 'js-cookie';
 
-function Login({ setLoginPopupVisibility }) {
+function Login({ LoginPopupVisibility, setLoginPopupVisibility }) {
+
+    useEffect(() => {
+        //disables back button on login popup
+        if (LoginPopupVisibility) {
+            window.history.pushState(null, "", window.location.href);
+
+            const handleBackButton = () => {
+                window.history.pushState(null, "", window.location.href);
+            };
+
+            window.addEventListener("popstate", handleBackButton);
+
+            return () => {
+                window.removeEventListener("popstate", handleBackButton);
+            };
+        }
+    }, [LoginPopupVisibility]);
 
     const Login = (formData) => {
 
@@ -49,47 +68,49 @@ function Login({ setLoginPopupVisibility }) {
     }
 
     return (
-        <div className="login__form">
-            <div className="login__iconBox">
-                <svg
-                    onClick={() => setLoginPopupVisibility(false)}
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-1">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
+        <div className="login">
+            <div className="login__container">
+                <div className="login__iconBox">
+                    <svg
+                        onClick={() => setLoginPopupVisibility(false)}
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-1">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
 
+                </div>
+
+                <form action={Login}>
+                    <div className="login__row">
+                        <label htmlFor="email" >
+                            Email:
+                        </label>
+                        <input
+                            type="text"
+                            name="email"
+                        >
+                        </input>
+                    </div>
+
+                    <div className="login__row">
+                        <label htmlFor="password" >
+                            Password:               </label>
+                        <input
+                            type="password"
+                            name="password"
+                        >
+                        </input>
+                    </div>
+
+                    <button
+                        className="login__btn"
+                        type="submit"
+                    >
+                        Login
+                    </button>
+
+
+                </form>
             </div>
-
-            <form action={Login}>
-                <div className="login__row">
-                    <label htmlFor="email" >
-                        Email:
-                    </label>
-                    <input
-                        type="text"
-                        name="email"
-                    >
-                    </input>
-                </div>
-
-                <div className="login__row">
-                    <label htmlFor="password" >
-                        Password:               </label>
-                    <input
-                        type="password"
-                        name="password"
-                    >
-                    </input>
-                </div>
-
-                <button
-                    className="login__btn"
-                    type="submit"
-                >
-                    Login
-                </button>
-
-
-            </form>
         </div>
     )
 }

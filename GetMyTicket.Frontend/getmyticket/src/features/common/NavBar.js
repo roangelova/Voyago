@@ -1,20 +1,28 @@
-import Cookies from 'js-cookie';
-import AccountMenuDropdown from '../account/AccountMenuDropdown';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+
+import Cookies from 'js-cookie';
+
+import AccountMenuDropdown from '../account/AccountMenuDropdown';
+import Login from '../account/Login';
 
 import arrowdown from '../../assets/icons/arrowdown.png';
 import arrowup from '../../assets/icons/arrowup.png';
 
-function NavBar({ handleLoginToggle }) {
+function NavBar() {
     let isLoggedIn = !!Cookies.get('accessToken');
 
     const [showUserMenu, setShowUserMenu] = useState(false);
+    const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
+
+    const handleLoginToggle = () => {
+        setLoginPopupVisibility(true);
+    };
 
     const NoUserNav =
-        <ul className='header__navigation-user'>
+        <ul className='navigation__user'>
             <li
-                className='header__navigation-login'
+                className='navigation__login'
                 onClick={handleLoginToggle}
             >
                 Login
@@ -26,14 +34,27 @@ function NavBar({ handleLoginToggle }) {
             </li>
         </ul>
 
+    const UserNav =
+        <ul className='navigation__user'>
+            <li onClick={() => (setShowUserMenu(!showUserMenu))} href='#' >
+                <span>Account </span>
+                <img src={showUserMenu ? arrowup : arrowdown} alt='arrow up/down' />
+            </li>
+
+            {showUserMenu ? <AccountMenuDropdown /> : null}
+
+        </ul>
+
     return (
-        <nav className='header__navigation'>
-            <ul className="header__navigation-browse">
-            <li>
-                    <NavLink to='/'>
-                        Home
+        <nav className='navigation'>
+            <div className='navigation__heading'>
+                <h1>
+                    <NavLink to="/">
+                        VoyaGo
                     </NavLink>
-                </ li>
+                </h1>
+            </div>
+            <ul className="navigation__browse">
                 <li>
                     <NavLink to='/trains'>
                         Trains
@@ -51,19 +72,16 @@ function NavBar({ handleLoginToggle }) {
                 </li>
             </ul>
 
-            {isLoggedIn ?
-                <ul className='header__navigation-user'>
-                    <li onClick={() => (setShowUserMenu(!showUserMenu))} href='#' >
-                        <span>Account </span>
-                        <img src={showUserMenu ? arrowup : arrowdown} alt='arrow up/down' />
-                    </li>
+            {isLoggedIn ? UserNav : NoUserNav}
 
-                    {showUserMenu ? <AccountMenuDropdown /> : null}
-
-                </ul>
-                :
-                NoUserNav
-
+            {
+                LoginPopupVisibility ?
+                    <div className='login blur-overlay'>
+                        <Login
+                            LoginPopupVisibility={LoginPopupVisibility}
+                            setLoginPopupVisibility={setLoginPopupVisibility} />
+                    </div> :
+                    null
             }
 
         </nav>

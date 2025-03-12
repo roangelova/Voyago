@@ -3,7 +3,7 @@ import logo from '../../assets/images/logo.png'
 function Footer() {
 
     return (
-        <div className="footer">
+        <section className="footer">
            <ul className="footer__ul">
                 <li>Legal</li>
                 <li>Terms of use</li>
@@ -17,7 +17,7 @@ function Footer() {
                 <li>Help centre</li>
                 <li>Become a partner</li>
            </ul>
-        </div>
+        </section>
     )
 }
 

@@ -6,10 +6,55 @@
     background-position: top;
 }
 
-.btn{
+.btn {
     padding: 10px;
     border-radius: 10px;
     font-size: 14px;
     background-color: $color-primary;
     box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+}
+
+.navigation {
+    font-size: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 0 90%;
+
+    margin: 5px 2rem;
+
+    &__login::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 1em;
+        background-color: #333;
+        margin: 0px 5px;
+    }
+
+    &__heading {
+        font-size: 20px;
+        color: #444;
+    }
+
+    &__browse {
+        display: flex;
+        gap: 1rem;
+        justify-self: left;
+    }
+
+    &__user {
+        display: flex;
+        font-size: 18px;
+
+        & span {
+            margin-right: 5px;
+        }
+
+        & li {
+            cursor: pointer;
+            font-size: 20px;
+        }
+    }
 }

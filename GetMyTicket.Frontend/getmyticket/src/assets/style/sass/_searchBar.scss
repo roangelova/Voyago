@@ -9,11 +9,11 @@
 
     &__container {
         position: absolute;
-        top: 50%;
+        top: 55%;
         left: 50%;
-        transform: translate(-50%, 0);
+        transform: translate(-55%, 0);
 
-        min-width:60vw;
+        min-width:50vw;
         min-height:10vh;
         max-width: 70vw;
         max-height: 20vh;
@@ -24,7 +24,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
 
         &--element {
             display: inline-block;

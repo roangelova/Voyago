@@ -3,12 +3,12 @@ import transavia_logo from '../../assets/images/transavia_logo.PNG'
 import { useNavigate } from "react-router-dom";
 
 function SearchResultCard({ trip }) {
-const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleBookTrip = () => {
         const userId = sessionStorage.getItem('userId');
-        
-       if (!userId) {
+
+        if (!userId) {
             toast.error('Ugh oh.. Seems like you need to log in again, in order to book this trip.')
             return;
         }
@@ -30,8 +30,8 @@ const navigate = useNavigate();
                     <span className="to">{trip.endCityName}</span>
                 </div>
                 <div className='connection'>
-                    <p>Departure: <span >{new Date(trip.startTime).toLocaleString()}</span> </p>
-                    <p> Arrival: <span>{new Date(trip.endTime).toLocaleString()}</span></p>
+                    <p><b>Departure:</b> <span >{new Date(trip.startTime).toLocaleString()}</span> </p>
+                    <p><b>Arrival: </b><span>{new Date(trip.endTime).toLocaleString()}</span></p>
                 </div>
 
 

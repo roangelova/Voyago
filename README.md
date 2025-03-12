@@ -1,11 +1,12 @@
-![image](https://github.com/user-attachments/assets/0f0e63b2-c954-4859-ad05-8e709092f9ba)
+![image](https://github.com/user-attachments/assets/8dcc1993-a57b-4f20-bbe4-3bbcdbe6a979)
 ![image](https://github.com/user-attachments/assets/93686998-e637-4d69-8e16-c04e5d28046e)
 
-The home page as of [10.03.2025]
+The home page as of [12.03.2025]
 
-![image](https://github.com/user-attachments/assets/020a4eb0-4066-438b-9ad5-e4d72459d132)
 
-Currently, the search page displays a static map. The next step is to display the actual start and destination city on the map. 
+![image](https://github.com/user-attachments/assets/84eb984a-bf0a-4818-bc00-a933b1c54df4)
+
+Search results page as of [12.03.2025] --> Currently, the search page displays a static map. The next step is to display the actual start and destination city on the map. 
 
 #### Project goals 
 The aim of this project is to combine my passion for the trasportation industry and develop an application, which will serve me as a training ground for my skills. As time goes by, the application will be refactored and upgraded to reflect better software development practices and implement more complicated features.  

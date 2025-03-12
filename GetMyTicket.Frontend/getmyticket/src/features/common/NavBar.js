@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import voyago from '../../assets/images/voyago.png'
+
 import Cookies from 'js-cookie';
 
 import AccountMenuDropdown from '../account/AccountMenuDropdown';
@@ -47,12 +49,10 @@ function NavBar() {
 
     return (
         <nav className='navigation'>
-            <div className='navigation__heading'>
-                <h1>
+            <div className='navigation__logo'>
                     <NavLink to="/">
-                        VoyaGo
+                        <img src={voyago} alt='Site logo and name'/>
                     </NavLink>
-                </h1>
             </div>
             <ul className="navigation__browse">
                 <li>

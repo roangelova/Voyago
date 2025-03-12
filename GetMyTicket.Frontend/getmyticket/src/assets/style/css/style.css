@@ -70,12 +70,6 @@ h1 {
   height: 60vh;
   background-image: url(../../images/header.jpg);
   background-size: cover;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.header__logo {
-  max-height: 70px;
 }
 
 .register {
@@ -301,8 +295,8 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: 1 0 90%;
-  margin: 5px 2rem;
+  padding-top: 5px;
+  margin: 0px 2rem 5px 1rem;
 }
 .navigation__login::after {
   content: "";
@@ -312,14 +306,12 @@ h1 {
   background-color: #333;
   margin: 0px 5px;
 }
-.navigation__heading {
-  font-size: 20px;
-  color: #444;
+.navigation__logo img {
+  width: 160px;
 }
 .navigation__browse {
   display: flex;
   gap: 1rem;
-  justify-self: left;
 }
 .navigation__user {
   display: flex;

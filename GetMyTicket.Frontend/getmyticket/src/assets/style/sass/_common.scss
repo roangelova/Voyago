@@ -20,9 +20,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex: 1 0 90%;
 
-    margin: 5px 2rem;
+    padding-top: 5px;
+    margin: 0px 2rem 5px 1rem;
+    
 
     &__login::after {
         content: '';
@@ -33,15 +34,15 @@
         margin: 0px 5px;
     }
 
-    &__heading {
-        font-size: 20px;
-        color: #444;
+    &__logo {
+        & img {
+            width: 160px;
+        }
     }
 
     &__browse {
         display: flex;
         gap: 1rem;
-        justify-self: left;
     }
 
     &__user {

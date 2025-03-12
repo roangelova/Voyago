@@ -7,13 +7,5 @@
         height: 60vh;
         background-image: url(../../images/header.jpg);
         background-size: cover;
-
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
-
-    &__logo {
-        max-height: 70px;
     }
 }

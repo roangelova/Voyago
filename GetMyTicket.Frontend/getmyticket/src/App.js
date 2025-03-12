@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import RegisterForm from './components/account/RegisterForm';
-import RegisterPopUp from './components/account/RegisterPopUp';
-import NotFoundPage from './components/common/NotFoundPage';
-import MainPage from './components/pages/MainPage';
-import SearchResultsPage from './components/pages/SearchResultsPage';
+import RegisterPopUp from './features/account/RegisterPopUp';
+import NotFoundPage from './features/common/NotFoundPage';
+import RegisterForm from './features/account/RegisterForm';
+import MainPage from './features/pages/MainPage';
+import SearchResultsPage from './features/pages/SearchResultsPage';
 import { ToastContainer } from 'react-toastify';
-import Cart from './components/cart/Cart';
+import Cart from './features/cart/Cart';
 
 function App() {
   return (

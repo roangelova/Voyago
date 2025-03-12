@@ -7,7 +7,6 @@ using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
-using System.Net;
 
 namespace GetMyTicket.Service.Services
 {

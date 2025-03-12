@@ -1,13 +1,19 @@
+import { useLocation } from "react-router-dom";
+
 import Footer from "../common/Footer";
 import NavBar from "../common/NavBar";
 import SearchResultCard from "../common/SearchResultCard";
 
-import munich from '../../assets/images/destinations/munich.jpg';
-import { useLocation } from "react-router-dom";
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 
 function SearchResultsPage() {
     const location = useLocation();
     const data = location.state;
+
+    const Munich = [48.1351, 11.5820];
+    const Varna = [43.2142, 27.9147]
+
+    //TODO -> FETCH REAL CITY LNG AND LAT 
 
     return (
         <>
@@ -17,14 +23,25 @@ function SearchResultsPage() {
                 <div className="search__results">
 
                     {data?.map((trip) => <SearchResultCard trip={trip} key={trip.tripId} />)}
+                    {data?.map((trip) => <SearchResultCard trip={trip} key={1} />)}
+                    {data?.map((trip) => <SearchResultCard trip={trip} key={2} />)}
+                    {data?.map((trip) => <SearchResultCard trip={trip} key={3} />)}
+
 
                 </div>
 
-                <div className='search__container-destinationCard'>
-                    <div className="search__image">
-                        <img src={munich} alt="destination image" />
-                    </div>
-                    <p> Munich, Bavaria’s capital, is home to centuries-old buildings and numerous museums. The city is known for its annual Oktoberfest celebration and its beer halls, including the famed Hofbräuhaus, founded in 1589. In the Altstadt (Old Town), central Marienplatz square contains landmarks such as Neo-Gothic Neues Rathaus (town hall), with a popular glockenspiel show that chimes and reenacts stories from the 16th century.</p>
+                <div className='search__container-map'>
+                    <MapContainer center={Munich} style={{ height: "100%", width: "100%" }} zoom={5} scrollWheelZoom={true}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={Varna}>
+                        </Marker>
+
+                        <Marker position={Munich}></Marker>
+                    </MapContainer>
+
                 </div>
 
             </section>

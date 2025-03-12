@@ -12,6 +12,10 @@
         color: $color-grey-dark-2;
     }
 
+    & h2 {
+        letter-spacing: 3px;
+    }
+
     & ul {
         display: flex;
         flex-direction: row;

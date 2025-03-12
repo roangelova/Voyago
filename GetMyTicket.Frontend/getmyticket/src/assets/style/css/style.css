@@ -1,3 +1,4 @@
+@import "https://unpkg.com/leaflet@1.7.1/dist/leaflet.css";
 *,
 *::after,
 *::before {
@@ -367,6 +368,7 @@ h1 {
 }
 
 .search__container {
+  border-top: 0.5px solid #999;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -379,24 +381,9 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-.search__container-destinationCard {
-  width: 700px;
-  height: 800px;
-  object-fit: fill;
-  object-position: center;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  flex-direction: column;
-  border-radius: 10px;
-  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
-}
-.search__container-destinationCard p {
-  text-align: center;
-  display: block;
-  padding: 20PX;
+.search__container-map {
+  width: 50%;
+  height: 90%;
 }
 .search__image {
   max-width: 100%;
@@ -660,6 +647,9 @@ h1 {
   font-weight: 600;
   letter-spacing: 1.5px;
   color: #504e4c;
+}
+.whyUs_container h2 {
+  letter-spacing: 3px;
 }
 .whyUs_container ul {
   display: flex;

@@ -17,6 +17,59 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
+        public async Task<Trip> GetTrip(Guid id)
+        {
+           return await unitOfWork.Trips.GetByIdAsync(id);
+        }
+
+        public async Task<Guid> CreateTrip(CreateTripDTO dto)
+        {
+            var vehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
+            var provider = await unitOfWork.TransportationProviders.GetByIdAsync(dto.TransortationProviderId);
+
+            if(vehicle.TransportationProvideriD != provider.TransportationProviderId)
+            {
+                throw new ApplicationError(ErrorMessages.OwnershipMissmatch);
+            }
+
+            if(dto.StartCityId == dto.EndCityId)
+            {
+                throw new ApplicationError(string.Format(ErrorMessages.CantBeTheSame, nameof(dto.StartCityId), nameof(dto.EndCityId)));
+            }
+
+            bool parseResultTransportationType = Enum.TryParse<TypeOfTransportation>(dto.TypeOfTransportation, false, out var TransportationType);
+            bool parseResultStartTime = DateTime.TryParse(dto.StartTime, out DateTime StartTime);
+            bool parseResultEndTime = DateTime.TryParse(dto.EndTime, out DateTime EndTime);
+
+            if (!parseResultTransportationType)
+            {
+                throw new ApplicationError(string.Format(ErrorMessages.InvalidType, nameof(dto.TypeOfTransportation), nameof(TransportationProvider)));
+            }
+
+            if (!parseResultStartTime || !parseResultEndTime) 
+            {
+                throw new ApplicationError(ErrorMessages.InvalidDateFormat);
+            }
+
+            var trip = new Trip()
+            {
+                StartCityId = dto.StartCityId,
+                EndCityId = dto.EndCityId,
+                TransportationProviderId = dto.TransortationProviderId,
+                VehicleId = dto.VehicleId,
+                TypeOfTransportation = TransportationType,
+                StartTime = StartTime,
+                EndTime = EndTime,
+                Price = dto.Price,
+                Capacity = vehicle.Capacity
+            };
+
+            await unitOfWork.Trips.AddAsync(trip);
+            await unitOfWork.SaveChangesAsync();
+
+            return trip.TripId;
+        }
+
         public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO)
         {
             //parse dates

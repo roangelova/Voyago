@@ -1,6 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs.Vehicle;
 using GetMyTicket.Service.Contracts;
-using GetMyTicket.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers

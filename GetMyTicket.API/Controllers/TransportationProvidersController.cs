@@ -1,6 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs.TP;
 using GetMyTicket.Service.Contracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers

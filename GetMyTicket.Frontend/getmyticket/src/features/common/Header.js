@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import '../../assets/style/css/style.css';
 import NavBar from './NavBar';
 
@@ -7,7 +6,6 @@ function Header() {
     return (
         <div className='header'>
             <div className='header__container'>
-              
 
                 <NavBar />
 

@@ -105,6 +105,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var DbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        DbContext.Database.Migrate();
         var strategy = DbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {

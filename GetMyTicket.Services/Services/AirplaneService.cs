@@ -26,7 +26,7 @@ namespace GetMyTicket.Service.Services
 
                 if (airplaneDTO.Capacity <= 0)
                 {
-                    throw new ApplicationError(string.Format(ErrorMessages.CantBeBull, nameof(airplaneDTO.Capacity)));
+                    throw new ApplicationError(string.Format(ErrorMessages.CantBeNull, nameof(airplaneDTO.Capacity)));
                 }
 
                 if (string.IsNullOrWhiteSpace(airplaneDTO.Model))

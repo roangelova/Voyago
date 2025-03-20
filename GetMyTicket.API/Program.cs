@@ -106,6 +106,7 @@ using (var scope = app.Services.CreateScope())
     {
         var DbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         DbContext.Database.Migrate();
+        //Retry strategy was added due to auto-pause of AZURE SQL to allow the db time to restart
         var strategy = DbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {

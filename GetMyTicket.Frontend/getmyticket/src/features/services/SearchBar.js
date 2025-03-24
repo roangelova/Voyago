@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Trips } from "../../services/tripService";
 
-import { useNavigate } from "react-router-dom";
-
-const SEARCH_BY_TYPE = 'all'; //possible values: ALL, AIRPLANE, BUS, TRAIN
+import { useNavigate, useParams } from "react-router-dom";
 
 const SearchBar = ({ LoginPopupVisibility }) => {
-//TODO -> include countries AND STARTCITY SHOULD NOT BE SHOWN IN DESTINATION LIST
+    //TODO -> include countries AND STARTCITY SHOULD NOT BE SHOWN IN DESTINATION LIST
     const navigate = useNavigate();
 
     const [cities, setCities] = useState([]);
@@ -16,6 +14,14 @@ const SearchBar = ({ LoginPopupVisibility }) => {
     const [destination, setDestination] = useState('');
     const [startDate, setStartDate] = useState('2025-05-10');
     const [endDate, setEndDate] = useState('2025-05-18');
+
+    let params = useParams();
+    let searchType = params.searchType;
+
+    searchType === 'flights' ? searchType = 'Airplane'
+        : searchType === 'trains' ? searchType = 'Train'
+            : searchType == 'buses' ? searchType = 'Bus'
+                : searchType = 'all'
 
     useEffect(() => {
         Cities.getAll().then(data => {
@@ -30,7 +36,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
 
     const handleSearch = () => {
         Trips.executeFilter({
-            "type": SEARCH_BY_TYPE,
+            "type": searchType,
             "startDate": startDate,
             "endDate": endDate,
             "startCityId": start,

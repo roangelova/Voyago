@@ -16,27 +16,23 @@ function SearchResultsPage() {
     const data = location.state;
 
     const defaultMapCoordinates = [48.1351, 11.5820];
-    const [startCoordinates, setStartCoordinates] = useState(null);
-    const [destinationCoordinates, setDestinationCoordinates] = useState(null)
+    const [startCoordinates, setStartCoordinates] = useState([53.5488,9.9872]);
+    const [destinationCoordinates, setDestinationCoordinates] = useState([50.1109,8.6821])
 
-    //TODO -> FETCH REAL CITY LNG AND LAT 
-
-    //MONTLY QUOTA EXCEEDED
     useEffect(() => {
+        if (data.length > 0) {
+            CityApi.getCityData(data[0].startCityName)
+                .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
+                .catch(err => {
+                    toast.error(err.error)
+                })
 
-      // if (data.length > 0) {
-      //     CityApi.getCityData(data[0].startCityName)
-      //         .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
-      //         .catch(err=> {
-      //             toast.error(err.error)
-      //         })
-
-      //     CityApi.getCityData(data[0].endCityName)
-      //         .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
-      //         .catch(err=> {
-      //             toast.error(err.error)
-      //         })
-      // }
+            CityApi.getCityData(data[0].endCityName)
+                .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
+                .catch(err => {
+                    toast.error(err.error)
+                })
+        }
     })
 
     return (

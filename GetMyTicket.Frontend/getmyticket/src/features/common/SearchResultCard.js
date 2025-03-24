@@ -2,17 +2,20 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 import fallbackLogo from '../../assets/images/fallbackLogo.png'
+import bistro from '../../assets/icons/bistro.png'
+import wc from '../../assets/icons/wc.png'
+import highspeed from '../../assets/icons/highspeed.png'
 
 function formatDate(date) {
     return new Intl.DateTimeFormat("en-GB", {
-      day: "numeric",
-      month: "long",
-      year: 'numeric',
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h24"
+        day: "numeric",
+        month: "long",
+        year: 'numeric',
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24"
     }).format(new Date(date));
-  }
+}
 
 function SearchResultCard({ trip }) {
     const navigate = useNavigate();
@@ -29,10 +32,11 @@ function SearchResultCard({ trip }) {
     }
 
     //TODO -> add support for other data types not just PNG
+    //TODO -> add vehicle amenities to Trip to display amenities
 
     let imageSrc;
     trip.transportationProviderLogo !== '' ? imageSrc = `data:image/png;base64,${trip.transportationProviderLogo}` :
-       imageSrc = fallbackLogo;
+        imageSrc = fallbackLogo;
 
     return (
         <div className="resultCard" onClick={handleBookTrip}>
@@ -52,11 +56,18 @@ function SearchResultCard({ trip }) {
                     <p><b>Arrival: </b><span>{formatDate(trip.endTime)}</span></p>
                 </div>
 
+                <div className='resultCard__amenities'>
+                    <img src={bistro} alt='Bistro on board' />
+                    <img src={highspeed} alt='Highspeed connection' />
+                    <img src={wc} alt='WC on board' />
+                </div>
 
             </div>
             <div className='resultCard__price'>
                 <span>{trip.price} {trip.currency}</span>
             </div>
+
+
         </div>
     )
 }

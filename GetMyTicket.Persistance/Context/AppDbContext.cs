@@ -110,7 +110,7 @@ namespace GetMyTicket.Persistance.Context
             var airplane1 = new Airplane
             {
                 VehicleId = Guid.CreateVersion7(),
-                TransportationProvideriD = TransportationProvider.TransportationProviderId,
+                TransportationProviderId = TransportationProvider.TransportationProviderId,
                 AirplaneManufacturer = Common.Enum.AirplaneManufacturer.Airbus,
                 Model = "A-320",
                 Capacity = 180,

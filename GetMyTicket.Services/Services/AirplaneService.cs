@@ -37,7 +37,7 @@ namespace GetMyTicket.Service.Services
                 var entity = new Airplane()
                 {
                     VehicleId = Guid.CreateVersion7(),
-                    TransportationProvideriD = airplaneDTO.TpProviderId,
+                    TransportationProviderId = airplaneDTO.TpProviderId,
                     Model = airplaneDTO.Model.Trim(),
                     Capacity = airplaneDTO.Capacity,
                     ManufacturingDate = airplaneDTO.ManufacturingDate,
@@ -60,7 +60,7 @@ namespace GetMyTicket.Service.Services
             if (entity != null)
             {
                 return new GetAirplaneDTO(
-                    entity.TransportationProvideriD,
+                    entity.TransportationProviderId,
                     Enum.GetName(entity.AirplaneManufacturer),
                     entity.Model,
                     entity.Capacity

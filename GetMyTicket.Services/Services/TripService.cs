@@ -27,7 +27,7 @@ namespace GetMyTicket.Service.Services
             var vehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
             var provider = await unitOfWork.TransportationProviders.GetByIdAsync(dto.TransortationProviderId);
 
-            if(vehicle.TransportationProvideriD != provider.TransportationProviderId)
+            if(vehicle.TransportationProviderId != provider.TransportationProviderId)
             {
                 throw new ApplicationError(ErrorMessages.OwnershipMissmatch);
             }

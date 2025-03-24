@@ -37,7 +37,7 @@ namespace GetMyTicket.Service.Services
                 Capacity = trainDTO.Capacity,
                 HasBistroOnBoard = trainDTO.HasBistroOnBoard,
                 IsAHighspeedTrain = trainDTO.IsAHighspeedTrain,
-                TransportationProvideriD = trainDTO.TransportationProviderId,
+                TransportationProviderId = trainDTO.TransportationProviderId,
                 TransportationProvider = TransportationProvider
             };
 
@@ -48,7 +48,7 @@ namespace GetMyTicket.Service.Services
             {
                 Capacity = entity.Capacity,
                 TrainId = entity.VehicleId,
-                TransportationProviderId = entity.TransportationProvideriD,
+                TransportationProviderId = entity.TransportationProviderId,
                 TransportationpProviderName = TransportationProvider.Name
             }; 
         }
@@ -66,7 +66,7 @@ namespace GetMyTicket.Service.Services
             {
                 Capacity = entity.Capacity,
                 TrainId = entity.VehicleId,
-                TransportationProviderId = entity.TransportationProvideriD
+                TransportationProviderId = entity.TransportationProviderId
             };
         }
     }

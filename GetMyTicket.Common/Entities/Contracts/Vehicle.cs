@@ -16,7 +16,7 @@ namespace GetMyTicket.Common.Entities.Contracts
 
         [ForeignKey(nameof(TransportationProvider))]
         [Required]
-        public Guid TransportationProvideriD { get; set; }
+        public Guid TransportationProviderId { get; set; }
 
         public ICollection<Trip> Trips { get; set; }
     }

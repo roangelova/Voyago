@@ -378,6 +378,7 @@ h1 {
   width: 50%;
   height: 90%;
   padding: 2rem;
+  z-index: 2;
 }
 
 .resultCard {

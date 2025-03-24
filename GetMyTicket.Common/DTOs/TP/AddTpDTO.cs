@@ -1,9 +1,12 @@
-﻿namespace GetMyTicket.Common.DTOs.TP
+﻿using Microsoft.AspNetCore.Http;
+
+namespace GetMyTicket.Common.DTOs.TP
 {
     public record CreateTransportationProviderDTO(
-        string Name, 
+        string Name,
         string Description,
         string Address,
-        string Email
+        string Email,
+        IFormFile Logo
         );
 }

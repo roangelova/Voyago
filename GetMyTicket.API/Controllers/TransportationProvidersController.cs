@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
 {
-    //AUTHORIZE set for testing purposes;
-
     [ApiController]
     [Route("api/transportationproviders")]
     public class TransportationProvidersController : ControllerBase
@@ -25,9 +23,9 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTransportationProvider(CreateTransportationProviderDTO data)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateTransportationProvider([FromForm] CreateTransportationProviderDTO data)
         {
-
             var entity = await transportationProviderService.Add(data);
 
             return CreatedAtAction(

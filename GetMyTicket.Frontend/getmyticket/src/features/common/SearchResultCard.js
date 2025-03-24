@@ -1,6 +1,8 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
+import fallbackLogo from '../../assets/images/fallbackLogo.png'
+
 function SearchResultCard({ trip }) {
     const navigate = useNavigate();
 
@@ -17,12 +19,16 @@ function SearchResultCard({ trip }) {
 
     //TODO -> add support for other data types not just PNG
 
+    let imageSrc;
+    trip.transportationProviderLogo !== '' ? imageSrc = `data:image/png;base64,${trip.transportationProviderLogo}` :
+       imageSrc = fallbackLogo;
+
     return (
         <div className="resultCard" onClick={handleBookTrip}>
             <div>
 
                 <div className="resultCard__provider">
-                    <img className="resultCard__provider-logo" src={`data:image/png;base64,${trip.transportationProviderLogo}`} alt="Transportation provider logo" />
+                    <img className="resultCard__provider-logo" src={imageSrc} alt="Transportation provider logo" />
                     <span>{trip.transportationProviderName}</span>
                 </div>
                 <div className='resultCard__trip'>

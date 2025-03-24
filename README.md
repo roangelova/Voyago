@@ -4,9 +4,9 @@
 The home page as of [12.03.2025]
 
 
-![image](https://github.com/user-attachments/assets/84eb984a-bf0a-4818-bc00-a933b1c54df4)
+![image](https://github.com/user-attachments/assets/f467d269-f849-49fc-8ece-08936b53fcbc)
 
-Search results page as of [12.03.2025] --> Currently, the search page displays a static map. The next step is to display the actual start and destination city on the map. 
+Search results page as of [24.03.2025]  
 
 #### Project goals 
 The aim of this project is to combine my passion for the trasportation industry and develop an application, which will serve me as a training ground for my skills. As time goes by, the application will be refactored and upgraded to reflect better software development practices and implement more complicated features.  

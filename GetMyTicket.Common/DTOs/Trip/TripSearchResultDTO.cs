@@ -1,4 +1,6 @@
-﻿namespace GetMyTicket.Common.DTOs.Trip
+﻿using System.Buffers.Text;
+
+namespace GetMyTicket.Common.DTOs.Trip
 {
     public class TripSearchResultDTO
     {
@@ -9,6 +11,8 @@
         public string EndCityName { get; set; }
         public string StartCityName { get; set; }
         public string TransportationProviderName { get; set; }
+
+        public string TransportationProviderLogo { get; set; }
         public string Currency { get; set; }
     }
 }

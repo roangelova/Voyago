@@ -26,6 +26,16 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(ErrorMessages.AllFieldsRequired);
             }
 
+            byte[] logo = null;
+
+            if (addTpDTO.Logo != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await addTpDTO.Logo.CopyToAsync(stream);
+                    logo = stream.ToArray();
+                }
+            }
 
             var entity = new TransportationProvider
             {
@@ -33,7 +43,8 @@ namespace GetMyTicket.Service.Services
                 Name = addTpDTO.Name.Trim(),
                 Description = addTpDTO.Description.Trim(),
                 Address = addTpDTO.Address.Trim(),
-                Email = addTpDTO.Email.Trim()
+                Email = addTpDTO.Email.Trim(),
+                Logo = logo
             };
 
             await unitOfWork.TransportationProviders.AddAsync(entity);
@@ -50,7 +61,8 @@ namespace GetMyTicket.Service.Services
 
                x.TransportationProviderId.ToString(),
                  x.Name,
-                x.Description
+                x.Description,
+                Convert.ToBase64String(x.Logo)
             ));
         }
 
@@ -63,7 +75,9 @@ namespace GetMyTicket.Service.Services
                 return new GetTransportationProviderDTO(
                     entity.TransportationProviderId.ToString(),
                     entity.Name,
-                    entity.Description);
+                    entity.Description, 
+                    Convert.ToBase64String(entity.Logo)
+                    );
             }
 
             return null;

@@ -1,5 +1,4 @@
 import { toast } from 'react-toastify';
-import transavia_logo from '../../assets/images/transavia_logo.PNG'
 import { useNavigate } from "react-router-dom";
 
 function SearchResultCard({ trip }) {
@@ -16,12 +15,14 @@ function SearchResultCard({ trip }) {
         navigate("/cart", { state: { trip: trip } });
     }
 
+    //TODO -> add support for other data types not just PNG
+
     return (
         <div className="resultCard" onClick={handleBookTrip}>
             <div>
 
                 <div className="resultCard__provider">
-                    <img className="resultCard__provider-logo" src={transavia_logo} alt="Transportation provider logo" />
+                    <img className="resultCard__provider-logo" src={`data:image/png;base64,${trip.transportationProviderLogo}`} alt="Transportation provider logo" />
                     <span>{trip.transportationProviderName}</span>
                 </div>
                 <div className='resultCard__trip'>

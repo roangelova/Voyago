@@ -24,19 +24,19 @@ function SearchResultsPage() {
     //MONTLY QUOTA EXCEEDED
     useEffect(() => {
 
-        if (data.length > 0) {
-            CityApi.getCityData(data[0].startCityName)
-                .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
-                .catch(err=> {
-                    toast.error(err.error)
-                })
+      // if (data.length > 0) {
+      //     CityApi.getCityData(data[0].startCityName)
+      //         .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
+      //         .catch(err=> {
+      //             toast.error(err.error)
+      //         })
 
-            CityApi.getCityData(data[0].endCityName)
-                .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
-                .catch(err=> {
-                    toast.error(err.error)
-                })
-        }
+      //     CityApi.getCityData(data[0].endCityName)
+      //         .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
+      //         .catch(err=> {
+      //             toast.error(err.error)
+      //         })
+      // }
     })
 
     return (

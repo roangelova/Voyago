@@ -26,6 +26,8 @@ namespace GetMyTicket.Common.Entities
         [MaxLength(EmailMaxLength)]
         public string Email { get; set; }
 
+        public byte[] Logo { get; set; }
+
         public ICollection<Vehicle> Vehicles { get; set; }
         public ICollection<Trip> Trips { get; set; }
 

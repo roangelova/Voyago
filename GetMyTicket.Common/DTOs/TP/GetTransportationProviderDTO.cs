@@ -3,6 +3,7 @@
     public record GetTransportationProviderDTO(
         string Id,
         string Name,
-        string Description);
+        string Description, 
+        string Logo);
 
 }

@@ -25,7 +25,7 @@ namespace GetMyTicket.API.Controllers
 
             return CreatedAtAction(
                 nameof(GetById),
-                new { Id = entity.VehicleId },
+                new { id = entity.VehicleId },
                 new { manufacturer, entity.Model });
         }
 

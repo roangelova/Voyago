@@ -3,6 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import fallbackLogo from '../../assets/images/fallbackLogo.png'
 
+function formatDate(date) {
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: 'numeric',
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h24"
+    }).format(new Date(date));
+  }
+
 function SearchResultCard({ trip }) {
     const navigate = useNavigate();
 
@@ -36,9 +47,9 @@ function SearchResultCard({ trip }) {
                     <span className="arrow">  →  </span>
                     <span className="to">{trip.endCityName}</span>
                 </div>
-                <div className='connection'>
-                    <p><b>Departure:</b> <span >{new Date(trip.startTime).toLocaleString()}</span> </p>
-                    <p><b>Arrival: </b><span>{new Date(trip.endTime).toLocaleString()}</span></p>
+                <div className='resultCard__connection'>
+                    <p><b>Departure:</b> <span >{formatDate(trip.startTime)}</span> </p>
+                    <p><b>Arrival: </b><span>{formatDate(trip.endTime)}</span></p>
                 </div>
 
 

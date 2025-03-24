@@ -361,7 +361,6 @@ h1 {
 }
 
 .search__container {
-  border-top: 0.5px solid #999;
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -401,21 +400,32 @@ h1 {
   display: flex;
   align-items: center;
   margin: 0.5rem;
+  margin-bottom: 1rem;
+}
+.resultCard__provider span {
+  font-size: 18px;
 }
 .resultCard__provider-logo {
   max-width: 50px;
   max-height: 50px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .resultCard__trip span {
   text-transform: uppercase;
   font-size: 16px;
+  font-weight: 700;
+}
+.resultCard__connection {
+  margin-top: 15px;
+}
+.resultCard__connection p {
+  margin-top: 5px;
 }
 .resultCard__price {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  margin-right: 1rem;
+  margin: 2rem 1rem;
 }
 .resultCard__price span {
   font-size: 22px;

@@ -31,6 +31,7 @@ namespace GetMyTicket.API.Controllers
 
 
         [HttpGet("search")]
+        //CURRENTLY, THE APP IGNORES TIMES ZONES TO SIMPLIFY THE DEVELOPMENT AT THIS STAGE OF DEVELOPMENT. THIS IS HOWEVER PLANNED IN THE NEAR FUTURE
         public async Task<IActionResult> GetAllTrips([FromQuery]SearchTripsDTO searchTripsDTO)
         {
             var trips = await tripService.GetAllSearchResultTrips(searchTripsDTO);

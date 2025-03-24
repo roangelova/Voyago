@@ -75,13 +75,14 @@ namespace GetMyTicket.Persistance.Context
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSeeding((context, _) =>
-              {
-                  string seedFilePath = GetSeedDataPath();
-
-                  Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
-                  SeedData(context);
-              });
+            //TODO -> DO WE HAVE A WORKAROUNG
+           //optionsBuilder.UseSeeding((context, _) =>
+           //  {
+           //      string seedFilePath = GetSeedDataPath();
+           //
+           //      Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
+           //      SeedData(context);
+           //  });
         }
 
         private static void SeedData(DbContext context)
@@ -89,7 +90,9 @@ namespace GetMyTicket.Persistance.Context
             if (context.Set<TransportationProvider>().Any() &&
                    context.Set<Vehicle>().Any() &&
                     context.Set<Trip>().Any() &&
-                    context.Set<User>().Any()
+                    context.Set<User>().Any() &&
+                    context.Set<Country>().Any() && 
+                    context.Set<City>().Any()
                     )
             {
                 return;

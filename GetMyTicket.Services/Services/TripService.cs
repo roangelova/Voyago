@@ -96,8 +96,8 @@ namespace GetMyTicket.Service.Services
                //  x.EndCityId == searchTripsDTO.EndCityId &&
                // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
                // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
-               null,
-               x => x.OrderByDescending(t => t.Price),
+               searchTripsDTO.Type != "all" ?  x => x.TypeOfTransportation.ToString() ==  searchTripsDTO.Type : null,
+               x => x.OrderByDescending(t => t.Price) ,
                 true,
                x => x.EndCity,
                x => x.StartCity,

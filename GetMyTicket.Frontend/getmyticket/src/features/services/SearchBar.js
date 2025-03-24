@@ -5,6 +5,8 @@ import { Trips } from "../../services/tripService";
 
 import { useNavigate } from "react-router-dom";
 
+const SEARCH_BY_TYPE = 'all'; //possible values: ALL, AIRPLANE, BUS, TRAIN
+
 const SearchBar = ({ LoginPopupVisibility }) => {
 //TODO -> include countries AND STARTCITY SHOULD NOT BE SHOWN IN DESTINATION LIST
     const navigate = useNavigate();
@@ -28,6 +30,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
 
     const handleSearch = () => {
         Trips.executeFilter({
+            "type": SEARCH_BY_TYPE,
             "startDate": startDate,
             "endDate": endDate,
             "startCityId": start,

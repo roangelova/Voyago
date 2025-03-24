@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using GetMyTicket.Common.Enum;
 
 namespace GetMyTicket.Common.DTOs.Trip
 {

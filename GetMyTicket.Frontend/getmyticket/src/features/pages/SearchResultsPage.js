@@ -35,6 +35,10 @@ function SearchResultsPage() {
 
                 <div className="search__results">
 
+                    {data.length === 0 ? 
+                    <h3>We could not find any offers for this search. Please, try again.</h3> 
+                    : null}
+
                     {data?.map((trip) => <SearchResultCard trip={trip} key={trip.tripId} />)}
                     {data?.map((trip) => <SearchResultCard trip={trip} key={1} />)}
 

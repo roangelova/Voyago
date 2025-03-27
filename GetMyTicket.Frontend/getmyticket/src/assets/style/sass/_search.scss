@@ -5,26 +5,26 @@
         width: 100vw;
         height: 100vh;
 
-        margin-top: 1rem;
-
-        padding: 1rem;
+        padding: 0px 1rem;
         justify-content: space-around;
-
-        &__results {
-            width: 60vw;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        align-items: center;
 
         &-map {
             width: 50%;
-            height: 90%;
+            height: 80%;
             padding: 2rem;
 
             z-index: 2;
         }
+    }
+
+    &__results {
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 1rem;
     }
 }
 

@@ -364,21 +364,22 @@ h1 {
   display: flex;
   width: 100vw;
   height: 100vh;
-  margin-top: 1rem;
-  padding: 1rem;
+  padding: 0px 1rem;
   justify-content: space-around;
-}
-.search__container__results {
-  width: 60vw;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
 .search__container-map {
   width: 50%;
-  height: 90%;
+  height: 80%;
   padding: 2rem;
   z-index: 2;
+}
+.search__results {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .resultCard {

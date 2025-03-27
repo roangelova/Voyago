@@ -4,24 +4,7 @@ import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
 import Cookies from 'js-cookie';
 
-function Login({ LoginPopupVisibility, setLoginPopupVisibility }) {
-
-    useEffect(() => {
-        //disables back button on login popup
-        if (LoginPopupVisibility) {
-            window.history.pushState(null, "", window.location.href);
-
-            const handleBackButton = () => {
-                window.history.pushState(null, "", window.location.href);
-            };
-
-            window.addEventListener("popstate", handleBackButton);
-
-            return () => {
-                window.removeEventListener("popstate", handleBackButton);
-            };
-        }
-    }, [LoginPopupVisibility]);
+function Login({ setLoginPopupVisibility }) {
 
     const Login = (formData) => {
 

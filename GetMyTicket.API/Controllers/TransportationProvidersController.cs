@@ -22,6 +22,20 @@ namespace GetMyTicket.API.Controllers
             return await transportationProviderService.GetAll();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var entity = await transportationProviderService.GetById(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(entity);
+
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateTransportationProvider([FromForm] CreateTransportationProviderDTO data)
@@ -34,18 +48,13 @@ namespace GetMyTicket.API.Controllers
                 new { entity.Name, entity.Email, entity.Description, entity.Address });
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById( Guid id)
+        [HttpPut("{id}")]
+       public async Task<IActionResult> PutTransportationProvider(Guid id,[FromForm] EditTransportationProvider data)
         {
-            var entity = await transportationProviderService.GetById(id);
 
-            if (entity == null)
-            {
-                return NotFound();
-            }
+            var updatedEntity = await transportationProviderService.Update(id, data);
 
-            return Ok(entity);
-
+            return Ok(updatedEntity);
         }
     }
 }

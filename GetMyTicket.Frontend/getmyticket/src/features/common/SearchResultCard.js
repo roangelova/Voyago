@@ -8,6 +8,7 @@ import highspeed from '../../assets/icons/highspeed.png'
 
 function formatDate(date) {
     return new Intl.DateTimeFormat("en-GB", {
+        weekday: "long",
         day: "numeric",
         month: "long",
         year: 'numeric',

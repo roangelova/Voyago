@@ -5,10 +5,16 @@ namespace GetMyTicket.Service.Contracts
 {
     public interface ITransportationProviderService
     {
+        //GET
         public Task<IEnumerable<GetTransportationProviderDTO>> GetAll();
+        public Task<GetTransportationProviderDTO> GetById(object Id);
 
+        //POST
         public Task<TransportationProvider> Add( CreateTransportationProviderDTO addTpDTO);
 
-        public Task<GetTransportationProviderDTO> GetById(object Id);
+        //PUT
+        public Task<TransportationProvider> Update(object id, EditTransportationProvider editTransportationProvider);
+
+        //DELETE
     }
 }

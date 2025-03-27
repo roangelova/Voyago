@@ -16,33 +16,35 @@ function SearchResultsPage() {
     const data = location.state;
 
     const defaultMapCoordinates = [48.1351, 11.5820];
-    const [startCoordinates, setStartCoordinates] = useState([53.5488,9.9872]);
-    const [destinationCoordinates, setDestinationCoordinates] = useState([50.1109,8.6821])
+    const [startCoordinates, setStartCoordinates] = useState(null);
+    const [destinationCoordinates, setDestinationCoordinates] = useState(null)
 
     useEffect(() => {
-        if (data.length > 0) {
-            CityApi.getCityData(data[0].startCityName)
-                .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
-                .catch(err => {
-                    toast.error(err.error)
-                })
+        if (data && data.length > 0) {
+            //MONTHLY QUOATA EXCEEDED
 
-            CityApi.getCityData(data[0].endCityName)
-                .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
-                .catch(err => {
-                    toast.error(err.error)
-                })
+        //   CityApi.getCityData(data[0].startCityName)
+        //       .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
+        //       .catch(err => {
+        //           toast.error(err.error)
+        //       })
+
+        //   CityApi.getCityData(data[0].endCityName)
+        //       .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
+        //       .catch(err => {
+        //           toast.error(err.error)
+        //       })
         }
     })
 
     return (
         <>
-            <NavBar className="search__nav" handleLoginToggle={null} />
+            <NavBar className="search__nav" />
             <section className="search__container">
 
                 <div className="search__results">
 
-                    {data.length === 0 ?
+                    {data && data.length === 0 ?
                         <h3>We could not find any offers for this search. Please, try again.</h3>
                         : null}
 

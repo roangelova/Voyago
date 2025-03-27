@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import voyago from '../../assets/images/voyago.png'
@@ -18,8 +18,24 @@ function NavBar() {
     const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
 
     const handleLoginToggle = () => {
-        setLoginPopupVisibility(true);
+        setLoginPopupVisibility(!LoginPopupVisibility);
     };
+
+    useEffect(() => {
+        //disables back button on login popup
+        if (LoginPopupVisibility) {
+            window.history.pushState(null, "", window.location.href);
+
+            const handleBackButton = (e) => {
+                e.preventDefault()
+                console.log('HANDLE BACK BUTTON')
+                window.history.pushState(null, "", window.location.href);
+            };
+
+            window.addEventListener("popstate", handleBackButton);
+
+        }
+    }, [LoginPopupVisibility, setLoginPopupVisibility]);
 
     const NoUserNav =
         <ul className='navigation__user'>
@@ -50,9 +66,9 @@ function NavBar() {
     return (
         <nav className='navigation'>
             <div className='navigation__logo'>
-                    <NavLink to="/">
-                        <img src={voyago} alt='Site logo and name'/>
-                    </NavLink>
+                <NavLink to="/">
+                    <img src={voyago} alt='Site logo and name' />
+                </NavLink>
             </div>
             <ul className="navigation__browse">
                 <li>
@@ -77,9 +93,7 @@ function NavBar() {
             {
                 LoginPopupVisibility ?
                     <div className='login blur-overlay'>
-                        <Login
-                            LoginPopupVisibility={LoginPopupVisibility}
-                            setLoginPopupVisibility={setLoginPopupVisibility} />
+                        <Login setLoginPopupVisibility={setLoginPopupVisibility} />
                     </div> :
                     null
             }

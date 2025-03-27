@@ -4,6 +4,7 @@ using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace GetMyTicket.Service.Services
 {
@@ -30,11 +31,7 @@ namespace GetMyTicket.Service.Services
 
             if (addTpDTO.Logo != null)
             {
-                using (var stream = new MemoryStream())
-                {
-                    await addTpDTO.Logo.CopyToAsync(stream);
-                    logo = stream.ToArray();
-                }
+               logo = await GetLogoFromStream(addTpDTO.Logo);
             }
 
             var entity = new TransportationProvider
@@ -75,12 +72,53 @@ namespace GetMyTicket.Service.Services
                 return new GetTransportationProviderDTO(
                     entity.TransportationProviderId.ToString(),
                     entity.Name,
-                    entity.Description, 
+                    entity.Description,
                     Convert.ToBase64String(entity.Logo)
                     );
             }
 
             return null;
+        }
+
+        public async Task<TransportationProvider> Update(object id, EditTransportationProvider dto)
+        {
+            //public string? Name { get; set; }
+            //public string? Description { get; set; }
+            //public string? Address { get; set; }
+            //public string? Email { get; set; }
+            // public IFormFile? Logo { get; set; }
+            byte[] logo = null;
+
+            if (dto.Logo != null)
+            {
+                logo = await GetLogoFromStream(dto.Logo);
+            }
+
+            TransportationProvider entityToUpdate = await unitOfWork.TransportationProviders.GetByIdAsync(id);
+
+            if (entityToUpdate is null) 
+            {
+                throw new ApplicationError( string.Format(ErrorMessages.NotFoundError, nameof(TransportationProvider), id.ToString()));
+            }
+
+            if (dto.Name is not null) entityToUpdate.Name = dto.Name.Trim();
+            if (dto.Description is not null) entityToUpdate.Description = dto.Description.Trim();
+            if (dto.Address is not null) entityToUpdate.Address = dto.Address.Trim();
+            if (dto.Email is not null) entityToUpdate.Email = dto.Email.Trim();
+
+            entityToUpdate.Logo = logo;
+
+            unitOfWork.TransportationProviders.Update(entityToUpdate);
+            await unitOfWork.SaveChangesAsync();
+
+            return entityToUpdate;
+        }
+
+        public static async Task<byte[]> GetLogoFromStream(IFormFile file)
+        {
+            using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            return stream.ToArray();
         }
     }
 }

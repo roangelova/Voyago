@@ -36,10 +36,10 @@ function SearchResultsPage() {
         //       })
         }
     })
-
+//<NavBar className="search__nav" />
     return (
         <>
-            <NavBar className="search__nav" />
+            
             <section className="search__container">
 
                 <div className="search__results">
@@ -67,7 +67,6 @@ function SearchResultsPage() {
                 </div>
 
             </section>
-            <Footer />
         </>
     )
 }

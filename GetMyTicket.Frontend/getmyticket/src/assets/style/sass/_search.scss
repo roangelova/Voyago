@@ -9,6 +9,7 @@
         justify-content: space-around;
         align-items: center;
 
+
         &-map {
             width: 50%;
             height: 80%;
@@ -20,11 +21,14 @@
 
     &__results {
 
+        padding: 2rem;
+
         display: flex;
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
         gap: 1rem;
+        max-height: 100%;
     }
 }
 

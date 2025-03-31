@@ -55,15 +55,23 @@ select {
     position: relative;
 }
 
-ul, li {
+ul,
+li {
     list-style-type: none;
 }
 
-input::placeholder{
+input::placeholder {
     color: $color-dark-grey;
 }
 
 input[type="radio"]:checked {
     background-color: #93b3da;
     border: 2px solid #93b3da;
-  }
+}
+
+.appLayout {
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: hidden;
+}

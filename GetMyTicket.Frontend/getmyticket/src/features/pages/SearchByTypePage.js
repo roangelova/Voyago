@@ -5,10 +5,9 @@ import SearchResultsPage from './SearchResultsPage';
 
 function SearchByTypePage() {
     return (
-        <>
-            <NavBar />
+        <div className='search__container'>
             <SearchBar />
-        </>
+        </div>
     );
 }
 

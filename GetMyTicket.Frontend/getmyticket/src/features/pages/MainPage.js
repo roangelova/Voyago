@@ -10,7 +10,6 @@ const MainPage = () => {
             <Header />
             <SearchBar />
             <WhyUsSection />
-            <Footer />
         </>
     )
 }

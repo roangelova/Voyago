@@ -1,12 +1,17 @@
 import { useGetCities } from "../../services/cityService";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Trips } from "../../services/tripService";
+import { Trips, useGetTrips } from "../../services/tripService";
 
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SearchBar = ({ LoginPopupVisibility }) => {
+    const { cities, error, isPending } = useGetCities();
+    const { mutate: getTrips } = useGetTrips();
+
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const [start, setStart] = useState('');
@@ -22,8 +27,6 @@ const SearchBar = ({ LoginPopupVisibility }) => {
             : searchType == 'buses' ? searchType = 'Bus'
                 : searchType = 'all'
 
-    const { cities, error, isPending } = useGetCities();
-
     useEffect(() => {
         if (cities?.length > 0) {
             setStart(cities[0].cityId);
@@ -34,18 +37,27 @@ const SearchBar = ({ LoginPopupVisibility }) => {
     if (error) toast.error("Failed to get cities.");
 
     const handleSearch = () => {
-        Trips.executeFilter({
+        getTrips({
             "type": searchType,
             "startDate": startDate,
             "endDate": endDate,
             "startCityId": start,
             "endCityId": destination
-        }).then(data => {
-            navigate("/search-results", { state: data })
-        }).catch(err => {
-            toast.error('Oops! We could not look up any trips right now.')
-        })
+        },
+            {
+                onSuccess: (trips) => {
+                    queryClient.setQueryData(['trips'], trips);;
+                    navigate("/search-results", { state: trips })
+                }
+            },
+            {
+                onError: (error) => {
+                    toast.error(error.message)
+                }
+            }
+        )
     }
+
 
     const availableCitiesForStart = cities?.filter(city => city.cityId !== destination);
     const availableCitiesForDestination = cities?.filter(city => city.cityId !== start);

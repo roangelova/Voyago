@@ -21,6 +21,9 @@
 
     &__results {
 
+        overflow-y: scroll;
+        scrollbar-width: none;
+
         padding: 2rem;
 
         display: flex;

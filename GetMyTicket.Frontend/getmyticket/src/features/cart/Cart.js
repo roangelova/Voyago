@@ -103,8 +103,6 @@ function Cart() {
 
     return (
         <>
-            <NavBar />
-
             <div className="cart">
                 <div className="cart__container">
                     <h2>Booking overview</h2>

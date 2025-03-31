@@ -398,6 +398,8 @@ h1 {
   z-index: 2;
 }
 .search__results {
+  overflow-y: scroll;
+  scrollbar-width: none;
   padding: 2rem;
   display: flex;
   justify-content: flex-start;
@@ -497,7 +499,7 @@ h1 {
   justify-content: center;
   flex: 1;
   background-color: #fff;
-  padding: 10px 15px;
+  padding: 15px 15px;
 }
 .cart__container {
   width: 70vw;
@@ -512,8 +514,9 @@ h1 {
   text-align: center;
   margin-top: 10px;
   font-weight: 400;
-  font-size: 26px;
+  font-size: 24px;
   text-transform: uppercase;
+  margin-bottom: 5px;
 }
 .cart__container-nav {
   display: flex;
@@ -538,9 +541,9 @@ h1 {
 .cart__container-step {
   display: flex;
   box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.42);
-  font-size: 20px;
+  font-size: 18px;
   width: 100%;
-  height: 50px;
+  height: 40px;
 }
 .cart__container-step div {
   display: flex;
@@ -612,14 +615,6 @@ h1 {
 .passengerDetails form {
   padding: 10px;
 }
-.passengerDetails__names {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 10px;
-}
-.passengerDetails__names label {
-  margin-right: 10px;
-}
 .passengerDetails fieldset {
   display: flex;
   margin-bottom: 1rem;
@@ -646,6 +641,14 @@ h1 {
 .passengerDetails__dob input {
   text-align: center;
 }
+.passengerDetails__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.passengerDetails__row label {
+  margin-right: 10px;
+}
 .passengerDetails__docType {
   margin-bottom: 10px;
 }
@@ -655,10 +658,9 @@ h1 {
 .passengerDetails__inputDiv {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 .passengerDetails__inputDiv label {
-  margin-right: 10px;
   width: 120px;
 }
 .passengerDetails__btn {

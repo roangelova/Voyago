@@ -20,11 +20,11 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                     .then(updatedPassenger => {
                         dispatch({ type: 'setPassenger', payload: updatedPassenger })
                         dispatch({ type: 'setPassengerId', payload: updatedPassenger })
-                    }).catch(err=> {
+                    }).catch(err => {
                         toast.error(err.response.data.detail)
                     })
             }
-        }else{
+        } else {
             toast.information('Operation aborted.')
         }
     }
@@ -33,7 +33,7 @@ function PassengerData({ dispatch, passenger, passengerId }) {
         <div className="passengerDetails">
             <form>
 
-                <div className="passengerDetails__names">
+                <div className="passengerDetails__row">
                     <div>
                         <label htmlFor="firstName">First name:</label>
                         <input
@@ -132,33 +132,34 @@ function PassengerData({ dispatch, passenger, passengerId }) {
 
                 </div>
 
-                <div className="passengerDetails__inputDiv">
-                    <label htmlFor="documentNumber">Document Id:</label>
-                    <input name='documentNumber'
-                        type="text"
-                        placeholder='N1526'
-                        value={passenger.documentId}
-                        onChange={(e) =>
-                            dispatch({ type: "setField", field: "documentId", value: e.target.value })
-                        }
-                    />
-                </div>
+                <div className="passengerDetails__row">
+                    <div>
+                        <label htmlFor="nationality">Nationality:</label>
+                        <input name='nationality'
+                            type="text"
+                            placeholder='bulgarian'
+                            value={passenger.nationality}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "nationality", value: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div >
+                        <label htmlFor="documentNumber">Document Id:</label>
+                        <input name='documentNumber'
+                            type="text"
+                            placeholder='N1526'
+                            value={passenger.documentId}
+                            onChange={(e) =>
+                                dispatch({ type: "setField", field: "documentId", value: e.target.value })
+                            }
+                        />
+                    </div>
 
-                <div className="passengerDetails__inputDiv">
-                    <label htmlFor="nationality">Nationality:</label>
-                    <input name='nationality'
-                        type="text"
-                        placeholder='bulgarian'
-                        value={passenger.nationality}
-                        onChange={(e) =>
-                            dispatch({ type: "setField", field: "nationality", value: e.target.value })
-                        }
-                    />
                 </div>
-
                 <button className="btn passengerDetails__btn"
                     onClick={handleSubmit}
-                >Update my information </button>
+                >Save information</button>
             </form>
 
 

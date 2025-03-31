@@ -82,11 +82,6 @@ namespace GetMyTicket.Service.Services
 
         public async Task<TransportationProvider> Update(object id, EditTransportationProvider dto)
         {
-            //public string? Name { get; set; }
-            //public string? Description { get; set; }
-            //public string? Address { get; set; }
-            //public string? Email { get; set; }
-            // public IFormFile? Logo { get; set; }
             byte[] logo = null;
 
             if (dto.Logo != null)

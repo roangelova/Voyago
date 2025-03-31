@@ -25,7 +25,6 @@
     margin: 0px 2rem 5px 1rem;
 
     border-bottom: solid 1px rgba(51, 51, 51, 0.148);
-    
 
     &__login::after {
         content: '';
@@ -59,5 +58,26 @@
             cursor: pointer;
             font-size: 20px;
         }
+    }
+}
+
+.spinner {
+    //credit to Jonas Schmedtmann from the Udremy React course for creating this amazing spinner :) 
+    margin: 4.8rem auto;
+    height: auto;
+
+    width: 6.4rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, $color-primary 94%, #0000) top/10px 10px no-repeat,
+        conic-gradient(#0000 30%, $color-primary );
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+
+    animation: rotate 1.5s infinite linear ;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(1turn)
     }
 }

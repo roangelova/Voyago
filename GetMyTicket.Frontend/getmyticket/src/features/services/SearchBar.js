@@ -1,15 +1,14 @@
-import { Cities } from "../../services/cityService";
+import { useGetCities } from "../../services/cityService";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Trips } from "../../services/tripService";
 
 import { useNavigate, useParams } from "react-router-dom";
+import Spinner from "../../ui/Spinner";
 
 const SearchBar = ({ LoginPopupVisibility }) => {
-    //TODO -> include countries AND STARTCITY SHOULD NOT BE SHOWN IN DESTINATION LIST
     const navigate = useNavigate();
 
-    const [cities, setCities] = useState([]);
     const [start, setStart] = useState('');
     const [destination, setDestination] = useState('');
     const [startDate, setStartDate] = useState('2025-05-10');
@@ -23,16 +22,16 @@ const SearchBar = ({ LoginPopupVisibility }) => {
             : searchType == 'buses' ? searchType = 'Bus'
                 : searchType = 'all'
 
+    const { cities, error, isPending } = useGetCities();
+
     useEffect(() => {
-        Cities.getAll().then(data => {
-            if (data.length > 0) {
-                setCities(data);
-                setStart(data[0].cityId);
-                setDestination(data[1].cityId)
-            }
-        })
-            .catch(err => toast.error("Failed to get cities."));
-    }, [])
+        if (cities?.length > 0) {
+            setStart(cities[0].cityId);
+            setDestination(cities[1].cityId);
+        }
+    }, [cities]);
+
+    if (error) toast.error("Failed to get cities.");
 
     const handleSearch = () => {
         Trips.executeFilter({
@@ -48,11 +47,16 @@ const SearchBar = ({ LoginPopupVisibility }) => {
         })
     }
 
+    const availableCitiesForStart = cities?.filter(city => city.cityId !== destination);
+    const availableCitiesForDestination = cities?.filter(city => city.cityId !== start);
+
+    if (isPending) return <Spinner />
+
     return (
         <div className={`searchBar__container ${LoginPopupVisibility ? 'blurred' : ''}`}>
             <div className='searchBar__container--element'>
                 <select name="start" value={start} onChange={(e) => setStart(e.target.value)}>
-                    {cities.map((city) => (
+                    {availableCitiesForStart?.map((city) => (
                         <option key={city.cityId} value={city.cityId}>
                             {city.cityName}
                         </option>
@@ -62,7 +66,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
 
             <div className='searchBar__container--element'>
                 <select name="destination" value={destination} onChange={(e) => setDestination(e.target.value)}>
-                    {cities.map((city) => (
+                    {availableCitiesForDestination?.map((city) => (
                         <option key={city.cityId} value={city.cityId}>
                             {city.cityName}
                         </option>

@@ -326,6 +326,22 @@ h1 {
   font-size: 20px;
 }
 
+.spinner {
+  margin: 4.8rem auto;
+  height: auto;
+  width: 6.4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #93b3da 94%, rgba(0, 0, 0, 0)) top/10px 10px no-repeat, conic-gradient(rgba(0, 0, 0, 0) 30%, #93b3da);
+  -webkit-mask: radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 10px), #000 0);
+  animation: rotate 1.5s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
 .searchBar__button {
   padding: 18px;
   border-radius: 10px;

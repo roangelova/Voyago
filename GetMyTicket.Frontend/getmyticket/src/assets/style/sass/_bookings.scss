@@ -1,0 +1,28 @@
+.bookings__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120rem;
+
+    padding: 3rem;
+
+    transition: all .4s ease-out;
+
+    & table, tr, td{
+        padding: 2.5rem;
+        text-align: center;
+    }
+
+    & tr:hover{
+        transform: scale(1.1);
+    }
+
+    & table{
+        background-color: $color-grey-light-1;
+    }
+
+    & caption{
+        font-size: 24px;
+        margin-bottom: 2.4rem;
+    }
+}

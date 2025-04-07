@@ -744,11 +744,34 @@ h1 {
   justify-content: center;
 }
 .footer__ul {
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5px;
+}
+
+.bookings__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120rem;
+  padding: 3rem;
+  transition: all 0.4s ease-out;
+}
+.bookings__container table, .bookings__container tr, .bookings__container td {
+  padding: 2.5rem;
+  text-align: center;
+}
+.bookings__container tr:hover {
+  transform: scale(1.1);
+}
+.bookings__container table {
+  background-color: #f9f7f6;
+}
+.bookings__container caption {
+  font-size: 24px;
+  margin-bottom: 2.4rem;
 }
 
 /*# sourceMappingURL=style.css.map */

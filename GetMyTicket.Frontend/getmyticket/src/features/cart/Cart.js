@@ -124,7 +124,7 @@ function Cart() {
                                     <PassengerData
                                         dispatch={dispatch}
                                         passenger={state.passenger}
-                                        passengerId={state.passengerId}/> :
+                                        passengerId={state.passengerId} /> :
                                     state.activeStep === 3 ?
                                         <ReviewCart
                                             trip={state.trip}
@@ -137,14 +137,21 @@ function Cart() {
                     </CartStepContainer>
 
                     <ul className="cart__container-nav">
-                        <li onClick={() => dispatch({ type: 'previousStep' })}>
-                            <img className="cart__container-nav--icon" src={arrowToLeft} alt='arrow back icon' />
-                            <span>BACK</span>
-                        </li>
-                        <li onClick={() => dispatch({ type: 'nextStep' })}>
-                            <img className="cart__container-nav--icon" src={arrowToRight} alt='arrow next icon' />
-                            <span>NEXT</span>
-                        </li>
+
+                        {state.activeStep !== 1 ?
+                            <li onClick={() => dispatch({ type: 'previousStep' })}>
+                                <img className="cart__container-nav--icon" src={arrowToLeft} alt='arrow back icon' />
+                                <span>BACK</span>
+                            </li> :
+                            <li></li>}
+
+                        {state.activeStep !== 3 ?
+                            <li onClick={() => dispatch({ type: 'nextStep' })}>
+                                <img className="cart__container-nav--icon" src={arrowToRight} alt='arrow next icon' />
+                                <span>NEXT</span>
+                            </li> :
+                            <li></li>}
+
                     </ul>
                 </div>
             </div>

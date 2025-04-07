@@ -13,6 +13,7 @@ import Cart from './features/cart/Cart';
 import SearchByTypePage from './features/pages/SearchByTypePage';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AppLayout from './ui/AppLayout';
+import Bookings from './features/account/Bookings';
 
 const queryClient = new QueryClient();
 
@@ -31,8 +32,8 @@ function App() {
             <Route path="/:searchType" element={<SearchByTypePage />} />
             <Route path="/register-form" element={<RegisterForm />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
-            <Route path='/user' element={<p>User page</p>}>
-              <Route path='bookings' element={<p>my user bookings</p>} />
+            <Route path='/user'>
+              <Route path='bookings' element={<Bookings />} />
               <Route path='profile' element={<p>my user profile</p>} />
             </Route>
           </Route>

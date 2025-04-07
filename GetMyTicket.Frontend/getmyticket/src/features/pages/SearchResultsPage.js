@@ -13,7 +13,7 @@ function SearchResultsPage() {
     const [destinationCoordinates, setDestinationCoordinates] = useState(null)
 
     useEffect(() => {
-        if (data?.length > 0) {
+        if (data && data.length > 0) {
             //MONTHLY QUOATA EXCEEDED
 
         //   CityApi.getCityData(data[0].startCityName)
@@ -29,7 +29,6 @@ function SearchResultsPage() {
         //       })
         }
     })
-//<NavBar className="search__nav" />
     return (
         <>
             
@@ -37,7 +36,7 @@ function SearchResultsPage() {
 
                 <div className="search__results">
 
-                    {data?.length === 0 ?
+                    {data && data.length > 0?
                         <h3>We could not find any offers for this search. Please, try again.</h3>
                         : null}
 

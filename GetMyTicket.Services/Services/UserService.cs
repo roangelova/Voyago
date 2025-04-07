@@ -24,7 +24,7 @@ namespace GetMyTicket.Service.Services
 
             if (!parseResult)
             {
-                throw new ApplicationError(string.Format(ErrorMessages.Invalid, nameof(registerUserDTO.Dob)));
+                throw new ApplicationError(string.Format(ResponseConstants.Invalid, nameof(registerUserDTO.Dob)));
             }
 
             //TODO: write unittest to check this method 
@@ -36,7 +36,7 @@ namespace GetMyTicket.Service.Services
                    string.IsNullOrWhiteSpace(registerUserDTO.Email) ||
                    string.IsNullOrWhiteSpace(registerUserDTO.Address))
             {
-                throw new ApplicationError(ErrorMessages.AllFieldsRequired);
+                throw new ApplicationError(ResponseConstants.AllFieldsRequired);
             }
 
             var user = new User()

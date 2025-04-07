@@ -19,14 +19,14 @@ namespace GetMyTicket.Service.Services
         {
             if (trainDTO.Capacity <= 0)
             {
-                throw new ApplicationException(string.Format(ErrorMessages.CantBeNull, nameof(trainDTO.Capacity)));
+                throw new ApplicationException(string.Format(ResponseConstants.CantBeNull, nameof(trainDTO.Capacity)));
             }
 
             var TransportationProvider = await unitOfWork.TransportationProviders.GetByIdAsync(trainDTO.TransportationProviderId);
 
             if (TransportationProvider == null)
             {
-                throw new ApplicationException(string.Format(ErrorMessages.NotFoundError,
+                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError,
                     nameof(TransportationProvider),
                     trainDTO.TransportationProviderId));
             }

@@ -3,7 +3,7 @@ import { api } from "../api/api.js";
 
 export function useGetTrips(filter){
     return useMutation({
-        mutationFn: (filter) => 
+        mutationFn: () => 
             api.get(`api/trips/search?Type=${filter.type}&StartDate=${filter.startDate}&EndDate=${filter.endDate}&StartCityId=${filter.startCityId}&EndCityId=${filter.endCityId}`)
     })
 }

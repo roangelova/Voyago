@@ -45,6 +45,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
             "endCityId": destination
         },
             {
+                //TODO: ADD VARIABLES
                 onSuccess: (trips) => {
                     queryClient.setQueryData(['trips'], trips);;
                     navigate("/search-results", { state: trips })

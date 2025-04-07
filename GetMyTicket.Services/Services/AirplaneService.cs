@@ -26,12 +26,12 @@ namespace GetMyTicket.Service.Services
 
                 if (airplaneDTO.Capacity <= 0)
                 {
-                    throw new ApplicationError(string.Format(ErrorMessages.CantBeNull, nameof(airplaneDTO.Capacity)));
+                    throw new ApplicationError(string.Format(ResponseConstants.CantBeNull, nameof(airplaneDTO.Capacity)));
                 }
 
                 if (string.IsNullOrWhiteSpace(airplaneDTO.Model))
                 {
-                    throw new ApplicationError(string.Format(ErrorMessages.NotSupported, nameof(airplaneDTO.Model)));
+                    throw new ApplicationError(string.Format(ResponseConstants.NotSupported, nameof(airplaneDTO.Model)));
                 }
 
                 var entity = new Airplane()
@@ -50,7 +50,7 @@ namespace GetMyTicket.Service.Services
                 return entity;
             }
 
-            throw new ApplicationError(string.Format(ErrorMessages.NotSupported, nameof(airplaneDTO.Manufacturer)));
+            throw new ApplicationError(string.Format(ResponseConstants.NotSupported, nameof(airplaneDTO.Manufacturer)));
         }
 
         public async Task<GetAirplaneDTO> GetById(object id)

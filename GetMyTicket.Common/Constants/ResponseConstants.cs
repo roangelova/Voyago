@@ -1,8 +1,8 @@
 ﻿namespace GetMyTicket.Common.Constants
 {
-    public static class ErrorMessages
+    public static class ResponseConstants
     {
-        //API RESPONSE
+        //ERROR
 
         public const string InvalidCredentials = "Invalid credentials. Please try again!";
         public const string SomethingWentWrong = "Oops...Something went wrong.";
@@ -26,5 +26,9 @@
         public const string CantBeTheSame = "{0} and {1} can't be the same";
 
         public const string OwnershipMissmatch = "Ownership missmatch. Vehicle does not belong to this transportation provider.";
+
+        //SUCCESS
+
+        public const string LogoutSuccessful = "Successfully logged out.";
     }
 }

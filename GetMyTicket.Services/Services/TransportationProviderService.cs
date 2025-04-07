@@ -24,7 +24,7 @@ namespace GetMyTicket.Service.Services
                 string.IsNullOrWhiteSpace(addTpDTO.Email) ||
                 string.IsNullOrWhiteSpace(addTpDTO.Address))
             {
-                throw new ApplicationError(ErrorMessages.AllFieldsRequired);
+                throw new ApplicationError(ResponseConstants.AllFieldsRequired);
             }
 
             byte[] logo = null;
@@ -93,7 +93,7 @@ namespace GetMyTicket.Service.Services
 
             if (entityToUpdate is null) 
             {
-                throw new ApplicationError( string.Format(ErrorMessages.NotFoundError, nameof(TransportationProvider), id.ToString()));
+                throw new ApplicationError( string.Format(ResponseConstants.NotFoundError, nameof(TransportationProvider), id.ToString()));
             }
 
             if (dto.Name is not null) entityToUpdate.Name = dto.Name.Trim();

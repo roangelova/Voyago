@@ -31,12 +31,12 @@ namespace GetMyTicket.Service.Services
 
             if (trip is null)
             {
-                throw new ApplicationError(string.Format(ErrorMessages.NotFoundError, nameof(Trip), bookTripDTO.TripId));
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), bookTripDTO.TripId));
             }
 
             if(trip.Capacity == 0)
             {
-                throw new ApplicationError(ErrorMessages.SoldOut);
+                throw new ApplicationError(ResponseConstants.SoldOut);
             }
 
             //TODO-> ONCE 1+ PASSENGERS ARE SUPPORTED, CALCULATE TOTAL PRICE

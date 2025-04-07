@@ -29,12 +29,12 @@ namespace GetMyTicket.Service.Services
 
             if(vehicle.TransportationProviderId != provider.TransportationProviderId)
             {
-                throw new ApplicationError(ErrorMessages.OwnershipMissmatch);
+                throw new ApplicationError(ResponseConstants.OwnershipMissmatch);
             }
 
             if(dto.StartCityId == dto.EndCityId)
             {
-                throw new ApplicationError(string.Format(ErrorMessages.CantBeTheSame, nameof(dto.StartCityId), nameof(dto.EndCityId)));
+                throw new ApplicationError(string.Format(ResponseConstants.CantBeTheSame, nameof(dto.StartCityId), nameof(dto.EndCityId)));
             }
 
             bool parseResultTransportationType = Enum.TryParse<TypeOfTransportation>(dto.TypeOfTransportation, false, out var TransportationType);
@@ -43,12 +43,12 @@ namespace GetMyTicket.Service.Services
 
             if (!parseResultTransportationType)
             {
-                throw new ApplicationError(string.Format(ErrorMessages.InvalidType, nameof(dto.TypeOfTransportation), nameof(TransportationProvider)));
+                throw new ApplicationError(string.Format(ResponseConstants.InvalidType, nameof(dto.TypeOfTransportation), nameof(TransportationProvider)));
             }
 
             if (!parseResultStartTime || !parseResultEndTime) 
             {
-                throw new ApplicationError(ErrorMessages.InvalidDateFormat);
+                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
             }
 
             var trip = new Trip()
@@ -78,7 +78,7 @@ namespace GetMyTicket.Service.Services
 
             if (!parseArrvalTime || !parseDepartureTime)
             {
-                throw new ApplicationError(ErrorMessages.InvalidDateFormat);
+                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
             }
 
             //prepare dates for filter function 

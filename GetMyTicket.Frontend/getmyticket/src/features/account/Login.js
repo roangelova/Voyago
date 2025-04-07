@@ -46,7 +46,7 @@ function Login({ setLoginPopupVisibility }) {
             }
                 , 3000);
         }).catch(err => {
-            toast.error(err.response.data)
+            toast.error(err.response?.data ?? 'There was an error logging you in.')
         })
     }
 

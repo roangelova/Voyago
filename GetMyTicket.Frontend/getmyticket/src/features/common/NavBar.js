@@ -59,46 +59,49 @@ function NavBar() {
                 <img src={showUserMenu ? arrowup : arrowdown} alt='arrow up/down' />
             </li>
 
-            {showUserMenu ? <AccountMenuDropdown /> : null}
+
 
         </ul>
 
     return (
-        <nav className='navigation'>
-            <div className='navigation__logo'>
-                <NavLink to="/">
-                    <img src={voyago} alt='Site logo and name' />
-                </NavLink>
-            </div>
-            <ul className="navigation__browse">
-                <li>
-                    <NavLink to='/trains'>
-                        Trains
+        <>
+            <nav className='navigation'>
+                <div className='navigation__logo'>
+                    <NavLink to="/">
+                        <img src={voyago} alt='Site logo and name' />
                     </NavLink>
-                </ li>
-                <li>
-                    <NavLink to='/buses'>
-                        Buses
-                    </NavLink>
-                </li >
-                <li>
-                    <NavLink to='/flights'>
-                        Flights
-                    </NavLink>
-                </li>
-            </ul>
+                </div>
+                <ul className="navigation__browse">
+                    <li>
+                        <NavLink to='/trains'>
+                            Trains
+                        </NavLink>
+                    </ li>
+                    <li>
+                        <NavLink to='/buses'>
+                            Buses
+                        </NavLink>
+                    </li >
+                    <li>
+                        <NavLink to='/flights'>
+                            Flights
+                        </NavLink>
+                    </li>
+                </ul>
 
-            {isLoggedIn ? UserNav : NoUserNav}
+                {isLoggedIn ? UserNav : NoUserNav}
 
-            {
-                LoginPopupVisibility ?
-                    <div className='login blur-overlay'>
-                        <Login setLoginPopupVisibility={setLoginPopupVisibility} />
-                    </div> :
-                    null
-            }
+                {
+                    LoginPopupVisibility ?
+                        <div className='login blur-overlay'>
+                            <Login setLoginPopupVisibility={setLoginPopupVisibility} />
+                        </div> :
+                        null
+                }
 
-        </nav>
+            </nav>
+
+            {showUserMenu ? <AccountMenuDropdown /> : null}</>
     )
 }
 

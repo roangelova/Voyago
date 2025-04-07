@@ -69,7 +69,6 @@ h1 {
 }
 
 .header {
-  position: relative;
   height: 40vh;
   width: 100vw;
 }
@@ -302,6 +301,8 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 10;
   padding-top: 5px;
   margin: 0px 3rem 0px 1rem;
   border-bottom: solid 1px rgba(51, 51, 51, 0.148);
@@ -472,6 +473,12 @@ h1 {
   display: flex;
   flex-direction: column;
   box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+  width: 150px;
+  position: absolute;
+  top: 0%;
+  left: 100%;
+  transform: translate(-110%, 50%);
+  z-index: 20;
 }
 .accountMenu img {
   margin-right: 5px;

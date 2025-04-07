@@ -16,14 +16,17 @@
 
 .navigation {
     font-size: 20px;
-
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    position: relative;
+    z-index: 10;
+
     padding-top: 5px;
     margin: 0px 3rem 0px 1rem;
-    
+
     border-bottom: solid 1px rgba(51, 51, 51, 0.148);
 
     &__login::after {
@@ -73,7 +76,7 @@
         conic-gradient(#0000 30%, $color-primary );
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
 
-    animation: rotate 1.5s infinite linear ;
+    animation: rotate 1.5s infinite linear;
 }
 
 @keyframes rotate {

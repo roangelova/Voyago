@@ -1,19 +1,26 @@
-.accountMenu{
+.accountMenu {
     display: flex;
     flex-direction: column;
     box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 
-    & img{
+    width: 150px;
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    transform: (translate(-110%, 50%));
+    z-index: 20;
+
+    & img {
         margin-right: 5px;
         height: 24px;
     }
 
-    & li{
+    & li {
         font-size: 16px;
         padding: 10px;
     }
 
-    &__item{
+    &__item {
         display: flex;
         align-items: center;
     }

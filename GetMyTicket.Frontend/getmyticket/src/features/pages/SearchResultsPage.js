@@ -36,7 +36,7 @@ function SearchResultsPage() {
 
                 <div className="search__results">
 
-                    {data && data.length > 0?
+                    {!data || data.length < 0?
                         <h3>We could not find any offers for this search. Please, try again.</h3>
                         : null}
 

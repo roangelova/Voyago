@@ -11,6 +11,11 @@ function AccountMenuDropdown() {
         Account.logout()
             .then(res => {
                 toast.info(res);
+            })
+            .catch(err => {
+                toast.error(err.response?.data ?? 'There was an error logging you out.')
+            })
+            .finally(() => {
 
                 Cookies.remove('accessToken');
                 Cookies.remove('refreshToken');
@@ -20,9 +25,6 @@ function AccountMenuDropdown() {
                     window.location.href = "/";
                 }
                     , 3000);
-            })
-            .catch(err => {
-                console.error(err)
             })
     }
 

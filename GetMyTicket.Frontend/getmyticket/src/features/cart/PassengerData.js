@@ -9,7 +9,7 @@ function PassengerData({ dispatch, passenger, passengerId }) {
         let confirmed = window.confirm('By submitting this information, you confirm that it is accurate and as per your personal identification documents. Please be advised that in case of inconsistencies, bording might be denied.')
 
         if (confirmed) {
-            if (passengerId !== null || passengerId !== undefined || passengerId !== "") {
+            if (passengerId != null && passengerId !== "") {
                 console.log('IN EDIT', passengerId)
                 Passenger.editPassenger(passengerId, passenger)
                     .then(updatedPassenger => {

@@ -1,7 +1,9 @@
 import { toast } from 'react-toastify';
+
 import bookings from '../../assets/icons/bookings.png';
 import logout from '../../assets/icons/logout.png';
 import profile from '../../assets/icons/profile.png';
+
 import { Account } from '../../services/accountService';
 import Cookies from "js-cookie";
 
@@ -30,14 +32,14 @@ function AccountMenuDropdown() {
 
     return (
         <ul className="accountMenu">
-            <a href='/user/profile'>
+            <a href='/account/profile'>
                 <li className="accountMenu__item">
                     <img src={profile} alt='My profile icon' />
                     <span>Profile</span>
                 </li>
             </a>
 
-            <a href='/user/bookings'>
+            <a href='/account/bookings'>
                 <li className="accountMenu__item">
                     <img src={bookings} alt='My bookings icon' />
                     <span>My bookings</span>
@@ -47,7 +49,7 @@ function AccountMenuDropdown() {
             <a href='#' onClick={handleLogout}>
                 <li className="accountMenu__item">
                     <img src={logout} alt='Log out icon' />
-                    <span>Log out</span>
+                    <span>Sign out</span>
                 </li>
             </a >
         </ul>

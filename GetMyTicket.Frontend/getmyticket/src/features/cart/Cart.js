@@ -38,6 +38,8 @@ const initialState = {
 
 function reducer(state, action) {
     switch (action.type) {
+        case 'clearCart':
+            return { ...state, tripId: null, trip: {} }
         case 'setTrip':
             return { ...state, trip: action.payload, tripId: action.payload.tripId };
 
@@ -127,7 +129,9 @@ function Cart() {
                                         passengerId={state.passengerId} /> :
                                     state.activeStep === 3 ?
                                         <ReviewCart
-                                            trip={state.trip}
+                                            tripId={state.tripId}
+                                            userId={state.userId}
+                                            passengerId={state.passengerId}
                                             dispatch={dispatch}
                                         />
                                         : null)

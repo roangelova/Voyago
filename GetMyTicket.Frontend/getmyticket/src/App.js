@@ -32,7 +32,7 @@ function App() {
             <Route path="/:searchType" element={<SearchByTypePage />} />
             <Route path="/register-form" element={<RegisterForm />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
-            <Route path='/user'>
+            <Route path='/account'>
               <Route path='bookings' element={<Bookings />} />
               <Route path='profile' element={<p>my user profile</p>} />
             </Route>

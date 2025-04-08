@@ -763,9 +763,6 @@ h1 {
   padding: 2.5rem;
   text-align: center;
 }
-.bookings__container tr:hover {
-  transform: scale(1.1);
-}
 .bookings__container table {
   background-color: #f9f7f6;
 }

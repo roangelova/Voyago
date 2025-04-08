@@ -5,18 +5,7 @@ import fallbackLogo from '../../assets/images/fallbackLogo.png'
 import bistro from '../../assets/icons/bistro.png'
 import wc from '../../assets/icons/wc.png'
 import highspeed from '../../assets/icons/highspeed.png'
-
-function formatDate(date) {
-    return new Intl.DateTimeFormat("en-GB", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: 'numeric',
-        hour: "2-digit",
-        minute: "2-digit",
-        hourCycle: "h24"
-    }).format(new Date(date));
-}
+import { formatDate } from '../../helpers';
 
 function SearchResultCard({ trip }) {
     const navigate = useNavigate();

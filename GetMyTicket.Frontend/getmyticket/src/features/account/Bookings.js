@@ -1,51 +1,43 @@
+import { formatDate } from "../../helpers";
+import { useGetUserBookings } from "../../services/bookingService";
+
 function Bookings() {
+    const userId = sessionStorage.getItem('userId');
+    const { isPending, error, bookings } = useGetUserBookings(userId);
+
+    console.log(bookings)
     return (
 
 
 
         <div className="bookings__container">
             <table>
-                <caption>My bookings</caption>
-                <tr>
-                    <th>Booking reference</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Departure Time</th>
-                    <th>Total Price</th>
-                    <th>Actions</th>
-                </tr>
-                <tr>
-                    <td>INT787</td>
-                    <td>Munich</td>
-                    <td>New York</td>
-                    <td>19.09.2025, 21:45</td>
-                    <td>899 EUR</td>
-                    <td>Cancel | Details</td>
-                </tr>
-                <tr>
-                    <td>DEC562</td>
-                    <td>Varna</td>
-                    <td>Munich</td>
-                    <td>01.07.2025, 14:00</td>
-                    <td>345 EUR</td>
-                    <td>Cancel | Details</td>
-                </tr>
-                <tr>
-                    <td>INT787</td>
-                    <td>Munich</td>
-                    <td>New York</td>
-                    <td>19.09.2025, 21:45</td>
-                    <td>899 EUR</td>
-                    <td>Cancel | Details</td>
-                </tr>
-                <tr>
-                    <td>DEC562</td>
-                    <td>Varna</td>
-                    <td>Munich</td>
-                    <td>01.07.2025, 14:00</td>
-                    <td>345 EUR</td>
-                    <td>Cancel | Details</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Booking reference</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure Time</th>
+                        <th>Total Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {bookings?.map(b =>
+                        <tr>
+                            <td>{b.bookingId}</td>
+                            <td>{b.toCityName}</td>
+                            <td>{b.fromCityName}</td>
+                            <td>{formatDate(b.departureTime)}</td>
+                            <td>{b.totalPrice} {b.currency}</td>
+                            <td><strong>Cancel | Details</strong></td>
+                        </tr>
+                    )}
+
+                </tbody>
+
             </table>
         </div>
     );

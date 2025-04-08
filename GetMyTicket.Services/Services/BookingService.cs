@@ -1,7 +1,9 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs;
+using GetMyTicket.Common.DTOs.Booking;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.ErrorHandling;
+using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -24,8 +26,6 @@ namespace GetMyTicket.Service.Services
         public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)
         {
             //TODO -> EXTAND TO WORK WITH MULTIPLE PASSENGERS PER BOOKING
-            //FOR NOW, WE USE A DEFAULT PASSENGERID, AS AT THIS STAGE THE REQUIRMENT FOR WHEN AND HOW THE PASSENGER DATA WILL BE CREATED IS UNCLEAR; 
-           // var passengerId = await passengerService.GetPassengerIdAsync(bookTripDTO.UserId);
 
             var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
 
@@ -34,7 +34,7 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), bookTripDTO.TripId));
             }
 
-            if(trip.Capacity == 0)
+            if (trip.Capacity == 0)
             {
                 throw new ApplicationError(ResponseConstants.SoldOut);
             }
@@ -51,20 +51,42 @@ namespace GetMyTicket.Service.Services
 
             trip.Capacity--;
 
-           // var passengerBookingMap = new PassengerBookingMap
-           // {
-           //     BookingId = booking.BookingId,
-           //     PassengerId = passengerId,
-           // };
+            var passengerBookingMap = new PassengerBookingMap
+            {
+                BookingId = booking.BookingId,
+                PassengerId = bookTripDTO.PassengerId,
+            };
 
-            //TODO-> review THIS again TO MAKE SURE U are not missing something and no partial changes will be persisted to the db
             unitOfWork.Trips.Update(trip);
             await unitOfWork.Bookings.AddAsync(booking);
-            //await unitOfWork.PassengerBookingMap.AddAsync(passengerBookingMap);
+            await unitOfWork.PassengerBookingMap.AddAsync(passengerBookingMap);
 
             await unitOfWork.SaveChangesAsync();
-           
+
             return booking.BookingId;
+        }
+
+        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId)
+        {
+            var user = await unitOfWork.Users.GetByIdAsync(userId);
+
+            var data = await unitOfWork.PassengerBookingMap
+                .GetAllAsync(x => user.PassengerMapId == x.PassengerId, 
+                null,
+                true,
+                //INCLUDE
+                x => x.Booking,
+                x=> x.Booking.Trip.StartCity,
+                x=> x.Booking.Trip.EndCity);
+
+            return data.Select(b => new ListBookingDTO()
+            {
+                BookingId = b.BookingId,
+                ToCityName = b.Booking.Trip.EndCity.CityName,
+                FromCityName = b.Booking.Trip.StartCity.CityName,
+                DepartureTime = b.Booking.Trip.StartTime,
+                TotalPrice = b.Booking.TotalPrice
+            });
         }
     }
 }

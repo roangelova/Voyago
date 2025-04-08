@@ -5,7 +5,6 @@ function Bookings() {
     const userId = sessionStorage.getItem('userId');
     const { isPending, error, bookings } = useGetUserBookings(userId);
 
-    console.log(bookings)
     return (
 
 
@@ -13,20 +12,22 @@ function Bookings() {
         <div className="bookings__container">
             <table>
                 <thead>
-                    <tr>
-                        <th>Booking reference</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Departure Time</th>
-                        <th>Total Price</th>
-                        <th>Actions</th>
-                    </tr>
+
+                    {!bookings || bookings.length === 0 ? <tr ><th className="bookings__noData">No bookings</th></tr> :
+                        <tr>
+                            <th>Booking reference</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Departure Time</th>
+                            <th>Total Price</th>
+                            <th>Actions</th>
+                        </tr>}
                 </thead>
 
                 <tbody>
 
                     {bookings?.map(b =>
-                        <tr>
+                        <tr key={b.bookingId}>
                             <td>{b.bookingId}</td>
                             <td>{b.toCityName}</td>
                             <td>{b.fromCityName}</td>

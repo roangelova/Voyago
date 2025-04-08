@@ -23,7 +23,7 @@ function ReviewCart({
                 //TODO -> what do we want to do next? Option to remove from cart? 
             })
     }
-    //TODO -> think of some design: should user be able to qucikly review the booking?
+    //TODO -> think of some design: should user be able to qucikly review the booking? ->> THEN DISABLE BUTTON WHILE CREATING BOOKING
     return (
         <div>
             <p>Click below to finish your booking</p>

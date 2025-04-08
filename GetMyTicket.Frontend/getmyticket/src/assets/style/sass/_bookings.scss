@@ -1,24 +1,36 @@
-.bookings__container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 120rem;
+.bookings {
 
-    padding: 3rem;
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-    transition: all .4s ease-out;
+        padding: 3rem;
 
-    & table, tr, td{
-        padding: 2.5rem;
-        text-align: center;
-    }
+        transition: all .4s ease-out;
 
-    & table{
-        background-color: $color-grey-light-1;
-    }
+        & table,
+        tr,
+        td {
+            padding: 2.5rem;
+            text-align: center;
+        }
 
-    & caption{
-        font-size: 24px;
-        margin-bottom: 2.4rem;
+        & table {
+            background-color: $color-grey-light-1;
+            font-size: 1rem;
+            border-radius: 7px;
+            overflow: hidden;
+            width: 90rem;
+        }
+
+        & th{
+            font-size: 24px;
+        }
+
+        & caption {
+            font-size: 24px;
+            margin-bottom: 2.4rem;
+        }
     }
 }

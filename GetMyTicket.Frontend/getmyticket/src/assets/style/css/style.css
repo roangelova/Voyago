@@ -755,16 +755,24 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120rem;
   padding: 3rem;
   transition: all 0.4s ease-out;
 }
-.bookings__container table, .bookings__container tr, .bookings__container td {
+.bookings__container table,
+.bookings__container tr,
+.bookings__container td {
   padding: 2.5rem;
   text-align: center;
 }
 .bookings__container table {
   background-color: #f9f7f6;
+  font-size: 1rem;
+  border-radius: 7px;
+  overflow: hidden;
+  width: 90rem;
+}
+.bookings__container th {
+  font-size: 24px;
 }
 .bookings__container caption {
   font-size: 24px;

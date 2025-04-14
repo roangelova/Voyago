@@ -1,19 +1,13 @@
 using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using GetMyTicket.Persistance.Context;
 using GetMyTicket.API.ExceptionHandler;
 using GetMyTicket.API.ServiceExtensions;
 using GetMyTicket.Common.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using GetMyTicket.Persistance.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using GetMyTicket.API.AppConfigurations;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var keyVaultUri = builder.Configuration["AzureKeyVault:VaultUri"];
-var client = new SecretClient(new Uri(keyVaultUri), new DefaultAzureCredential());
 
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
@@ -37,36 +31,9 @@ builder.Services.AddIdentity<User, ApplicationRole>(options =>
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
 
-KeyVaultSecret JwtIssuer = await client.GetSecretAsync("JwtIssuer");
-KeyVaultSecret JwtAudience = await client.GetSecretAsync("JwtAudience");
-KeyVaultSecret JwtKey = await client.GetSecretAsync("JwtKey");
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(options =>
-    {
-        options.RequireHttpsMetadata = false;
-
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = JwtIssuer.Value,
-            ValidAudience = JwtAudience.Value,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey.Value))
-        };
-    });
+await builder.ConfigureApp();
 
 builder.Services.AddAuthorization();
-
-KeyVaultSecret secret = await client.GetSecretAsync("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(secret.Value, sqlOptions =>
-         sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null)));
 
 builder.Services.AddApplicationServices();
 
@@ -130,12 +97,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseAuthentication();
-
-app.Use(async (context, next) =>
-{
-    Console.WriteLine($"User: {context?.User.Identity?.Name} - Authenticated: {context?.User.Identity?.IsAuthenticated}");
-    await next();
-});
 
 app.UseAuthorization();
 

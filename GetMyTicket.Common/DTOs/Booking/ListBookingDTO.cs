@@ -13,5 +13,7 @@
         public double TotalPrice { get; set; }
 
         public string Currency {  get; set; }
+
+        public string Status { get; set; }
     }
 }

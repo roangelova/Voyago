@@ -86,7 +86,8 @@ namespace GetMyTicket.Service.Services
                 FromCityName = b.Booking.Trip.StartCity.CityName,
                 DepartureTime = b.Booking.Trip.StartTime,
                 TotalPrice = b.Booking.TotalPrice,
-                Currency = Enum.GetName(b.Booking.Trip.Currency)
+                Currency = Enum.GetName(b.Booking.Trip.Currency), 
+                Status = Enum.GetName(b.Booking.BookingStatus)
             });
         }
     }

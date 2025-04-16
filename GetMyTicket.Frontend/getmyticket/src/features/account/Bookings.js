@@ -20,6 +20,7 @@ function Bookings() {
                             <th>To</th>
                             <th>Departure Time</th>
                             <th>Total Price</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>}
                 </thead>
@@ -33,6 +34,7 @@ function Bookings() {
                             <td>{b.fromCityName}</td>
                             <td>{formatDate(b.departureTime)}</td>
                             <td>{b.totalPrice} {b.currency}</td>
+                            <td>{b.status}</td>
                             <td><strong>Cancel | Details</strong></td>
                         </tr>
                     )}

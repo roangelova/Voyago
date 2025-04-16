@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class Trip
+    public class Trip: ITrackableEntity
     {
         public Guid TripId { get; set; }
 
@@ -50,5 +51,14 @@ namespace GetMyTicket.Common.Entities
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

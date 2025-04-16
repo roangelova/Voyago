@@ -1,13 +1,14 @@
 ﻿using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class Booking
+    public class Booking : ITrackableEntity
     {
-        public Guid BookingId { get; set; } 
+        public Guid BookingId { get; set; }
 
         public double TotalPrice { get; set; }
 
@@ -22,5 +23,14 @@ namespace GetMyTicket.Common.Entities
 
         public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

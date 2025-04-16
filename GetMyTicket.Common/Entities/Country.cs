@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using GetMyTicket.Common.Entities.Trackable;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class Country
+    public class Country :ITrackableEntity
     {
         public Guid CountryId { get; set; } = Guid.CreateVersion7();
 
@@ -12,7 +12,16 @@ namespace GetMyTicket.Common.Entities
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public ICollection<City> Destinations { get; set; } 
+        public ICollection<City> Destinations { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

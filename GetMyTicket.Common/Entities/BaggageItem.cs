@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Entities.Trackable;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,9 +7,9 @@ using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class BaggageItem
+    public class BaggageItem : ITrackableEntity
     {
-        public Guid BaggageItemId { get; set; } 
+        public Guid BaggageItemId { get; set; }
 
         [Required]
         [Range(0, MaxBaggageSize)]
@@ -25,5 +26,15 @@ namespace GetMyTicket.Common.Entities
         [ForeignKey(nameof(Trip))]
         [Required]
         public Guid TripId { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

@@ -1,14 +1,14 @@
-﻿using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Entities.Passengers;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GetMyTicket.Common.Entities.Contracts;
+using GetMyTicket.Common.Entities.Passengers;
+using GetMyTicket.Common.Entities.Trackable;
+using Microsoft.AspNetCore.Identity;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
 {
-    public class User : IdentityUser<Guid>
+    public class User : IdentityUser<Guid>, ITrackableEntity
     {
         [Required]
         [MaxLength(NameMaxLength)]
@@ -34,6 +34,14 @@ namespace GetMyTicket.Common.Entities
         [ForeignKey(nameof(Passenger))]
         public Guid PassengerMapId { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

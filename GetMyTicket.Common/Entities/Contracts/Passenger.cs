@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.Enum;
+﻿using GetMyTicket.Common.Entities.Trackable;
+using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities.Contracts
 {
-    public abstract class Passenger
+    public abstract class Passenger : ITrackableEntity
     {
         public Guid PassengerId { get; set; }
 
@@ -28,6 +29,14 @@ namespace GetMyTicket.Common.Entities.Contracts
 
         [Required]
         public DateOnly DOB { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public DateTime? LastUpdatedAt { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
+        public DateTime? DeletedAt { get; set; }
     }
 }

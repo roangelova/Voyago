@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Passengers;
+using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
 using Microsoft.AspNetCore.Identity;
@@ -75,14 +77,15 @@ namespace GetMyTicket.Persistance.Context
         {
             base.OnConfiguring(optionsBuilder);
 
-            //TODO -> DO WE HAVE A WORKAROUNG
-           //optionsBuilder.UseSeeding((context, _) =>
-           //  {
-           //      string seedFilePath = GetSeedDataPath();
-           //
-           //      Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
-           //      SeedData(context);
-           //  });
+           
+          optionsBuilder.UseSeeding((context, _) =>
+            {
+                string seedFilePath = GetSeedDataPath();
+          
+                Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
+                SeedData(context);
+                SaveChanges();
+            });
         }
 
         private static void SeedData(DbContext context)
@@ -194,6 +197,46 @@ namespace GetMyTicket.Persistance.Context
             string seedFilePath = Path.Combine(projectRoot, "GetMyTicket.Persistance", "SeedData", "DestinationsSeed.json");
 
             return seedFilePath;
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<ITrackableEntity>();
+
+            foreach (var entry in entries) 
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override int SaveChanges()
+        {
+            var entries = ChangeTracker.Entries<ITrackableEntity>();
+
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    entry.Entity.IsDeleted = true;
+                    entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();  
         }
     }
 }

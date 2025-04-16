@@ -17,9 +17,8 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                     })
             } else {
                 Passenger.createPassenger(passenger)
-                    .then(updatedPassenger => {
-                        dispatch({ type: 'setPassenger', payload: updatedPassenger })
-                        dispatch({ type: 'setPassengerId', payload: updatedPassenger })
+                    .then(passengerId => {
+                        dispatch({ type: 'setPassengerId', payload: passengerId })
                     }).catch(err => {
                         toast.error(err.response.data.detail)
                     })
@@ -100,7 +99,7 @@ function PassengerData({ dispatch, passenger, passengerId }) {
                     <label htmlFor='dob'>Date of birth:</label>
                     <input type='date' name='dob' value={new Date(passenger.dob).toISOString().split('T')[0]}
                         onChange={(e) =>
-                            dispatch({ type: "setField", field: "dob", value: e.target.value })
+                             dispatch({ type: "setField", field: "dob", value: e.target.value })
                         }
                     />
                 </div>

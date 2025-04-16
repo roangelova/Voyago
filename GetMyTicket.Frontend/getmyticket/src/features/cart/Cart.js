@@ -6,7 +6,6 @@ import arrowToRight from '../../assets/icons/arrowToRight.png';
 
 import { toast } from 'react-toastify';
 
-import NavBar from '../common/NavBar';
 import CartStepContainer from './CartStepContainer';
 import TripDetails from './TripDetails';
 import PassengerData from './PassengerData';
@@ -14,7 +13,6 @@ import ReviewCart from './ReviewCart';
 
 import { Passenger } from "../../services/passengerService";
 
-const FAKE_USER_FOR_TESTING = '536e2aeb-f0df-4155-af9a-954277593763';
 const userId = sessionStorage.getItem('userId');
 
 const initialState = {
@@ -59,7 +57,7 @@ function reducer(state, action) {
                 }
             }
         case 'setPassengerId':
-            return { ...state, passengerId: action.payload.passengerId }
+            return { ...state, passengerId: action.payload }
         case 'setPassenger':
             return {
                 ...state, passenger: {

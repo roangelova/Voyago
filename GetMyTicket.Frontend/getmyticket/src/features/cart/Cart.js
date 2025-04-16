@@ -92,7 +92,7 @@ function Cart() {
         Passenger.getPassenger(state.userId)
             .then(data => {
                 if (data) {
-                    dispatch({ type: 'setPassengerId', payload: data });
+                    dispatch({ type: 'setPassengerId', payload: data.passengerId });
                     dispatch({ type: 'setPassenger', payload: data })
                 }
             })

@@ -71,6 +71,7 @@ namespace GetMyTicket.Persistance.Context
                 .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            ApplyGlobalQueryFilters(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -237,6 +238,25 @@ namespace GetMyTicket.Persistance.Context
             }
 
             return base.SaveChanges();  
+        }
+
+        /// <summary>
+        /// This method applies a global filter to out entities, to make sure that soft-deleted objects are not retrieved 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        private static void ApplyGlobalQueryFilters(ModelBuilder modelBuilder)
+        {
+            //TODO -> should a QF also be applied to the IsActive prop? Currently, we do not use it annywhere in our app, so we ignore it at this point
+            modelBuilder.Entity<Passenger>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Vehicle>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Booking>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<City>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Country>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<TransportationProvider>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Trip>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<User>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<ApplicationRole>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<BaggageItem>().HasQueryFilter(x => x.IsDeleted == false);
         }
     }
 }

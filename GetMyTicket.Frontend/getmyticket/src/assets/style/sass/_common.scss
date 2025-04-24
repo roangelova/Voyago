@@ -16,7 +16,7 @@
 
 .navigation {
     font-size: 20px;
-    
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -82,5 +82,45 @@
 @keyframes rotate {
     to {
         transform: rotate(1turn)
+    }
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+    padding: 3rem;
+
+    &__pages {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        align-items: center;
+
+        & span{
+            line-height: 0;
+        }
+
+        & img {
+            align-self: center;
+        }
+
+        & div {
+            font-size: 18px;
+
+            display: flex;
+            gap: 1rem;
+            padding: 2rem;
+        }
+    }
+
+    &__resultsPerPage {
+
+        & option,
+        select,
+        label {
+            font-size: 18px;
+        }
     }
 }

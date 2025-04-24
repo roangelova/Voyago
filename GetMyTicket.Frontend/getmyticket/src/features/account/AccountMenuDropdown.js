@@ -18,7 +18,7 @@ function AccountMenuDropdown() {
                 toast.error(err.response?.data ?? 'There was an error logging you out.')
             })
             .finally(() => {
-
+                //TODO -> do we need to invalidate some data?
                 Cookies.remove('accessToken');
                 Cookies.remove('refreshToken');
                 sessionStorage.removeItem('userId');

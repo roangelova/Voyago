@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SearchResultCard from "../common/SearchResultCard";
 
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import Pagination from "../common/Paginations";
 
 function SearchResultsPage() {
     const location = useLocation();
@@ -42,6 +43,7 @@ function SearchResultsPage() {
 
                     {data?.map((trip) => <SearchResultCard trip={trip} key={trip.tripId} />)}
 
+
                 </div>
 
                 <div className='search__container-map'>
@@ -59,6 +61,7 @@ function SearchResultsPage() {
                 </div>
 
             </section>
+                <Pagination totalItemsCount={data.length} />
         </>
     )
 }

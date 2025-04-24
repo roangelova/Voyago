@@ -350,6 +350,37 @@ h1 {
     transform: rotate(1turn);
   }
 }
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-around;
+  padding: 3rem;
+}
+.pagination__pages {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+}
+.pagination__pages span {
+  line-height: 0;
+}
+.pagination__pages img {
+  align-self: center;
+}
+.pagination__pages div {
+  font-size: 18px;
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+}
+.pagination__resultsPerPage option,
+.pagination__resultsPerPage select,
+.pagination__resultsPerPage label {
+  font-size: 18px;
+}
+
 .searchBar__button {
   padding: 18px;
   border-radius: 10px;

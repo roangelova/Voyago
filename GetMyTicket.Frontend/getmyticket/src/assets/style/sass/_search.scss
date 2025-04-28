@@ -11,8 +11,8 @@
 
 
         &-map {
-            width: 50%;
-            height: 80%;
+            width: 40%;
+            height: 70%;
             padding: 2rem;
 
             z-index: 2;
@@ -32,6 +32,18 @@
         flex-direction: column;
         gap: 1rem;
         max-height: 100%;
+
+        &--options {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            justify-content: space-around;
+            border-bottom: 1px solid $color-dark-grey;
+
+            & div {
+                padding: 1rem;
+            }
+        }
     }
 }
 

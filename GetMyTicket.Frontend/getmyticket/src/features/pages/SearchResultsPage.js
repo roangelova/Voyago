@@ -6,11 +6,23 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import Pagination from "../common/Paginations";
 import FilterBy from "../common/FilterBy";
 import SortBy from "../common/SortBy";
+import { CityApi } from '../../services/cityInfoAPI.js'
+import { toast } from "react-toastify";
+
+const FILTER_PARAM = 'provider';
 
 const sortOptions = [
     { key: 'Lowest price', value: 'lowestPriceFirst' },
     { key: 'Highest price', value: 'highestPriceFirst' },
     { key: 'Travel time', value: 'travelTime' }];
+
+//TODO -> MAKE DYNAMIC; consider how key and value should be named
+const filterOptions = [
+    { key: 'Show all', value: 'all' },
+    { key: 'Avianca', value: 'Avianca' },
+    { key: 'Deutsche Bahn', value: 'DeutscheBahn' },
+    { key: 'TransAvia', value: 'TransAvia' },
+]
 
 function SearchResultsPage() {
     const location = useLocation();
@@ -26,8 +38,8 @@ function SearchResultsPage() {
 
 
     const defaultMapCoordinates = [48.1351, 11.5820];
-    const [startCoordinates, setStartCoordinates] = useState(null);
-    const [destinationCoordinates, setDestinationCoordinates] = useState(null)
+    const [startCoordinates, setStartCoordinates] = useState(['48.1351', '11.5820']);
+    const [destinationCoordinates, setDestinationCoordinates] = useState(['43.2141', '27.9147'])
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -35,23 +47,23 @@ function SearchResultsPage() {
 
     useEffect(() => {
         //////FILTER
-        const filterByParam = searchParams.get('provider');
+        const filterByParam = searchParams.get(FILTER_PARAM);
         if (filterByParam !== 'all') {
             updatedData = updatedData.filter(x => x.transportationProviderName === filterByParam)
         }
-        
+
         //////SORT
         const sortByValue = searchParams.get('sortBy');
-        
-        if (sortByValue === 'travelTime') {
+
+        if (sortByValue === sortOptions[2].value) {
             updatedData?.sort((a, b) => {
                 const travelTimeA = new Date(a.endTime) - new Date(a.startTime);
                 const travelTimeB = new Date(b.endTime) - new Date(b.startTime);
                 return travelTimeA - travelTimeB;
             })
-        } else if (sortByValue === 'highestPriceFirst') {
+        } else if (sortByValue === sortOptions[1].value) {
             updatedData?.sort((a, b) => b.price - a.price)
-        } else if (sortByValue === 'lowestPriceFirst') {
+        } else if (sortByValue === sortOptions[0].value) {
             updatedData?.sort((a, b) => a.price - b.price)
         }
 
@@ -59,7 +71,7 @@ function SearchResultsPage() {
         let pageSize = searchParams.get('results');
         let page = searchParams.get('page');
         updatedData = updatedData.slice((page - 1) * pageSize, page * pageSize);
-        
+
         //end of sorting. pagination and filtering
         setFilteredData(updatedData)
     }, [searchParams, data])
@@ -70,17 +82,17 @@ function SearchResultsPage() {
         if (data && data.length > 0) {
             //MONTHLY QUOATA EXCEEDED
 
-            //   CityApi.getCityData(data[0].startCityName)
-            //       .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
-            //       .catch(err => {
-            //           toast.error(err.error)
-            //       })
+            //  CityApi.getCityData(data[0].startCityName)
+            //      .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))
+            //      .catch(err => {
+            //          toast.error(err.error)
+            //      })
 
-            //   CityApi.getCityData(data[0].endCityName)
-            //       .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
-            //       .catch(err => {
-            //           toast.error(err.error)
-            //       })
+            //  CityApi.getCityData(data[0].endCityName)
+            //      .then(data => setDestinationCoordinates([data[0].latitude, data[0].longitude]))
+            //      .catch(err => {
+            //          toast.error(err.error)
+            //      })
         }
     })
     return (
@@ -89,7 +101,11 @@ function SearchResultsPage() {
             <section className="search__container">
                 <div className="search__results">
                     <div className="search__results--options">
-                        <FilterBy />
+                        <FilterBy
+                            title={'Provider'}
+                            options={filterOptions}
+                            param={FILTER_PARAM}
+                        />
                         <SortBy sortOptions={sortOptions} />
                     </div>
 

@@ -424,8 +424,8 @@ h1 {
   align-items: center;
 }
 .search__container-map {
-  width: 50%;
-  height: 80%;
+  width: 40%;
+  height: 70%;
   padding: 2rem;
   z-index: 2;
 }
@@ -439,6 +439,16 @@ h1 {
   flex-direction: column;
   gap: 1rem;
   max-height: 100%;
+}
+.search__results--options {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  justify-content: space-around;
+  border-bottom: 1px solid #3c4856;
+}
+.search__results--options div {
+  padding: 1rem;
 }
 
 .resultCard {
@@ -711,7 +721,7 @@ h1 {
 
 .whyUs_container {
   margin: 5rem;
-  margin-top: 7rem;
+  margin-top: 17rem;
 }
 .whyUs_container h2,
 .whyUs_container h3 {

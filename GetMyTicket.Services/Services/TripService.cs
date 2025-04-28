@@ -17,9 +17,9 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Trip> GetTrip(Guid id)
+        public async Task<Trip> GetTrip(Guid id, CancellationToken cancellationToken = default)
         {
-           return await unitOfWork.Trips.GetByIdAsync(id);
+            return await unitOfWork.Trips.GetByIdAsync(id, cancellationToken);
         }
 
         public async Task<Guid> CreateTrip(CreateTripDTO dto)
@@ -27,12 +27,12 @@ namespace GetMyTicket.Service.Services
             var vehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
             var provider = await unitOfWork.TransportationProviders.GetByIdAsync(dto.TransortationProviderId);
 
-            if(vehicle.TransportationProviderId != provider.TransportationProviderId)
+            if (vehicle.TransportationProviderId != provider.TransportationProviderId)
             {
                 throw new ApplicationError(ResponseConstants.OwnershipMissmatch);
             }
 
-            if(dto.StartCityId == dto.EndCityId)
+            if (dto.StartCityId == dto.EndCityId)
             {
                 throw new ApplicationError(string.Format(ResponseConstants.CantBeTheSame, nameof(dto.StartCityId), nameof(dto.EndCityId)));
             }
@@ -46,7 +46,7 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.InvalidType, nameof(dto.TypeOfTransportation), nameof(TransportationProvider)));
             }
 
-            if (!parseResultStartTime || !parseResultEndTime) 
+            if (!parseResultStartTime || !parseResultEndTime)
             {
                 throw new ApplicationError(ResponseConstants.InvalidDateFormat);
             }
@@ -70,7 +70,7 @@ namespace GetMyTicket.Service.Services
             return trip.TripId;
         }
 
-        public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO)
+        public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO, CancellationToken cancellationToken)
         {
             //parse dates
             bool parseDepartureTime = DateOnly.TryParse(searchTripsDTO.StartDate, out DateOnly tripStartTime);
@@ -90,15 +90,15 @@ namespace GetMyTicket.Service.Services
             DateTime ArrivalEndTime = tripEndTime.ToDateTime(TimeOnly.MaxValue);
 
             //FOR TESTING PURPOSES -> RETURN ALL TRIPS SO WE HAVE MORE DATA TO WORK WITH
-            //TODO -> AZURESQL DB, SEED MORE DATA & PERSIST ALL ADDDATA ENTITIES
             var data = await unitOfWork.Trips.GetAllAsync(
                // x => x.StartCityId == searchTripsDTO.StartCityId &&
                //  x.EndCityId == searchTripsDTO.EndCityId &&
                // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
                // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
-               searchTripsDTO.Type != "all" ?  x => x.TypeOfTransportation.ToString() ==  searchTripsDTO.Type : null,
-               x => x.OrderByDescending(t => t.Price) ,
+               searchTripsDTO.Type != "all" ? x => x.TypeOfTransportation.ToString() == searchTripsDTO.Type : null,
+               x => x.OrderByDescending(t => t.Price),
                 true,
+                cancellationToken,
                x => x.EndCity,
                x => x.StartCity,
                x => x.TransportationProvider
@@ -113,7 +113,7 @@ namespace GetMyTicket.Service.Services
                 Price = x.Price,
                 StartCityName = x.StartCity.CityName,
                 TransportationProviderName = x.TransportationProvider.Name,
-                Currency =Enum.GetName(x.Currency),
+                Currency = Enum.GetName(x.Currency),
                 TransportationProviderLogo = Convert.ToBase64String(x.TransportationProvider.Logo)
             }).ToList();
 

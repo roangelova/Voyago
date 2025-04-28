@@ -7,6 +7,6 @@ namespace GetMyTicket.Service.Contracts
     {
         public Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO);
 
-        public Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId);
+        public Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default);
     }
 }

@@ -66,7 +66,7 @@ namespace GetMyTicket.Service.Services
             return booking.BookingId;
         }
 
-        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId)
+        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
         {
             var user = await unitOfWork.Users.GetByIdAsync(userId);
 
@@ -74,6 +74,7 @@ namespace GetMyTicket.Service.Services
                 .GetAllAsync(x => user.PassengerMapId == x.PassengerId, 
                 null,
                 true,
+                cancellationToken,
                 //INCLUDE
                 x => x.Booking,
                 x=> x.Booking.Trip.StartCity,

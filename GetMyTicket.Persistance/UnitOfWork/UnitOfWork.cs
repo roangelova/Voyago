@@ -47,9 +47,9 @@ namespace GetMyTicket.Persistance.UnitOfWork
             PassengerBookingMap = new GenericRepository<PassengerBookingMap>(AppDbContext);
         }
 
-        public async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-           return await AppDbContext.SaveChangesAsync();
+           return await AppDbContext.SaveChangesAsync(cancellationToken);
         }
 
         public void Dispose()

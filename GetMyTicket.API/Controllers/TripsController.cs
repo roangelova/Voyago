@@ -16,9 +16,9 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(Guid tripId)
-        { 
-         var trip = await tripService.GetTrip(tripId);
+        public async Task<IActionResult> Get(Guid tripId, CancellationToken cancellationToken = default)
+        {
+            var trip = await tripService.GetTrip(tripId, cancellationToken);
 
             if (trip == null)
             {
@@ -32,9 +32,9 @@ namespace GetMyTicket.API.Controllers
 
         [HttpGet("search")]
         //CURRENTLY, THE APP IGNORES TIMES ZONES TO SIMPLIFY THE DEVELOPMENT AT THIS STAGE OF DEVELOPMENT. THIS IS HOWEVER PLANNED IN THE NEAR FUTURE
-        public async Task<IActionResult> GetAllTrips([FromQuery]SearchTripsDTO searchTripsDTO)
+        public async Task<IActionResult> GetAllTrips([FromQuery] SearchTripsDTO searchTripsDTO, CancellationToken cancellationToken)
         {
-            var trips = await tripService.GetAllSearchResultTrips(searchTripsDTO);
+            var trips = await tripService.GetAllSearchResultTrips(searchTripsDTO, cancellationToken);
 
             return Ok(trips);
         }

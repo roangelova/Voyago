@@ -17,20 +17,21 @@ namespace GetMyTicket.Persistance.Generic_Repository
             DbSet = context.Set<T>();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
         {
-            await DbSet.AddAsync(entity);
+            await DbSet.AddAsync(entity, cancellationToken);
         }
 
         public void Delete(T entity)
         {
-            DbSet.Remove(entity);
+            DbSet.Remove(entity );
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(
           Expression<Func<T, bool>>? filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
           bool AsNonTracking = false,
+          CancellationToken cancellationToken = default,
           params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = DbSet;
@@ -59,9 +60,9 @@ namespace GetMyTicket.Persistance.Generic_Repository
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(object id)
+        public async Task<T> GetByIdAsync(object id, CancellationToken cancellationToken = default)
         {
-            return await DbSet.FindAsync(id);
+            return await DbSet.FindAsync(id, cancellationToken);
         }
 
         public void Update(T entity)

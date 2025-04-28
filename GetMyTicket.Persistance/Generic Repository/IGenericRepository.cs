@@ -4,11 +4,9 @@ namespace GetMyTicket.Persistance.Generic_Repository
 {
     public interface IGenericRepository<T> where T : class
     {
-        //getById , ADD, DELETEBYID, DELETE ENTITY, UPDATE, GETALL
+        public Task<T> GetByIdAsync(object id, CancellationToken cancellationToken = default);
 
-        public Task<T> GetByIdAsync(object id);
-
-        public Task AddAsync(T entity);
+        public Task AddAsync(T entity, CancellationToken cancellationToken = default);
 
         public void Update(T entity);
 
@@ -18,7 +16,8 @@ namespace GetMyTicket.Persistance.Generic_Repository
           Expression<Func<T, bool>>? filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
           bool AsNonTracking = false,
-          params Expression<Func<T, object>>[] includes 
+          CancellationToken cancellationToken = default,
+          params Expression<Func<T, object>>[] includes
    );
     }
 }

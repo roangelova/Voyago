@@ -24,13 +24,12 @@ namespace GetMyTicket.API.Controllers
             return passenger;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO)
         {
             Guid passengerId = await passengerService.CreatePassenger(createOrEditPassengerDTO);
 
-            return CreatedAtAction(nameof(GetPassenger), new { id = passengerId }, passengerId); ;
+            return Ok(passengerId) ;
         }
 
         [HttpPut("{id}")]

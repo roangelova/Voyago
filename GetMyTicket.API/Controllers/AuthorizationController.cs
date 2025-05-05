@@ -1,10 +1,12 @@
-﻿using GetMyTicket.Common.Constants;
+﻿using System.Text.Json;
+using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
 using GetMyTicket.Service.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers
@@ -53,10 +55,9 @@ namespace GetMyTicket.API.Controllers
 
             if (!tokenExists)
             {
-                return BadRequest(ErrorMessages.SomethingWentWrong);
+                return BadRequest(ResponseConstants.SomethingWentWrong);
             }
 
-            //TODO -> REMOVE OR REFACTOR TO BE USED. Email only for test purposes
             var tokenModel = GenerateTokens(userId);
 
             await RedisDb.KeyRenameAsync(refreshToken, tokenModel.RefreshToken);
@@ -71,7 +72,7 @@ namespace GetMyTicket.API.Controllers
 
             if (user == null)
             {
-                return BadRequest(ErrorMessages.InvalidCredentials);
+                return BadRequest(ResponseConstants.InvalidCredentials);
             }
 
             bool passwordIsCorrect = await userManager.CheckPasswordAsync(
@@ -79,31 +80,36 @@ namespace GetMyTicket.API.Controllers
 
             if (!passwordIsCorrect)
             {
-                return BadRequest(ErrorMessages.InvalidCredentials);
+                return BadRequest(ResponseConstants.InvalidCredentials);
             }
 
             var tokenModel = GenerateTokens(user.Id);
 
-            //TODO - encrypt token and store encrypted value
-            //TODO - > CAN WE OPTIMIZE THIS? Its kinda slow
-            await RedisDb.SetAddAsync(tokenModel.RefreshToken, data.Email);
+            var authorizedUser = new AuthorizedUserCacheModel()
+            {
+                AccessToken = tokenModel.AccessToken,
+                RefreshToken = tokenModel.RefreshToken,
+                Id = tokenModel.UserId
+            };
+
+            await RedisDb.SetAddAsync(tokenModel.AccessToken, JsonSerializer.Serialize(authorizedUser));
+            await RedisDb.SetAddAsync(tokenModel.RefreshToken, JsonSerializer.Serialize(authorizedUser));
 
             return Ok(tokenModel);
-
         }
 
-        //TODO REFACTOR: SHOULD NOT NEED REFRESH TOKEN
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-           // var result = await RedisDb.KeyDeleteAsync(refreshToken);
+            var userId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
 
-           // if (!result)
-           // {
-           //     return BadRequest(ErrorMessages.SomethingWentWrong);
-           // }
+            if (userId is null) return BadRequest(ResponseConstants.SomethingWentWrong); 
 
-            return Ok("Successfully logged out.");
+            var result = await RedisDb.KeyDeleteAsync(userId);
+
+            if (!result) return BadRequest(ResponseConstants.SomethingWentWrong);
+
+            return Ok(ResponseConstants.LogoutSuccessful);
         }
 
 
@@ -113,9 +119,7 @@ namespace GetMyTicket.API.Controllers
             string refreshToken = authorizationService.GenerateRefreshToken();
 
             var tokenModel = new JwtTokenModel(accessToken, refreshToken, userId);
-
             return tokenModel;
-
         }
 
     }

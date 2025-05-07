@@ -7,7 +7,7 @@ function Bookings() {
 
     return (
 
-
+        //TTODO: ADD FILTER BY BOOKINGSTATUS
 
         <div className="bookings__container">
             <table>

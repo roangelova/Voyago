@@ -29,5 +29,20 @@ namespace GetMyTicket.API.Controllers
         {
             return await bookingService.GetUserBookings(userId);
         }
+
+        [HttpPut("{bookingId}")]
+        public async Task<IActionResult> CancelBooking (Guid bookingId)
+        {
+            var result = await bookingService.CancelBooking(bookingId);
+
+           if(result == 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
+        }
     }
 }

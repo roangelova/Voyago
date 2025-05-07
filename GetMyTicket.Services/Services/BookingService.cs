@@ -2,6 +2,7 @@
 using GetMyTicket.Common.DTOs;
 using GetMyTicket.Common.DTOs.Booking;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.UnitOfWork;
@@ -21,6 +22,19 @@ namespace GetMyTicket.Service.Services
         {
             this.unitOfWork = unitOfWork;
             this.passengerService = passengerService;
+        }
+
+        public async Task<int> CancelBooking(object bookingId)
+        {
+            var booking = await unitOfWork.Bookings.GetByIdAsync(bookingId);
+
+            if (booking is null)
+            {
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Booking), bookingId));
+            }
+
+            booking.BookingStatus = BookingStatus.Canceled;
+            return await unitOfWork.SaveChangesAsync();
         }
 
         public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)

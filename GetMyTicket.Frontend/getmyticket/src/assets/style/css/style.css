@@ -794,10 +794,19 @@ h1 {
   gap: 5px;
 }
 
+.bookings__options {
+  border-bottom: solid 1px #999;
+}
+.bookings__actions {
+  font-weight: 700;
+  cursor: pointer;
+}
 .bookings__container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   padding: 3rem;
   transition: all 0.4s ease-out;
 }

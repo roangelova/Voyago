@@ -1,8 +1,8 @@
 import { formatDate } from "../../helpers";
 import { useState, useEffect, use } from "react";
 import { Booking, useGetUserBookings } from "../../services/bookingService";
-import FilterBy from "../common/FilterBy";
-import { useSearchParams } from "react-router-dom";
+import FilterBy from "../../ui/FilterBy.js";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const FILTER_PARAM = 'bookingStatus';
@@ -14,6 +14,8 @@ const options = [
 ]
 
 function Bookings() {
+    const navigate= useNavigate();
+
     const userId = sessionStorage.getItem('userId');
     const { isPending, error, bookings = [] } = useGetUserBookings(userId);
     const [filteredData, setFilteredData] = useState([]);
@@ -32,7 +34,6 @@ function Bookings() {
     useEffect(() => {
         //////FILTER
         const filterByParam = searchParams.get(FILTER_PARAM);
-        console.log(filterByParam)
         if (filterByParam !== 'All') {
             updatedData = updatedData.filter(x => x.status === filterByParam)
         }
@@ -77,7 +78,7 @@ function Bookings() {
                     <FilterBy
                         title="Status"
                         options={options}
-                        param={FILTER_PARAM}
+                        paramName={FILTER_PARAM}
                     />
                 </div>
                 <table>
@@ -106,8 +107,8 @@ function Bookings() {
                                 <td>{b.totalPrice} {b.currency}</td>
                                 <td>{b.status}</td>
                                 <td className="bookings__actions">
-                                    {b.status === 'Confirmed' ? <span onClick={() => handleCancelBooking(b.bookingId)}>Cancel</span> : null}
-                                    <span> Details</span>
+                                    {b.status === 'Confirmed' ? <div onClick={() => handleCancelBooking(b.bookingId)}>Cancel |</div> : null}
+                                    <div onClick={() => navigate(`/account/bookings/${b.bookingId}`, {state: b})}> Manage booking</div>
                                 </td>
                             </tr>
                         )}

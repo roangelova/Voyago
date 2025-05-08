@@ -15,5 +15,7 @@
         public string Currency {  get; set; }
 
         public string Status { get; set; }
+
+        public Guid TripId { get; set; }
     }
 }

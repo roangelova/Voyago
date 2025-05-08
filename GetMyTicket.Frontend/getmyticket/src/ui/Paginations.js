@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-import arrrowToLeft from '../../assets/icons/arrowToLeft.png'
-import arrrowToRight from '../../assets/icons/arrowToRight.png'
+import arrrowToLeft from '../assets/icons/arrowToLeft.png'
+import arrrowToRight from '../assets/icons/arrowToRight.png'
 import { useSearchParams } from "react-router-dom";
 
+//TODO -> out of sync issue
 function Pagination({ totalItemsCount = 1 }) {
     const resultsPerPageOptions = [5, 10, 15, 20];
     const [resultsPerPage, setResultsPerPage] = useState(resultsPerPageOptions[0]);
@@ -30,9 +31,10 @@ function Pagination({ totalItemsCount = 1 }) {
 
 
     useEffect(() => {
-        params.set("page", currentPage);
-        params.set("results", resultsPerPage);
-        setParams(params)
+        let newParams = new URLSearchParams(params);
+        newParams.set("page", currentPage);
+        newParams.set("results", resultsPerPage);
+        setParams(newParams)
     }, [currentPage, resultsPerPage])
 
     return (

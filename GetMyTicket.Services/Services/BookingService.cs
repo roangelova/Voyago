@@ -102,7 +102,8 @@ namespace GetMyTicket.Service.Services
                 DepartureTime = b.Booking.Trip.StartTime,
                 TotalPrice = b.Booking.TotalPrice,
                 Currency = Enum.GetName(b.Booking.Trip.Currency), 
-                Status = Enum.GetName(b.Booking.BookingStatus)
+                Status = Enum.GetName(b.Booking.BookingStatus),
+                TripId = b.Booking.TripId
             });
         }
     }

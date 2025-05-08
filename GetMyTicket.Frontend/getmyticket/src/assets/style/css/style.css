@@ -62,6 +62,10 @@ input[type=radio]:checked {
   overflow-x: hidden;
 }
 
+.destructiveBtn {
+  background-color: rgb(177, 51, 51) !important;
+}
+
 h1 {
   font-weight: 400;
   font-size: 2srem;
@@ -829,6 +833,27 @@ h1 {
 .bookings__container caption {
   font-size: 24px;
   margin-bottom: 2.4rem;
+}
+
+.bookingDetails__container {
+  background-color: #f9f7f6;
+  width: 80%;
+  margin: auto;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+.bookingDetails__box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+.bookingDetails__actions {
+  display: flex;
+  gap: 2rem;
 }
 
 /*# sourceMappingURL=style.css.map */

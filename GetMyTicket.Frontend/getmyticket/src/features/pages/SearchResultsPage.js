@@ -1,11 +1,11 @@
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import SearchResultCard from "../common/SearchResultCard";
+import SearchResultCard from "../common/SearchResultCard.js";
 
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
-import Pagination from "../common/Paginations";
-import FilterBy from "../common/FilterBy";
-import SortBy from "../common/SortBy";
+import Pagination from "../../ui/Paginations.js";
+import FilterBy from "../../ui/FilterBy.js";
+import SortBy from "../../ui/SortBy.js";
 import { CityApi } from '../../services/cityInfoAPI.js'
 import { toast } from "react-toastify";
 
@@ -28,20 +28,31 @@ function SearchResultsPage() {
     const location = useLocation();
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         if (location.state) {
             setData(location.state);
             setFilteredData(location.state); // Start with unfiltered data
         }
-    }, [location.state]);
+
+        //set filterBy and sortBy default values to avoid both components overriding
+        //the URL by themselfs upon initial render
+        let filterByValue = filterOptions[0]?.value;
+        let sortByValue = sortOptions[0]?.value;
+
+        let newParams = new URLSearchParams(searchParams);
+        newParams.set(FILTER_PARAM, filterByValue);
+        newParams.set('sortBy', sortByValue);
+
+        setSearchParams(newParams)
+    }, []);
 
 
     const defaultMapCoordinates = [48.1351, 11.5820];
     const [startCoordinates, setStartCoordinates] = useState(['48.1351', '11.5820']);
     const [destinationCoordinates, setDestinationCoordinates] = useState(['43.2141', '27.9147'])
 
-    const [searchParams, setSearchParams] = useSearchParams();
 
     let updatedData = [...data];
 
@@ -97,16 +108,16 @@ function SearchResultsPage() {
     })
     return (
         <>
-                <title>Search results | Voyago</title>
+            <title>Search results | Voyago</title>
             <section className="search__container">
                 <div className="search__results">
                     <div className="search__results--options">
+                        <SortBy sortOptions={sortOptions} />
                         <FilterBy
                             title={'Provider'}
                             options={filterOptions}
-                            param={FILTER_PARAM}
+                            paramName={FILTER_PARAM}
                         />
-                        <SortBy sortOptions={sortOptions} />
                     </div>
 
                     {!filteredData || filteredData.length <= 0 ?

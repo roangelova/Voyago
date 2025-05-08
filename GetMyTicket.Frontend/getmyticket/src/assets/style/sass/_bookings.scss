@@ -1,10 +1,10 @@
 .bookings {
 
-    &__options{
+    &__options {
         border-bottom: solid 1px #999;
     }
 
-    &__actions{
+    &__actions {
         font-weight: 700;
         cursor: pointer;
     }
@@ -36,7 +36,7 @@
             width: 90rem;
         }
 
-        & th{
+        & th {
             font-size: 24px;
         }
 
@@ -44,5 +44,32 @@
             font-size: 24px;
             margin-bottom: 2.4rem;
         }
+    }
+}
+
+.bookingDetails {
+    &__container {
+        background-color: $color-grey-light-1;
+        width: 80%;
+        margin: auto;
+        padding: 3rem;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 2rem;
+        align-items: center;
+    }
+
+    &__box {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 2rem;
     }
 }

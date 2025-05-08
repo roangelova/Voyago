@@ -15,6 +15,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AppLayout from './ui/AppLayout';
 import Bookings from './features/account/Bookings';
 import ProtectedRoute from './ui/ProtectedRoute';
+import BookingDetails from './features/account/BookingDetails';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,8 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path='/account'>
                 <Route path='bookings' element={<Bookings />} />
+                <Route path="bookings/:bookingId" element={<BookingDetails />} />
+
                 <Route path='profile' element={<p>my user profile</p>} />
               </Route>
             </Route>

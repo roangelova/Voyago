@@ -12,7 +12,6 @@ import PassengerData from './PassengerData';
 import ReviewCart from './ReviewCart';
 
 import { Passenger } from "../../services/passengerService";
-
 const userId = sessionStorage.getItem('userId');
 
 const initialState = {
@@ -103,6 +102,7 @@ function Cart() {
 
     return (
         <>
+        <title>Cart | Voyago</title>
             <div className="cart">
                 <div className="cart__container">
                     <h2>Booking overview</h2>

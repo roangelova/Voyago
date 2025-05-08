@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 const FILTER_PARAM = 'bookingStatus';
 
 const options = [
+    { key: 'All', value: 'All' },
     { key: 'Confirmed', value: 'Confirmed' },
     { key: 'Canceled', value: 'Canceled' },
 ]
@@ -24,7 +25,7 @@ function Bookings() {
 
     useEffect(() => {
         //set default search params
-        searchParams.set('bookingStatus', 'Confirmed');
+        searchParams.set('bookingStatus', 'All');
         setSearchParams(searchParams)
     }, [])
 
@@ -32,7 +33,7 @@ function Bookings() {
         //////FILTER
         const filterByParam = searchParams.get(FILTER_PARAM);
         console.log(filterByParam)
-        if (filterByParam !== 'all') {
+        if (filterByParam !== 'All') {
             updatedData = updatedData.filter(x => x.status === filterByParam)
         }
 
@@ -69,51 +70,53 @@ function Bookings() {
     }
 
     return (
+        <>
+            <title>Bookings | Voyago</title>
+            <div className="bookings__container">
+                <div className="bookings__options">
+                    <FilterBy
+                        title="Status"
+                        options={options}
+                        param={FILTER_PARAM}
+                    />
+                </div>
+                <table>
+                    <thead>
 
-        <div className="bookings__container">
-            <div className="bookings__options">
-                <FilterBy
-                    title="Status"
-                    options={options}
-                    param={FILTER_PARAM}
-                />
+                        {!filteredData || filteredData.length === 0 ? <tr ><th className="bookings__noData">No bookings</th></tr> :
+                            <tr>
+                                <th>Booking reference</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Departure Time</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>}
+                    </thead>
+
+                    <tbody>
+
+                        {filteredData?.map(b =>
+                            <tr key={b.bookingId}>
+                                <td>{b.bookingId}</td>
+                                <td>{b.toCityName}</td>
+                                <td>{b.fromCityName}</td>
+                                <td>{formatDate(b.departureTime)}</td>
+                                <td>{b.totalPrice} {b.currency}</td>
+                                <td>{b.status}</td>
+                                <td className="bookings__actions">
+                                    {b.status === 'Confirmed' ? <span onClick={() => handleCancelBooking(b.bookingId)}>Cancel</span> : null}
+                                    <span> Details</span>
+                                </td>
+                            </tr>
+                        )}
+
+                    </tbody>
+
+                </table>
             </div>
-            <table>
-                <thead>
-
-                    {!filteredData || filteredData.length === 0 ? <tr ><th className="bookings__noData">No bookings</th></tr> :
-                        <tr>
-                            <th>Booking reference</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Departure Time</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>}
-                </thead>
-
-                <tbody>
-
-                    {filteredData?.map(b =>
-                        <tr key={b.bookingId}>
-                            <td>{b.bookingId}</td>
-                            <td>{b.toCityName}</td>
-                            <td>{b.fromCityName}</td>
-                            <td>{formatDate(b.departureTime)}</td>
-                            <td>{b.totalPrice} {b.currency}</td>
-                            <td>{b.status}</td>
-                            <td className="bookings__actions">
-                                {b.status === 'Confirmed' ? <span onClick={() => handleCancelBooking(b.bookingId)}>Cancel</span> : null}
-                                <span> Details</span>
-                            </td>
-                        </tr>
-                    )}
-
-                </tbody>
-
-            </table>
-        </div>
+        </>
     );
 }
 

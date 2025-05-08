@@ -97,7 +97,7 @@ function SearchResultsPage() {
     })
     return (
         <>
-
+                <title>Search results | Voyago</title>
             <section className="search__container">
                 <div className="search__results">
                     <div className="search__results--options">

@@ -42,5 +42,11 @@ namespace GetMyTicket.API.Controllers
 
             return Ok(updatedPassenger);
         }
+
+        [HttpGet("{bookingId}")]
+        public async Task<List<GetNameAndAgePassengerDataDTO>> GetPassengersForBooking(Guid bookingId, CancellationToken cancellationToken = default)
+        {
+            return await passengerService.GetPassengersForBooking(bookingId, cancellationToken);
+        }
     }
 }

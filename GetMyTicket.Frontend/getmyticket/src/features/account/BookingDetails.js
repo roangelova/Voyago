@@ -1,10 +1,17 @@
 import { useLocation } from "react-router-dom";
 import { formatDate, getFormattedDate, getFormattedTime } from "../../helpers";
+import { useEffect, useState } from "react";
+import { Passenger } from "../../services/passengerService";
+import Spinner from "../../ui/Spinner";
 
 function BookingDetails() {
     const { state: booking } = useLocation();
+    const [passengers, setPassengers] = useState([]);
 
-console.log(booking)
+    useEffect(() => {
+        Passenger.getNameAndAge(booking.bookingId)
+        .then(data => setPassengers(data))
+    }, [booking])
 
     return (
         <div className="bookingDetails__container">
@@ -19,11 +26,13 @@ console.log(booking)
                 </div>
             </div>
             <div className="bookingDetails__box">
-                <h3>Total passenger: 3</h3>
+                <h3>Total passenger: {passengers.length}</h3>
                 <div className="bookingDetails__data">
-                    <p>Sara Smith, age 34</p>
-                    <p>Sam Smith, age 36</p>
-                    <p>Caroline Smith, age 2</p>
+                 
+                 {passengers?.map(p => 
+                    <p key={p.name}>{p.name}, {p.age}</p>
+                 )}
+
                 </div>
             </div>
             <div className="bookingDetails__box">

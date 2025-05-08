@@ -9,5 +9,7 @@ namespace GetMyTicket.Service.Contracts
         public Task<GetPassengerDTO> GetPassengerAsync(Guid userId);
         public Task<Guid> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO);
         public Task<GetPassengerDTO> EditPassenger(Guid passengerId, CreateOrEditPassengerDTO createOrEditPassengerDTO);
+
+        public Task<List<GetNameAndAgePassengerDataDTO>> GetPassengersForBooking(Guid bookingId, CancellationToken cancellationToken = default);
     }
 }

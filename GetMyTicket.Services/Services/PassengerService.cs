@@ -165,5 +165,35 @@ namespace GetMyTicket.Service.Services
                 Nationality = passenger.Nationality
             };
         }
+
+        public async Task<List<GetNameAndAgePassengerDataDTO>> GetPassengersForBooking(Guid bookingId, CancellationToken cancellationToken = default)
+        {
+            var passengers = await unitOfWork.PassengerBookingMap.GetAllAsync(x => x.BookingId == bookingId, null, true, cancellationToken, x => x.Passenger);
+
+            var result = new List<GetNameAndAgePassengerDataDTO>();
+
+            //TODO -> add a func to calculate age properly and consider leap years etc
+            foreach (var passenger in passengers)
+            {
+                result.Add(new GetNameAndAgePassengerDataDTO
+                {
+                    Name = passenger.Passenger.FirstName + ' ' + passenger.Passenger.LastName,
+                    Age = CalculateAge(passenger.Passenger.DOB)
+                });
+            }
+
+            return result;
+        }
+
+        public static int CalculateAge(DateOnly dob)
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            int age = today.Year - dob.Year;
+
+            if (today < dob.AddYears(age))
+                age--;
+
+            return age;
+        }
     }
 }

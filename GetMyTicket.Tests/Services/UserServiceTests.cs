@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Moq;
@@ -46,7 +47,6 @@ namespace GetMyTicket.Tests.Services
         [Fact]
         public async Task RegisterUserAsync_InvalidDob_ThrowsError()
         {
-            // Arrange
             var registerUserDTO = new CreateUserDTO(
                 "Tourist",
                  "Guy",
@@ -56,23 +56,30 @@ namespace GetMyTicket.Tests.Services
                 true,
                 "Some address 15");
 
-            await Assert.ThrowsAsync<InvalidDataException>(() => userService.CreateUserAsync(registerUserDTO));
+            await Assert.ThrowsAsync<ApplicationError>(() => userService.CreateUserAsync(registerUserDTO));
         }
 
-        [Fact]
-        public async Task RegisterUserAsync_EmptyRequiredFields_ThrowsException()
-        {
-            // Arrange
-            var dto = new CreateUserDTO(
-                "",
-                 "Guy with no first name",
-                "touristguy11@gmail.com",
-                "Passw1rd#",
-                "1997-01-01",
-                true,
-                "Some address 15");
+        [Theory]
+        [InlineData("", "Last", "email@example.com", "Address")] 
+        [InlineData("First", "", "email@example.com", "Address")] 
+        [InlineData("First", "Last", "", "Address")] 
+        [InlineData("First", "Last", "email@example.com", "")] 
 
-            await Assert.ThrowsAsync<ArgumentException>(() => userService.CreateUserAsync(dto));
+        //test empty first name/ last name/ email/ address
+        public async Task RegisterUserAsync_MissingRequiredFields_ThrowsException(
+       string firstName, string lastName, string email, string address)
+        {
+            var dto = new CreateUserDTO(
+                firstName,
+                lastName,
+                email,
+                "Passw1rd#",
+                "1990-01-01",
+                true,
+                address
+            );
+
+            await Assert.ThrowsAsync<ApplicationError>(() => userService.CreateUserAsync(dto));
         }
 
         [Fact]

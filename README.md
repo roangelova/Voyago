@@ -29,3 +29,5 @@ The Get My Ticket website aims to provide users with the possibility of booking 
 - create booking & view current bookings
  
 IMPORTANT NOTICE: This project aims to adhere to the best practices used in software development. However, this may not always be possible due to lack of resources that can be used free of charge.
+
+Note about commits: I work on this project both at home on my personal laptop, as well as during my free time at work on my work laptop. Because of this, I aim to commit as often as needed to insure consistant codebase and prevent potential data loss, instead of when certain feature is complete. 

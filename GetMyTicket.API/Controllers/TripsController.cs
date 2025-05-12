@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
+using GetMyTicket.Common.Entities;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +45,13 @@ namespace GetMyTicket.API.Controllers
         {
             var tripId = await tripService.CreateTrip(createTripDTO);
 
-            return Ok(tripId);
+            return CreatedAtAction(nameof(Get), new {tripId}, tripId);
+        }
 
-            //TODO -> replace with CreatedAtAction once we have a GET method
+        [HttpPut]
+        public async Task<Trip> UpdateTrip(UpdateTripDTO updateTripDTO)
+        {
+            return await tripService.UpdateTrip(updateTripDTO);
         }
     }
 }

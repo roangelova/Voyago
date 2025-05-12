@@ -4,7 +4,7 @@
         Guid TpProviderId, 
         string Manufacturer, 
         string Model,
-        DateOnly ManufacturingDate, 
+        DateOnly? ManufacturingDate, 
         int Capacity
         );
     

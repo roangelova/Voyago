@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace GetMyTicket.API.ExceptionHandler
 {
     internal sealed class ExceptionHandler
-        (IProblemDetailsService problemDetailsService)
         : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(
@@ -19,18 +18,15 @@ namespace GetMyTicket.API.ExceptionHandler
                 _ => StatusCodes.Status500InternalServerError
             };
 
-            return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+            await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
             {
-                HttpContext = httpContext,
-                Exception = exception,
-                ProblemDetails = new ProblemDetails()
-                {
-                    Type = exception.GetType().Name,
-                    Title = "An error occured",
-                    Detail = exception.Message,
-                    Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
-                }
-            });
+                Title = "An error occured",
+                Detail = exception.Message,
+                Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}",
+                Status = httpContext.Response.StatusCode
+            }, cancellationToken: cancellationToken);
+
+            return true;
         }
     }
 }

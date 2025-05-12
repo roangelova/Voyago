@@ -1,6 +1,7 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
@@ -11,10 +12,12 @@ namespace GetMyTicket.Service.Services
     public class TripService : ITripService
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly TripValidator tripValidator;
 
-        public TripService(IUnitOfWork unitOfWork)
+        public TripService(IUnitOfWork unitOfWork, TripValidator tripValidator)
         {
             this.unitOfWork = unitOfWork;
+            this.tripValidator = tripValidator;
         }
 
         public async Task<Trip> GetTrip(Guid id, CancellationToken cancellationToken = default)
@@ -24,32 +27,10 @@ namespace GetMyTicket.Service.Services
 
         public async Task<Guid> CreateTrip(CreateTripDTO dto)
         {
-            var vehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
-            var provider = await unitOfWork.TransportationProviders.GetByIdAsync(dto.TransortationProviderId);
+            var result = await tripValidator.ValidateCreateTripDTO(dto);
 
-            if (vehicle.TransportationProviderId != provider.TransportationProviderId)
-            {
-                throw new ApplicationError(ResponseConstants.OwnershipMissmatch);
-            }
-
-            if (dto.StartCityId == dto.EndCityId)
-            {
-                throw new ApplicationError(string.Format(ResponseConstants.CantBeTheSame, nameof(dto.StartCityId), nameof(dto.EndCityId)));
-            }
-
-            bool parseResultTransportationType = Enum.TryParse<TypeOfTransportation>(dto.TypeOfTransportation, false, out var TransportationType);
-            bool parseResultStartTime = DateTime.TryParse(dto.StartTime, out DateTime StartTime);
-            bool parseResultEndTime = DateTime.TryParse(dto.EndTime, out DateTime EndTime);
-
-            if (!parseResultTransportationType)
-            {
-                throw new ApplicationError(string.Format(ResponseConstants.InvalidType, nameof(dto.TypeOfTransportation), nameof(TransportationProvider)));
-            }
-
-            if (!parseResultStartTime || !parseResultEndTime)
-            {
-                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
-            }
+            if (!result.IsValid)
+                throw new ApplicationError(result.ErrorMessage);
 
             var trip = new Trip()
             {
@@ -57,11 +38,11 @@ namespace GetMyTicket.Service.Services
                 EndCityId = dto.EndCityId,
                 TransportationProviderId = dto.TransortationProviderId,
                 VehicleId = dto.VehicleId,
-                TypeOfTransportation = TransportationType,
-                StartTime = StartTime,
-                EndTime = EndTime,
-                Price = dto.Price,
-                Capacity = vehicle.Capacity
+                TypeOfTransportation = result.TransportationType,
+                StartTime = result.StartTime,
+                EndTime = result.EndTime,
+                Price = dto.Price.Value,
+                Capacity = result.Vehicle.Capacity
             };
 
             await unitOfWork.Trips.AddAsync(trip);
@@ -119,5 +100,81 @@ namespace GetMyTicket.Service.Services
 
             return result;
         }
+
+
+        //Not in use for now; 
+        public async Task<GetTripDetailsDTO> GetTripDetails(Guid tripId, CancellationToken cancellationToken = default)
+        {
+            throw new NotFiniteNumberException();
+            //     var trip = await unitOfWork.Trips.GetByIdAsync(tripId, cancellationToken);
+            //
+            //      if(trip == null)
+            //      {
+            //          throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), trip));
+            //      }
+            //
+            //      var transportationProvider = await unitOfWork.TransportationProviders.GetByIdAsync(trip.TransportationProviderId, cancellationToken);
+            //
+            //      return new GetTripDetailsDTO
+            //      {
+            //          TransportationProviderName = transportationProvider.Name ?? "No data",
+            //          TransportationProviderLogo = Convert.ToBase64String(transportationProvider.Logo)
+            //      };
+        }
+
+        /// <summary>
+        /// Amends a trip. Only the following properties can be editet: Price, VehicleId (change vehicle for the trip, but not the type), Start- and EndTime. For all other changes the trip must be canceled
+        /// an a new one provided, as this will be a siginificant change to the entity and not optimal for users.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        /// <exception cref="ApplicationError"></exception>
+        public async Task<Trip> UpdateTrip(UpdateTripDTO dto)
+        {
+            var trip = await unitOfWork.Trips.GetByIdAsync(dto.TripId);
+
+            if (trip is null)
+            {
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), dto.TripId));
+            }
+
+            if (trip.VehicleId != dto.VehicleId.Value)
+            {
+                var oldVehicle = await unitOfWork.Vehicles.GetByIdAsync(trip.VehicleId);
+                var newVehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
+
+                if (newVehicle is null)
+                {
+                    throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Vehicle), dto.VehicleId));
+                }
+
+                if (oldVehicle.TransportationProviderId != newVehicle.TransportationProviderId)
+                {
+                    throw new ApplicationError(ResponseConstants.OwnershipChangeNotAllowed);
+                }
+
+                trip.Vehicle = newVehicle;
+            }
+
+            //TODO -> WE NEED TO CHECK IF EITEHR TIME HAS A VALUE AND ONLY THEN PERFORM PARSING AND ERROR HANDLING
+            if (!DateTime.TryParse(dto.StartTime, out var startTime) || !DateTime.TryParse(dto.EndTime, out var endTime))
+            {
+                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
+            }
+
+            if (dto.Price.HasValue)
+            {
+                trip.Price = dto.Price.Value;
+            }
+
+            trip.StartTime = startTime;
+            trip.EndTime = endTime;
+
+            unitOfWork.Trips.Update(trip);
+            await unitOfWork.SaveChangesAsync();
+
+            return trip;
+        }
+
     }
 }

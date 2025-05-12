@@ -3,7 +3,7 @@ using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
-using GetMyTicket.Service.Authorization;
+using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;

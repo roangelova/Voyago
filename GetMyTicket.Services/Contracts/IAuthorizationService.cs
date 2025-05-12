@@ -1,6 +1,6 @@
 ﻿using System.Reflection.Metadata;
 
-namespace GetMyTicket.Service.Authorization
+namespace GetMyTicket.Service.Contracts
 {
     public interface IAuthorizationService
     {

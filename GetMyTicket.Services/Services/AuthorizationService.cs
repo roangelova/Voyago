@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.JwtToken;
+using GetMyTicket.Service.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,7 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace GetMyTicket.Service.Authorization
+namespace GetMyTicket.Service.Services
 {
     public class AuthorizationService : IAuthorizationService
     {

@@ -26,6 +26,7 @@
         public const string CantBeTheSame = "{0} and {1} can't be the same";
 
         public const string OwnershipMissmatch = "Ownership missmatch. Vehicle does not belong to this transportation provider.";
+        public const string OwnershipChangeNotAllowed = "Cannot update trip vehicle to another provider. To do so, please cancel the current trip and add a new one.";
 
         //SUCCESS
 

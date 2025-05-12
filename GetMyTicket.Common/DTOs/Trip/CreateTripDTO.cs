@@ -24,7 +24,8 @@ namespace GetMyTicket.Common.DTOs.Trip
         [Required]
         public string EndTime { get; set; }
 
+        [Required]
         [Range(0, 9999)]
-        public double Price { get; set; }
+        public double? Price { get; set; }
     }
 }

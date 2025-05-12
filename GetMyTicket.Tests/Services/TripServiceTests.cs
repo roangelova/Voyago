@@ -32,7 +32,6 @@ namespace GetMyTicket.Tests.Services
         [Fact]
         public async Task GetTrip_WhenProvidedGuidMatchesExpectedTrip_ReturnsTrip()
         {
-            // Arrange
             var tripId = Guid.NewGuid();
             var expectedTrip = new Trip { TripId = tripId };
 
@@ -43,11 +42,8 @@ namespace GetMyTicket.Tests.Services
             unitOfWork.Setup(u => u.Trips).Returns(tripRepoMock.Object);
             var tripService = new TripService(unitOfWork.Object);
 
-
-            // Act
             var actualTrip = await tripService.GetTrip(tripId);
 
-            // Assert
             Assert.Equal(expectedTrip, actualTrip);
         }
 
@@ -115,6 +111,41 @@ namespace GetMyTicket.Tests.Services
                 EndCityId = City.CityId,
                 VehicleId = bus.VehicleId,
                 TransortationProviderId = provider.TransportationProviderId,
+            };
+
+            await Assert.ThrowsAsync<ApplicationError>(() => tripService.CreateTrip(dto));
+        }
+
+        [Fact]
+        public async Task CreateTrip_InvalidTransportationType_ThrowsApplicationError()
+        {
+            var provider = new TransportationProvider { TransportationProviderId = Guid.NewGuid() };
+
+            var bus = new Bus
+            {
+                VehicleId = Guid.NewGuid(),
+                TransportationProviderId = Guid.NewGuid()
+            };
+
+            vehicleRepoMock.Setup(repo => repo.GetByIdAsync(bus.VehicleId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(bus);
+
+            transportationProviderRepoMock.Setup(repo => repo.GetByIdAsync(provider.TransportationProviderId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(provider);
+
+            unitOfWork.Setup(u => u.Vehicles).Returns(vehicleRepoMock.Object);
+            unitOfWork.Setup(u => u.TransportationProviders).Returns(transportationProviderRepoMock.Object);
+
+            var tripService = new TripService(unitOfWork.Object);
+
+            var City = new City { CityId = Guid.NewGuid() };
+            var dto = new CreateTripDTO
+            {
+                StartCityId = City.CityId,
+                EndCityId = City.CityId,
+                VehicleId = bus.VehicleId,
+                TransortationProviderId = provider.TransportationProviderId,
+                TypeOfTransportation = "Boat"
             };
 
             await Assert.ThrowsAsync<ApplicationError>(() => tripService.CreateTrip(dto));

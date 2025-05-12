@@ -4,8 +4,12 @@
     {
         //ERROR
 
-        public const string InvalidCredentials = "Invalid credentials. Please try again!";
         public const string SomethingWentWrong = "Oops...Something went wrong.";
+
+        public const string InvalidCredentials = "Invalid credentials. Please try again!";
+        public const string Invalid = "Invalid {0}";
+        public const string InvalidType = "{0} is not a valid type of {1}";
+        public const string InvalidDateFormat = "The provided date format was incorrect";
 
         public const string NotFoundError = "{0} with Id {1} was not found.";
 
@@ -13,11 +17,9 @@
 
         public const string SoldOut = "Uh oh! The itinerary is no longer available. Please, choose a different connection!";
 
-        public const string Invalid = "Invalid {0}";
         public const string NotSupported = "{0} not supported.";
-        public const string InvalidType = "{0} is not a valid type of {1}";
 
-        public const string InvalidDateFormat = "The provided date format was incorrect";
+        public const string InvalidTripTime = "Invalid start or end time for trip.";
 
         public const string CantBeNull = "{0} can't be null.";
 

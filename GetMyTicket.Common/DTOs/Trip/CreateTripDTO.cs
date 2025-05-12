@@ -19,10 +19,10 @@ namespace GetMyTicket.Common.DTOs.Trip
         public Guid VehicleId { get; set; }
 
         [Required]
-        public string StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         [Required]
-        public string EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         [Required]
         [Range(0, 9999)]

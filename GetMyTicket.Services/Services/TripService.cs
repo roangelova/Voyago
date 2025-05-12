@@ -39,8 +39,8 @@ namespace GetMyTicket.Service.Services
                 TransportationProviderId = dto.TransortationProviderId,
                 VehicleId = dto.VehicleId,
                 TypeOfTransportation = result.TransportationType,
-                StartTime = result.StartTime,
-                EndTime = result.EndTime,
+                StartTime = dto.StartTime.Value,
+                EndTime = dto.StartTime.Value,
                 Price = dto.Price.Value,
                 Capacity = result.Vehicle.Capacity
             };
@@ -101,27 +101,6 @@ namespace GetMyTicket.Service.Services
             return result;
         }
 
-
-        //Not in use for now; 
-        public async Task<GetTripDetailsDTO> GetTripDetails(Guid tripId, CancellationToken cancellationToken = default)
-        {
-            throw new NotFiniteNumberException();
-            //     var trip = await unitOfWork.Trips.GetByIdAsync(tripId, cancellationToken);
-            //
-            //      if(trip == null)
-            //      {
-            //          throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), trip));
-            //      }
-            //
-            //      var transportationProvider = await unitOfWork.TransportationProviders.GetByIdAsync(trip.TransportationProviderId, cancellationToken);
-            //
-            //      return new GetTripDetailsDTO
-            //      {
-            //          TransportationProviderName = transportationProvider.Name ?? "No data",
-            //          TransportationProviderLogo = Convert.ToBase64String(transportationProvider.Logo)
-            //      };
-        }
-
         /// <summary>
         /// Amends a trip. Only the following properties can be editet: Price, VehicleId (change vehicle for the trip, but not the type), Start- and EndTime. For all other changes the trip must be canceled
         /// an a new one provided, as this will be a siginificant change to the entity and not optimal for users.
@@ -138,7 +117,8 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), dto.TripId));
             }
 
-            if (trip.VehicleId != dto.VehicleId.Value)
+            //VEHICLE CHANGE
+            if (dto.VehicleId.HasValue && trip.VehicleId != dto.VehicleId.Value)
             {
                 var oldVehicle = await unitOfWork.Vehicles.GetByIdAsync(trip.VehicleId);
                 var newVehicle = await unitOfWork.Vehicles.GetByIdAsync(dto.VehicleId);
@@ -148,18 +128,22 @@ namespace GetMyTicket.Service.Services
                     throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Vehicle), dto.VehicleId));
                 }
 
-                if (oldVehicle.TransportationProviderId != newVehicle.TransportationProviderId)
-                {
+                bool ownershipChanged = oldVehicle.TransportationProviderId != newVehicle.TransportationProviderId;
+
+                if (ownershipChanged)
                     throw new ApplicationError(ResponseConstants.OwnershipChangeNotAllowed);
-                }
 
                 trip.Vehicle = newVehicle;
             }
 
-            //TODO -> WE NEED TO CHECK IF EITEHR TIME HAS A VALUE AND ONLY THEN PERFORM PARSING AND ERROR HANDLING
-            if (!DateTime.TryParse(dto.StartTime, out var startTime) || !DateTime.TryParse(dto.EndTime, out var endTime))
+            if (dto.StartTime.HasValue)
             {
-                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
+                trip.StartTime = dto.StartTime.Value;
+            }
+
+            if (dto.EndTime.HasValue)
+            {
+                trip.EndTime = dto.EndTime.Value;
             }
 
             if (dto.Price.HasValue)
@@ -167,14 +151,10 @@ namespace GetMyTicket.Service.Services
                 trip.Price = dto.Price.Value;
             }
 
-            trip.StartTime = startTime;
-            trip.EndTime = endTime;
-
             unitOfWork.Trips.Update(trip);
             await unitOfWork.SaveChangesAsync();
 
             return trip;
         }
-
     }
 }

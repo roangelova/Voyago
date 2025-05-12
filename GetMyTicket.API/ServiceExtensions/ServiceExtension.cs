@@ -1,8 +1,8 @@
 ﻿using GetMyTicket.Persistance.Generic_Repository;
 using GetMyTicket.Persistance.UnitOfWork;
+using GetMyTicket.Service;
 using GetMyTicket.Service.Contracts;
 using GetMyTicket.Service.Services;
-using GetMyTicket.Service.Authorization;
 using Microsoft.OpenApi.Models;
 
 namespace GetMyTicket.API.ServiceExtensions
@@ -50,6 +50,8 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<TripValidator>();
 
             services.AddScoped<ITransportationProviderService, TransportationProviderService>();
             services.AddScoped<IUserService, UserService>();

@@ -13,7 +13,6 @@ namespace GetMyTicket.Service.Contracts
         /// <param name="searchTripsDTO">The data to filter the trips by</param>
         /// <returns>List of trips that match the search criteria</returns>
         public Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO data, CancellationToken cancellationToken = default);
-        public Task<GetTripDetailsDTO> GetTripDetails (Guid tripId, CancellationToken cancellationToken = default);
 
         public Task<Guid> CreateTrip (CreateTripDTO dto);
 

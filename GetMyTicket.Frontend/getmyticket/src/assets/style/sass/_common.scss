@@ -1,126 +1,126 @@
 .error-page {
-    height: 100vh;
-    width: 100vw;
-    background-image: url(../../images/PageNotFound.png);
-    background-size: cover;
-    background-position: top;
+  height: 100vh;
+  width: 100vw;
+  background-image: url(../../images/PageNotFound.png);
+  background-size: cover;
+  background-position: top;
 }
 
 .btn {
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 14px;
-    background-color: $color-primary;
-    box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: $color-primary;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
 }
 
 .navigation {
-    font-size: 20px;
+  font-size: 24px;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  position: relative;
+  z-index: 10;
+
+  margin: 0px 3rem 0px 1rem;
+
+  &__login {
+    & a::after {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 2rem;
+      background-color: #333;
+      margin: 0px 5px;
+    }
+  }
+
+  &__logo {
+    & img {
+      width: 16rem;
+    }
+  }
+
+  &__browse {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 1rem;
+  }
 
-    position: relative;
-    z-index: 10;
+  &__user {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
 
-    padding-top: 5px;
-    margin: 0px 3rem 0px 1rem;
-
-    border-bottom: solid 1px rgba(51, 51, 51, 0.148);
-
-    &__login::after {
-        content: '';
-        display: inline-block;
-        width: 1px;
-        height: 1em;
-        background-color: #333;
-        margin: 0px 5px;
+    & span {
+      margin-right: 5px;
     }
 
-    &__logo {
-        & img {
-            width: 160px;
-        }
+    & li {
+      cursor: pointer;
+      font-size: 24px;
     }
-
-    &__browse {
-        display: flex;
-        gap: 1rem;
-    }
-
-    &__user {
-        display: flex;
-        font-size: 18px;
-
-        & span {
-            margin-right: 5px;
-        }
-
-        & li {
-            cursor: pointer;
-            font-size: 20px;
-        }
-    }
+  }
 }
 
 .spinner {
-    //credit to Jonas Schmedtmann from the Udremy React course for creating this amazing spinner :) 
-    margin: 4.8rem auto;
-    height: auto;
+  //credit to Jonas Schmedtmann from the Udremy React course for creating this amazing spinner :)
+  margin: 4.8rem auto;
+  height: auto;
 
-    width: 6.4rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(farthest-side, $color-primary 94%, #0000) top/10px 10px no-repeat,
-        conic-gradient(#0000 30%, $color-primary );
-    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
+  width: 6.4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, $color-primary 94%, #0000) top/10px
+      10px no-repeat,
+    conic-gradient(#0000 30%, $color-secondary);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 10px), #000 0);
 
-    animation: rotate 1.5s infinite linear;
+  animation: rotate 1.5s infinite linear;
 }
 
 @keyframes rotate {
-    to {
-        transform: rotate(1turn)
-    }
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-around;
+  padding: 3rem;
+
+  &__pages {
     display: flex;
-    flex-direction: row;
-    align-items: baseline;
     justify-content: space-around;
-    padding: 3rem;
+    flex-direction: row;
+    align-items: center;
 
-    &__pages {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: row;
-        align-items: center;
-
-        & span{
-            line-height: 0;
-        }
-
-        & img {
-            align-self: center;
-        }
-
-        & div {
-            font-size: 18px;
-
-            display: flex;
-            gap: 1rem;
-            padding: 2rem;
-        }
+    & span {
+      line-height: 0;
     }
 
-    &__resultsPerPage {
-
-        & option,
-        select,
-        label {
-            font-size: 18px;
-        }
+    & img {
+      align-self: center;
     }
+
+    & div {
+      font-size: 18px;
+
+      display: flex;
+      gap: 1rem;
+      padding: 2rem;
+    }
+  }
+
+  &__resultsPerPage {
+    & option,
+    select,
+    label {
+      font-size: 18px;
+    }
+  }
 }

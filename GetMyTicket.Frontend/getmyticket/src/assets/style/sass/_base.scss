@@ -1,21 +1,44 @@
+//GLOBAL RESETS AND CONFIGS
+
 *,
 *::after,
 *::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  //10px / 16px = 0.625 = 62.5% of the user's browser font-size setting; 1rem = 10px;
 }
 
 /*
-TODO: DEFINE PRIMARY COLORS
-*/
-//GENERATED COLOR PALETTE:
-$color-primary: #93b3da;
-$color-light-grey: #a0acbd;
-$color-dark-grey: #3c4856;
-$color-pink: #d8a1b4;
+--- FONT SIZES---
 
-//TODO -> KEEP OR DELETE? :
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+--- SPACING SYSTEM--- (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 
+
+--- SHADOWS ---
+
+--- BORDER-RADIUS ---
+
+--- WHITESPACE ---
+
+
+*/
+
+//DEFINE COLOR PALETTE:
+$color-primary: #d0ebff;
+$color-primary-light: #e8f5ff;
+$color-primary-dark: #bbd4e6;
+
+$color-secondary: #b9cce9;
+$color-secondary-light: #e7f5ff;
+$color-secondary-dark: #9d8bb1;
+
 $color-grey-light-1: #f9f7f6;
 $color-grey-light-2: #a7b2b5;
 
@@ -23,58 +46,60 @@ $color-grey-dark-1: #898f91;
 $color-grey-dark-2: #504e4c;
 
 body {
-    font-family: "Lato", sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #333;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1; //global reset
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
-input {
-    font-family: inherit;
-    font-weight: inherit;
+input,
+select,
+textarea,
+button {
+  font: inherit;
 
-    padding: 3px;
-    margin: 5px 0;
+  padding: 3px;
+  margin: 5px 0;
+  border: 0px solid;
 }
 
 button,
 select {
-    font-family: inherit;
-    font-weight: inherit;
-    cursor: pointer;
-    border: none;
+  cursor: pointer;
+  border: none;
 }
 
+//TODO -> create .btn--small, btn--big, btn--medium + LINK/VISITED AND HOVER/ACTIVE
+
 #id {
-    position: relative;
+  position: relative;
 }
 
 ul,
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 input::placeholder {
-    color: $color-dark-grey;
+  color: $color-grey-dark-1;
 }
 
 input[type="radio"]:checked {
-    background-color: #93b3da;
-    border: 2px solid #93b3da;
+  background-color: #93b3da;
+  border: 2px solid #93b3da;
 }
 
 .appLayout {
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
-.destructiveBtn{
-    background-color: rgb(177, 51, 51) !important;
+.destructiveBtn {
+  background-color: rgb(177, 51, 51) !important;
 }

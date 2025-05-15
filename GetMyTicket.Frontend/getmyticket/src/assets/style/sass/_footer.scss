@@ -6,18 +6,18 @@
 
     background-color: $color-grey-light-1;
     border-top: 0.5px solid #999;
-
+    padding: 20rem;
     display: flex;
-    gap: 6rem;
+    gap: 30rem;
     align-items: center;
     justify-content: center;
 
     &__ul {
-        font-size: 18px;
+        font-size: 24px;
 
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 5px;
+        gap: 3rem;
     }
 }

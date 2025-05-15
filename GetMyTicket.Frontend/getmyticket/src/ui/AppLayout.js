@@ -5,7 +5,7 @@ import NavBar from "../features/common/NavBar";
 function AppLayout() {
     return (
         <div className="appLayout">
-            <NavBar />
+          
             <main>
                <Outlet/>
             </main>

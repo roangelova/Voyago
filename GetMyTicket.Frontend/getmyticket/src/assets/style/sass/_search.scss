@@ -41,7 +41,7 @@
             flex-direction: row;
             gap: 3rem;
             justify-content: space-around;
-            border-bottom: 1px solid $color-dark-grey;
+            border-bottom: 1px solid $color-grey-dark-2;
 
             & div {
                 padding: 1rem;
@@ -58,7 +58,7 @@
         cursor: pointer;
     }
 
-    background-color: $color-light-grey;
+    background-color: $color-grey-light-1;
     max-width: 100%;
     max-height: 30vh;
 

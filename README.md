@@ -1,14 +1,8 @@
-![image](https://github.com/user-attachments/assets/f488d167-fb74-4e0c-a533-9df805f5b173)
-![image](https://github.com/user-attachments/assets/93686998-e637-4d69-8e16-c04e5d28046e)
+A MAJOR redesign is in progress. Have a sneak peak: 
 
-The home page as of [28.04.2025]
+![image](https://github.com/user-attachments/assets/5665f128-d806-4731-8403-42488f64df93)
+[15.05.2025]
 
-
-![image](https://github.com/user-attachments/assets/17c94670-be4a-40dd-9f78-6a8575e052cb)
-![image](https://github.com/user-attachments/assets/a3ae53b9-2baf-4bcd-981b-d55c60953c07)
-
-
-Search results page as of [28.04.2025]  
 
 #### Project goals 
 The aim of this project is to combine my passion for the trasportation industry and develop an application, which will serve me as a training ground for my skills. As time goes by, the application will be refactored and upgraded to reflect better software development practices and implement more complicated features.  

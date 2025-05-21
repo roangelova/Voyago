@@ -1,25 +1,24 @@
 .searchBar {
     &__button {
-        padding: 18px;
-        border-radius: 10px;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
         font-size: 16px;
         background-color: $color-primary;
-        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+        box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.42);
     }
 
     &__container {
         position: absolute;
-        top: 55%;
+        top: 60%;
         left: 50%;
-        transform: translate(-55%, 0);
+        transform: translate(-50%, -50%);
 
-        min-width:50vw;
-        min-height:10vh;
-        max-width: 70vw;
-        max-height: 20vh;
-        border-radius: 15px;
+        padding:0.5rem;
+        width: 90rem;
+        max-height: 10rem;
+        border-radius: 0.5rem;
         background-color: #fff;
-        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.2);
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
 
         display: flex;
         align-items: center;
@@ -27,11 +26,11 @@
 
         &--element {
             display: inline-block;
-            margin: 10px;
+            margin: 1rem;
 
             & select,
             input{
-                padding: 15px;
+                padding: 1rem;
                 border-radius: 10px;
                 background-color: $color-grey-light-1;
             }

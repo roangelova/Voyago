@@ -57,7 +57,6 @@ function BookingDetails() {
                 <button className="btn destructiveBtn">Cancel booking</button>
             </div>
 
-
             <div className="passengerDetails__help">
                 <p>Need help? Call us at 098/000-000-000. We are her for you 24/7!</p>
             </div>

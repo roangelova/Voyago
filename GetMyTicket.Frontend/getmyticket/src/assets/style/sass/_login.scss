@@ -59,6 +59,15 @@
         & label {
             font-size: 18px;
         }
+
+        & input{
+           font-size: 1.6rem;
+        }
+
+        input,
+        input::placeholder{
+          background-color: $color-primary-light !important;
+        }
     }
 
     &__btn {

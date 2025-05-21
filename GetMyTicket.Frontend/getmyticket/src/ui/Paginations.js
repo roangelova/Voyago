@@ -1,67 +1,71 @@
-import { useEffect, useState } from "react";
+import arrrowToLeft from "../assets/icons/arrowToLeft.png";
+import arrrowToRight from "../assets/icons/arrowToRight.png";
 
-import arrrowToLeft from '../assets/icons/arrowToLeft.png'
-import arrrowToRight from '../assets/icons/arrowToRight.png'
-import { useSearchParams } from "react-router-dom";
+function Pagination({
+  totalItemsCount = 1,
+  currentPage,
+  setCurrentPage,
+  resultsPerPage,
+  setResultsPerPage,
+  resultsPerPageOptions,
+}) {
+  let totalNumberOfPages = Math.ceil(totalItemsCount / resultsPerPage);
 
-//TODO -> out of sync issue
-function Pagination({ totalItemsCount = 1 }) {
-    const resultsPerPageOptions = [5, 10, 15, 20];
-    const [resultsPerPage, setResultsPerPage] = useState(resultsPerPageOptions[0]);
-    const [currentPage, setCurrentPage] = useState(1);
+  const handlePreviousPage = () => {
+    if (currentPage === 1) return;
+    setCurrentPage((currentPage) => (currentPage === 1 ? 1 : currentPage - 1));
+  };
 
-    const [params, setParams] = useSearchParams();
+  const handleNextPage = () => {
+    if (currentPage === totalNumberOfPages) return;
+    setCurrentPage((currentPage) =>
+      currentPage === totalNumberOfPages ? totalNumberOfPages : currentPage + 1
+    );
+  };
 
-    let totalNumberOfPages = Math.ceil(totalItemsCount / resultsPerPage);
+  const handleNewResultsPerPageValue = (e) => {
+    setResultsPerPage(e.target.value);
+    setCurrentPage(1);
+  };
 
-    const handlePreviousPage = () => {
-        if (currentPage === 1) return;
-        setCurrentPage(currentPage => currentPage === 1 ? 1 : currentPage - 1)
-    }
-
-    const handleNextPage = () => {
-        if (currentPage === totalNumberOfPages) return;
-        setCurrentPage(currentPage => currentPage === totalNumberOfPages ? totalNumberOfPages : currentPage + 1)
-    }
-
-    const handleNewResultsPerPageValue = (e) => {
-        setResultsPerPage(e.target.value)
-        setCurrentPage(1);
-    }
-
-
-    useEffect(() => {
-        let newParams = new URLSearchParams(params);
-        newParams.set("page", currentPage);
-        newParams.set("results", resultsPerPage);
-        setParams(newParams)
-    }, [currentPage, resultsPerPage])
-
-    return (
-        <div className="pagination">
-            <div className="pagination__pages">
-                <span>
-                    <img onClick={handlePreviousPage} src={arrrowToLeft} />
-                </span>
-                <div>
-                    Page {currentPage} of {totalNumberOfPages === 0 ? 1 : totalNumberOfPages}
-                </div>
-                <span onClick={handleNextPage}>
-                    <img src={arrrowToRight} />
-                </span>
-            </div>
-            <div className="pagination__resultsPerPage">
-                <label htmlFor="resultPerPage">Results per page: </label>
-                <select id="resultPerPage" value={resultsPerPage} onChange={handleNewResultsPerPageValue}>
-
-                    {resultsPerPageOptions.map(opt =>
-                        <option key={opt} value={opt}>{opt}</option>
-                    )}
-
-                </select>
-            </div>
+  return (
+    <div className="pagination">
+      <div className="pagination__pages">
+        <span>
+          <img
+            onClick={handlePreviousPage}
+            src={arrrowToLeft}
+            alt="Arrow to the left"
+          />
+        </span>
+        <div>
+          Page {currentPage} of{" "}
+          {totalNumberOfPages === 0 ? 1 : totalNumberOfPages}
         </div>
-    )
+        <span>
+          <img
+            onClick={handleNextPage}
+            src={arrrowToRight}
+            alt="Arrow to the right"
+          />
+        </span>
+      </div>
+      <div className="pagination__resultsPerPage">
+        <label htmlFor="resultPerPage">Results per page: </label>
+        <select
+          id="resultPerPage"
+          value={resultsPerPage}
+          onChange={handleNewResultsPerPageValue}
+        >
+          {resultsPerPageOptions.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
 }
 
 export default Pagination;

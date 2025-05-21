@@ -95,7 +95,8 @@ namespace GetMyTicket.Service.Services
                 StartCityName = x.StartCity.CityName,
                 TransportationProviderName = x.TransportationProvider.Name,
                 Currency = Enum.GetName(x.Currency),
-                TransportationProviderLogo = Convert.ToBase64String(x.TransportationProvider.Logo)
+                TransportationProviderLogo = Convert.ToBase64String(x.TransportationProvider.Logo),
+                TypeOfTrip = Enum.GetName(x.TypeOfTransportation)
             }).ToList();
 
             return result;

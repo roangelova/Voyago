@@ -70,6 +70,7 @@ function Login({ setLoginPopupVisibility }) {
                         <input
                             type="text"
                             name="email"
+                            placeholder="Email"
                         >
                         </input>
                     </div>
@@ -79,6 +80,7 @@ function Login({ setLoginPopupVisibility }) {
                             Password:               </label>
                         <input
                             type="password"
+                            placeholder="Password"
                             name="password"
                         >
                         </input>

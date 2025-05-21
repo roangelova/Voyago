@@ -2,7 +2,7 @@
 {
     public enum TypeOfTransportation
     {
-        Airplane,
+        Flight,
         Train,
         Bus
     }

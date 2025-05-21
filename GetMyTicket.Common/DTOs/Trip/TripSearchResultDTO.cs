@@ -14,5 +14,7 @@ namespace GetMyTicket.Common.DTOs.Trip
 
         public string TransportationProviderLogo { get; set; }
         public string Currency { get; set; }
+
+        public string TypeOfTrip { get; set; }
     }
 }

@@ -53,8 +53,9 @@ function SearchResultCard({ trip }) {
                 </div>
 
             </div>
-            <div className='resultCard__price'>
-                <span>{trip.price} {trip.currency}</span>
+            <div className='resultCard__priceAndType'>
+                <span className='resultCard__priceAndType--price'>{trip.price} {trip.currency}</span>
+                <span className='resultCard__priceAndType--typeTag'>{trip.typeOfTrip}</span>
             </div>
 
 

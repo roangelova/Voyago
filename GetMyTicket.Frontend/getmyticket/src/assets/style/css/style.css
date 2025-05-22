@@ -22,7 +22,7 @@ html {
 --- SHADOWS ---
 
 --- BORDER-RADIUS ---
-
+50px //bars, buttons
 --- WHITESPACE ---
 
 
@@ -65,7 +65,7 @@ li {
 }
 
 input {
-  color: #504e4c !important;
+  color: inherit !important;
 }
 
 input::placeholder {
@@ -88,29 +88,50 @@ input[type=radio]:checked {
   background-color: rgb(177, 51, 51) !important;
 }
 
+.heading--primary {
+  line-height: 1.4;
+  letter-spacing: 1px;
+  font-size: 52px;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  color: #555;
+}
+.heading--secondary {
+  text-align: center;
+  margin: 2rem 0px;
+  font-size: 4.4rem;
+  font-weight: 600;
+  letter-spacing: 1.7px;
+  letter-spacing: 1.6;
+  font-size: 44px;
+  color: #555;
+}
+.heading--tertiary {
+  text-align: center;
+  margin: 2rem 0px;
+  font-size: 4.4rem;
+  font-weight: 600;
+  letter-spacing: 1.7px;
+  color: #555;
+}
+
 .header {
   height: 100vh;
   width: 100vw;
   position: relative;
 }
-.header .headings {
+.header__headings {
   position: absolute;
   top: 30%;
   left: 30%;
   transform: translate(-50%, -50%);
   color: #444;
 }
-.header .headings h1 {
-  line-height: 1.4;
-  letter-spacing: 1px;
-  font-size: 52px;
-  margin-bottom: 2rem;
-  text-transform: uppercase;
-}
-.header .headings p {
+.header__headings p {
   font-size: 24px;
   line-height: 1.7;
   letter-spacing: 0.5px;
+  color: #555;
 }
 .header__container {
   height: 100vh;
@@ -429,22 +450,29 @@ input[type=radio]:checked {
 }
 
 .searchBar__button {
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  font-size: 16px;
+  padding: 1.5rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #444;
   background-color: #d0ebff;
-  box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.42);
+  box-shadow: 0.5px 0.5px 0.5px 0.5px #bbd4e6;
+  transition: all 0.5s;
+}
+.searchBar__button:hover, .searchBar__button:active {
+  background-color: #e8f5ff;
 }
 .searchBar__container {
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 0.5rem;
   width: 90rem;
   max-height: 10rem;
-  border-radius: 0.5rem;
-  background-color: #fff;
+  border-radius: 50px;
+  background-color: rgba(17, 17, 17, 0.062);
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
@@ -458,7 +486,11 @@ input[type=radio]:checked {
 .searchBar__container--element input {
   padding: 1rem;
   border-radius: 10px;
-  background-color: #f9f7f6;
+  background-color: transparent;
+  margin-right: 1rem;
+}
+.searchBar__container--element:not(:last-child) {
+  border-right: 0.05rem solid rgba(0, 0, 0, 0.205);
 }
 
 .search__container {
@@ -791,7 +823,6 @@ input[type=radio]:checked {
 .whyUs_container h2 {
   letter-spacing: 1.6;
   font-size: 44px;
-  margin-bottom: 7rem;
 }
 .whyUs_container ul {
   display: flex;
@@ -831,6 +862,19 @@ input[type=radio]:checked {
 .whyUs_container__item:hover {
   transform: scale(1.05);
   overflow: hidden;
+}
+
+.popularDestinations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.popularDestinations p {
+  font-size: 2.4rem;
+  line-height: 1.7;
+  padding: 1rem;
+  color: #444;
 }
 
 .footer {
@@ -912,8 +956,12 @@ input[type=radio]:checked {
   gap: 2rem;
 }
 
-.margin-right-sm {
-  margin-right: 1.6rem;
+.margin-bottom--sm {
+  margin-bottom: 3.5rem;
+}
+
+.margin-bottom--md {
+  margin-bottom: 7rem;
 }
 
 /*# sourceMappingURL=style.css.map */

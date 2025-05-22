@@ -24,7 +24,7 @@ html {
 --- SHADOWS ---
 
 --- BORDER-RADIUS ---
-
+50px //bars, buttons
 --- WHITESPACE ---
 
 
@@ -87,7 +87,7 @@ li {
 }
 
 input{
-  color: $color-grey-dark-2 !important;
+  color: inherit !important;
 }
 
 input::placeholder {

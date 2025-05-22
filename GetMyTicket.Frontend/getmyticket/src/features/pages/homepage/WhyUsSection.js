@@ -1,13 +1,13 @@
-import support from '../../assets/icons/support.png';
-import refund from '../../assets/icons/refund.png';
-import reward from '../../assets/icons/reward.png';
-import reliable from '../../assets/icons/reliable.png';
+import support from '../../../assets/icons/support.png';
+import refund from '../../../assets/icons/refund.png';
+import reward from '../../../assets/icons/reward.png';
+import reliable from '../../../assets/icons/reliable.png';
 
 
 function WhyUsSection() {
     return (
         <section className='whyUs_container'>
-            <h2>The Best Travel Experience, Guaranteed</h2>
+            <h2 className='margin-bottom-md'>The Best Travel Experience, Guaranteed</h2>
             <ul>
                 <li className='whyUs_container__item'>
                     <h3>Reliable</h3>

@@ -1,8 +1,8 @@
 import Header from "../common/Header";
 import SearchBar from "../services/SearchBar";
-import Footer from "../common/Footer";
 
-import WhyUsSection from "../common/WhyUsSection";
+import WhyUsSection from "./homepage/WhyUsSection";
+import PopularDestinationsSection from "./homepage/PopularDestinationsSections";
 
 const MainPage = () => {
     return (
@@ -10,6 +10,7 @@ const MainPage = () => {
             <Header />
             <SearchBar />
             <WhyUsSection />
+            <PopularDestinationsSection/>
         </>
     )
 }

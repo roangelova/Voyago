@@ -3,25 +3,18 @@
   width: 100vw;
   position: relative;
 
-  .headings {
+  &__headings {
     position: absolute;
     top: 30%;
     left: 30%;
     transform: translate(-50%, -50%);
     color: #444;
 
-    & h1 {
-      line-height: 1.4;
-      letter-spacing: 1px;
-      font-size: 52px;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-    }
-
     & p {
       font-size: 24px;
       line-height: 1.7;
       letter-spacing: 0.5px;
+      color:#555;
     }
   }
 

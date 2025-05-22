@@ -20,9 +20,13 @@ html {
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 
 
 --- SHADOWS ---
+box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); 
+
 
 --- BORDER-RADIUS ---
+
 50px //bars, buttons
+
 --- WHITESPACE ---
 
 
@@ -856,7 +860,7 @@ input[type=radio]:checked {
 .whyUs_container__item p {
   font-size: 1.6rem;
   text-align: center;
-  line-height: 1.7;
+  line-height: 1.5;
   padding: 1rem;
 }
 .whyUs_container__item:hover {
@@ -865,10 +869,12 @@ input[type=radio]:checked {
 }
 
 .popularDestinations {
+  padding: 3rem 0px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-image: linear-gradient(to top, rgba(187, 212, 230, 0.5), rgba(208, 235, 255, 0.5), rgba(232, 245, 255, 0.5));
 }
 .popularDestinations p {
   font-size: 2.4rem;
@@ -892,6 +898,7 @@ input[type=radio]:checked {
   height: 100%;
   object-fit: cover;
   filter: grayscale(0.2);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 .popularDestinations__gallery--img1 {
   grid-row: 1/span 2;
@@ -980,15 +987,23 @@ input[type=radio]:checked {
   gap: 2rem;
 }
 
-.margin-bottom--sm {
-  margin-bottom: 3.5rem;
+.margin-bottom--xs {
+  margin-bottom: 1.5rem;
 }
 
-.margin-bottom--md {
+.margin-bottom--s {
+  margin-bottom: 2.5rem;
+}
+
+.margin-bottom--m {
+  margin-bottom: 5rem;
+}
+
+.margin-bottom--l {
   margin-bottom: 7rem;
 }
 
-.margin-bottom--lg {
+.margin-bottom--xl {
   margin-bottom: 10rem;
 }
 

@@ -47,7 +47,6 @@
     align-items: center;
     flex: 1;
 
-    // background: linear-gradient(to bottom, rgba($color-primary, 0.2), rgba($color-secondary, 0.3));
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 0.5rem;
 
@@ -64,7 +63,7 @@
     & p {
       font-size: 1.6rem;
       text-align: center;
-      line-height: 1.7;
+      line-height: 1.5;
       padding: 1rem;
     }
   }
@@ -76,10 +75,18 @@
 }
 
 .popularDestinations {
+  padding: 3rem 0px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  background-image: linear-gradient(
+    to top,
+    rgba($color-primary-dark, 0.5),
+   rgba($color-primary, 0.5),
+    rgba($color-primary-light, 0.5)
+  );
 
   & p {
     font-size: 2.4rem;
@@ -104,6 +111,7 @@
         height: 100%;
         object-fit: cover;
         filter: grayscale(0.2);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
       }
     }
 

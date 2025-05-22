@@ -11,11 +11,11 @@ import bulgaria from "../../../assets/images/bulgaria.jpg";
 function PopularDestinationsSection() {
   return (
     <section className="popularDestinations">
-      <h2 className="heading--secondary margin-bottom--sm">
+      <h2 className="heading--secondary margin-bottom--xs">
         Popular destinations
       </h2>
-      <p className="margin-bottom--lg">Not sure where to go next? Check out where everyone’s heading</p>
-      <div className="popularDestinations__gallery margin-bottom--lg">
+      <p className="margin-bottom--m">Not sure where to go next? Check out where everyone’s heading</p>
+      <div className="popularDestinations__gallery margin-bottom--l">
         <div>
           <img className="popularDestinations__gallery--img1" src={germany} alt="Destination image of Germany" />
           <img className="popularDestinations__gallery--img2" src={italy} alt="Destination image of Italy" />

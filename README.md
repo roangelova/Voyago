@@ -1,6 +1,8 @@
 A MAJOR redesign is in progress. Have a sneak peak: 
 
-![image](https://github.com/user-attachments/assets/48b86f7d-bbb2-4f86-9300-def5dcfc622a)
+![image](https://github.com/user-attachments/assets/a4631c2b-47a8-455c-87b6-f4755a3bff86)
+
+![image](https://github.com/user-attachments/assets/8061bf52-04b3-41bb-b116-992c228a65c3)
 
 [22.05.2025]
 

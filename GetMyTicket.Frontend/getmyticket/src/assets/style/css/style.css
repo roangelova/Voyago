@@ -924,9 +924,9 @@ input[type=radio]:checked {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 33%;
+  height: 13.2rem;
   padding: 1rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
   color: #eee;
   opacity: 0;
   transform: translateY(100%);
@@ -935,13 +935,27 @@ input[type=radio]:checked {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
   transition: all 0.3s ease;
 }
 .popularDestinations__overlay h4 {
   font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .popularDestinations__overlay span {
   font-size: 2rem;
+}
+.popularDestinations__overlay a:link,
+.popularDestinations__overlay a:visited {
+  border-bottom: 1px solid currentColor;
+  font-size: 1.8rem;
+  font-weight: 500;
+  justify-self: flex-end;
+  transition: all 0.5s;
+}
+.popularDestinations__overlay a:hover,
+.popularDestinations__overlay a:active {
+  transform: scale(1.33);
 }
 
 .footer {

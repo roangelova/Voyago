@@ -23,7 +23,10 @@ function PopularDestinationsSection() {
             <img src={germany} alt="Destination image of Germany" />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Germany</h4>
-              <span>We fly to more than 6 destinations in Germany!</span>
+              <span className="margin-bottom--s">
+                Discover vibrant cities, fairy-tale castles and scenic forests.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
 
@@ -31,7 +34,10 @@ function PopularDestinationsSection() {
             <img src={italy} alt="Destination image of Italy" />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Italy</h4>
-              <span>We fly to more than 6 destinations in Italy!</span>
+              <span className="margin-bottom--s">
+                Dive into rich history, world-class cuisine and timeless beauty.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
 
@@ -43,7 +49,10 @@ function PopularDestinationsSection() {
             />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Norway</h4>
-              <span>We fly to more than 3 destinations in Norway!</span>
+              <span className="margin-bottom--s">
+                Explore majestic fjords, northern lights and peaceful nature.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
 
@@ -55,7 +64,10 @@ function PopularDestinationsSection() {
             />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Spain</h4>
-              <span>We fly to more than 3 destinations in Spain!</span>
+              <span className="margin-bottom--s">
+                Soak up the sun, savor tapas and embrace lively culture.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
 
@@ -67,7 +79,10 @@ function PopularDestinationsSection() {
             />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Greece</h4>
-              <span>We fly to more than 7 destinations in Greece!</span>
+              <span className="margin-bottom--s">
+                Wander through ancient ruins and relax by crystal-clear seas.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
 
@@ -75,7 +90,10 @@ function PopularDestinationsSection() {
             <img src={bulgaria} alt="Destination image of Bulgaria" />
             <div className="popularDestinations__overlay">
               <h4 className="margin-bottom--xs">Bulgaria</h4>
-              <span>We fly to more than 3 destinations in Bulgaria!</span>
+              <span className="margin-bottom--s">
+                Enjoy hidden beaches, mountain escapes and cultural gems.
+              </span>
+              <a className="margin-bottom--s" href="#">Book now</a>
             </div>
           </div>
         </div>

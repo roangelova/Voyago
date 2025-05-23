@@ -5,8 +5,7 @@ import spain from "../../../assets/images/spain.jpg";
 import greece from "../../../assets/images/greece.jpg";
 import bulgaria from "../../../assets/images/bulgaria.jpg";
 
-//TODO: ADD A SMALL POPUP ON HOVER WITH DETAILS -> semi-transparent black background
-
+//TODO:ADJUST TEXT ON THE SPAN
 
 function PopularDestinationsSection() {
   return (
@@ -14,18 +13,74 @@ function PopularDestinationsSection() {
       <h2 className="heading--secondary margin-bottom--xs">
         Popular destinations
       </h2>
-      <p className="margin-bottom--m">Not sure where to go next? Check out where everyone’s heading</p>
+      <p className="margin-bottom--m">
+        Not sure where to go next? Check out where everyone’s heading
+      </p>
+
       <div className="popularDestinations__gallery margin-bottom--l">
-        <div>
-          <img className="popularDestinations__gallery--img1" src={germany} alt="Destination image of Germany" />
-          <img className="popularDestinations__gallery--img2" src={italy} alt="Destination image of Italy" />
-          <img className="popularDestinations__gallery--img3" src={norway} alt="Destination image of Norway" />
-          <img className="popularDestinations__gallery--img4" src={spain} alt="Destination image of Spain" />
-          <img className="popularDestinations__gallery--img5" src={greece} alt="Destination image of Greece" />
-          <img className="popularDestinations__gallery--img6" src={bulgaria} alt="Destination image of Bulgaria" />
+        <div className="popularDestinations__grid">
+          <div className="popularDestinations__destination popularDestinations__destination--1">
+            <img src={germany} alt="Destination image of Germany" />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Germany</h4>
+              <span>We fly to more than 6 destinations in Germany!</span>
+            </div>
+          </div>
+
+          <div className="popularDestinations__destination">
+            <img src={italy} alt="Destination image of Italy" />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Italy</h4>
+              <span>We fly to more than 6 destinations in Italy!</span>
+            </div>
+          </div>
+
+          <div className="popularDestinations__destination">
+            <img
+              className="popularDestinations__gallery--img3"
+              src={norway}
+              alt="Destination image of Norway"
+            />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Norway</h4>
+              <span>We fly to more than 3 destinations in Norway!</span>
+            </div>
+          </div>
+
+          <div className="popularDestinations__destination">
+            <img
+              className="popularDestinations__gallery--img4"
+              src={spain}
+              alt="Destination image of Spain"
+            />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Spain</h4>
+              <span>We fly to more than 3 destinations in Spain!</span>
+            </div>
+          </div>
+
+          <div className="popularDestinations__destination">
+            <img
+              className="popularDestinations__gallery--img5"
+              src={greece}
+              alt="Destination image of Greece"
+            />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Greece</h4>
+              <span>We fly to more than 7 destinations in Greece!</span>
+            </div>
+          </div>
+
+          <div className="popularDestinations__destination popularDestinations__destination--6">
+            <img src={bulgaria} alt="Destination image of Bulgaria" />
+            <div className="popularDestinations__overlay">
+              <h4 className="margin-bottom--xs">Bulgaria</h4>
+              <span>We fly to more than 3 destinations in Bulgaria!</span>
+            </div>
+          </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 }
 

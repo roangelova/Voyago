@@ -40,6 +40,7 @@
   &__logo {
     & img {
       width: 16rem;
+      filter:contrast(0.5)
     }
   }
 

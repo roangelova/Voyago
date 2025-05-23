@@ -84,7 +84,7 @@
   background-image: linear-gradient(
     to top,
     rgba($color-primary-dark, 0.5),
-   rgba($color-primary, 0.5),
+    rgba($color-primary, 0.5),
     rgba($color-primary-light, 0.5)
   );
 
@@ -98,30 +98,78 @@
   &__gallery {
     width: 125rem;
     margin: 0 auto;
+  }
 
-    & div {
-      display: grid;
-      grid-template-columns: 60rem 60rem;
-      column-gap: 5rem;
-      grid-template-rows: 1fr 1fr 1fr 1fr;
-      row-gap: 5rem;
+  &__grid {
+    display: grid;
+    grid-template-columns: 60rem 60rem;
+    column-gap: 5rem;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    row-gap: 5rem;
+  }
 
-      & img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: grayscale(0.2);
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-      }
+  &__destination {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+
+    & img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(0.2);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     }
 
-    &--img1 {
+    &--1 {
       grid-row: 1 / span 2;
     }
 
-    &--img6 {
+    &--6 {
       grid-row: 3 / span 2;
       grid-column: 2;
     }
+
+    //ON IMAGE HOVER
+    &:hover .popularDestinations__overlay {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 33%;
+    padding: 1rem;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.2)
+    );
+    color: #eee;
+    opacity: 0;
+    transform: translateY(100%);
+    pointer-events: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    & h4 {
+      font-size: 3rem;
+    }
+
+    & span {
+      font-size: 2rem;
+    }
+
+    transition: all 0.3s ease;
   }
 }

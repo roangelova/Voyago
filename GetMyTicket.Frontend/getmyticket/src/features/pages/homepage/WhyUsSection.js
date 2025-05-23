@@ -7,7 +7,7 @@ import reliable from '../../../assets/icons/reliable.png';
 function WhyUsSection() {
     return (
         <section className='whyUs_container'>
-            <h2 className='margin-bottom-md'>The Best Travel Experience, Guaranteed</h2>
+            <h2 className='margin-bottom--xl'>The Best Travel Experience, Guaranteed</h2>
             <ul>
                 <li className='whyUs_container__item'>
                     <h3>Reliable</h3>

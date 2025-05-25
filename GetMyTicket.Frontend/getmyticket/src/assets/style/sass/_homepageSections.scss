@@ -150,7 +150,7 @@
       to top,
       rgba(0, 0, 0, 0.6),
       rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.0)
+      rgba(0, 0, 0, 0)
     );
     color: #eee;
     opacity: 0;
@@ -163,7 +163,7 @@
     flex-direction: column;
     text-align: center;
 
-    transition: all 0.3s ease;
+    transition: all 0.5s ease-out;
 
     & h4 {
       font-size: 3rem;
@@ -188,5 +188,61 @@
     a:active {
       transform: scale(1.33);
     }
+  }
+}
+
+.partnerLogos {
+  background-color: #fff;
+  width: 100vw;
+  overflow: hidden;
+
+  padding: 4rem 0;
+  white-space: nowrap;
+
+  position: relative;
+
+  &__slide {
+    display: inline-block;
+
+    & img {
+      height: 10rem;
+      filter: grayscale(100);
+      margin: 0 4rem;
+    }
+
+    animation: 30s slide infinite linear;
+  }
+
+  &:hover .partnerLogos__slide {
+    animation-play-state: paused;
+  }
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 5rem;
+    z-index: 2;
+    height: 100%;
+  }
+
+  &:before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), #fff);
+  }
+
+  &:after {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff);
+    right:0;
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
   }
 }

@@ -455,7 +455,7 @@ input[type=radio]:checked {
 }
 
 .searchBar__button {
-  padding: 1rem 2.5rem;
+  padding: 1rem 4rem;
   border-radius: 50px;
   font-weight: 500;
   font-size: 1.6rem;
@@ -605,7 +605,7 @@ input[type=radio]:checked {
   flex-direction: column;
   box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(5px);
-  border-radius: 5px;
+  border-radius: 2px;
   width: 150px;
   position: absolute;
   top: 0%;
@@ -935,7 +935,7 @@ input[type=radio]:checked {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease-out;
 }
 .popularDestinations__overlay h4 {
   font-size: 3rem;
@@ -957,6 +957,51 @@ input[type=radio]:checked {
   transform: scale(1.33);
 }
 
+.partnerLogos {
+  background-color: #fff;
+  width: 100vw;
+  overflow: hidden;
+  padding: 4rem 0;
+  white-space: nowrap;
+  position: relative;
+}
+.partnerLogos__slide {
+  display: inline-block;
+  animation: 30s slide infinite linear;
+}
+.partnerLogos__slide img {
+  height: 10rem;
+  filter: grayscale(100);
+  margin: 0 4rem;
+}
+.partnerLogos:hover .partnerLogos__slide {
+  animation-play-state: paused;
+}
+.partnerLogos:after, .partnerLogos:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 5rem;
+  z-index: 2;
+  height: 100%;
+}
+.partnerLogos:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), #fff);
+}
+.partnerLogos:after {
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff);
+  right: 0;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
 .footer {
   min-height: 30vh;
   max-height: 50vh;

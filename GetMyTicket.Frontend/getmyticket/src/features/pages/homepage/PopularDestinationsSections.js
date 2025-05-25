@@ -26,7 +26,7 @@ function PopularDestinationsSection() {
               <span className="margin-bottom--s">
                 Discover vibrant cities, fairy-tale castles and scenic forests.
               </span>
-              <a className="margin-bottom--s" href="#">Book now</a>
+              <a className="margin-bottom--s"href="#">Book now</a>
             </div>
           </div>
 

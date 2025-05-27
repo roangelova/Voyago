@@ -1,5 +1,5 @@
 .whyUs_container {
-  margin: 10rem auto;
+  margin: 5rem auto;
 
   max-height: 90rem;
   min-height: 60rem;
@@ -206,8 +206,13 @@
 
     & img {
       height: 8rem;
-      filter: grayscale(100);
-      margin: 0 4rem;
+      width: auto;
+      max-width: 12rem;
+      object-fit: contain;
+      filter: grayscale(100%);
+      margin: 0 2rem;
+      padding: 0.5rem;
+      box-sizing: content-box;
     }
 
     animation: 30s slide infinite linear;
@@ -234,7 +239,7 @@
 
   &:after {
     background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff);
-    right:0;
+    right: 0;
   }
 }
 

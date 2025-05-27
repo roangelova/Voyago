@@ -1,9 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Security.Claims;
+using System.Text.Json;
 using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
 using GetMyTicket.Service.Contracts;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -88,12 +91,12 @@ namespace GetMyTicket.API.Controllers
             var authorizedUser = new AuthorizedUserCacheModel()
             {
                 AccessToken = tokenModel.AccessToken,
-                RefreshToken = tokenModel.RefreshToken,
-                Id = tokenModel.UserId
+                RefreshToken = tokenModel.RefreshToken
             };
 
-            await RedisDb.SetAddAsync(tokenModel.AccessToken, JsonSerializer.Serialize(authorizedUser));
-            await RedisDb.SetAddAsync(tokenModel.RefreshToken, JsonSerializer.Serialize(authorizedUser));
+            //Save Tokens by userId as key in Redis Cache
+            //TODO -> USE LOCAL CACHE IN DEVELOPMENT?
+            await RedisDb.SetAddAsync(user.Id.ToString(), JsonSerializer.Serialize(authorizedUser));
 
             return Ok(tokenModel);
         }
@@ -101,9 +104,9 @@ namespace GetMyTicket.API.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            var userId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            var userId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            if (userId is null) return BadRequest(ResponseConstants.SomethingWentWrong); 
+            if (userId is null) return BadRequest(ResponseConstants.SomethingWentWrong);
 
             var result = await RedisDb.KeyDeleteAsync(userId);
 

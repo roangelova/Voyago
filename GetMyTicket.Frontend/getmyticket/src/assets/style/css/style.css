@@ -970,7 +970,7 @@ input[type=radio]:checked {
   animation: 30s slide infinite linear;
 }
 .partnerLogos__slide img {
-  height: 10rem;
+  height: 8rem;
   filter: grayscale(100);
   margin: 0 4rem;
 }
@@ -1035,7 +1035,7 @@ input[type=radio]:checked {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: 4rem;
   padding: 3rem;
   transition: all 0.4s ease-out;
 }
@@ -1047,10 +1047,10 @@ input[type=radio]:checked {
 }
 .bookings__container table {
   background-color: #f9f7f6;
-  font-size: 1rem;
+  font-size: 1.6rem;
   border-radius: 7px;
   overflow: hidden;
-  width: 90rem;
+  width: 130rem;
 }
 .bookings__container th {
   font-size: 24px;

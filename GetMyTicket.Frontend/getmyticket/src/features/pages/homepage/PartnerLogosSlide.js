@@ -24,8 +24,8 @@ function PartnerLogosSlide() {
       <img src={staralliance} alt="Star alliance logo" />
       <img src={trenitalia} alt="TrenItalia logo" />
       <img src={wizzair} alt="Wizz air logo" />
-      <img src={lufthansa} alt="Lufthansa logo" />
       <img src={sas} alt="SAS logo" />
+      <img src={lufthansa} alt="Lufthansa logo" />
       <img src={airfrance} alt="Air France logo" />
       <img src={klm} alt="KLM logo" />
     </div>

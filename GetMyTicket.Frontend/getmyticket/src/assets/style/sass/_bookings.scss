@@ -15,7 +15,7 @@
         align-items: center;
 
         flex-direction: column;
-        gap: 1rem;
+        gap: 4rem;
 
         padding: 3rem;
 
@@ -30,10 +30,10 @@
 
         & table {
             background-color: $color-grey-light-1;
-            font-size: 1rem;
+            font-size: 1.6rem;
             border-radius: 7px;
             overflow: hidden;
-            width: 90rem;
+            width: 130rem;
         }
 
         & th {

@@ -971,9 +971,13 @@ input[type=radio]:checked {
   white-space: nowrap;
   position: relative;
 }
+.partnerLogos__track {
+  display: inline-flex;
+  white-space: nowrap;
+}
 .partnerLogos__slide {
   display: inline-block;
-  animation: 30s slide infinite linear;
+  animation: slide 30s linear infinite;
 }
 .partnerLogos__slide img {
   height: 8rem;

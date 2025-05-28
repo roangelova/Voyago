@@ -974,10 +974,10 @@ input[type=radio]:checked {
 .partnerLogos__track {
   display: inline-flex;
   white-space: nowrap;
+  animation: slide 30s linear infinite;
 }
 .partnerLogos__slide {
   display: inline-block;
-  animation: slide 30s linear infinite;
 }
 .partnerLogos__slide img {
   height: 8rem;
@@ -985,8 +985,8 @@ input[type=radio]:checked {
   max-width: 12rem;
   object-fit: contain;
   filter: grayscale(100%);
-  margin: 0 2rem;
-  padding: 0.5rem;
+  margin: 0 3rem;
+  padding: 1rem;
   box-sizing: content-box;
 }
 .partnerLogos:hover .partnerLogos__slide {
@@ -1014,7 +1014,7 @@ input[type=radio]:checked {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 .footer {

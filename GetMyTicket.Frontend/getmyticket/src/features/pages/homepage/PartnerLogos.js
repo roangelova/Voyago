@@ -6,7 +6,6 @@ function PartnerLogos() {
       <div className="partnerLogos__track">
         <PartnerLogosSlide />
         <PartnerLogosSlide />
-        <PartnerLogosSlide />
       </div>
     </section>
   );

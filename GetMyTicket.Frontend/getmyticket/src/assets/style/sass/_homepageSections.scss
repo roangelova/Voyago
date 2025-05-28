@@ -204,11 +204,11 @@
   &__track {
     display: inline-flex;
     white-space: nowrap;
+    animation: slide 30s linear infinite;
   }
   
   &__slide {
     display: inline-block;
-    animation: slide 30s linear infinite;
 
     & img {
       height: 8rem;
@@ -216,8 +216,8 @@
       max-width: 12rem;
       object-fit: contain;
       filter: grayscale(100%);
-      margin: 0 2rem;
-      padding: 0.5rem;
+      margin: 0 3rem;
+      padding: 1rem;
       box-sizing: content-box;
     }
   }
@@ -252,6 +252,6 @@
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }

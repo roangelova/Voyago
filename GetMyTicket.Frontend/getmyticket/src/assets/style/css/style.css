@@ -1045,7 +1045,15 @@ input[type=radio]:checked {
 .footer__section ul {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
+}
+.footer__section ul li {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.footer__section ul li img {
+  filter: contrast(65%);
 }
 .footer h4 {
   margin-bottom: 4rem;

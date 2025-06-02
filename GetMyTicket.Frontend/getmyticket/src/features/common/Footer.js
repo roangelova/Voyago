@@ -1,3 +1,9 @@
+import address from '../../assets/icons/address.png'
+import email from '../../assets/icons/email.png'
+import phone from '../../assets/icons/phone.png'
+
+//TODO: add list and <a> effect when links are added
+
 function Footer() {
   return (
     <section className="footer">
@@ -26,12 +32,15 @@ function Footer() {
           <h4>Contact Info</h4>
           <ul>
             <li>
+              <img src={address} alt='Icon'/>
               <span>9000 Varna, Bulgaria</span>
             </li>
             <li>
+               <img src={phone} alt='Icon'/>
               <span>+359 893 000123 </span>
             </li>
             <li>
+               <img src={email} alt='Icon'/>
               <span>info@example.com</span>
             </li>
           </ul>

@@ -4,6 +4,7 @@ import SearchBar from "../services/SearchBar";
 import WhyUsSection from "./homepage/WhyUsSection";
 import PopularDestinationsSection from "./homepage/PopularDestinationsSections";
 import PartnerLogos from "./homepage/PartnerLogos";
+import CustomerReviews from "./homepage/CustomerReviews";
 
 const MainPage = () => {
     return (
@@ -11,6 +12,7 @@ const MainPage = () => {
             <Header />
             <SearchBar />
             <PartnerLogos/>
+            <CustomerReviews/>
             <WhyUsSection />
             <PopularDestinationsSection/>
         </>

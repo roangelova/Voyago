@@ -1,22 +1,47 @@
 function Footer() {
+  return (
+    <section className="footer">
+      <div className="footer__content">
+        <div className="footer__section">
+          <h4>About us</h4>
+          <p>
+            We make travel simple. Whether you're booking a flight, catching a
+            train, or hopping on a bus, our platform brings all your travel
+            options into one easy-to-use place. Compare, book, and manage your
+            trips — all in one account.
+          </p>
+        </div>
 
-    return (
-        <section className="footer">
-           <ul className="footer__ul">
-                <li>Legal</li>
-                <li>Terms of use</li>
-                <li>Privacy Policy</li>
-                <li>Supplier Code of Conduct</li>
-           </ul>
+        <div className="footer__section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li>Help Centre</li>
+            <li>FAQ</li>
+            <li>Legal</li>
+            <li>About us</li>
+          </ul>
+        </div>
 
-           <ul className="footer__ul">
-                <li>About us</li>
-                <li>Careers</li>
-                <li>Help centre</li>
-                <li>Become a partner</li>
-           </ul>
-        </section>
-    )
+        <address className="footer__section">
+          <h4>Contact Info</h4>
+          <ul>
+            <li>
+              <span>9000 Varna, Bulgaria</span>
+            </li>
+            <li>
+              <span>+359 893 000123 </span>
+            </li>
+            <li>
+              <span>info@example.com</span>
+            </li>
+          </ul>
+        </address>
+      </div>
+      <footer>
+        <span> Copyright &copy; 2025 by VOYAGO. All rights reserved. </span>
+      </footer>
+    </section>
+  );
 }
 
 export default Footer;

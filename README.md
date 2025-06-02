@@ -1,6 +1,8 @@
-A MAJOR redesign is in progress. Have a sneak peak: 
+A MAJOR redesign is in progress. Have a sneak peak of our homepage: 
 
 ![image](https://github.com/user-attachments/assets/a4631c2b-47a8-455c-87b6-f4755a3bff86)
+
+![image](https://github.com/user-attachments/assets/7ced4b95-add4-4d33-9c27-88737fa64a5a)
 
 ![image](https://github.com/user-attachments/assets/8061bf52-04b3-41bb-b116-992c228a65c3)
 

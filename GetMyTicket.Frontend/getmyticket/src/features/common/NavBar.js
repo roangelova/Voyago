@@ -5,16 +5,11 @@ import voyago from "../../assets/images/voyago.png";
 
 import Cookies from "js-cookie";
 
-import AccountMenuDropdown from "../account/AccountMenuDropdown";
 import Login from "../account/Login";
-
-import arrowdown from "../../assets/icons/arrowdown.png";
-import arrowup from "../../assets/icons/arrowup.png";
 
 function NavBar() {
   let isLoggedIn = !!Cookies.get("accessToken");
 
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
 
   const handleLoginToggle = () => {
@@ -49,15 +44,6 @@ function NavBar() {
     </ul>
   );
 
-  const UserNav = (
-    <ul className="navigation__user">
-      <li onClick={() => setShowUserMenu(!showUserMenu)} href="#">
-        <span>Account </span>
-        <img src={showUserMenu ? arrowup : arrowdown} alt="arrow up/down" />
-      </li>
-    </ul>
-  );
-
   return (
     <>
       <nav className="navigation">
@@ -78,7 +64,7 @@ function NavBar() {
           </li>
         </ul>
 
-        {isLoggedIn ? UserNav : NoUserNav}
+        {isLoggedIn ? <NavLink to="account">Account</NavLink> : NoUserNav}
 
         {LoginPopupVisibility ? (
           <div className="login blur-overlay">
@@ -86,8 +72,6 @@ function NavBar() {
           </div>
         ) : null}
       </nav>
-
-      {showUserMenu ? <AccountMenuDropdown /> : null}
     </>
   );
 }

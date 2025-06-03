@@ -1,6 +1,5 @@
 import "../../assets/style/css/style.css";
 
-//TODO -> FIX TINY JUMP (NAV SHIFTS A BIT TO THE LEFT WHEN NOT IN HEADER)
 function Header() {
   return (
     <div className="header">

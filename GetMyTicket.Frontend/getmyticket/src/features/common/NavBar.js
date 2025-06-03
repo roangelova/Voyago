@@ -6,6 +6,7 @@ import voyago from "../../assets/images/voyago.png";
 import Cookies from "js-cookie";
 
 import Login from "../account/Login";
+import RegisterPopUp from "../account/RegisterPopUp";
 
 function NavBar() {
   let isLoggedIn = !!Cookies.get("accessToken");
@@ -31,7 +32,7 @@ function NavBar() {
     }
   }, [LoginPopupVisibility, setLoginPopupVisibility]);
 
-  //TODO -> THEY ARE EITHER GONNA BE NAVLINKS OR A -elements; we cant have it both ways; 
+  //TODO -> THEY ARE EITHER GONNA BE NAVLINKS OR A -elements; we cant have it both ways;
   const NoUserNav = (
     <ul className="navigation__user">
       <li className="navigation__login" onClick={handleLoginToggle}>
@@ -72,6 +73,10 @@ function NavBar() {
           </div>
         ) : null}
       </nav>
+      {/*TODO: FOR DEVELOPMENT PURPOSES ONLY */}
+      <div className="blur-overlay">
+        <RegisterPopUp />
+      </div>
     </>
   );
 }

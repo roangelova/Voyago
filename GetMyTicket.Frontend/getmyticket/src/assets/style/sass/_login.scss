@@ -1,94 +1,93 @@
 .login {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    width: 30vw;
+    height: 30vh;
+
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+  }
 
-    &__container {
-        width: 30vw;
-        height: 30vh;
+  &__iconBox {
+    margin-left: auto;
 
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+    & svg {
+      height: 30px;
+      width: 20px;
+      margin-top: 10px;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+  }
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+  & form {
+    height: 90%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -20px;
+  }
+
+  &__row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 50%;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+
+    & label {
+      font-size: 18px;
     }
 
-    &__iconBox {
-        margin-left: auto;
-
-        & svg {
-            height: 30px;
-            width: 20px;
-            margin-top: 10px;
-            margin-right: 15px;
-            cursor: pointer;
-        }
+    & input {
+      font-size: 1.6rem;
     }
 
-    & form {
-        height: 90%;
-        width: 100%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-top: -20px;
+    input,
+    input::placeholder {
+      background-color: $color-primary-light !important;
     }
+  }
 
+  &__btn {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 16px;
 
-    &__row {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        width: 50%;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
 
-        & label {
-            font-size: 18px;
-        }
-
-        & input{
-           font-size: 1.6rem;
-        }
-
-        input,
-        input::placeholder{
-          background-color: $color-primary-light !important;
-        }
-    }
-
-    &__btn {
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        font-size: 16px;
-
-        margin-top: 1.5rem;
-
-        border-radius: 10px;
-        box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
-    }
+    border-radius: 10px;
+    box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+  }
 }
 
 .blur-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 100;
 }

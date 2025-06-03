@@ -45,7 +45,7 @@
       }
 
       &.active {
-        background-color: $color-primary-dark;
+        background-color: $color-secondary;
       }
 
       &:hover {
@@ -56,7 +56,8 @@
 
   &__content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding: 5rem;
   }
 }

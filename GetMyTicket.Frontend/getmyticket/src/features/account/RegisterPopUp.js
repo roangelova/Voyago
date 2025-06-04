@@ -2,10 +2,15 @@ import googleLogo from "../../assets/icons/google.svg";
 
 import register from "../../assets/images/register.jpg";
 
-//TODO: integrate <a?>login</a? with login popup
+function RegisterPopUp({
+  setLoginPopupVisibility,
+  setRegisterPopupVisibility,
+}) {
+  const onLoginClick = () => {
+    setLoginPopupVisibility(true);
+    setRegisterPopupVisibility(false);
+  };
 
-function RegisterPopUp() {
-  //TODO -> add as an actual popup and make background blurry
   return (
     <div className="register">
       <div className="register__container">
@@ -15,7 +20,7 @@ function RegisterPopUp() {
         <div className="register__right">
           <h3 className="heading--tertiary">Sign up</h3>
           <span className="register__row">
-            Already have an account? <a href="#">Login</a>
+            Already have an account? <a onClick={onLoginClick}>Login</a>
           </span>
           <div className="register__row register__provider">
             <img src={googleLogo} />
@@ -34,12 +39,20 @@ function RegisterPopUp() {
             </div>
             <div>
               <label htmlFor="password">Password</label>
-              <input name="password" type="password"></input>
+              <input
+                name="password"
+                type="password"
+                placeholder="********"
+              ></input>
             </div>
 
             <div>
               <label htmlFor="confirmPassword">Confirm password</label>
-              <input name="confirmPassword" type="password"></input>
+              <input
+                name="confirmPassword"
+                type="password"
+                placeholder="********"
+              ></input>
             </div>
             <button>Join</button>
             <p className="register__agreement">

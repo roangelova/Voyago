@@ -187,6 +187,7 @@ input[type=radio]:checked {
 }
 .register__right a {
   border-bottom: 1px solid #a7b2b5;
+  cursor: pointer;
 }
 .register__row {
   margin-bottom: 2rem;

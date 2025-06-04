@@ -12,9 +12,14 @@ function NavBar() {
   let isLoggedIn = !!Cookies.get("accessToken");
 
   const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
+  const [RegisterPopupVisibility, setRegisterPopupVisibility] = useState(false);
 
   const handleLoginToggle = () => {
     setLoginPopupVisibility(!LoginPopupVisibility);
+  };
+
+  const handleRegisterToggle = () => {
+    setRegisterPopupVisibility(!RegisterPopupVisibility);
   };
 
   useEffect(() => {
@@ -40,7 +45,7 @@ function NavBar() {
       </li>
       <span></span>
       <li>
-        <a href="/register">Register</a>
+        <a onClick={handleRegisterToggle}>Register</a>
       </li>
     </ul>
   );
@@ -68,15 +73,19 @@ function NavBar() {
         {isLoggedIn ? <NavLink to="account">Account</NavLink> : NoUserNav}
 
         {LoginPopupVisibility ? (
-          <div className="login blur-overlay">
+          <div className="login blur-overlay" onClick={handleLoginToggle}>
             <Login setLoginPopupVisibility={setLoginPopupVisibility} />
           </div>
         ) : null}
       </nav>
-      {/*TODO: FOR DEVELOPMENT PURPOSES ONLY */}
-      <div className="blur-overlay">
-        <RegisterPopUp />
-      </div>
+      {RegisterPopupVisibility ? (
+        <div className="blur-overlay" onClick={handleRegisterToggle}>
+          <RegisterPopUp
+            setLoginPopupVisibility={setLoginPopupVisibility}
+            setRegisterPopupVisibility={setRegisterPopupVisibility}
+          />
+        </div>
+      ) : null}
     </>
   );
 }

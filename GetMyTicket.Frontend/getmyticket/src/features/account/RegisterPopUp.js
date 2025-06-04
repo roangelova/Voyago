@@ -33,7 +33,7 @@ function RegisterPopUp({
               <input
                 name="email"
                 type="email"
-                placeholder="email@gmail.com"
+                placeholder="email@example.com"
                 autoComplete="on"
               ></input>
             </div>

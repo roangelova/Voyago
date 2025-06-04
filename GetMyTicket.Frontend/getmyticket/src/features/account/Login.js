@@ -54,30 +54,11 @@ function Login({ setLoginPopupVisibility }) {
   return (
     <div className="login">
       <div className="login__container">
-        <div className="login__iconBox">
-          <svg
-            onClick={() => setLoginPopupVisibility(false)}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </div>
-
         <form action={Login}>
           <div className="login__row">
             <label htmlFor="email">Email:</label>
             <input type="text" name="email" placeholder="Email"></input>
           </div>
-
           <div className="login__row">
             <label htmlFor="password">Password: </label>
             <input
@@ -86,7 +67,6 @@ function Login({ setLoginPopupVisibility }) {
               name="password"
             ></input>
           </div>
-
           <button className="login__btn" type="submit">
             Login
           </button>

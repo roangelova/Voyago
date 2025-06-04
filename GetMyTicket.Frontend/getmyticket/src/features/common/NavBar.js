@@ -74,16 +74,20 @@ function NavBar() {
 
         {LoginPopupVisibility ? (
           <div className="login blur-overlay" onClick={handleLoginToggle}>
-            <Login setLoginPopupVisibility={setLoginPopupVisibility} />
+            <div onClick={(e) => e.stopPropagation()}>
+              <Login setLoginPopupVisibility={setLoginPopupVisibility} />
+            </div>
           </div>
         ) : null}
       </nav>
       {RegisterPopupVisibility ? (
         <div className="blur-overlay" onClick={handleRegisterToggle}>
-          <RegisterPopUp
-            setLoginPopupVisibility={setLoginPopupVisibility}
-            setRegisterPopupVisibility={setRegisterPopupVisibility}
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <RegisterPopUp
+              setLoginPopupVisibility={setLoginPopupVisibility}
+              setRegisterPopupVisibility={setRegisterPopupVisibility}
+            />
+          </div>
         </div>
       ) : null}
     </>

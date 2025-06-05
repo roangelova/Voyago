@@ -330,3 +330,40 @@
 }
 
 //TODO --> ALL SECTIONS SHOULD HAVE THE SAME MARGIN-TOP/BOTTOM/ WHITESPACE
+
+.QnA {
+  display: flex;
+  align-items: center;
+  background-color: $color-grey-light-1;
+  justify-content: center;
+  flex-direction: column;
+  padding: 8rem;
+
+  & h3 {
+    margin-bottom: 8rem;
+  }
+
+  & ul {
+    max-width: 160rem;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 10rem;
+    row-gap: 2rem;
+
+    & li {
+      padding: 1rem;
+
+      & p {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      & h4 {
+        margin-bottom: 2rem;
+        font-size: 2.2rem;
+      }
+    }
+  }
+}

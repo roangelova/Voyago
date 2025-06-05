@@ -998,6 +998,37 @@ input[type=checkbox] {
   z-index: 3;
 }
 
+.QnA {
+  display: flex;
+  align-items: center;
+  background-color: #f9f7f6;
+  justify-content: center;
+  flex-direction: column;
+  padding: 8rem;
+}
+.QnA h3 {
+  margin-bottom: 8rem;
+}
+.QnA ul {
+  max-width: 160rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 10rem;
+  row-gap: 2rem;
+}
+.QnA ul li {
+  padding: 1rem;
+}
+.QnA ul li p {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.QnA ul li h4 {
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+}
+
 .footer {
   width: 100vw;
   background-color: #504e4c;

@@ -99,8 +99,12 @@ input::placeholder {
 }
 
 input[type="radio"]:checked {
-  background-color: #93b3da;
-  border: 2px solid #93b3da;
+  background-color: $color-primary;
+  border: 2px solid $color-primary;
+}
+
+input[type="checkbox"] {
+  accent-color: $color-primary; 
 }
 
 .appLayout {

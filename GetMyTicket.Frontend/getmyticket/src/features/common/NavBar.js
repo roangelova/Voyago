@@ -5,7 +5,7 @@ import voyago from "../../assets/images/voyago.png";
 
 import Cookies from "js-cookie";
 
-import Login from "../account/Login";
+import LoginPopUp from "../account/LoginPopUp";
 import RegisterPopUp from "../account/RegisterPopUp";
 
 function NavBar() {
@@ -75,7 +75,7 @@ function NavBar() {
         {LoginPopupVisibility ? (
           <div className="login blur-overlay" onClick={handleLoginToggle}>
             <div onClick={(e) => e.stopPropagation()}>
-              <Login setLoginPopupVisibility={setLoginPopupVisibility} />
+              <LoginPopUp setLoginPopupVisibility={setLoginPopupVisibility} />
             </div>
           </div>
         ) : null}

@@ -1,6 +1,8 @@
+import { toast } from "react-toastify";
 import googleLogo from "../../assets/icons/google.svg";
 
 import register from "../../assets/images/register.jpg";
+import { Account } from "../../services/accountService";
 
 function RegisterPopUp({
   setLoginPopupVisibility,
@@ -10,6 +12,51 @@ function RegisterPopUp({
     setLoginPopupVisibility(true);
     setRegisterPopupVisibility(false);
   };
+
+  function registerUser(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    let email = formData.get("email").trim();
+    let password = formData.get("password").trim();
+    let confirmPassword = formData.get("confirmPassword").trim();
+    let newsletterSubscribtion = formData.get("newsletterSubscription");
+
+    if (email == "") {
+      toast.error(
+        "All fields are required for registration! Please, try again."
+      );
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Password and confirm password do not match!");
+      return;
+    }
+
+    let checkboxValue = newsletterSubscribtion === "on" ? true : false;
+
+    Account.register({ email, password, checkboxValue })
+      .then((res) => {
+        if (res.succeeded) {
+          toast.success(
+            "Registration successful.Taking you to login page in 3, 2, 1 .. "
+          );
+
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        let errorMessage = "";
+        err.response.data.forEach((error) => {
+          errorMessage += error.description;
+          errorMessage += " ";
+        });
+        toast.error(err);
+      });
+  }
 
   return (
     <div className="register">
@@ -27,7 +74,7 @@ function RegisterPopUp({
             <span>Sign up with Google</span>
           </div>
           <div className="register__row">or</div>
-          <div className="register__box">
+          <form className="register__box" onSubmit={registerUser}>
             <div>
               <label htmlFor="email">Email</label>
               <input
@@ -54,12 +101,22 @@ function RegisterPopUp({
                 placeholder="********"
               ></input>
             </div>
-            <button>Join</button>
+            <div className="register__checkbox">
+              <input
+                type="checkbox"
+                defaultChecked
+                name="newsletterSubscription"
+              ></input>
+              <label htmlFor="newsletterSubscription">
+                Subscribe to newsletter
+              </label>
+            </div>
+            <button type="submit">Join</button>
             <p className="register__agreement">
               By joining, you agree to our <a>Terms and Conditions</a> and{" "}
               <a>Privacy Policy</a>
             </p>
-          </div>
+          </form>
         </div>
       </div>
     </div>

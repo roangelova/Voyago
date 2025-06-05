@@ -76,8 +76,12 @@ input::placeholder {
 }
 
 input[type=radio]:checked {
-  background-color: #93b3da;
-  border: 2px solid #93b3da;
+  background-color: #d0ebff;
+  border: 2px solid #d0ebff;
+}
+
+input[type=checkbox] {
+  accent-color: #d0ebff;
 }
 
 .appLayout {
@@ -226,6 +230,11 @@ input[type=radio]:checked {
 .register__agreement {
   text-align: center;
   line-height: 1.6;
+}
+.register__checkbox {
+  flex-direction: row !important;
+  gap: 1rem !important;
+  align-items: center;
 }
 
 .login__container {

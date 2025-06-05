@@ -4,9 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ToastContainer } from 'react-toastify';
 
-import RegisterPopUp from './features/account/RegisterPopUp';
 import NotFoundPage from './features/common/NotFoundPage';
-import RegisterForm from './features/account/RegisterForm';
 import MainPage from './features/pages/MainPage';
 import SearchResultsPage from './features/pages/SearchResultsPage';
 import Cart from './features/cart/Cart';

@@ -6,6 +6,7 @@ using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.Mapping_Tables;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -71,7 +72,7 @@ namespace GetMyTicket.Persistance.Context
                 .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            ApplyGlobalQueryFilters(builder);
+           // ApplyGlobalQueryFilters(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

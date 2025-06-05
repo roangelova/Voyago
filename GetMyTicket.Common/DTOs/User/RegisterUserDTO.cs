@@ -1,13 +1,15 @@
-﻿namespace GetMyTicket.Common.DTOs.User
-{
-    public record CreateUserDTO(
-        string FirstName,
-        string LastName,
-        string Email,
-        string Password,
-        string Dob,
-        bool NewsletterSubscribtion,
-        string Address
-        );
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace GetMyTicket.Common.DTOs.User
+{
+    public class CreateUserDTO
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        public bool NewsletterSubscribtion { get; set; } = true;
+    }
 }

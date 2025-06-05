@@ -19,39 +19,21 @@ namespace GetMyTicket.Service.Services
 
         public async Task<IdentityResult> CreateUserAsync(CreateUserDTO registerUserDTO)
         {
-            //check and convert DOB
-            bool parseResult = DateOnly.TryParse(registerUserDTO.Dob, out DateOnly result);
-
-            if (!parseResult)
-            {
-                throw new ApplicationError(string.Format(ResponseConstants.Invalid, nameof(registerUserDTO.Dob)));
-            }
-
-            //TODO: write unittest to check this method 
-
             //TODO: decide on a way to bypass username validation OR Decide if a username is actually needed
 
-            if (string.IsNullOrWhiteSpace(registerUserDTO.FirstName) ||
-                   string.IsNullOrWhiteSpace(registerUserDTO.LastName) ||
-                   string.IsNullOrWhiteSpace(registerUserDTO.Email) ||
-                   string.IsNullOrWhiteSpace(registerUserDTO.Address))
+            if (string.IsNullOrWhiteSpace(registerUserDTO.Email))
             {
                 throw new ApplicationError(ResponseConstants.AllFieldsRequired);
             }
 
             var user = new User()
             {
-                FirstName = registerUserDTO.FirstName.Trim(),
-                LastName = registerUserDTO.LastName.Trim(),
                 Email = registerUserDTO.Email.Trim(),
                 IsSubscribedForNewsletter = registerUserDTO.NewsletterSubscribtion,
-                DOB = result,
                 UserName = registerUserDTO.Email.Trim(),
-                Address = registerUserDTO.Address.Trim(),
                 RegistrationDate = DateOnly.FromDateTime(DateTime.UtcNow)
             };
 
-            //CREATE USER
              return await userManager.CreateAsync(user, registerUserDTO.Password);
         }
     }

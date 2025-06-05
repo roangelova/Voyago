@@ -1,9 +1,8 @@
-﻿using GetMyTicket.Common.Entities.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GetMyTicket.Common.Entities
 {
@@ -20,13 +19,11 @@ namespace GetMyTicket.Common.Entities
 
         public Vehicle Vehicle { get; set; }
 
-        [Required]
         public City StartCity { get; set; }
 
         [ForeignKey(nameof(StartCity))]
         public Guid StartCityId { get; set; }
 
-        [Required]
         public City EndCity { get; set; }
 
         [ForeignKey(nameof(EndCity))]
@@ -34,22 +31,18 @@ namespace GetMyTicket.Common.Entities
 
         public int Capacity { get; set; }
 
-        [Required]
         [ForeignKey(nameof(Vehicle))]
         public Guid VehicleId { get; set; }
 
-        [Required]
         public DateTime StartTime { get; set; }
 
-        [Required]
         public DateTime EndTime { get; set; }
 
-        [Required]
         public double Price { get; set; }
 
         public Currency Currency { get; set; } 
 
-        public ICollection<Booking> Bookings { get; set; }
+        public ICollection<Booking> Bookings { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

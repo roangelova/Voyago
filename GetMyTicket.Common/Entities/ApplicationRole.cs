@@ -1,16 +1,11 @@
 ﻿using GetMyTicket.Common.Entities.Trackable;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GetMyTicket.Common.Entities
 {
     public class ApplicationRole: IdentityRole<Guid>, ITrackableEntity
     {
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

@@ -1,8 +1,7 @@
-﻿using GetMyTicket.Common.Entities.Contracts;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GetMyTicket.Common.Entities
 {
@@ -19,9 +18,9 @@ namespace GetMyTicket.Common.Entities
 
         public BookingStatus BookingStatus { get; set; }
 
-        public ICollection<BaggageItem> BaggageItems { get; set; }
+        public ICollection<BaggageItem> BaggageItems { get; set; } = [];
 
-        public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; }
+        public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

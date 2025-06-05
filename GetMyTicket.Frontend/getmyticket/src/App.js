@@ -30,8 +30,6 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route index path="/" element={< MainPage />} />
-            <Route path="/register" element={<RegisterPopUp />} />
-            <Route path="/register-form" element={<RegisterForm />} />
             <Route path="/:searchType" element={<SearchByTypePage />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
 

@@ -4,6 +4,7 @@ namespace GetMyTicket.Common.Entities.Passengers
 {
     public class Child : Passenger
     {
-        public string SeatNumber { get; set; }
+        //TODO: SeatNumber will be not-required until we add the functionality to the frontend
+        public string? SeatNumber { get; set; }
     }
 }

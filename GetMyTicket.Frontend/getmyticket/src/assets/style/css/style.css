@@ -1156,6 +1156,7 @@ input[type=radio]:checked {
 }
 .account__nav--item:last-child {
   margin-top: auto;
+  cursor: pointer;
 }
 .account__nav--item.active {
   background-color: #b9cce9;

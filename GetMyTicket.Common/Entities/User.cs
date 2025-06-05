@@ -10,11 +10,9 @@ namespace GetMyTicket.Common.Entities
 {
     public class User : IdentityUser<Guid>, ITrackableEntity
     {
-        [Required]
         [MaxLength(NameMaxLength)]
         public string FirstName { get; set; }
 
-        [Required]
         [MaxLength(NameMaxLength)]
         public string LastName { get; set; }
 

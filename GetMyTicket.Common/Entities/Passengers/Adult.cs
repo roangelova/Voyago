@@ -9,21 +9,19 @@ namespace GetMyTicket.Common.Entities.Passengers
 {
     public class Adult : Passenger
     {
-        public User User { get; set; }
+        public required User User { get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
 
-        [Required]
         public DocumentType DocumentType { get; set; }
 
-        [Required]
         [MaxLength(MaxDocumentIdLength)]
-        public string DocumentId{ get; set; }
+        public required string DocumentId{ get; set; }
 
-        [Required]
         public DateOnly ExpirationDate { get; set; }
 
-        public string SeatNumber { get; set; }
+        //TODO: SeatNumber will be not-required until we add the functionality to the frontend
+        public string? SeatNumber { get; set; }
     }
 }

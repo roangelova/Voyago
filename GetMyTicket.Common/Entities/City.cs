@@ -8,13 +8,11 @@ namespace GetMyTicket.Common.Entities
     {
         public Guid CityId { get; set; } = Guid.CreateVersion7();
 
-        [Required]
         [MaxLength(NameMaxLength)]
-        public string CityName { get; set; }
+        public required string CityName { get; set; }
 
-        [Required]
         [MaxLength(IATA_CodeMaxLength)]
-        public string IATA_Code { get; set; }
+        public required string IATA_Code { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

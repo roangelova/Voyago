@@ -11,20 +11,17 @@ namespace GetMyTicket.Common.Entities
     {
         public Guid BaggageItemId { get; set; }
 
-        [Required]
         [Range(0, MaxBaggageSize)]
         public int Size { get; set; }
 
-        public Passenger Passenger { get; set; }
+        public required Passenger Passenger { get; set; }
 
         [ForeignKey(nameof(Passenger))]
-        [Required]
         public Guid PassengerId { get; set; }
 
-        public Trip Trip { get; set; }
+        public required Trip Trip { get; set; }
 
         [ForeignKey(nameof(Trip))]
-        [Required]
         public Guid TripId { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

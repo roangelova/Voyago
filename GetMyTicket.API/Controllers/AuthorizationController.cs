@@ -5,11 +5,8 @@ using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
 using GetMyTicket.Service.Contracts;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.JsonWebTokens;
 using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers

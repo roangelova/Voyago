@@ -15,10 +15,9 @@ namespace GetMyTicket.Common.Entities.Contracts
         public TransportationProvider TransportationProvider { get; set; }
 
         [ForeignKey(nameof(TransportationProvider))]
-        [Required]
         public Guid TransportationProviderId { get; set; }
 
-        public ICollection<Trip> Trips { get; set; }
+        public ICollection<Trip> Trips { get; set; } = [];
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime? LastUpdatedAt { get; set; }

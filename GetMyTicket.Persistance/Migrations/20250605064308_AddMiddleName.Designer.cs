@@ -4,6 +4,7 @@ using GetMyTicket.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetMyTicket.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250605064308_AddMiddleName")]
+    partial class AddMiddleName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +113,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("BaggageItem", (string)null);
+                    b.ToTable("BaggageItem");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Booking", b =>
@@ -147,7 +150,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.City", b =>
@@ -188,7 +191,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Contracts.Passenger", b =>
@@ -244,7 +247,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("PassengerId");
 
-                    b.ToTable("Passenger", (string)null);
+                    b.ToTable("Passenger");
 
                     b.HasDiscriminator().HasValue("Passenger");
 
@@ -287,7 +290,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("TransportationProviderId");
 
-                    b.ToTable("Vehicle", (string)null);
+                    b.ToTable("Vehicle");
 
                     b.HasDiscriminator().HasValue("Vehicle");
 
@@ -322,7 +325,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.TransportationProvider", b =>
@@ -372,7 +375,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasKey("TransportationProviderId");
 
-                    b.ToTable("TransportationProviders", (string)null);
+                    b.ToTable("TransportationProviders");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.Trip", b =>
@@ -438,7 +441,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Trips", (string)null);
+                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
@@ -562,7 +565,7 @@ namespace GetMyTicket.Persistance.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.ToTable("PassengerBookingMap", (string)null);
+                    b.ToTable("PassengerBookingMap");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -705,7 +708,7 @@ namespace GetMyTicket.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Passenger", null, t =>
+                    b.ToTable("Passenger", t =>
                         {
                             t.Property("SeatNumber")
                                 .HasColumnName("Child_SeatNumber");

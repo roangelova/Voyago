@@ -10,9 +10,9 @@ namespace GetMyTicket.Common.Entities
 
         [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public ICollection<City> Destinations { get; set; }
+        public ICollection<City> Destinations { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

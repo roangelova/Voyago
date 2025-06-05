@@ -9,26 +9,22 @@ namespace GetMyTicket.Common.Entities
     {
         public Guid TransportationProviderId { get; set; } 
 
-        [Required]
         [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        [Required]
         [MaxLength(DescriptionMaxLength)]
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
-        [Required]
         [MaxLength(AddressMaxLength)]
-        public string Address { get; set; }
+        public  required string Address { get; set; }
 
-        [Required]
         [MaxLength(EmailMaxLength)]
-        public string Email { get; set; }
+        public  required string Email { get; set; }
 
         public byte[] Logo { get; set; }
 
-        public ICollection<Vehicle> Vehicles { get; set; }
-        public ICollection<Trip> Trips { get; set; }
+        public ICollection<Vehicle> Vehicles { get; set; } = [];
+        public ICollection<Trip> Trips { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

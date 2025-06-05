@@ -1,9 +1,7 @@
-﻿using GetMyTicket.Common.Entities.Trackable;
+﻿using System.ComponentModel.DataAnnotations;
+using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities.Contracts
@@ -12,22 +10,21 @@ namespace GetMyTicket.Common.Entities.Contracts
     {
         public Guid PassengerId { get; set; }
 
-        [Required]
         [MaxLength(NameMaxLength)]
-        public string FirstName { get; set; }
+        public required string FirstName { get; set; }
 
-        [Required]
         [MaxLength(NameMaxLength)]
-        public string LastName { get; set; }
+        public string? MiddleName { get; set; }
+
+        [MaxLength(NameMaxLength)]
+        public required string LastName { get; set; }
         public Gender Gender { get; set; }
 
-        public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; }
+        public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; } = [];
 
-        [Required]
         [MaxLength(MaxNationalityLength)]
-        public string Nationality { get; set; }
+        public required string Nationality { get; set; }
 
-        [Required]
         public DateOnly DOB { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

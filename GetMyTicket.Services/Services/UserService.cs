@@ -30,8 +30,7 @@ namespace GetMyTicket.Service.Services
             {
                 Email = registerUserDTO.Email.Trim(),
                 IsSubscribedForNewsletter = registerUserDTO.NewsletterSubscribtion,
-                UserName = registerUserDTO.Email.Trim(),
-                RegistrationDate = DateOnly.FromDateTime(DateTime.UtcNow)
+                UserName = registerUserDTO.Email.Trim()
             };
 
              return await userManager.CreateAsync(user, registerUserDTO.Password);

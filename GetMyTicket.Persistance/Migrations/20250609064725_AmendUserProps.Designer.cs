@@ -4,6 +4,7 @@ using GetMyTicket.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetMyTicket.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250609064725_AmendUserProps")]
+    partial class AmendUserProps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -508,7 +511,7 @@ namespace GetMyTicket.Persistance.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<Guid?>("PassengerMapId")
+                    b.Property<Guid>("PassengerMapId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
@@ -539,10 +542,6 @@ namespace GetMyTicket.Persistance.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("PassengerMapId")
-                        .IsUnique()
-                        .HasFilter("[PassengerMapId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -686,7 +685,9 @@ namespace GetMyTicket.Persistance.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.HasDiscriminator().HasValue("Adult");
                 });
@@ -841,16 +842,6 @@ namespace GetMyTicket.Persistance.Migrations
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
-                {
-                    b.HasOne("GetMyTicket.Common.Entities.Contracts.Passenger", "PassengerMap")
-                        .WithOne()
-                        .HasForeignKey("GetMyTicket.Common.Entities.User", "PassengerMapId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("PassengerMap");
-                });
-
             modelBuilder.Entity("GetMyTicket.Common.Mapping_Tables.PassengerBookingMap", b =>
                 {
                     b.HasOne("GetMyTicket.Common.Entities.Booking", "Booking")
@@ -924,8 +915,8 @@ namespace GetMyTicket.Persistance.Migrations
             modelBuilder.Entity("GetMyTicket.Common.Entities.Passengers.Adult", b =>
                 {
                     b.HasOne("GetMyTicket.Common.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("PassengerMap")
+                        .HasForeignKey("GetMyTicket.Common.Entities.Passengers.Adult", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -964,6 +955,12 @@ namespace GetMyTicket.Persistance.Migrations
             modelBuilder.Entity("GetMyTicket.Common.Entities.Trip", b =>
                 {
                     b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
+                {
+                    b.Navigation("PassengerMap")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

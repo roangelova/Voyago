@@ -72,22 +72,32 @@ namespace GetMyTicket.Persistance.Context
                 .WithMany()
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-           // ApplyGlobalQueryFilters(builder);
+            builder.Entity<User>()
+                .Property(u => u.Email)
+                .IsRequired();
+
+            builder.Entity<User>()
+                 .HasOne(u => u.PassengerMap)
+                 .WithOne(navigationExpression: null)
+                 .HasForeignKey<User>(u => u.PassengerMapId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+            // ApplyGlobalQueryFilters(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
-           
-          optionsBuilder.UseSeeding((context, _) =>
-            {
-                string seedFilePath = GetSeedDataPath();
-          
-                Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
-                SeedData(context);
-                SaveChanges();
-            });
+
+            optionsBuilder.UseSeeding((context, _) =>
+              {
+                  string seedFilePath = GetSeedDataPath();
+
+                  Task.Run(async () => await SeedDataFromJSON(context, seedFilePath)).GetAwaiter().GetResult();
+                  SeedData(context);
+                  SaveChanges();
+              });
         }
 
         private static void SeedData(DbContext context)
@@ -96,7 +106,7 @@ namespace GetMyTicket.Persistance.Context
                    context.Set<Vehicle>().Any() &&
                     context.Set<Trip>().Any() &&
                     context.Set<User>().Any() &&
-                    context.Set<Country>().Any() && 
+                    context.Set<Country>().Any() &&
                     context.Set<City>().Any()
                     )
             {
@@ -205,7 +215,7 @@ namespace GetMyTicket.Persistance.Context
         {
             var entries = ChangeTracker.Entries<ITrackableEntity>();
 
-            foreach (var entry in entries) 
+            foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Deleted)
                 {
@@ -236,9 +246,13 @@ namespace GetMyTicket.Persistance.Context
                 {
                     entry.Entity.LastUpdatedAt = DateTime.UtcNow;
                 }
+                else if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                }
             }
 
-            return base.SaveChanges();  
+            return base.SaveChanges();
         }
 
         /// <summary>

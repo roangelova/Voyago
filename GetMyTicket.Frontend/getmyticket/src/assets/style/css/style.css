@@ -1122,7 +1122,6 @@ input[type=checkbox] {
 .booking__left {
   width: 80rem;
   height: 50rem;
-  background-color: #f9f7f6;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   padding: 3rem 7rem;
@@ -1191,11 +1190,17 @@ input[type=checkbox] {
   flex-direction: column;
   gap: 1rem;
   text-align: center;
+}
+.booking__actions a, .booking__actions button {
+  padding: 1.5rem;
+  font-size: 1.6rem;
   transition: all 0.4s;
 }
-.booking__actions a:hover, .booking__actions a:active, .booking__actions button:hover, .booking__actions button:active {
-  background-color: #898f91;
-  color: #333;
+.booking__actions a:hover, .booking__actions a:active {
+  transform: translateY(-3px);
+}
+.booking__actions button:hover, .booking__actions button:active {
+  transform: translateY(3px);
 }
 
 .margin-bottom--xs {
@@ -1224,7 +1229,7 @@ input[type=checkbox] {
   grid-template-rows: 90vh;
 }
 .account__nav {
-  background-image: linear-gradient(to bottom, #fff 0.1%, #e8f5ff 99.9%);
+  background-image: linear-gradient(to bottom, #fff 0.1%, #f9f7f6 99.9%);
   grid-row: 1;
   padding: 2rem 0rem;
   overflow: hidden;
@@ -1257,7 +1262,7 @@ input[type=checkbox] {
   cursor: pointer;
 }
 .account__nav--item.active {
-  background-color: #b9cce9;
+  background-color: #a7b2b5;
 }
 .account__nav--item:hover {
   transform: translateX(4px);

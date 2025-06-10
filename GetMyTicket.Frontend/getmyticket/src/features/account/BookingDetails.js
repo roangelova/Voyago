@@ -92,11 +92,11 @@ function BookingDetails() {
         <div className="booking__priceBreakdown">
           <span>Price breakdown</span>
           <div className="booking__data">
-            <p>Prize per booking: 230 EUR</p>
+            <p>Price per seat: 230 EUR </p>
             <p>
-              Total price: {booking.totalPrice} {booking.currency}
+              You Pay: {booking.totalPrice} {booking.currency}
             </p>
-            <p>No discount used</p>
+            <p>Saved: 0 EUR</p>
           </div>
         </div>
 

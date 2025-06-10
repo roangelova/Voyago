@@ -15,6 +15,7 @@ import Bookings from './features/account/Bookings';
 import ProtectedRoute from './ui/ProtectedRoute';
 import BookingDetails from './features/account/BookingDetails';
 import Account from './features/pages/Account';
+import PassengerList from './features/account/PassengerList';
 
 const queryClient = new QueryClient();
 
@@ -37,7 +38,7 @@ function App() {
                 <Route path='bookings' element={<Bookings />} />
                 <Route path="bookings/:bookingId" element={<BookingDetails />} />
                 <Route path="paymentMethods" element={<h1>Payment methods</h1>} />
-                <Route path="passengers" element={<h1>Passengers</h1>} />
+                <Route path="passengers" element={<PassengerList/>} />
                 <Route path="notifications" element={<h1>Notifications</h1>} />
                 <Route path="help" element={<h1>Help</h1>} />
               </Route>

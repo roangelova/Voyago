@@ -6,14 +6,7 @@ export const Booking = {
     cancelBooking: (id) => api.put(`api/bookings/${id}`)
 }
 
-//TODO -> FILE STRUCTURE: apis? hooks? how do we handle this 
-
-export function useGetUserBookings(userId){
-    const {isPending, error, data: bookings} = useQuery({
-        queryKey: ['bookings'],
-        queryFn: () => api.get(`api/bookings/${userId}`)
-    })
-
-    return {isPending, bookings, error};
+export async function GetUserBookings({ queryKey }) {
+  const [, userId] = queryKey;
+  return api.get(`api/bookings/${userId}`);
 }
-

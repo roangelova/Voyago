@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
 import Cookies from "js-cookie";
 
-function Login({ setLoginPopupVisibility }) {
+function Login() {
   const Login = (formData) => {
     let email = formData.get("email");
     let password = formData.get("password");
@@ -16,7 +16,8 @@ function Login({ setLoginPopupVisibility }) {
 
     Account.login({ email, password })
       .then((res) => {
-        sessionStorage.setItem("userId", res.userId);
+       sessionStorage.setItem("userId", res.userId);
+       window.dispatchEvent(new Event("userIdSet"));
 
         Cookies.set(
           "accessToken",

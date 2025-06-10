@@ -1,8 +1,9 @@
 import Cookies from "js-cookie";
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { AccountProvider } from "../features/account/AccountContext";
 
-function ProtectedRoute() {
+function ProtectedRoute({children}) {
     const navigate = useNavigate();
     let isLoggedIn = !!Cookies.get('accessToken');
 
@@ -13,9 +14,9 @@ function ProtectedRoute() {
     }, [isLoggedIn, navigate])
 
     return (
-        <>
+        <AccountProvider>
            <Outlet/>
-        </>
+        </AccountProvider>
     );
 }
 

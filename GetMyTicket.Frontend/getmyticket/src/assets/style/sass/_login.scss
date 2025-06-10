@@ -62,7 +62,7 @@
 
     &:hover,
     &:active {
-      background-color: $color-primary-light;
+     transform: translateY(3px);
     }
   }
 }

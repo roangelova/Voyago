@@ -1,8 +1,6 @@
-import { useEffect } from "react";
-
 import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
-import Cookies from "js-cookie";
+import { setAccessAndRefreshTokenInCookies } from "../../helpers";
 
 function Login() {
   const Login = (formData) => {
@@ -19,28 +17,7 @@ function Login() {
        sessionStorage.setItem("userId", res.userId);
        window.dispatchEvent(new Event("userIdSet"));
 
-        Cookies.set(
-          "accessToken",
-          JSON.stringify({
-            accessToken: res.accessToken,
-            tokenType: res.tokenType,
-          }),
-          {
-            expires: new Date(res.accessTokenExpires),
-            secure: true,
-            sameSite: false,
-          }
-        );
-
-        Cookies.set(
-          "refreshToken",
-          JSON.stringify({ refreshToken: res.refreshToken }),
-          {
-            expires: new Date(res.refreshTokenExpires),
-            secure: true,
-            sameSite: false,
-          }
-        );
+        setAccessAndRefreshTokenInCookies(res);
 
         toast.success("Logged in! Taking you to the homepage in 3, 2, 1..");
         setTimeout(() => {

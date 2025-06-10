@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Trips, useGetTrips } from "../../services/tripService";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
 import { useQueryClient } from "@tanstack/react-query";
 
-const SearchBar = ({ LoginPopupVisibility }) => {
+const SearchBar = () => {
   const { cities, error, isPending } = useGetCities();
   const { mutate: getTrips } = useGetTrips();
 
@@ -19,11 +19,12 @@ const SearchBar = ({ LoginPopupVisibility }) => {
   const [startDate, setStartDate] = useState("2025-05-10");
   const [endDate, setEndDate] = useState("2025-05-18");
 
-  let params = useParams();
-  let searchType = params.searchType;
+ let location = useLocation();
+ let path = location.pathname; 
+ let searchType = location.pathname.slice(1); 
 
   searchType === "flights"
-    ? (searchType = "Airplane")
+    ? (searchType = "Flight")
     : searchType === "trains"
     ? (searchType = "Train")
     : searchType == "buses"
@@ -51,7 +52,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
       {
         //TODO: ADD VARIABLES
         onSuccess: (trips) => {
-          queryClient.setQueryData(["trips"], trips);
+          queryClient.setQueryData(["trips"], trips );
           navigate("/search-results", { state: trips });
         },
       },
@@ -74,9 +75,7 @@ const SearchBar = ({ LoginPopupVisibility }) => {
 
   return (
     <div
-      className={`searchBar__container ${
-        LoginPopupVisibility ? "blurred" : ""
-      }`}
+      className='searchBar__container'
     >
       <div className="searchBar__container--element">
        
@@ -99,24 +98,13 @@ const SearchBar = ({ LoginPopupVisibility }) => {
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
         >
-            <optgroup label="Germany">
-                
           
+        
           {availableCitiesForDestination?.map((city) => (
             <option key={city.cityId} value={city.cityId}>
               {city.cityName}
             </option>
           ))} 
-           </optgroup>
-            <optgroup label="Bulgaria">
-                
-          
-          {availableCitiesForDestination?.map((city) => (
-            <option key={city.cityId} value={city.cityId}>
-              {city.cityName}
-            </option>
-          ))} 
-           </optgroup>
         </select>
       </div>
 

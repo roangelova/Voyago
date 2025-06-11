@@ -50,6 +50,7 @@
   display: flex;
   margin-top: 5rem;
   align-items: center;
+  justify-content: center;
 
   &__left {
     width: 80rem;
@@ -80,6 +81,12 @@
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     background-image: linear-gradient(rgba(#333, 0.2));
 
+    &--list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
     & span {
       font-size: 1.8rem;
       display: inline-block;
@@ -93,13 +100,18 @@
   }
 
   &__tripData {
-    margin-bottom: 2rem;
-    text-align: center;
+    margin-bottom: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:1rem;
 
     &-city {
       font-size: 6rem !important;
       text-align: center;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
 
     & p {
@@ -110,9 +122,9 @@
 
   &__right {
     width: 35rem;
-    height: 70rem;
-    background-color: rgba($color-grey-light-1, 0.5);
-    box-shadow: 2px 2px 10px rgba(8, 4, 4, 0.2);
+    height: 60rem;
+     background-image: rgba($color-grey-light-1, 0.5);
+    box-shadow: 3px 3px 10px rgba(8, 4, 4, 0.4);
     border-radius: 10px;
     flex-grow: 1;
     padding: 4rem 2rem;
@@ -172,7 +184,7 @@
 
     & a,
     & button {
-      padding: 1.5rem;
+      padding: 1.5rem 0;
       font-size: 1.6rem;
 
       transition: all 0.4s;
@@ -189,11 +201,29 @@
     }
   }
 
+  &__data--saved {
+    color: #17641e;
+  }
+
+  &__addBaggageBtn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem;
+    border-bottom: 0.5px solid #333;
+
+    transition: all 0.4s;
+
+    &:hover,
+    a:active {
+      transform: translateY(1px);
+    }
+  }
+
   &--active {
     background-color: #17641e;
   }
 
-   &--canceled {
+  &--canceled {
     background-color: #b8372d;
   }
 }

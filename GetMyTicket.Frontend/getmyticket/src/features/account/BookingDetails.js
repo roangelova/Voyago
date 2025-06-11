@@ -53,27 +53,30 @@ function BookingDetails() {
 
         <div className="booking__details">
           <div>
-            <span>Total passenger: {passengers?.length}</span>
-            <div>
-              {passengers?.map((p) => (
-                <p key={p?.name}>
-                  {p.name}, {p.age}
-                </p>
-              ))}
-            </div>
+            <span>
+              {" "}
+              {passengers?.length}{" "}
+              {passengers?.length === 1 ? "Passenger:" : "Passengers:"}
+            </span>
+
+            <ul className="booking__details--list">
+              <li>Ingrid Sofie Hanse, 47</li>
+            </ul>
           </div>
           <div>
-            <span>Baggage options</span>
-            <div>
-              <p>2 x big</p>
-              <p>1 x carry-on</p>
-              <p> - | + </p>
+            <span>Baggage Details:</span>
+            <div className="booking__details--list">
+              <p>2 x Checked Bags &#40;max. 23 kg&#41;</p>
+              <p>1 x Carry-on &#40;max. 9 kg&#41;</p>
             </div>
+            <a className="booking__addBaggageBtn">Modify</a>
           </div>
         </div>
 
         <div className="booking__help">
-          <p>Need help? Call us at 098/000-000-000. We are her for you 24/7!</p>
+          <p>
+            Need help? Call us at 098/123-789-456. We are here for you 24/7!
+          </p>
         </div>
       </div>
 
@@ -95,7 +98,7 @@ function BookingDetails() {
           <span>You paid:</span>
           <div className="booking__data">
             <p>
-              Price per seat: <strong>230 EUR </strong>
+              Price per seat: <strong>210 EUR </strong>
             </p>
             <p>
               Total:{" "}
@@ -103,8 +106,8 @@ function BookingDetails() {
                 {booking?.totalPrice} {booking?.currency}
               </strong>
             </p>
-            <p>
-              Saved: <strong>0 EUR</strong>{" "}
+            <p className="booking__data--saved">
+              Saved: <strong>10 EUR</strong>{" "}
             </p>
           </div>
         </div>

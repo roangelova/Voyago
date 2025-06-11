@@ -34,7 +34,7 @@ function AccountProvider({ children }) {
  const {
     data,
     isLoading,
-    error,
+    error
   } = useQuery({
     queryKey: ["accountData", userId],
     queryFn: GetUserBookings,
@@ -49,7 +49,7 @@ function AccountProvider({ children }) {
         userId,
       bookings: data || [],
         isLoading,
-        error,
+        error
       }}>
       {children}
     </AccountContext.Provider>

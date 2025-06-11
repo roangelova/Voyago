@@ -1,9 +1,9 @@
 import { formatDate } from "../../helpers";
 import { useState, useEffect } from "react";
-import { CancelBooking } from "../../services/bookingService";
 import FilterBy from "../../ui/FilterBy.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAccountContext } from "./AccountContext.js";
+import { useCancelBooking } from "../../services/bookingService.js";
 
 const FILTER_PARAM = "bookingStatus";
 
@@ -15,7 +15,7 @@ const options = [
 
 function Bookings() {
   const navigate = useNavigate();
-
+  const { mutate: cancelBooking } = useCancelBooking();
   const { bookings } = useAccountContext();
 
   const [filteredData, setFilteredData] = useState([]);
@@ -43,21 +43,23 @@ function Bookings() {
   }, [filterValue, setFilterValue, bookings]);
 
   function handleCancelBooking(id) {
-    let result = CancelBooking(id);
-
-    if (result) {
-      const updatedBookings = bookings.map((booking) =>
-        booking.bookingId === id ? { ...booking, status: "Canceled" } : booking
-      );
-
-      const filterByParam = searchParams.get(FILTER_PARAM);
-      let updatedFilteredData = [...updatedBookings];
-      updatedFilteredData = updatedFilteredData.filter(
-        (b) => b.status === filterByParam
-      );
-
-      setFilteredData(updatedFilteredData);
+    const confirmed = window.confirm(
+      "Do you really want to cancel this booking?"
+    );
+    if (confirmed) {
+      cancelBooking(id);
     }
+   //const updatedBookings = bookings.map((booking) =>
+   //  booking.bookingId === id ? { ...booking, status: "Canceled" } : booking
+   //);
+
+   //const filterByParam = searchParams.get(FILTER_PARAM);
+   //let updatedFilteredData = [...updatedBookings];
+   //updatedFilteredData = updatedFilteredData.filter(
+   //  (b) => b.status === filterByParam
+   //);
+
+   //setFilteredData(updatedFilteredData);
   }
 
   //TODO -> ADD BOOKING REFERENCES AS WELL TO THE DB AND USE IT HERE
@@ -113,7 +115,7 @@ function Bookings() {
                   ) : null}
                   <div
                     onClick={() =>
-                      navigate(`/account/bookings/${b.bookingId}`, { state: b })
+                      navigate(`/account/bookings/${b.bookingId}`)
                     }
                   >
                     Manage booking

@@ -42,7 +42,7 @@ export function setAccessAndRefreshTokenInCookies(response) {
     {
       expires: new Date(response.accessTokenExpires),
       secure: true,
-      sameSite: false,
+      sameSite: true,
     }
   );
 
@@ -52,7 +52,7 @@ export function setAccessAndRefreshTokenInCookies(response) {
     {
       expires: new Date(response.refreshTokenExpires),
       secure: true,
-      sameSite: false,
+      sameSite: true,
     }
   );
 }

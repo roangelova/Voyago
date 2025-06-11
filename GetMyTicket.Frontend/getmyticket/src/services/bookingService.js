@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../api/api.js";
 import { toast } from "react-toastify";
 
@@ -11,19 +12,17 @@ export async function GetUserBookings({ queryKey }) {
   return api.get(`api/bookings/${userId}`);
 }
 
-export function CancelBooking(id) {
-  const confirm = window.confirm("Do you really want to cancel this booking?");
+export function useCancelBooking() {
+   const queryClient = useQueryClient();
 
-  if (confirm) {
-    Booking.cancelBooking(id)
-      .then(() => {
-        toast.success("Booking was canceled successfully!");
-        return true;
-      })
-      .catch((err) => {
-        toast.error(err);
-      });
-  } else {
-    return false;
-  }
+  return useMutation({
+    mutationFn: (id) => Booking.cancelBooking(id),
+    onSuccess: () => {
+      toast.success("Booking was canceled successfully!");
+      queryClient.invalidateQueries(["accountData"]);
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to cancel booking");
+    },
+  });
 }

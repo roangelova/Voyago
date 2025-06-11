@@ -1,41 +1,62 @@
-import { useLocation } from "react-router-dom";
 import { getFormattedDate, getFormattedTime } from "../../helpers";
 import { useEffect, useState } from "react";
 import { Passenger } from "../../services/passengerService";
 import { BoardingPassPDF } from "../common/BoardingPassPDF";
 import { usePDF } from "@react-pdf/renderer";
-import { CancelBooking } from "../../services/bookingService";
+import { useCancelBooking } from "../../services/bookingService";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAccountContext } from "./AccountContext";
 
 function BookingDetails() {
-  const { state: booking } = useLocation();
+  const { mutate: cancelBooking } = useCancelBooking();
+  const { bookingId } = useParams();
+  const { bookings } = useAccountContext();
+  const navigate = useNavigate();
   const [passengers, setPassengers] = useState([]);
   const [instance, updateInstance] = usePDF({ document: BoardingPassPDF });
 
+  const booking = bookings.find((b) => b.bookingId === bookingId);
+
+  if (booking === undefined) {
+    navigate("/404");
+  }
+
   useEffect(() => {
-    Passenger.getNameAndAge(booking.bookingId).then((data) =>
-      setPassengers(data)
-    );
+    if (booking !== undefined) {
+      Passenger.getNameAndAge(booking?.bookingId).then((data) =>
+        setPassengers(data)
+      );
+    }
   }, [booking]);
 
-  console.log(booking);
+  function handleCancelBooking(id) {
+    const confirmed = window.confirm(
+      "Do you really want to cancel this booking?"
+    );
+    if (confirmed) {
+      cancelBooking(id);
+    }
+  }
 
   return (
     <figure className="booking">
       <div className="booking__left">
         <div className="booking__tripData">
           <p className="booking__tripData-city">
-            {booking.fromCityName} - {booking.toCityName}
+            {booking?.fromCityName} - {booking?.toCityName}
           </p>
-          <p>{getFormattedDate(booking.departureTime)}</p>
-          <p>Departure time: {getFormattedTime(booking.departureTime)}</p>
+          <p>{getFormattedDate(booking?.departureTime || null)}</p>
+          <p>
+            Departure time: {getFormattedTime(booking?.departureTime || null)}
+          </p>
         </div>
 
         <div className="booking__details">
           <div>
-            <span>Total passenger: {passengers.length}</span>
+            <span>Total passenger: {passengers?.length}</span>
             <div>
               {passengers?.map((p) => (
-                <p key={p.name}>
+                <p key={p?.name}>
                   {p.name}, {p.age}
                 </p>
               ))}
@@ -61,12 +82,12 @@ function BookingDetails() {
           <p>Booking Ref: XYZ123 </p>
           <span
             className={
-              booking.status === "Confirmed"
+              booking?.status === "Confirmed"
                 ? "booking--active"
                 : "booking--canceled"
             }
           >
-            {booking.status}
+            {booking?.status}
           </span>
         </div>
 
@@ -79,7 +100,7 @@ function BookingDetails() {
             <p>
               Total:{" "}
               <strong>
-                {booking.totalPrice} {booking.currency}
+                {booking?.totalPrice} {booking?.currency}
               </strong>
             </p>
             <p>
@@ -88,13 +109,13 @@ function BookingDetails() {
           </div>
         </div>
 
-        {booking.status === "Confirmed" && (
+        {booking?.status === "Confirmed" && (
           <div className="booking__actions">
-            <a className="btn" href={instance.url} download="BoardingPass.pdf">
+            <a className="btn" href={instance?.url} download="BoardingPass.pdf">
               Download boarding pass
             </a>
             <button
-              onClick={() => CancelBooking(booking.bookingId)}
+              onClick={() => handleCancelBooking(booking?.bookingId)}
               className="btn"
             >
               Cancel booking

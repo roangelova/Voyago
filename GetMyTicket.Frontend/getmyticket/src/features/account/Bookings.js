@@ -98,8 +98,8 @@ function Bookings() {
             {filteredData?.map((b) => (
               <tr key={b.bookingId}>
                 <td>XYZ123</td>
-                <td>{b.toCityName}</td>
                 <td>{b.fromCityName}</td>
+                <td>{b.toCityName}</td>
                 <td>{formatDate(b.departureTime)}</td>
                 <td>
                   {b.totalPrice} {b.currency}

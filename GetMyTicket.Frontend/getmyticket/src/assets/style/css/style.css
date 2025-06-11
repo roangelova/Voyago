@@ -1122,30 +1122,45 @@ input[type=checkbox] {
 .booking__left {
   width: 80rem;
   height: 50rem;
+  background-image: linear-gradient(to bottom, rgba(137, 143, 145, 0.8)), url(../../images/bookingBg.jpg);
+  background-size: cover;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   padding: 3rem 7rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
 }
 .booking__help {
-  margin: auto 0;
-  display: block;
-}
-.booking__box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.booking__box span {
   font-size: 1.8rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin-top: auto;
+  text-align: center;
+}
+.booking__details {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(rgba(51, 51, 51, 0.2));
+}
+.booking__details span {
+  font-size: 1.8rem;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+.booking__details div {
+  font-size: 1.6rem;
+  text-align: center;
+}
+.booking__tripData {
+  margin-bottom: 2rem;
+  text-align: center;
 }
 .booking__tripData-city {
-  font-size: 3rem !important;
-  margin-bottom: 0.5rem;
+  font-size: 6rem !important;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 .booking__tripData p {
   font-size: 1.8rem;
@@ -1154,15 +1169,14 @@ input[type=checkbox] {
 .booking__right {
   width: 35rem;
   height: 70rem;
-  background-color: #f9f7f6;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(249, 247, 246, 0.5);
+  box-shadow: 2px 2px 10px rgba(8, 4, 4, 0.2);
   border-radius: 10px;
   flex-grow: 1;
-  margin-left: -5rem;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 5rem;
 }
 .booking__info {
   font-size: 2rem;
@@ -1175,7 +1189,6 @@ input[type=checkbox] {
 .booking__info span {
   display: inline-block;
   padding: 1rem 3rem;
-  background-color: #297e30;
   border-radius: 10px;
   font-size: 1.8rem;
   color: #fff;
@@ -1183,12 +1196,26 @@ input[type=checkbox] {
 .booking__priceBreakdown {
   margin: auto 0;
   font-size: 1.8rem;
+  text-align: center;
+}
+.booking__priceBreakdown span {
+  font-size: 2.4rem;
+  padding: 0.5rem;
+  display: inline-block;
+  margin-bottom: 3rem;
+  border-bottom: 0.5px solid #898f91;
+}
+.booking__priceBreakdown div {
+  font-size: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 .booking__actions {
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   text-align: center;
 }
 .booking__actions a, .booking__actions button {
@@ -1201,6 +1228,12 @@ input[type=checkbox] {
 }
 .booking__actions button:hover, .booking__actions button:active {
   transform: translateY(3px);
+}
+.booking--active {
+  background-color: #17641e;
+}
+.booking--canceled {
+  background-color: #b8372d;
 }
 
 .margin-bottom--xs {

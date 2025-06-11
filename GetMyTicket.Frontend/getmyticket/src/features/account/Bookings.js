@@ -1,9 +1,8 @@
 import { formatDate } from "../../helpers";
 import { useState, useEffect } from "react";
-import { Booking } from "../../services/bookingService";
+import { CancelBooking } from "../../services/bookingService";
 import FilterBy from "../../ui/FilterBy.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useAccountContext } from "./AccountContext.js";
 
 const FILTER_PARAM = "bookingStatus";
@@ -29,7 +28,7 @@ function Bookings() {
     //set default search params
     searchParams.set("bookingStatus", "All");
     setSearchParams(searchParams);
-    setFilteredData(...bookings)
+    setFilteredData(...bookings);
   }, []);
 
   useEffect(() => {
@@ -44,38 +43,24 @@ function Bookings() {
   }, [filterValue, setFilterValue, bookings]);
 
   function handleCancelBooking(id) {
-    const confirm = window.confirm(
-      "Do you really want to cancel this booking?"
-    );
+    let result = CancelBooking(id);
 
-    if (confirm) {
-      Booking.cancelBooking(id)
-        .then(() => {
-          toast.success("Booking was canceled successfully!");
+    if (result) {
+      const updatedBookings = bookings.map((booking) =>
+        booking.bookingId === id ? { ...booking, status: "Canceled" } : booking
+      );
 
-          const updatedBookings = bookings.map((booking) =>
-            booking.bookingId === id
-              ? { ...booking, status: "Canceled" }
-              : booking
-          );
+      const filterByParam = searchParams.get(FILTER_PARAM);
+      let updatedFilteredData = [...updatedBookings];
+      updatedFilteredData = updatedFilteredData.filter(
+        (b) => b.status === filterByParam
+      );
 
-          const filterByParam = searchParams.get(FILTER_PARAM);
-          let updatedFilteredData = [...updatedBookings];
-          updatedFilteredData = updatedFilteredData.filter(
-            (b) => b.status === filterByParam
-          );
-
-          setFilteredData(updatedFilteredData);
-        })
-        .catch((err) => {
-          toast.error(err);
-        });
-    } else {
-      return;
+      setFilteredData(updatedFilteredData);
     }
   }
 
-//TODO -> ADD BOOKING REFERENCES AS WELL TO THE DB AND USE IT HERE
+  //TODO -> ADD BOOKING REFERENCES AS WELL TO THE DB AND USE IT HERE
 
   return (
     <>

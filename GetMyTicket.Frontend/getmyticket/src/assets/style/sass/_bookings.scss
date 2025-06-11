@@ -54,9 +54,12 @@
   &__left {
     width: 80rem;
     height: 50rem;
-   // background-color: $color-grey-light-1;
+    background-image: linear-gradient(to bottom, rgba($color-grey-dark-1, 0.8)),
+      url(../../images/bookingBg.jpg);
+    background-size: cover;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     padding: 3rem 7rem;
 
     display: flex;
@@ -65,99 +68,132 @@
   }
 
   &__help {
-    margin: auto 0;
-    display: block;
+    font-size: 1.8rem;
+    margin-top: auto;
+    text-align: center;
   }
 
-  &__box{
+  &__details {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    justify-content: space-around;
+    padding: 2rem;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(rgba(#333, 0.2));
 
-    & span{
-        font-size: 1.8rem;
-        font-weight: 600;
-        letter-spacing: +0.5px;
+    & span {
+      font-size: 1.8rem;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    & div {
+      font-size: 1.6rem;
+      text-align: center;
     }
   }
 
-  &__tripData{
+  &__tripData {
+    margin-bottom: 2rem;
+    text-align: center;
 
-    &-city{
-        font-size:3rem !important;
-        margin-bottom: 0.5rem;
+    &-city {
+      font-size: 6rem !important;
+      text-align: center;
+      margin-bottom: 1rem;
     }
 
-    & p{
-        font-size: 1.8rem;
-        letter-spacing: 1.7;
+    & p {
+      font-size: 1.8rem;
+      letter-spacing: 1.7;
     }
   }
 
   &__right {
     width: 35rem;
     height: 70rem;
-    background-color: $color-grey-light-1;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: rgba($color-grey-light-1, 0.5);
+    box-shadow: 2px 2px 10px rgba(8, 4, 4, 0.2);
     border-radius: 10px;
     flex-grow: 1;
-    margin-left: -5rem;
-    padding: 3rem 2rem;
-
+    padding: 4rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 5rem;
   }
 
-&__info{
+  &__info {
     font-size: 2rem;
     text-align: center;
-    
-    & p{
-        font-size: 2.4rem;
-        margin-bottom:2rem;
+
+    & p {
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
     }
 
-    & span{
-        display: inline-block;
-        padding: 1rem 3rem;
-        background-color: #297e30;
-        border-radius: 10px;
-        font-size: 1.8rem;
-        color: #fff;
+    & span {
+      display: inline-block;
+      padding: 1rem 3rem;
+      border-radius: 10px;
+      font-size: 1.8rem;
+      color: #fff;
     }
-}
-
-  &__priceBreakdown{
-   margin: auto 0;
- font-size: 1.8rem;
   }
 
-  &__actions{
+  &__priceBreakdown {
+    margin: auto 0;
+    font-size: 1.8rem;
+
+    text-align: center;
+
+    & span {
+      font-size: 2.4rem;
+      padding: 0.5rem;
+      display: inline-block;
+      margin-bottom: 3rem;
+      border-bottom: 0.5px solid $color-grey-dark-1;
+    }
+
+    & div {
+      font-size: 1.8rem;
+
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  &__actions {
     margin-top: auto;
 
     display: flex;
     flex-direction: column;
-    gap:1rem;
+    gap: 1.5rem;
     text-align: center;
 
-    
     & a,
-    & button{
-        padding: 1.5rem;
-        font-size: 1.6rem;
-       
-        transition: all .4s;
+    & button {
+      padding: 1.5rem;
+      font-size: 1.6rem;
+
+      transition: all 0.4s;
     }
 
     & a:hover,
-    & a:active{
-        transform: translateY(-3px);
+    & a:active {
+      transform: translateY(-3px);
     }
 
     & button:hover,
     & button:active {
-        transform: translateY(3px);
+      transform: translateY(3px);
     }
+  }
+
+  &--active {
+    background-color: #17641e;
+  }
+
+   &--canceled {
+    background-color: #b8372d;
   }
 }

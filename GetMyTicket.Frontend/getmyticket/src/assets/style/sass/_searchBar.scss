@@ -9,11 +9,11 @@
     background-color: $color-primary;
     box-shadow: 0.5px 0.5px 0.5px 0.5px $color-primary-dark;
 
-    transition: all .5s;
+    transition: all 0.5s;
 
     &:hover,
     &:active {
-        background-color: $color-primary-light;
+      background-color: $color-primary-light;
     }
   }
 
@@ -23,10 +23,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 90rem;
+    width: 110rem;
     max-height: 10rem;
     border-radius: 50px;
-    background-color: rgba(17, 17, 17, 0.062);
+    background-color: rgba(17, 17, 17, 0.1);
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
 
     display: flex;
@@ -38,7 +38,8 @@
       margin: 1rem;
 
       & select,
-      input {
+      input,
+      span {
         padding: 1rem;
         border-radius: 10px;
         background-color: transparent;
@@ -49,5 +50,58 @@
         border-right: 0.05rem solid rgba(0, 0, 0, 0.205);
       }
     }
+  }
+
+  &__passengers {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    & img {
+      height: 1rem;
+      width: auto;
+      margin-right: 1rem;
+    }
+
+    & span {
+      color: #111;
+      font-size: 1.7rem;
+    }
+  }
+}
+
+.passengerDropdown {
+  position: absolute;
+  top: 120%;
+  left: 100;
+  background-color: rgba(17, 17, 17, 0.1);
+  color:#111;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.7);
+
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 5px;
+  border-top-left-radius: 0;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 2rem;
+
+  & input {
+    width: 8rem;
+    background-color: transparent;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+  }
+
+  & label {
+
   }
 }

@@ -6,6 +6,9 @@ import { Trips, useGetTrips } from "../../services/tripService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
 import { useQueryClient } from "@tanstack/react-query";
+import SelectPassengerCountDropdown from "../../ui/SelectPassengerCountDropdown";
+
+import arrowDown from "../../assets/icons/arrowDown.png";
 
 const SearchBar = () => {
   const { cities, error, isPending } = useGetCities();
@@ -14,14 +17,21 @@ const SearchBar = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
+  const [showPassengersDropdown, setShowPassengerDropDown] = useState(false);
+  const [passengers, setPassengers] = useState({
+    adults: 1,
+    children: 0,
+    infants: 0,
+  });
+
   const [start, setStart] = useState("");
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("2025-05-10");
   const [endDate, setEndDate] = useState("2025-05-18");
 
- let location = useLocation();
- let path = location.pathname; 
- let searchType = location.pathname.slice(1); 
+  let location = useLocation();
+  let path = location.pathname;
+  let searchType = location.pathname.slice(1);
 
   searchType === "flights"
     ? (searchType = "Flight")
@@ -52,7 +62,7 @@ const SearchBar = () => {
       {
         //TODO: ADD VARIABLES
         onSuccess: (trips) => {
-          queryClient.setQueryData(["trips"], trips );
+          queryClient.setQueryData(["trips"], trips);
           navigate("/search-results", { state: trips });
         },
       },
@@ -74,22 +84,19 @@ const SearchBar = () => {
   if (isPending) return <Spinner />;
 
   return (
-    <div
-      className='searchBar__container'
-    >
+    <div className="searchBar__container">
       <div className="searchBar__container--element">
-       
-          <select
-            name="start"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-          >
-            {availableCitiesForStart?.map((city) => (
-              <option key={city.cityId} value={city.cityId}>
-                {city.cityName}
-              </option>
-            ))}
-          </select>
+        <select
+          name="start"
+          value={start}
+          onChange={(e) => setStart(e.target.value)}
+        >
+          {availableCitiesForStart?.map((city) => (
+            <option key={city.cityId} value={city.cityId}>
+              {city.cityName}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="searchBar__container--element">
@@ -98,15 +105,29 @@ const SearchBar = () => {
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
         >
-          
-        
           {availableCitiesForDestination?.map((city) => (
             <option key={city.cityId} value={city.cityId}>
               {city.cityName}
             </option>
-          ))} 
+          ))}
         </select>
       </div>
+
+      <div onClick={() => setShowPassengerDropDown((prev) => !prev)} className="searchBar__container--element searchBar__passengers">
+        <span>Passengers</span>
+        <img
+          src={arrowDown}
+          alt="Passengers icon"
+          
+        />
+      </div>
+
+      {showPassengersDropdown && (
+        <SelectPassengerCountDropdown
+          passengers={passengers}
+          setPassengers={setPassengers}
+        />
+      )}
 
       <div className="searchBar__container--element">
         <input

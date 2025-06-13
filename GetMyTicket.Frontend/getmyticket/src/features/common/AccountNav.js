@@ -32,7 +32,7 @@ function AccountNav() {
         );
       })
       .finally(() => {
-        setTimeout(UserAfterLogoutCleanUp, 3000);
+        setTimeout(UserAfterLogoutCleanUp, 1000);
       });
   }
 

@@ -16,8 +16,6 @@ namespace GetMyTicket.API.Controllers
 
     public class AuthorizationController : ControllerBase
     {
-        //TODO: REFACTOR!
-
         private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;
@@ -49,18 +47,24 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpPost("refreshToken")]
-        public async Task<IActionResult> RefreshToken(string refreshToken, Guid userId)
+        public async Task<IActionResult> RefreshToken(RefreshTokenDTO refreshTokenDTO)
         {
-            var tokenExists = await RedisDb.KeyExistsAsync(refreshToken);
+            var userData = await RedisDb.StringGetAsync(refreshTokenDTO.UserId.ToString());
 
-            if (!tokenExists)
+            //User is not logged in
+            if (userData.IsNull)
             {
                 return BadRequest(ResponseConstants.SomethingWentWrong);
             }
 
-            var tokenModel = GenerateTokens(userId);
+            var data = JsonSerializer.Deserialize<AuthorizedUserCacheModel>(userData!);
 
-            await RedisDb.KeyRenameAsync(refreshToken, tokenModel.RefreshToken);
+            if (data?.RefreshToken != refreshTokenDTO.RefreshToken)
+            {
+                return BadRequest(ResponseConstants.SomethingWentWrong);
+            }
+
+            var tokenModel = await GenerateTokensAndSetInCache(refreshTokenDTO.UserId);
 
             return Ok(tokenModel);
         }
@@ -83,17 +87,14 @@ namespace GetMyTicket.API.Controllers
                 return BadRequest(ResponseConstants.InvalidCredentials);
             }
 
-            var tokenModel = GenerateTokens(user.Id);
+            bool userIsLoggedIn = await RedisDb.KeyExistsAsync(user.Id.ToString());
 
-            var authorizedUser = new AuthorizedUserCacheModel()
+            if (userIsLoggedIn)
             {
-                AccessToken = tokenModel.AccessToken,
-                RefreshToken = tokenModel.RefreshToken
-            };
+                return BadRequest(ResponseConstants.SomethingWentWrong);
+            }
 
-            //Save Tokens by userId as key in Redis Cache
-            //TODO -> USE LOCAL CACHE IN DEVELOPMENT?
-            await RedisDb.SetAddAsync(user.Id.ToString(), JsonSerializer.Serialize(authorizedUser));
+            var tokenModel = await GenerateTokensAndSetInCache(user.Id);
 
             return Ok(tokenModel);
         }
@@ -113,14 +114,30 @@ namespace GetMyTicket.API.Controllers
         }
 
 
-        private JwtTokenModel GenerateTokens(Guid userId)
+        /// <summary>
+        /// This method generates new access and refresh tokens. Then, using the userId as a key, the data is cached in a RedisD
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private async Task<JwtTokenModel> GenerateTokensAndSetInCache(Guid userId)
         {
             string accessToken = authorizationService.GenerateAccessToken(userId);
             string refreshToken = authorizationService.GenerateRefreshToken();
 
             var tokenModel = new JwtTokenModel(accessToken, refreshToken, userId);
+
+            var authorizedUser = new AuthorizedUserCacheModel()
+            {
+                AccessToken = tokenModel.AccessToken,
+                RefreshToken = tokenModel.RefreshToken
+            };
+
+            await RedisDb.StringSetAsync(
+                userId.ToString(),
+                JsonSerializer.Serialize(authorizedUser),
+                TimeSpan.FromMinutes(JwtTokenModel._AccessTokenTokenExpiration));
+
             return tokenModel;
         }
-
     }
 }

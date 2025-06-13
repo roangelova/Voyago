@@ -54,7 +54,6 @@ function BookingDetails() {
         <div className="booking__details">
           <div>
             <span>
-              {" "}
               {passengers?.length}{" "}
               {passengers?.length === 1 ? "Passenger:" : "Passengers:"}
             </span>

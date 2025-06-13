@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<None Include="DTOs\User\RefreshTokenDTO.cs" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
 	</ItemGroup>
 

@@ -4,7 +4,7 @@ namespace GetMyTicket.Common.JwtToken
 {
     public class JwtTokenModel
     {
-        public const int _AccessTokenTokenExpiration = 30;
+        public const int _AccessTokenTokenExpiration = 15;
         public const int _RefreshTokenTokenExpiration = 120;
         public const string _TokenType = "Bearer";
 
@@ -26,7 +26,7 @@ namespace GetMyTicket.Common.JwtToken
 
         public string RefreshToken { get; set; }
 
-        public DateTime AccessTokenExpires { get; set; } 
-        public DateTime RefresTokenExpires { get; set; } 
+        public DateTime AccessTokenExpires { get; set; }
+        public DateTime RefresTokenExpires { get; set; }
     }
 }

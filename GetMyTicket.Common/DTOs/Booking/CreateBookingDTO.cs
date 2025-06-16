@@ -1,10 +1,9 @@
-﻿namespace GetMyTicket.Common.DTOs
+﻿namespace GetMyTicket.Common.DTOs.Booking
 {
     public class CreateBookingDTO
     {
         public Guid TripId { get; set; }
-        public Guid PassengerId { get; set; }
+        public List<CreateBooking_PassengerIdAndTypeDTO> Passengers { get; set; }
         public Guid UserId { get; set; }
     }
-    
 }

@@ -140,7 +140,8 @@ namespace GetMyTicket.Persistance.Context
                 EndTime = new DateTime(2025, 5, 18, 20, 20, 00),
                 StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
                 EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
-                Price = 220,
+                AdultPrice = 220,
+                ChildrenPrice= 100,
                 Capacity = airplane1.Capacity
             };
 

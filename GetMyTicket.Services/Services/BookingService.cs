@@ -1,5 +1,4 @@
 ﻿using GetMyTicket.Common.Constants;
-using GetMyTicket.Common.DTOs;
 using GetMyTicket.Common.DTOs.Booking;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Enum;
@@ -39,8 +38,6 @@ namespace GetMyTicket.Service.Services
 
         public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)
         {
-            //TODO -> EXTAND TO WORK WITH MULTIPLE PASSENGERS PER BOOKING
-
             var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
 
             if (trip is null)
@@ -48,51 +45,65 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), bookTripDTO.TripId));
             }
 
+            //TODO -> HOW DO WE WANT TO HANDLE CAPACITY AVAILABILITY CHECKS? BOTH CLIENT- AND SERVER-SIDE
             if (trip.Capacity == 0)
             {
                 throw new ApplicationError(ResponseConstants.SoldOut);
             }
 
-            //TODO-> ONCE 1+ PASSENGERS ARE SUPPORTED, CALCULATE TOTAL PRICE
-            //TODO -> ONCE PASSENGERS IS IMPLEMENTED, ADD BAGGAGE OPTION; 
             var booking = new Booking()
             {
                 BookingId = Guid.CreateVersion7(),
-                TotalPrice = trip.Price,
-                BookingStatus = Common.Enum.BookingStatus.Confirmed,
+                TotalPrice = 0,
+                BookingStatus = BookingStatus.Confirmed,
                 TripId = bookTripDTO.TripId
             };
 
-            trip.Capacity--;
-
-            var passengerBookingMap = new PassengerBookingMap
+            foreach (var passenger in bookTripDTO.Passengers)
             {
-                BookingId = booking.BookingId,
-                PassengerId = bookTripDTO.PassengerId,
-            };
+                //NOTE: Infants travel free of charge. They do not occupy a seat. They do however need to be registered a passenger to travel and are
+                //therefore mapped to a booking.
+                switch (passenger.Type)
+                {
+                    case "Adult":
+                        booking.TotalPrice += trip.AdultPrice;
+                        trip.Capacity--;
+                        break;
+                    case "Child":
+                        booking.TotalPrice += trip.ChildrenPrice;
+                        trip.Capacity--;
+                        break;
+                }
+
+                booking.PassengerBookingMap.Add(new PassengerBookingMap
+                {
+                    BookingId = booking.BookingId,
+                    PassengerId = passenger.Id
+                });
+            }
 
             unitOfWork.Trips.Update(trip);
             await unitOfWork.Bookings.AddAsync(booking);
-            await unitOfWork.PassengerBookingMap.AddAsync(passengerBookingMap);
 
             await unitOfWork.SaveChangesAsync();
 
             return booking.BookingId;
         }
 
+        //TODO -> HOW DO WE WANT TO LIST THE PASSENGERS IN THE BOOKINGS?
         public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
         {
             var user = await unitOfWork.Users.GetByIdAsync(userId);
 
             var data = await unitOfWork.PassengerBookingMap
-                .GetAllAsync(x => user.PassengerMapId == x.PassengerId, 
+                .GetAllAsync(x => user.PassengerMapId == x.PassengerId,
                 null,
                 true,
                 cancellationToken,
                 //INCLUDE
                 x => x.Booking,
-                x=> x.Booking.Trip.StartCity,
-                x=> x.Booking.Trip.EndCity);
+                x => x.Booking.Trip.StartCity,
+                x => x.Booking.Trip.EndCity);
 
             return data.Select(b => new ListBookingDTO()
             {
@@ -101,10 +112,11 @@ namespace GetMyTicket.Service.Services
                 FromCityName = b.Booking.Trip.StartCity.CityName,
                 DepartureTime = b.Booking.Trip.StartTime,
                 TotalPrice = b.Booking.TotalPrice,
-                Currency = Enum.GetName(b.Booking.Trip.Currency), 
+                Currency = Enum.GetName(b.Booking.Trip.Currency),
                 Status = Enum.GetName(b.Booking.BookingStatus),
                 TripId = b.Booking.TripId
             });
         }
     }
+
 }

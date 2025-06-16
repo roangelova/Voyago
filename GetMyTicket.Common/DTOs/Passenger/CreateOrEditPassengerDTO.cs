@@ -2,7 +2,7 @@
 {
     public class CreateOrEditPassengerDTO
     {
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         public string FirstName { get; set; }
 

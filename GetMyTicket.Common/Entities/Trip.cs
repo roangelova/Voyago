@@ -38,7 +38,11 @@ namespace GetMyTicket.Common.Entities
 
         public DateTime EndTime { get; set; }
 
-        public double Price { get; set; }
+        public double AdultPrice { get; set; }
+
+        public double ChildrenPrice { get; set; }
+
+        //infants travel free of charge, therefore no seperate prop was created
 
         public Currency Currency { get; set; } 
 

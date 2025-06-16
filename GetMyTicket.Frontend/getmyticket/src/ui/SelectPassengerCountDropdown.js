@@ -10,9 +10,10 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
 
   return (
     <div className="passengerDropdown">
-      <label htmlFor="adults">Adults:</label>
+      <label htmlFor="passengerDropdown__adults">Adults:</label>
       <input
         name="adults"
+        id="passengerDropdown__adults"
         type="number"
         value={passengers.adults}
         onChange={handleChange}
@@ -22,9 +23,10 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
         required
       />
 
-      <label htmlFor="children">Children:</label>
+      <label htmlFor="passengerDropdown__children">Children:</label>
       <input
         name="children"
+        id="passengerDropdown__children"
         type="number"
         value={passengers.children}
         onChange={handleChange}
@@ -32,8 +34,9 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
         placeholder="1"
       />
 
-      <label htmlFor="infants">Infants:</label>
+      <label htmlFor="passengerDropdown__infants">Infants:</label>
       <input
+        id="passengerDropdown__infants"
         name="infants"
         type="number"
         value={passengers.infants}

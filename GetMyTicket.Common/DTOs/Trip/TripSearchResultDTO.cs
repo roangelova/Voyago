@@ -7,7 +7,8 @@ namespace GetMyTicket.Common.DTOs.Trip
         public Guid TripId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public double Price { get; set; }
+        public double AdultPrice { get; set; }
+        public double ChildrenPrice { get; set; }
         public string EndCityName { get; set; }
         public string StartCityName { get; set; }
         public string TransportationProviderName { get; set; }

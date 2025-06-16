@@ -21,10 +21,9 @@ namespace GetMyTicket.Service.Services
 
         /// <summary>
         /// The method creates a passenger entity for the provided User. In order to travel, anyone needs to be a registered passenger. The method 
-        /// creates an Adult, Child or Infant, based on the provided age, and returns the id of the created passenger. Currently only 1 passenger per booking
-        /// is supported. 
+        /// creates an Adult, Child or Infant, based on the provided age, and returns the id of the created passenger.
         /// </summary>
-        /// <param name="bookTripDTO"></param>
+        /// <param name="CreateOrEditPassengerDTO"></param>
         /// <returns></returns>
         public async Task<Guid> CreatePassenger(CreateOrEditPassengerDTO dto)
         {
@@ -46,7 +45,7 @@ namespace GetMyTicket.Service.Services
 
             Passenger passenger;
 
-            if (age > 18)
+            if (age >= 18)
             {
                 passenger = new Adult()
                 {
@@ -54,7 +53,7 @@ namespace GetMyTicket.Service.Services
                     FirstName = dto.FirstName.Trim(),
                     LastName = dto.LastName.Trim(),
                     User = user,
-                    UserId = dto.UserId,
+                    UserId = dto.UserId.Value,
                     Gender = gender,
                     DocumentType = documentType,
                     DocumentId = dto.DocumentId.Trim(),
@@ -65,9 +64,27 @@ namespace GetMyTicket.Service.Services
 
                 user.PassengerMapId = passenger.PassengerId;
             }
+            else if(age >= 2 && age <18 )
+            {
+                passenger = new Child()
+                {
+                    FirstName = dto.FirstName.Trim(),
+                    LastName = dto.LastName.Trim(),
+                    Gender = gender,
+                    DOB = DateOfBirth,
+                    Nationality = dto.Nationality.Trim()
+                };
+            }
             else
             {
-                throw new ApplicationError(ResponseConstants.UserUnderage);
+                passenger = new Child()
+                {
+                    FirstName = dto.FirstName.Trim(),
+                    LastName = dto.LastName.Trim(),
+                    Gender = gender,
+                    DOB = DateOfBirth,
+                    Nationality = dto.Nationality.Trim()
+                };
             }
 
             await unitOfWork.Passengers.AddAsync(passenger);

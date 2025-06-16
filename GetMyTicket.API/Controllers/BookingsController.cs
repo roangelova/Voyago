@@ -1,5 +1,4 @@
-﻿using GetMyTicket.Common.DTOs;
-using GetMyTicket.Common.DTOs.Booking;
+﻿using GetMyTicket.Common.DTOs.Booking;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 

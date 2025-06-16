@@ -1,8 +1,6 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Common.Entities;
-using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
@@ -43,48 +41,30 @@ namespace GetMyTicket.Service.Services
                 ? today.Year - user.DOB.Value.Year - (today < user.DOB.Value.AddYears(today.Year - user.DOB.Value.Year) ? 1 : 0)
                  : null;
 
-            Passenger passenger;
-
-            if (age >= 18)
+            Passenger passenger = new Passenger()
             {
-                passenger = new Adult()
-                {
-                    PassengerId = Guid.CreateVersion7(),
-                    FirstName = dto.FirstName.Trim(),
-                    LastName = dto.LastName.Trim(),
-                    User = user,
-                    UserId = dto.UserId.Value,
-                    Gender = gender,
-                    DocumentType = documentType,
-                    DocumentId = dto.DocumentId.Trim(),
-                    ExpirationDate = DocumentExpirationDate,
-                    DOB = DateOfBirth,
-                    Nationality = dto.Nationality.Trim()
-                };
+                PassengerId = Guid.CreateVersion7(),
+                FirstName = dto.FirstName.Trim(),
+                LastName = dto.LastName.Trim(),
+                Gender = gender,
+                DocumentType = documentType,
+                DocumentId = dto.DocumentId.Trim(),
+                ExpirationDate = DocumentExpirationDate,
+                DOB = DateOfBirth,
+                Nationality = dto.Nationality.Trim()
+            };
 
-                user.PassengerMapId = passenger.PassengerId;
+            if (age < 2)
+            {
+                passenger.PassengerType = PassengerType.Infant;
             }
-            else if(age >= 2 && age <18 )
+            else if (age >= 2 && age < 18)
             {
-                passenger = new Child()
-                {
-                    FirstName = dto.FirstName.Trim(),
-                    LastName = dto.LastName.Trim(),
-                    Gender = gender,
-                    DOB = DateOfBirth,
-                    Nationality = dto.Nationality.Trim()
-                };
+                passenger.PassengerType = PassengerType.Child;
             }
             else
             {
-                passenger = new Child()
-                {
-                    FirstName = dto.FirstName.Trim(),
-                    LastName = dto.LastName.Trim(),
-                    Gender = gender,
-                    DOB = DateOfBirth,
-                    Nationality = dto.Nationality.Trim()
-                };
+                passenger.PassengerType = PassengerType.Adult;
             }
 
             await unitOfWork.Passengers.AddAsync(passenger);
@@ -96,7 +76,7 @@ namespace GetMyTicket.Service.Services
         public async Task<GetPassengerDTO> EditPassenger(Guid passengerId, CreateOrEditPassengerDTO dto)
         {
             //At this stage, every passenger is an adult; This will change as the application grows
-            Adult passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId) as Adult;
+            var passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId);
             if (passenger == null)
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Passenger), passengerId));
 
@@ -152,36 +132,36 @@ namespace GetMyTicket.Service.Services
             return (gender, documentType, DateOfBirth, DocumentExpirationDate);
         }
 
-        public async Task<GetPassengerDTO> GetPassengerAsync(Guid userId)
-        {
-            var user = await unitOfWork.Users.GetByIdAsync(userId);
-
-            if (user is null)
-            {
-                throw new ApplicationError(
-                     string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
-            }
-
-            var passenger = await unitOfWork.Passengers.GetByIdAsync(user.PassengerMapId) as Adult;
-
-            if (passenger == null)
-            {
-                return null;
-            }
-
-            return new GetPassengerDTO()
-            {
-                UserId = userId,
-                PassengerId = passenger.PassengerId,
-                FirstName = passenger.FirstName,
-                LastName = passenger.LastName,
-                Gender = passenger.Gender.ToString(),
-                DocumentType = passenger.DocumentType.ToString(),
-                DocumentId = passenger.DocumentId,
-                Dob = passenger.DOB,
-                Nationality = passenger.Nationality
-            };
-        }
+     // public async Task<GetPassengerDTO> GetPassengerAsync(Guid userId)
+     // {
+     //     var user = await unitOfWork.Users.GetByIdAsync(userId);
+     //
+     //     if (user is null)
+     //     {
+     //         throw new ApplicationError(
+     //              string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
+     //     }
+     //
+     //     var passenger = await unitOfWork.Passengers.GetByIdAsync(user.PassengerMapId);
+     //
+     //     if (passenger == null)
+     //     {
+     //         return null;
+     //     }
+     //
+     //     return new GetPassengerDTO()
+     //     {
+     //         UserId = userId,
+     //         PassengerId = passenger.PassengerId,
+     //         FirstName = passenger.FirstName,
+     //         LastName = passenger.LastName,
+     //         Gender = passenger.Gender.ToString(),
+     //         DocumentType = passenger.DocumentType.ToString(),
+     //         DocumentId = passenger.DocumentId,
+     //         Dob = passenger.DOB,
+     //         Nationality = passenger.Nationality
+     //     };
+     // }
 
         public async Task<List<GetNameAndAgePassengerDataDTO>> GetPassengersForBooking(Guid bookingId, CancellationToken cancellationToken = default)
         {

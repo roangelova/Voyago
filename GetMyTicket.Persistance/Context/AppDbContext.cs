@@ -1,8 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text.Json;
+﻿using System.Text.Json;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Entities.Vehicles;
 using GetMyTicket.Common.Enum;
@@ -37,11 +35,7 @@ namespace GetMyTicket.Persistance.Context
 
         public DbSet<Booking> Bookings { get; set; }
 
-        public DbSet<Adult> Adults { get; set; }
-
-        public DbSet<Child> Children { get; set; }
-
-        public DbSet<Infant> Infants { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
 
         public DbSet<Country> Countries { get; set; }
 
@@ -76,11 +70,32 @@ namespace GetMyTicket.Persistance.Context
                 .Property(u => u.Email)
                 .IsRequired();
 
-            builder.Entity<User>()
-                 .HasOne(u => u.PassengerMap)
-                 .WithOne(navigationExpression: null)
-                 .HasForeignKey<User>(u => u.PassengerMapId)
-                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<UserPassengerMap>()
+                 .HasKey(up => new { up.UserId, up.PassengerId });
+
+            builder.Entity<UserPassengerMap>()
+                .HasOne(up => up.User)
+                .WithMany(u => u.UserPassengerMaps)
+                .HasForeignKey(up => up.UserId);
+
+            builder.Entity<UserPassengerMap>()
+                .HasOne(up => up.Passenger)
+                .WithMany(p => p.UserPassengerMaps)
+                .HasForeignKey(up => up.PassengerId);
+
+            builder.Entity<PassengerBookingMap>()
+                .HasKey(pb => new { pb.PassengerId, pb.BookingId });
+
+            builder.Entity<PassengerBookingMap> ()
+                .HasOne(pb => pb.Passenger)
+                .WithMany( p => p.PassengerBookingMaps)
+                .HasForeignKey (pb => pb.PassengerId);
+
+            builder.Entity<PassengerBookingMap>()
+                .HasOne(pb => pb.Booking)
+                .WithMany(b => b.PassengerBookingMap)
+                .HasForeignKey(pb => pb.BookingId);
+
 
             // ApplyGlobalQueryFilters(builder);
         }
@@ -141,7 +156,7 @@ namespace GetMyTicket.Persistance.Context
                 StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
                 EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                 AdultPrice = 220,
-                ChildrenPrice= 100,
+                ChildrenPrice = 100,
                 Capacity = airplane1.Capacity
             };
 

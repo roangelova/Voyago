@@ -91,32 +91,32 @@ namespace GetMyTicket.Service.Services
         }
 
         //TODO -> HOW DO WE WANT TO LIST THE PASSENGERS IN THE BOOKINGS?
-        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
-        {
-            var user = await unitOfWork.Users.GetByIdAsync(userId);
-
-            var data = await unitOfWork.PassengerBookingMap
-                .GetAllAsync(x => user.PassengerMapId == x.PassengerId,
-                null,
-                true,
-                cancellationToken,
-                //INCLUDE
-                x => x.Booking,
-                x => x.Booking.Trip.StartCity,
-                x => x.Booking.Trip.EndCity);
-
-            return data.Select(b => new ListBookingDTO()
-            {
-                BookingId = b.BookingId,
-                ToCityName = b.Booking.Trip.EndCity.CityName,
-                FromCityName = b.Booking.Trip.StartCity.CityName,
-                DepartureTime = b.Booking.Trip.StartTime,
-                TotalPrice = b.Booking.TotalPrice,
-                Currency = Enum.GetName(b.Booking.Trip.Currency),
-                Status = Enum.GetName(b.Booking.BookingStatus),
-                TripId = b.Booking.TripId
-            });
-        }
+     // public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
+     // {
+     //     var user = await unitOfWork.Users.GetByIdAsync(userId);
+     //
+     //     var data = await unitOfWork.PassengerBookingMap
+     //         .GetAllAsync(x => user.UserPassengerMaps. == x.PassengerId,
+     //         null,
+     //         true,
+     //         cancellationToken,
+     //         //INCLUDE
+     //         x => x.Booking,
+     //         x => x.Booking.Trip.StartCity,
+     //         x => x.Booking.Trip.EndCity);
+     //
+     //     return data.Select(b => new ListBookingDTO()
+     //     {
+     //         BookingId = b.BookingId,
+     //         ToCityName = b.Booking.Trip.EndCity.CityName,
+     //         FromCityName = b.Booking.Trip.StartCity.CityName,
+     //         DepartureTime = b.Booking.Trip.StartTime,
+     //         TotalPrice = b.Booking.TotalPrice,s
+     //         Currency = Enum.GetName(b.Booking.Trip.Currency),
+     //         Status = Enum.GetName(b.Booking.BookingStatus),
+     //         TripId = b.Booking.TripId
+     //     });
+     // }
     }
 
 }

@@ -17,12 +17,12 @@ namespace GetMyTicket.API.Controllers
         }
 
 
-        [HttpGet("by-user/{userId}")]
-        public async Task<GetPassengerDTO> GetPassenger(Guid userId)
-        {
-            var passenger =  await passengerService.GetPassengerAsync(userId);
-            return passenger;
-        }
+       // [HttpGet("by-user/{userId}")]
+       // public async Task<GetPassengerDTO> GetPassenger(Guid userId)
+       // {
+       //     var passenger =  await passengerService.GetPassengerAsync(userId);
+       //     return passenger;
+       // }
 
         [HttpPost]
         public async Task<IActionResult> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO)

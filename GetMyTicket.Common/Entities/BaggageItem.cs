@@ -1,5 +1,4 @@
-﻿using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Entities.Trackable;
+﻿using GetMyTicket.Common.Entities.Trackable;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

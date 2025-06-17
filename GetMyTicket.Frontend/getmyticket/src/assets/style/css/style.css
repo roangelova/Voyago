@@ -595,6 +595,7 @@ input[type=checkbox] {
 }
 .resultCard__info {
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .cart {

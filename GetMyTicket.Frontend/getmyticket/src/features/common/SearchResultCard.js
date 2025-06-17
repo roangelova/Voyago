@@ -14,8 +14,8 @@ function SearchResultCard({ trip, passengers }) {
     const userId = sessionStorage.getItem("userId");
 
     if (!userId) {
-      toast.error(
-        "Ugh oh.. Seems like you need to log in again, in order to book this trip."
+      toast.info(
+        "Please log in to continue with the booking process."
       );
       return;
     }

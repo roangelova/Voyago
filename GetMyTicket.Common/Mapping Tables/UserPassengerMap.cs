@@ -14,6 +14,6 @@ namespace GetMyTicket.Common.Mapping_Tables
         public Passenger Passenger { get; set; }
 
         [MaxLength(MaxPassengerLabelLength)]
-        public string Label { get; set; } 
+        public string? Label { get; set; } 
     }
 }

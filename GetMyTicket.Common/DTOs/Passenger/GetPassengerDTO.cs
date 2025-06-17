@@ -2,8 +2,6 @@
 {
     public class GetPassengerDTO
     {
-        public Guid UserId { get; set; }
-
         public Guid PassengerId { get; set; }
 
         public string FirstName { get; set; }
@@ -15,6 +13,8 @@
         public string DocumentType { get; set; }
 
         public string DocumentId { get; set; }
+
+        public string? Label { get; set; }
 
         public DateOnly Dob {  get; set; }
 

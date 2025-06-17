@@ -30,6 +30,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
         public IGenericRepository<User> Users { get; }
 
         public IGenericRepository<PassengerBookingMap> PassengerBookingMap { get; }
+        public IGenericRepository<UserPassengerMap> UserPassengerMap { get; }
 
         public UnitOfWork(AppDbContext appDbContext)
         {
@@ -45,6 +46,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
             Users = new GenericRepository<User>(AppDbContext);
             BaggageItems = new GenericRepository<BaggageItem>(AppDbContext);
             PassengerBookingMap = new GenericRepository<PassengerBookingMap>(AppDbContext);
+            UserPassengerMap = new GenericRepository<UserPassengerMap>(AppDbContext);
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

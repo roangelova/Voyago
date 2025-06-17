@@ -3,6 +3,7 @@ using GetMyTicket.Common.DTOs.Passenger;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
+using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -23,7 +24,7 @@ namespace GetMyTicket.Service.Services
         /// </summary>
         /// <param name="CreateOrEditPassengerDTO"></param>
         /// <returns></returns>
-        public async Task<Guid> CreatePassenger(CreateOrEditPassengerDTO dto)
+        public async Task<Guid> CreatePassenger(CreatePassengerDTO dto)
         {
             var user = await unitOfWork.Users.GetByIdAsync(dto.UserId);
 
@@ -32,14 +33,8 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(
                     string.Format(ResponseConstants.NotFoundError, nameof(User), dto.UserId));
             }
-
-            var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
-
-            DateOnly today = DateOnly.FromDateTime(DateTime.UtcNow);
-
-            int? age = user.DOB.HasValue
-                ? today.Year - user.DOB.Value.Year - (today < user.DOB.Value.AddYears(today.Year - user.DOB.Value.Year) ? 1 : 0)
-                 : null;
+          
+            var gender =  ParseEnum<Gender>(dto.Gender);
 
             Passenger passenger = new Passenger()
             {
@@ -47,12 +42,23 @@ namespace GetMyTicket.Service.Services
                 FirstName = dto.FirstName.Trim(),
                 LastName = dto.LastName.Trim(),
                 Gender = gender,
-                DocumentType = documentType,
-                DocumentId = dto.DocumentId.Trim(),
-                ExpirationDate = DocumentExpirationDate,
-                DOB = DateOfBirth,
-                Nationality = dto.Nationality.Trim()
+                DocumentId = string.IsNullOrWhiteSpace(dto?.DocumentId) ? null : dto.DocumentId.Trim(),
+                ExpirationDate = dto.DocumentExpirationDate,
+                DOB = dto.Dob,
+                Nationality = string.IsNullOrWhiteSpace(dto?.Nationality) ? null : dto.Nationality.Trim()
             };
+
+            if (!string.IsNullOrWhiteSpace(dto.DocumentType))
+            {
+                passenger.DocumentType = ParseEnum<DocumentType>(dto.DocumentType);
+            }
+
+            int age = CalculateAge(dto.Dob);
+
+            if (age < 0) 
+            {
+                throw new ApplicationError(string.Format(ResponseConstants.Invalid, nameof(age)));
+            }
 
             if (age < 2)
             {
@@ -62,10 +68,17 @@ namespace GetMyTicket.Service.Services
             {
                 passenger.PassengerType = PassengerType.Child;
             }
-            else
+            else if(age > 18 && age < 100)
             {
                 passenger.PassengerType = PassengerType.Adult;
             }
+
+            passenger.UserPassengerMaps.Add(new UserPassengerMap()
+            {
+                UserId = user.Id,
+                PassengerId = passenger.PassengerId,
+                Label = string.IsNullOrWhiteSpace(dto.Label) ? null : dto.Label
+            });
 
             await unitOfWork.Passengers.AddAsync(passenger);
             await unitOfWork.SaveChangesAsync();
@@ -73,95 +86,67 @@ namespace GetMyTicket.Service.Services
             return passenger.PassengerId;
         }
 
-        public async Task<GetPassengerDTO> EditPassenger(Guid passengerId, CreateOrEditPassengerDTO dto)
+        ///NOTE: Gender, DOB and PassengerType cannot be edited. A passenger cannot be transfered from one profile to another (change of UserId). 
+        ///To achieve this, the passenger must be deactivated from the old account and recreated on the new one. 
+        public async Task<GetPassengerDTO> EditPassenger(EditPassengerDTO dto)
         {
-            //At this stage, every passenger is an adult; This will change as the application grows
-            var passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId);
+            var passenger = await unitOfWork.Passengers.GetByIdAsync(dto.PassengerId);
             if (passenger == null)
-                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Passenger), passengerId));
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Passenger), dto.PassengerId));
 
-            var user = await unitOfWork.Users.GetByIdAsync(dto.UserId);
-            if (user == null)
-                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(User), dto.UserId));
+            passenger.FirstName = string.IsNullOrWhiteSpace(dto.FirstName) ? passenger.FirstName : dto.FirstName.Trim();
+            passenger.LastName = string.IsNullOrWhiteSpace(dto.LastName) ? passenger.LastName : dto.LastName.Trim();
+            passenger.DocumentId = string.IsNullOrWhiteSpace(dto?.DocumentId) ? passenger.DocumentId : dto.DocumentId.Trim();
+            passenger.ExpirationDate = dto.DocumentExpirationDate ?? dto.DocumentExpirationDate;
+            passenger.Nationality = string.IsNullOrWhiteSpace(dto?.Nationality) ? passenger.Nationality : dto.Nationality.Trim();
 
-            var (gender, documentType, DateOfBirth, DocumentExpirationDate) = ParseAndValidatePassengerData(dto);
-
-            passenger.FirstName = dto.FirstName.Trim();
-            passenger.LastName = dto.LastName.Trim();
-            passenger.Gender = gender;
-            passenger.DocumentType = documentType;
-            passenger.DocumentId = dto.DocumentId.Trim();
-            passenger.ExpirationDate = DocumentExpirationDate;
-            passenger.DOB = DateOfBirth;
-            passenger.Nationality = dto.Nationality.Trim();
+            if (!string.IsNullOrWhiteSpace(dto.DocumentType))
+            {
+                passenger.DocumentType = ParseEnum<DocumentType>(dto.DocumentType);
+            }
 
             unitOfWork.Passengers.Update(passenger);
             await unitOfWork.SaveChangesAsync();
 
-            //TODO -> add FN LN to passenger obj;
             return new GetPassengerDTO
             {
-                UserId = user.Id,
                 PassengerId = passenger.PassengerId,
                 FirstName = passenger.FirstName,
                 LastName = passenger.LastName,
                 Gender = passenger.Gender.ToString(),
+                Dob = passenger.DOB,
                 DocumentType = passenger.DocumentType.ToString(),
                 DocumentId = passenger.DocumentId,
-                Dob = passenger.DOB,
-                Nationality = passenger.Nationality
+                Nationality = passenger.Nationality         
             };
         }
 
 
-        private static (Gender gender, DocumentType documentType, DateOnly DateOfBirth, DateOnly DocumentExpirationDate)
-            ParseAndValidatePassengerData(CreateOrEditPassengerDTO dto)
-        {
-            if (!Enum.TryParse<Gender>(dto.Gender, out Gender gender))
-                throw new ArgumentException(string.Format(ResponseConstants.NotSupported, nameof(dto.Gender)));
+      public async Task<List<GetPassengerDTO>> GetPassengerAsync(Guid userId, CancellationToken cancellationToken)
+      {
+          var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
+     
+          if (user is null)
+          {
+              throw new ApplicationError(
+                   string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
+          }
+     
+          var passengers = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == userId, null, false, cancellationToken, x=> x.Passenger );
 
-            if (!Enum.TryParse<DocumentType>(dto.DocumentType, out DocumentType documentType))
-                throw new ArgumentException(string.Format(ResponseConstants.NotSupported, nameof(dto.DocumentType)));
-
-            bool dobParseResult = DateOnly.TryParse(dto.Dob, out DateOnly DateOfBirth);
-            bool documentExpirationParseResult = DateOnly.TryParse(dto.DocumentExpirationDate, out DateOnly DocumentExpirationDate);
-
-            if (!dobParseResult || !documentExpirationParseResult)
-                throw new ArgumentException(ResponseConstants.InvalidDateFormat);
-
-            return (gender, documentType, DateOfBirth, DocumentExpirationDate);
-        }
-
-     // public async Task<GetPassengerDTO> GetPassengerAsync(Guid userId)
-     // {
-     //     var user = await unitOfWork.Users.GetByIdAsync(userId);
-     //
-     //     if (user is null)
-     //     {
-     //         throw new ApplicationError(
-     //              string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
-     //     }
-     //
-     //     var passenger = await unitOfWork.Passengers.GetByIdAsync(user.PassengerMapId);
-     //
-     //     if (passenger == null)
-     //     {
-     //         return null;
-     //     }
-     //
-     //     return new GetPassengerDTO()
-     //     {
-     //         UserId = userId,
-     //         PassengerId = passenger.PassengerId,
-     //         FirstName = passenger.FirstName,
-     //         LastName = passenger.LastName,
-     //         Gender = passenger.Gender.ToString(),
-     //         DocumentType = passenger.DocumentType.ToString(),
-     //         DocumentId = passenger.DocumentId,
-     //         Dob = passenger.DOB,
-     //         Nationality = passenger.Nationality
-     //     };
-     // }
+            return passengers.Select(passenger => new GetPassengerDTO()
+            {
+              PassengerId = passenger.PassengerId,
+              FirstName = passenger.Passenger.FirstName,
+              LastName = passenger.Passenger.LastName,
+              Gender = passenger.Passenger.Gender.ToString(),
+              Label = passenger.Label,
+              DocumentType = passenger.Passenger.DocumentType.ToString(),
+              DocumentId = passenger.Passenger.DocumentId,
+              Dob = passenger.Passenger.DOB,
+              Nationality = passenger.Passenger.Nationality,
+            }).ToList();
+      }
 
         public async Task<List<GetNameAndAgePassengerDataDTO>> GetPassengersForBooking(Guid bookingId, CancellationToken cancellationToken = default)
         {
@@ -191,6 +176,16 @@ namespace GetMyTicket.Service.Services
                 age--;
 
             return age;
+        }
+
+        public static T ParseEnum<T>(string value) where T : struct, Enum
+        {
+            if (Enum.TryParse<T>(value, out var result))
+            {
+                return result;
+            }
+
+            throw new ArgumentException(string.Format(ResponseConstants.NotSupported,value));
         }
     }
 }

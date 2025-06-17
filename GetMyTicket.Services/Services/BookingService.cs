@@ -59,17 +59,24 @@ namespace GetMyTicket.Service.Services
                 TripId = bookTripDTO.TripId
             };
 
-            foreach (var passenger in bookTripDTO.Passengers)
+            foreach (var passengerId in bookTripDTO.PassengerIds)
             {
+                var passenger = await unitOfWork.Passengers.GetByIdAsync(passengerId);
+
+                if (passenger is null)
+                {
+                    throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Passenger), passengerId));
+                }
+
                 //NOTE: Infants travel free of charge. They do not occupy a seat. They do however need to be registered a passenger to travel and are
                 //therefore mapped to a booking.
-                switch (passenger.Type)
+                switch (passenger.PassengerType)
                 {
-                    case "Adult":
+                    case PassengerType.Adult:
                         booking.TotalPrice += trip.AdultPrice;
                         trip.Capacity--;
                         break;
-                    case "Child":
+                    case PassengerType.Child:
                         booking.TotalPrice += trip.ChildrenPrice;
                         trip.Capacity--;
                         break;
@@ -78,7 +85,7 @@ namespace GetMyTicket.Service.Services
                 booking.PassengerBookingMap.Add(new PassengerBookingMap
                 {
                     BookingId = booking.BookingId,
-                    PassengerId = passenger.Id
+                    PassengerId = passengerId
                 });
             }
 
@@ -90,33 +97,41 @@ namespace GetMyTicket.Service.Services
             return booking.BookingId;
         }
 
-        //TODO -> HOW DO WE WANT TO LIST THE PASSENGERS IN THE BOOKINGS?
-     // public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
-     // {
-     //     var user = await unitOfWork.Users.GetByIdAsync(userId);
-     //
-     //     var data = await unitOfWork.PassengerBookingMap
-     //         .GetAllAsync(x => user.UserPassengerMaps. == x.PassengerId,
-     //         null,
-     //         true,
-     //         cancellationToken,
-     //         //INCLUDE
-     //         x => x.Booking,
-     //         x => x.Booking.Trip.StartCity,
-     //         x => x.Booking.Trip.EndCity);
-     //
-     //     return data.Select(b => new ListBookingDTO()
-     //     {
-     //         BookingId = b.BookingId,
-     //         ToCityName = b.Booking.Trip.EndCity.CityName,
-     //         FromCityName = b.Booking.Trip.StartCity.CityName,
-     //         DepartureTime = b.Booking.Trip.StartTime,
-     //         TotalPrice = b.Booking.TotalPrice,s
-     //         Currency = Enum.GetName(b.Booking.Trip.Currency),
-     //         Status = Enum.GetName(b.Booking.BookingStatus),
-     //         TripId = b.Booking.TripId
-     //     });
-     // }
+        
+         public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
+         {
+             var user = await unitOfWork.Users.GetByIdAsync(userId);
+        
+             if (user is null)
+             {
+                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
+             }
+        
+             var passengerIds = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == userId & x.IsAccountOwner == true);
+             var passengerId = passengerIds.FirstOrDefault().PassengerId;
+
+             var data = await unitOfWork.PassengerBookingMap
+                 .GetAllAsync(x => x.PassengerId == passengerId,
+                 null,
+                 true,
+                 cancellationToken,
+                 //INCLUDE
+                 x => x.Booking,
+                 x => x.Booking.Trip.StartCity,
+                 x => x.Booking.Trip.EndCity);
+         
+             return data.Select(b => new ListBookingDTO()
+             {
+                 BookingId = b.BookingId,
+                 ToCityName = b.Booking.Trip.EndCity.CityName,
+                 FromCityName = b.Booking.Trip.StartCity.CityName,
+                 DepartureTime = b.Booking.Trip.StartTime,
+                 TotalPrice = b.Booking.TotalPrice,
+                 Currency = Enum.GetName(b.Booking.Trip.Currency),
+                 Status = Enum.GetName(b.Booking.BookingStatus),
+                 TripId = b.Booking.TripId
+             });
+         }
     }
 
 }

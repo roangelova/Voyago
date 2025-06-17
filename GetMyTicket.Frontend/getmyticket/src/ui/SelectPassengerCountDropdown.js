@@ -19,6 +19,7 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
         onChange={handleChange}
         in="1"
         max="10"
+        min={1}
         placeholder="1"
         required
       />
@@ -31,6 +32,7 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
         value={passengers.children}
         onChange={handleChange}
         max="10"
+        min="0"
         placeholder="1"
       />
 
@@ -42,6 +44,7 @@ function SelectPassengerCountDropdown({ passengers, setPassengers }) {
         value={passengers.infants}
         onChange={handleChange}
         max="10"
+        min="0"
         placeholder="1"
       />
     </div>

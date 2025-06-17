@@ -21,6 +21,8 @@ namespace GetMyTicket.Common.DTOs.Passenger
 
         public string? Label { get; set; }
 
+        public bool IsAccountOwner { get; set; }
+
         public string? Nationality { get; set; }
 
         public string? DocumentType { get; set; }

@@ -15,5 +15,7 @@ namespace GetMyTicket.Common.Mapping_Tables
 
         [MaxLength(MaxPassengerLabelLength)]
         public string? Label { get; set; } 
+
+        public bool IsAccountOwner { get; set; }
     }
 }

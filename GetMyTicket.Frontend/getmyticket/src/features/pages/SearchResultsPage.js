@@ -33,6 +33,12 @@ function SearchResultsPage() {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  //NOTE: Passengers obj is used to calculate and display total price to user
+  const [passengers, setPassengers] = useState({
+    adults: 1,
+    children: 0, 
+    infants: 0
+  })
 
   //FILTER BY, PAGINATION, SORTBY
   const [sortValue, setSortValue] = useState(sortOptions[0]?.value);
@@ -47,8 +53,9 @@ function SearchResultsPage() {
   //set default FILTERBY, SORTBY AND PAGINATION values; Start with default unfiltered data
   useEffect(() => {
     if (location.state) {
-      setData(location.state);
-      setFilteredData(location.state); // Start with unfiltered data
+      setPassengers(location.state.passengers)
+      setData(location.state.trips);
+      setFilteredData(location.state.trips); // Start with unfiltered data
     }
 
     let newParams = new URLSearchParams(searchParams);
@@ -160,7 +167,7 @@ function SearchResultsPage() {
           ) : null}
 
           {filteredData?.map((trip) => (
-            <SearchResultCard trip={trip} key={trip.tripId + Math.random()} />
+            <SearchResultCard passengers={passengers} trip={trip} key={trip.tripId + Math.random()} />
           ))}
         </div>
 

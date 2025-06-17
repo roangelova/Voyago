@@ -490,6 +490,7 @@ input[type=checkbox] {
   border: 1px solid currentColor;
   border-radius: 5px;
 }
+
 .search__container {
   display: flex;
   width: 100vw;
@@ -591,6 +592,9 @@ input[type=checkbox] {
 }
 .resultCard__amenities img {
   margin-right: 10px;
+}
+.resultCard__info {
+  margin-bottom: 1rem;
 }
 
 .cart {

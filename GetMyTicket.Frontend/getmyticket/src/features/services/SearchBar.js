@@ -62,7 +62,7 @@ const SearchBar = () => {
         //TODO: ADD VARIABLES
         onSuccess: (trips) => {
           queryClient.setQueryData(["trips"], trips);
-          navigate("/search-results", { state: trips });
+          navigate("/search-results", { state: {trips, passengers} });
         },
       },
       {

@@ -30,7 +30,6 @@ const SearchBar = () => {
   const [endDate, setEndDate] = useState("2025-05-18");
 
   let location = useLocation();
-  let path = location.pathname;
   let searchType = location.pathname.slice(1);
 
   searchType === "flights"

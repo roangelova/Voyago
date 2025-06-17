@@ -1,5 +1,4 @@
-﻿using GetMyTicket.Common.DTOs;
-using GetMyTicket.Common.DTOs.Booking;
+﻿using GetMyTicket.Common.DTOs.Booking;
 
 namespace GetMyTicket.Service.Contracts
 {
@@ -7,7 +6,7 @@ namespace GetMyTicket.Service.Contracts
     {
         public Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO);
 
-        public Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default);
+     //   public Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default);
 
         public Task<int> CancelBooking (object bookingId);
     }

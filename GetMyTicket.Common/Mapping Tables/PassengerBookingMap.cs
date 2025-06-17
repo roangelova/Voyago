@@ -1,5 +1,4 @@
 ﻿using GetMyTicket.Common.Entities;
-using GetMyTicket.Common.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 

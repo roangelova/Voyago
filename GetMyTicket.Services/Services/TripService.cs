@@ -2,7 +2,6 @@
 using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
@@ -41,7 +40,8 @@ namespace GetMyTicket.Service.Services
                 TypeOfTransportation = result.TransportationType,
                 StartTime = dto.StartTime.Value,
                 EndTime = dto.StartTime.Value,
-                Price = dto.Price.Value,
+                AdultPrice = dto.AdultPrice.Value,
+                ChildrenPrice = dto.ChildrenPrice.Value,
                 Capacity = result.Vehicle.Capacity
             };
 
@@ -77,7 +77,7 @@ namespace GetMyTicket.Service.Services
                // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
                // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
                searchTripsDTO.Type != "all" ? x => x.TypeOfTransportation.ToString() == searchTripsDTO.Type : null,
-               x => x.OrderByDescending(t => t.Price),
+               x => x.OrderByDescending(t => t.AdultPrice),
                 true,
                 cancellationToken,
                x => x.EndCity,
@@ -91,11 +91,12 @@ namespace GetMyTicket.Service.Services
                 StartTime = x.StartTime,
                 EndTime = x.EndTime,
                 EndCityName = x.EndCity.CityName,
-                Price = x.Price,
+                AdultPrice = x.AdultPrice,
+                ChildrenPrice = x.ChildrenPrice,
                 StartCityName = x.StartCity.CityName,
                 TransportationProviderName = x.TransportationProvider.Name,
                 Currency = Enum.GetName(x.Currency),
-                TransportationProviderLogo = Convert.ToBase64String(x.TransportationProvider.Logo),
+                TransportationProviderLogo = x.TransportationProvider?.Logo != null ? Convert.ToBase64String(x.TransportationProvider?.Logo ) : string.Empty ,
                 TypeOfTrip = Enum.GetName(x.TypeOfTransportation)
             }).ToList();
 
@@ -103,7 +104,7 @@ namespace GetMyTicket.Service.Services
         }
 
         /// <summary>
-        /// Amends a trip. Only the following properties can be editet: Price, VehicleId (change vehicle for the trip, but not the type), Start- and EndTime. For all other changes the trip must be canceled
+        /// Amends a trip. Only the following properties can be editet: AdultPrice, ChildrenPrice, VehicleId (change vehicle for the trip, but not the type), Start- and EndTime. For all other changes the trip must be canceled
         /// an a new one provided, as this will be a siginificant change to the entity and not optimal for users.
         /// </summary>
         /// <param name="dto"></param>
@@ -137,20 +138,10 @@ namespace GetMyTicket.Service.Services
                 trip.Vehicle = newVehicle;
             }
 
-            if (dto.StartTime.HasValue)
-            {
-                trip.StartTime = dto.StartTime.Value;
-            }
-
-            if (dto.EndTime.HasValue)
-            {
-                trip.EndTime = dto.EndTime.Value;
-            }
-
-            if (dto.Price.HasValue)
-            {
-                trip.Price = dto.Price.Value;
-            }
+            trip.StartTime = dto.StartTime ?? trip.StartTime;
+            trip.EndTime = dto.EndTime ?? trip.EndTime;
+            trip.AdultPrice = dto.AdultPrice ?? trip.AdultPrice;
+            trip.ChildrenPrice = dto.ChildrenPrice ?? trip.ChildrenPrice;
 
             unitOfWork.Trips.Update(trip);
             await unitOfWork.SaveChangesAsync();

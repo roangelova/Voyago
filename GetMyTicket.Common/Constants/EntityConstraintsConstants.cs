@@ -15,5 +15,7 @@
         public const int MaxNationalityLength = 20;
 
         public const int MaxVehicleCapacity = 999;
+
+        public const int MaxPassengerLabelLength = 50;
     }
 }

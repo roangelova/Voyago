@@ -4,6 +4,7 @@ using GetMyTicket.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GetMyTicket.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250616074702_CreateAdultAndChildrenPriceOnTrip")]
+    partial class CreateAdultAndChildrenPriceOnTrip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,6 +193,66 @@ namespace GetMyTicket.Persistance.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Contracts.Passenger", b =>
+                {
+                    b.Property<Guid>("PassengerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DOB")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime?>("LastUpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("PassengerId");
+
+                    b.ToTable("Passenger");
+
+                    b.HasDiscriminator().HasValue("Passenger");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("GetMyTicket.Common.Entities.Contracts.Vehicle", b =>
                 {
                     b.Property<Guid>("VehicleId")
@@ -264,69 +327,6 @@ namespace GetMyTicket.Persistance.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("GetMyTicket.Common.Entities.Passenger", b =>
-                {
-                    b.Property<Guid>("PassengerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateOnly>("DOB")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DocumentId")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("DocumentType")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly?>("ExpirationDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateTime?>("LastUpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MiddleName")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Nationality")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("PassengerType")
-                        .HasColumnType("int");
-
-                    b.HasKey("PassengerId");
-
-                    b.ToTable("Passengers");
-                });
-
             modelBuilder.Entity("GetMyTicket.Common.Entities.TransportationProvider", b =>
                 {
                     b.Property<Guid>("TransportationProviderId")
@@ -364,6 +364,7 @@ namespace GetMyTicket.Persistance.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("Logo")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
@@ -513,6 +514,9 @@ namespace GetMyTicket.Persistance.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid?>("PassengerMapId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -542,6 +546,10 @@ namespace GetMyTicket.Persistance.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("PassengerMapId")
+                        .IsUnique()
+                        .HasFilter("[PassengerMapId] IS NOT NULL");
+
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -558,25 +566,6 @@ namespace GetMyTicket.Persistance.Migrations
                     b.HasIndex("BookingId");
 
                     b.ToTable("PassengerBookingMap");
-                });
-
-            modelBuilder.Entity("GetMyTicket.Common.Mapping_Tables.UserPassengerMap", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PassengerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Label")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("UserId", "PassengerId");
-
-                    b.HasIndex("PassengerId");
-
-                    b.ToTable("UserPassengerMap");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -682,6 +671,58 @@ namespace GetMyTicket.Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Passengers.Adult", b =>
+                {
+                    b.HasBaseType("GetMyTicket.Common.Entities.Contracts.Passenger");
+
+                    b.Property<string>("DocumentId")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("DocumentType")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("ExpirationDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("SeatNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("Adult");
+                });
+
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Passengers.Child", b =>
+                {
+                    b.HasBaseType("GetMyTicket.Common.Entities.Contracts.Passenger");
+
+                    b.Property<string>("SeatNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Passenger", t =>
+                        {
+                            t.Property("SeatNumber")
+                                .HasColumnName("Child_SeatNumber");
+                        });
+
+                    b.HasDiscriminator().HasValue("Child");
+                });
+
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Passengers.Infant", b =>
+                {
+                    b.HasBaseType("GetMyTicket.Common.Entities.Contracts.Passenger");
+
+                    b.Property<bool>("TravellingWithAStroller")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Infant");
+                });
+
             modelBuilder.Entity("GetMyTicket.Common.Entities.Vehicles.Airplane", b =>
                 {
                     b.HasBaseType("GetMyTicket.Common.Entities.Contracts.Vehicle");
@@ -728,7 +769,7 @@ namespace GetMyTicket.Persistance.Migrations
                         .WithMany("BaggageItems")
                         .HasForeignKey("BookingId");
 
-                    b.HasOne("GetMyTicket.Common.Entities.Passenger", "Passenger")
+                    b.HasOne("GetMyTicket.Common.Entities.Contracts.Passenger", "Passenger")
                         .WithMany()
                         .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -806,6 +847,16 @@ namespace GetMyTicket.Persistance.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
+                {
+                    b.HasOne("GetMyTicket.Common.Entities.Contracts.Passenger", "PassengerMap")
+                        .WithOne()
+                        .HasForeignKey("GetMyTicket.Common.Entities.User", "PassengerMapId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("PassengerMap");
+                });
+
             modelBuilder.Entity("GetMyTicket.Common.Mapping_Tables.PassengerBookingMap", b =>
                 {
                     b.HasOne("GetMyTicket.Common.Entities.Booking", "Booking")
@@ -814,8 +865,8 @@ namespace GetMyTicket.Persistance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GetMyTicket.Common.Entities.Passenger", "Passenger")
-                        .WithMany("PassengerBookingMaps")
+                    b.HasOne("GetMyTicket.Common.Entities.Contracts.Passenger", "Passenger")
+                        .WithMany("PassengerBookingMap")
                         .HasForeignKey("PassengerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -823,25 +874,6 @@ namespace GetMyTicket.Persistance.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Passenger");
-                });
-
-            modelBuilder.Entity("GetMyTicket.Common.Mapping_Tables.UserPassengerMap", b =>
-                {
-                    b.HasOne("GetMyTicket.Common.Entities.Passenger", "Passenger")
-                        .WithMany("UserPassengerMaps")
-                        .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GetMyTicket.Common.Entities.User", "User")
-                        .WithMany("UserPassengerMaps")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Passenger");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -895,10 +927,26 @@ namespace GetMyTicket.Persistance.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Passengers.Adult", b =>
+                {
+                    b.HasOne("GetMyTicket.Common.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GetMyTicket.Common.Entities.Booking", b =>
                 {
                     b.Navigation("BaggageItems");
 
+                    b.Navigation("PassengerBookingMap");
+                });
+
+            modelBuilder.Entity("GetMyTicket.Common.Entities.Contracts.Passenger", b =>
+                {
                     b.Navigation("PassengerBookingMap");
                 });
 
@@ -912,13 +960,6 @@ namespace GetMyTicket.Persistance.Migrations
                     b.Navigation("Destinations");
                 });
 
-            modelBuilder.Entity("GetMyTicket.Common.Entities.Passenger", b =>
-                {
-                    b.Navigation("PassengerBookingMaps");
-
-                    b.Navigation("UserPassengerMaps");
-                });
-
             modelBuilder.Entity("GetMyTicket.Common.Entities.TransportationProvider", b =>
                 {
                     b.Navigation("Trips");
@@ -929,11 +970,6 @@ namespace GetMyTicket.Persistance.Migrations
             modelBuilder.Entity("GetMyTicket.Common.Entities.Trip", b =>
                 {
                     b.Navigation("Bookings");
-                });
-
-            modelBuilder.Entity("GetMyTicket.Common.Entities.User", b =>
-                {
-                    b.Navigation("UserPassengerMaps");
                 });
 #pragma warning restore 612, 618
         }

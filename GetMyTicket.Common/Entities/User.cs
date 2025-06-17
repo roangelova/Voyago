@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using GetMyTicket.Common.Entities.Contracts;
-using GetMyTicket.Common.Entities.Passengers;
 using GetMyTicket.Common.Entities.Trackable;
+using GetMyTicket.Common.Mapping_Tables;
 using Microsoft.AspNetCore.Identity;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
@@ -27,10 +26,7 @@ namespace GetMyTicket.Common.Entities
         [MaxLength(AddressMaxLength)]
         public string? Address { get; set; }
 
-        public Passenger? PassengerMap { get; set; }
-
-        [ForeignKey(nameof(PassengerMap))]
-        public Guid? PassengerMapId { get; set; }
+        public ICollection<UserPassengerMap> UserPassengerMaps { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

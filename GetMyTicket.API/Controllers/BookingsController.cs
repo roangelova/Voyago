@@ -1,5 +1,4 @@
-﻿using GetMyTicket.Common.DTOs;
-using GetMyTicket.Common.DTOs.Booking;
+﻿using GetMyTicket.Common.DTOs.Booking;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,11 +23,11 @@ namespace GetMyTicket.API.Controllers
             return Ok(bookingId);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId)
-        {
-            return await bookingService.GetUserBookings(userId);
-        }
+     //  [HttpGet("{userId}")]
+     //  public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId)
+     //  {
+     //      return await bookingService.GetUserBookings(userId);
+     //  }
 
         [HttpPut("{bookingId}")]
         public async Task<IActionResult> CancelBooking (Guid bookingId)

@@ -4,11 +4,16 @@ using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
-namespace GetMyTicket.Common.Entities.Contracts
+namespace GetMyTicket.Common.Entities
 {
-    public abstract class Passenger : ITrackableEntity
+    /// <summary>
+    /// Nationality, doc type, doc id and doc expiration date are only applicable for flights. Furthermore, passengers can always check-in at the airport and provide the information then. 
+    /// </summary>
+    public class Passenger : ITrackableEntity
     {
         public Guid PassengerId { get; set; }
+
+        public PassengerType PassengerType { get; set; }
 
         [MaxLength(NameMaxLength)]
         public required string FirstName { get; set; }
@@ -20,10 +25,19 @@ namespace GetMyTicket.Common.Entities.Contracts
         public required string LastName { get; set; }
         public Gender Gender { get; set; }
 
-        public ICollection<PassengerBookingMap> PassengerBookingMap { get; set; } = [];
+        public ICollection<UserPassengerMap> UserPassengerMaps { get; set; } = [];
+
+        public ICollection<PassengerBookingMap> PassengerBookingMaps { get; set; } = [];
 
         [MaxLength(MaxNationalityLength)]
-        public required string Nationality { get; set; }
+        public string? Nationality { get; set; }
+
+        public DocumentType? DocumentType { get; set; }
+
+        [MaxLength(MaxDocumentIdLength)]
+        public string? DocumentId { get; set; }
+
+        public DateOnly? ExpirationDate { get; set; }
 
         public DateOnly DOB { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

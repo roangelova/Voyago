@@ -18,24 +18,24 @@ namespace GetMyTicket.API.Controllers
 
 
         [HttpGet("by-user/{userId}")]
-        public async Task<GetPassengerDTO> GetPassenger(Guid userId)
+        public async Task<List<GetPassengerDTO>> GetPassenger(Guid userId, CancellationToken cancellationToken)
         {
-            var passenger =  await passengerService.GetPassengerAsync(userId);
-            return passenger;
+            var passengers =  await passengerService.GetPassengerAsync(userId, cancellationToken);
+            return passengers;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePassenger(CreateOrEditPassengerDTO createOrEditPassengerDTO)
+        public async Task<IActionResult> CreatePassenger(CreatePassengerDTO CreatePassengerDTO)
         {
-            Guid passengerId = await passengerService.CreatePassenger(createOrEditPassengerDTO);
+            Guid passengerId = await passengerService.CreatePassenger(CreatePassengerDTO);
 
             return Ok(passengerId) ;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> EditPassenger(Guid id, CreateOrEditPassengerDTO data)
+        [HttpPut]
+        public async Task<IActionResult> EditPassenger(EditPassengerDTO data)
         {
-            var updatedPassenger = await passengerService.EditPassenger(id, data);
+            var updatedPassenger = await passengerService.EditPassenger(data);
 
             if (updatedPassenger == null)
                 return NotFound();

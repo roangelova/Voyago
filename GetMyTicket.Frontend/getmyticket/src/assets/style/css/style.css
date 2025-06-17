@@ -1051,26 +1051,35 @@ input[type=checkbox] {
   padding: 8rem;
 }
 .QnA h3 {
-  margin-bottom: 8rem;
+  margin-bottom: 9rem;
 }
 .QnA ul {
   max-width: 160rem;
+  margin-bottom: 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: repeat(1fr);
   column-gap: 10rem;
-  row-gap: 2rem;
+  row-gap: 5rem;
 }
-.QnA ul li {
-  padding: 1rem;
+.QnA ul li div {
+  display: flex;
+  justify-content: space-between;
+  gap: 7rem;
+}
+.QnA ul li div img {
+  height: 50%;
+  cursor: pointer;
+  display: inline-block;
 }
 .QnA ul li p {
   font-size: 1.8rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
 }
 .QnA ul li h4 {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   font-size: 2.2rem;
+  color: #444;
 }
 
 .footer {

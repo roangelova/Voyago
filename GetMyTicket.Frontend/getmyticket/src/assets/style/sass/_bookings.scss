@@ -228,10 +228,10 @@
   }
 
   &--active {
-    background-color: #17641e;
+    background-color: $color-btn--green;
   }
 
   &--canceled {
-    background-color: #b8372d;
+    background-color: $color-btn--red;
   }
 }

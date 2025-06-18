@@ -21,6 +21,10 @@
   transform: translateY(3px);
 }
 
+.btn--destructive{
+  background-color: $color-btn--red;
+}
+
 .navigation {
   font-size: 24px;
   padding: 2rem 1rem;

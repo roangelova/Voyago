@@ -32,10 +32,10 @@
       & li {
         display: flex;
         align-items: center;
-        gap: 2rem;
+        gap: 3rem;
 
         & img{
-          filter: contrast(65%);
+          filter: invert(20) contrast(50%);
         }
       }
     }

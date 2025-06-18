@@ -110,7 +110,7 @@ function Bookings() {
                 <td>{b.status}</td>
                 <td className="bookings__actions">
                   {b.status === "Confirmed" ? (
-                    <button className="btn" onClick={() => handleCancelBooking(b.bookingId)}>
+                    <button className="btn btn--destructive" onClick={() => handleCancelBooking(b.bookingId)}>
                       Cancel
                     </button>
                   ) : null}

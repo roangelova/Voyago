@@ -332,6 +332,10 @@ input[type=checkbox] {
   transform: translateY(3px);
 }
 
+.btn--destructive {
+  background-color: #b8372d;
+}
+
 .navigation {
   font-size: 24px;
   padding: 2rem 1rem;
@@ -610,6 +614,78 @@ input[type=checkbox] {
 .resultCard__info {
   margin-bottom: 1rem;
   font-weight: 600;
+}
+
+.cart {
+  width: 140rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5rem;
+  margin-top: 4rem;
+}
+.cart__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.cart h5 {
+  font-size: 2rem;
+}
+.cart__left {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 70rem;
+  padding: 4rem;
+}
+.cart__row p {
+  margin-bottom: 0.5rem;
+}
+.cart__provider {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.cart__provider img {
+  height: 4rem;
+  width: auto;
+}
+.cart__provider p {
+  font-size: 1.8rem;
+}
+.cart__right {
+  width: 40rem;
+  padding: 4rem 1rem 2rem 1rem;
+  background-color: #f9f7f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+.cart__pricePerPersonBreakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5rem;
+  row-gap: 1rem;
+  padding-bottom: 3rem;
+  border-bottom: 0.5px solid rgba(51, 51, 51, 0.5);
+}
+.cart__total div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-size: 2.4rem;
+}
+.cart__total span {
+  color: #666;
+}
+.cart__checkout {
+  margin-top: auto;
+}
+.cart__checkout button {
+  padding: 1.5rem 2.5rem;
 }
 
 .whyUs_container {
@@ -909,8 +985,8 @@ input[type=checkbox] {
 }
 .QnA ul li h4 {
   margin-bottom: 2.5rem;
-  font-size: 2.2rem;
-  color: #444;
+  font-size: 2.4rem;
+  color: #666;
 }
 
 .footer {
@@ -944,10 +1020,10 @@ input[type=checkbox] {
 .footer__section ul li {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
 }
 .footer__section ul li img {
-  filter: contrast(65%);
+  filter: invert(20) contrast(50%);
 }
 .footer h4 {
   margin-bottom: 4rem;

@@ -1,6 +1,90 @@
 .cart {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 
+  & h5 {
+    font-size: 2rem;
+  }
 
+  width: 140rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5rem;
+  margin-top: 4rem;
 
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 70rem;
+
+    padding: 4rem;
+  }
+
+  &__row {
+    & p {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__provider {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    & img {
+      height: 4rem;
+      width: auto;
+    }
+
+    & p {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__right {
+    width: 40rem;
+    padding: 4rem 1rem 2rem 1rem;
+    background-color: $color-grey-light-1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  &__pricePerPersonBreakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5rem;
+    row-gap: 1rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid rgba(#333, 0.5);
+  }
+
+  &__total{
+    & div{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        font-size: 2.4rem;
+    }
+
+    & span {
+      color: #666;
+    }
+  }
+
+  &__checkout{
+    margin-top: auto;
+
+    & button{
+        padding: 1.5rem 2.5rem;
+    }
+  }
 }
-

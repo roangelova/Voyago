@@ -4,11 +4,11 @@
   grid-template-rows: 90vh;
 
   &__nav {
-  background-image: linear-gradient(
-    to bottom,
-    #fff 0.1%,
-    $color-grey-light-1 99.9%
-  );
+    background-image: linear-gradient(
+      to bottom,
+      #fff 0.1%,
+      $color-grey-light-1 99.9%
+    );
     grid-row: 1;
 
     padding: 2rem 0rem;
@@ -63,5 +63,33 @@
     align-items: flex-start;
     justify-content: center;
     padding: 5rem;
+  }
+}
+
+.passengers {
+  & h4 {
+    margin-bottom: 4rem;
+  }
+
+  &__row {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    height: 8rem;
+    width: 80rem;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap:4rem;
+  }
+
+  &--name {
+    margin-right: 2rem;
+    font-size: 2rem;
+    padding: 0.5rem;
   }
 }

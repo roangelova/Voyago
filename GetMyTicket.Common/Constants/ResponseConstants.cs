@@ -12,6 +12,9 @@
         public const string InvalidDateFormat = "The provided date format was incorrect";
 
         public const string NotFoundError = "{0} with Id {1} was not found.";
+        public const string NoBookingsForThisUser = "No bookings were found for this user";
+
+        public const string DuplicateIsAccountOwnerWhenCreatingPassenger = "There already is a registered account owner. Could not create passenger. To create an account for this passenger, please proceed to register.";
 
         public const string SoldOut = "Uh oh! The itinerary is no longer available. Please, choose a different connection!";
 

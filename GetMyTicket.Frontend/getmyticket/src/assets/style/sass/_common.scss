@@ -1,8 +1,8 @@
 .error-page {
-height: 90vh;
-display: flex;
-align-items: center;
-justify-content: center;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn {
@@ -12,6 +12,13 @@ justify-content: center;
   color: #fff;
   background-color: $color-grey-dark-2;
   box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+
+  transition: all 0.4s;
+}
+
+.btn:hover,
+.btn:active {
+  transform: translateY(3px);
 }
 
 .navigation {
@@ -39,7 +46,7 @@ justify-content: center;
   &__logo {
     & img {
       width: 16rem;
-      filter:contrast(0.5)
+      filter: contrast(0.5);
     }
   }
 

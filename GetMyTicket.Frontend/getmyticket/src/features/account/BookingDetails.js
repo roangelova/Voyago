@@ -59,7 +59,9 @@ function BookingDetails() {
             </span>
 
             <ul className="booking__details--list">
-              <li>Ingrid Sofie Hanse, 47</li>
+            {passengers.map(passenger => 
+              <li key={passenger.name}>{passenger.name}, {passenger.age}</li>
+            )}
             </ul>
           </div>
           <div>
@@ -106,7 +108,7 @@ function BookingDetails() {
               </strong>
             </p>
             <p className="booking__data--saved">
-              Saved: <strong>10 EUR</strong>{" "}
+              Saved: <strong>40 EUR</strong>{" "}
             </p>
           </div>
         </div>

@@ -34,6 +34,13 @@ namespace GetMyTicket.Service.Services
                     string.Format(ResponseConstants.NotFoundError, nameof(User), dto.UserId));
             }
           
+            var registeredAccountOwnersForUserId = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == dto.UserId && x.IsAccountOwner == true);
+      
+            if(registeredAccountOwnersForUserId.Any())
+            {
+                throw new ApplicationException(ResponseConstants.DuplicateIsAccountOwnerWhenCreatingPassenger);
+            }
+
             var gender =  ParseEnum<Gender>(dto.Gender);
 
             Passenger passenger = new Passenger()
@@ -77,7 +84,8 @@ namespace GetMyTicket.Service.Services
             {
                 UserId = user.Id,
                 PassengerId = passenger.PassengerId,
-                Label = string.IsNullOrWhiteSpace(dto.Label) ? null : dto.Label
+                Label = string.IsNullOrWhiteSpace(dto.Label) ? null : dto.Label,
+                IsAccountOwner = dto.IsAccountOwner
             });
 
             await unitOfWork.Passengers.AddAsync(passenger);

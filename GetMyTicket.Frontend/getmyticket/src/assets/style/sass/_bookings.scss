@@ -3,23 +3,30 @@
     border-bottom: solid 1px #999;
   }
 
+  &__tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   &__actions {
     font-weight: 700;
     cursor: pointer;
+    flex-direction: column;
+    display: flex;
+    gap: 1rem;
   }
 
   &__container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-
+    height: 100%;
     flex-direction: column;
     gap: 4rem;
-
+    box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.3);
     padding: 3rem;
 
     transition: all 0.4s ease-out;
-
     & table,
     tr,
     td {
@@ -28,15 +35,23 @@
     }
 
     & table {
-      background-color: $color-grey-light-1;
+      background-color: rgba($color-grey-light-1, 0.3);
       font-size: 1.6rem;
       border-radius: 7px;
-      overflow: hidden;
-      width: 130rem;
+      width: 140rem;
+      border-collapse: collapse;
     }
 
     & th {
       font-size: 24px;
+      padding: 4rem;
+      background-color: rgba($color-grey-light-1, 0.6);
+    }
+
+    & tbody {
+      & tr:not(:last-child) {
+        border-bottom: 1px solid #444;
+      }
     }
 
     & caption {
@@ -106,7 +121,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap:1rem;
+    gap: 1rem;
 
     &-city {
       font-size: 6rem !important;
@@ -123,7 +138,7 @@
   &__right {
     width: 35rem;
     height: 60rem;
-     background-image: rgba($color-grey-light-1, 0.5);
+    background-image: rgba($color-grey-light-1, 0.5);
     box-shadow: 3px 3px 10px rgba(8, 4, 4, 0.4);
     border-radius: 10px;
     flex-grow: 1;
@@ -186,18 +201,11 @@
     & button {
       padding: 1.5rem 0;
       font-size: 1.6rem;
-
-      transition: all 0.4s;
     }
 
     & a:hover,
     & a:active {
       transform: translateY(-3px);
-    }
-
-    & button:hover,
-    & button:active {
-      transform: translateY(3px);
     }
   }
 

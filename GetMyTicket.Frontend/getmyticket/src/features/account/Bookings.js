@@ -77,7 +77,8 @@ function Bookings() {
             setFilterValue={setFilterValue}
           />
         </div>
-        <table>
+        <div className="bookings__tableWrapper">
+             <table>
           <thead>
             {!filteredData || filteredData.length === 0 ? (
               <tr>
@@ -97,7 +98,7 @@ function Bookings() {
           </thead>
 
           <tbody>
-            {filteredData?.map((b) => (
+           {filteredData?.map((b) => (
               <tr key={b.bookingId}>
                 <td>XYZ123</td>
                 <td>{b.fromCityName}</td>
@@ -109,22 +110,25 @@ function Bookings() {
                 <td>{b.status}</td>
                 <td className="bookings__actions">
                   {b.status === "Confirmed" ? (
-                    <div onClick={() => handleCancelBooking(b.bookingId)}>
-                      Cancel |
-                    </div>
+                    <button className="btn" onClick={() => handleCancelBooking(b.bookingId)}>
+                      Cancel
+                    </button>
                   ) : null}
-                  <div
+                  <button className="btn"
                     onClick={() =>
                       navigate(`/account/bookings/${b.bookingId}`)
                     }
                   >
                     Manage booking
-                  </div>
+                  </button>
                 </td>
               </tr>
             ))}
+
           </tbody>
         </table>
+        </div>
+     
       </div>
     </>
   );

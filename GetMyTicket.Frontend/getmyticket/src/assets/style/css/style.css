@@ -324,6 +324,12 @@ input[type=checkbox] {
   color: #fff;
   background-color: #504e4c;
   box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.42);
+  transition: all 0.4s;
+}
+
+.btn:hover,
+.btn:active {
+  transform: translateY(3px);
 }
 
 .navigation {
@@ -962,16 +968,25 @@ input[type=checkbox] {
 .bookings__options {
   border-bottom: solid 1px #999;
 }
+.bookings__tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
 .bookings__actions {
   font-weight: 700;
   cursor: pointer;
+  flex-direction: column;
+  display: flex;
+  gap: 1rem;
 }
 .bookings__container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
   flex-direction: column;
   gap: 4rem;
+  box-shadow: 1px 0.5px 1px 0.5px rgba(0, 0, 0, 0.3);
   padding: 3rem;
   transition: all 0.4s ease-out;
 }
@@ -982,14 +997,19 @@ input[type=checkbox] {
   text-align: center;
 }
 .bookings__container table {
-  background-color: #f9f7f6;
+  background-color: rgba(249, 247, 246, 0.3);
   font-size: 1.6rem;
   border-radius: 7px;
-  overflow: hidden;
-  width: 130rem;
+  width: 140rem;
+  border-collapse: collapse;
 }
 .bookings__container th {
   font-size: 24px;
+  padding: 4rem;
+  background-color: rgba(249, 247, 246, 0.6);
+}
+.bookings__container tbody tr:not(:last-child) {
+  border-bottom: 1px solid #444;
 }
 .bookings__container caption {
   font-size: 24px;
@@ -1113,13 +1133,9 @@ input[type=checkbox] {
 .booking__actions a, .booking__actions button {
   padding: 1.5rem 0;
   font-size: 1.6rem;
-  transition: all 0.4s;
 }
 .booking__actions a:hover, .booking__actions a:active {
   transform: translateY(-3px);
-}
-.booking__actions button:hover, .booking__actions button:active {
-  transform: translateY(3px);
 }
 .booking__data--saved {
   color: #17641e;

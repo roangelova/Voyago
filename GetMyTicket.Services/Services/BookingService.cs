@@ -108,9 +108,14 @@ namespace GetMyTicket.Service.Services
              }
         
              var passengerIds = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == userId & x.IsAccountOwner == true);
-             var passengerId = passengerIds.FirstOrDefault().PassengerId;
+             var passengerId = passengerIds.FirstOrDefault()?.PassengerId;
 
-             var data = await unitOfWork.PassengerBookingMap
+            if (passengerId is null)
+            {
+                throw new ApplicationError(ResponseConstants.NoBookingsForThisUser);
+            }
+
+            var data = await unitOfWork.PassengerBookingMap
                  .GetAllAsync(x => x.PassengerId == passengerId,
                  null,
                  true,

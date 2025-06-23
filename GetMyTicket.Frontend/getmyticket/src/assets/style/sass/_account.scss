@@ -13,8 +13,6 @@
 
     padding: 2rem 0rem;
 
-    overflow: hidden;
-
     & nav {
       width: 100%;
       height: 100%;
@@ -67,6 +65,10 @@
 }
 
 .passengers {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
   & h4 {
     margin-bottom: 4rem;
   }
@@ -74,7 +76,6 @@
   &__row {
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     padding: 2rem;
-    height: 8rem;
     width: 80rem;
 
     display: flex;
@@ -82,14 +83,35 @@
   }
 
   &__content {
+    max-width: 120rem;
+    margin: 2rem auto;
     display: flex;
     flex-direction: column;
-    gap:4rem;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  &__information {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   &--name {
-    margin-right: 2rem;
-    font-size: 2rem;
-    padding: 0.5rem;
+    font-size: 1.8rem;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & button {
+      padding: 1rem 2.5rem;
+    }
+
+    & :last-child{
+      background-color: $color-btn--red;
+    }
   }
 }

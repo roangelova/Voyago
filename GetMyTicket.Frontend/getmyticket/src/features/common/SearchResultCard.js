@@ -5,7 +5,7 @@ import fallbackLogo from "../../assets/images/fallbackLogo.png";
 import bistro from "../../assets/icons/bistro.png";
 import wc from "../../assets/icons/wc.png";
 import highspeed from "../../assets/icons/highspeed.png";
-import { formatDate } from "../../helpers";
+import { calculateTotalPrice, formatDate } from "../../helpers";
 
 function SearchResultCard({ trip, passengers }) {
   const navigate = useNavigate();
@@ -79,13 +79,6 @@ function SearchResultCard({ trip, passengers }) {
 }
 
 export default SearchResultCard;
-
-function calculateTotalPrice(trip, passengers) {
-  return (
-    passengers.adults * trip.adultPrice +
-    passengers.children * trip.childrenPrice
-  );
-}
 
 function getPriceNoteString(passengers){
     let string = [];

@@ -22,6 +22,16 @@ export function getFormattedDate(date) {
   }).format(new Date(date));
 }
 
+export function getFormattedDob(date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  }).format(new Date(date));
+}
+
+
+
 export function getFormattedTime(date) {
   return new Intl.DateTimeFormat("en-GB", {
     hour: "2-digit",
@@ -54,5 +64,13 @@ export function setAccessAndRefreshTokenInCookies(response) {
       secure: true,
       sameSite: true,
     }
+  );
+}
+
+//calculates the total price for the booking
+export function calculateTotalPrice(trip, passengers) {
+  return (
+    passengers.adults * trip.adultPrice +
+    passengers.children * trip.childrenPrice
   );
 }

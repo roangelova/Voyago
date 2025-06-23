@@ -1,10 +1,11 @@
-import { useLocation } from "react-router-dom";
-import { formatDate } from "../../helpers";
+import { useLocation, useNavigate } from "react-router-dom";
+import { calculateTotalPrice, formatDate } from "../../helpers";
 import SelectPassengersDropdown from "./SelectPassengersDropdown";
 import fallbackLogo from "../../assets/images/fallbackLogo.png";
 import { useEffect, useState } from "react";
 import { Passenger } from "../../services/passengerService";
 import check from "../../assets/icons/check.png";
+import { Booking } from "../../services/bookingService";
 
 const userId = sessionStorage.getItem("userId");
 
@@ -18,6 +19,7 @@ function Cart() {
   const [userPassengerList, setUserPassengerList] = useState();
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
 
+  const navigate = useNavigate();
   console.log(trip, passengersCountForBooking);
 
   let imageSrc;
@@ -37,6 +39,14 @@ function Cart() {
 
   const onCheckout = () => {
     // Кои условия трябва да са изпълнени, за да замършим резервацията?
+    //there should always be at least 1 adult per booking
+
+    Booking.bookTrip({
+      tripId: trip.tripId,
+      passengerIds: passengerIdsForBooking,
+      userId,
+      //TODO - ADD A MUTATE FUNC AND HANDLE ERROR AND SUCCESS
+    }).then(navigate('/account/bookings'))
   };
 
   return (
@@ -116,16 +126,19 @@ function Cart() {
 
             <div className="cart__pricePerPersonBreakdown">
               <ul>
-
-
-
-
+                {CreatePriceSummary(trip, passengersCountForBooking).map(
+                  (x) => (
+                    <li>{x}</li>
+                  )
+                )}
               </ul>
             </div>
             <div className="cart__total">
               <div>
                 <p>Total</p>
-                <p>440 EUR</p>
+                <p>
+                  {calculateTotalPrice(trip, passengersCountForBooking)} EUR
+                </p>
               </div>
               <span>All taxes, fees and charges included</span>
             </div>
@@ -142,3 +155,33 @@ function Cart() {
 }
 
 export default Cart;
+
+function CreatePriceSummary(trip, passengersCountForBooking) {
+  let summary = [];
+
+  if (passengersCountForBooking.adults > 0) {
+    summary.push(
+      `${passengersCountForBooking.adults} Adult ticket${
+        passengersCountForBooking.adults > 1 ? "s" : ""
+      } — ${trip.adultPrice} ${trip.currency}`
+    );
+  }
+
+  if (passengersCountForBooking.children > 0) {
+    summary.push(
+      `${passengersCountForBooking.children} Child ticket${
+        passengersCountForBooking.children > 1 ? "s" : ""
+      } — ${trip.childrenPrice} ${trip.currency}`
+    );
+  }
+
+  if (passengersCountForBooking.infants > 0) {
+    summary.push(
+      `${passengersCountForBooking.infants} Infant ticket${
+        passengersCountForBooking.infants > 1 ? "s" : ""
+      } — Free`
+    );
+  }
+
+  return summary;
+}

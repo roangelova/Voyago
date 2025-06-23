@@ -738,6 +738,17 @@ input[type=checkbox] {
 .cart__checkIcon {
   height: 1.5rem;
 }
+.cart__important {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  background-image: linear-gradient(to right, #f9f7f6, #fff);
+}
+.cart__important p,
+.cart__important h4 {
+  color: #555;
+}
 
 .whyUs_container {
   margin: 5rem auto;
@@ -1033,6 +1044,7 @@ input[type=checkbox] {
 .QnA ul li p {
   font-size: 1.8rem;
   padding: 1rem;
+  line-height: 1.5;
 }
 .QnA ul li h4 {
   margin-bottom: 2.5rem;

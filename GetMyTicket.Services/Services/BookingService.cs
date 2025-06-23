@@ -100,7 +100,7 @@ namespace GetMyTicket.Service.Services
         
          public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
          {
-             var user = await unitOfWork.Users.GetByIdAsync(userId);
+             var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
         
              if (user is null)
              {

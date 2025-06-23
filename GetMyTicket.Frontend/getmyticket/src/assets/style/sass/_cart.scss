@@ -151,4 +151,17 @@
   &__checkIcon {
     height: 1.5rem;
   }
+
+  &__important {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    background-image: linear-gradient(to right, $color-grey-light-1, #fff);
+
+    & p,
+    h4 {
+      color: #555;
+    }
+  }
 }

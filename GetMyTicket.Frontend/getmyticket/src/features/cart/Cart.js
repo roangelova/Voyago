@@ -46,7 +46,7 @@ function Cart() {
       passengerIds: passengerIdsForBooking,
       userId,
       //TODO - ADD A MUTATE FUNC AND HANDLE ERROR AND SUCCESS
-    }).then(navigate('/account/bookings'))
+    }).then(navigate("/account/bookings"));
   };
 
   return (
@@ -119,6 +119,22 @@ function Cart() {
                 />
               </div>
             </div>
+
+            <div className="cart__important">
+              <h4>Important notice!</h4>
+              <p>
+                Please not that if your passport is set to expire in less than{" "}
+                <b>six months</b> after your trip, you could be denied boarding
+                or entry! Always check the current entry regulations for your
+                destination in advance.
+              </p>
+              <p>
+                If additional documents are required &#40;such as birth
+                sertificates for passengers under 18 years old, visas etc.&#41;,
+                you will be asked to provide those at the airport. Please note
+                that failure to do may result in denied bording.
+              </p>
+            </div>
           </div>
 
           <div className="cart__right">
@@ -163,7 +179,7 @@ function CreatePriceSummary(trip, passengersCountForBooking) {
     summary.push(
       `${passengersCountForBooking.adults} Adult ticket${
         passengersCountForBooking.adults > 1 ? "s" : ""
-      } — ${trip.adultPrice} ${trip.currency}`
+      } — ${trip.adultPrice} ${trip.currency} p.p.`
     );
   }
 
@@ -171,7 +187,7 @@ function CreatePriceSummary(trip, passengersCountForBooking) {
     summary.push(
       `${passengersCountForBooking.children} Child ticket${
         passengersCountForBooking.children > 1 ? "s" : ""
-      } — ${trip.childrenPrice} ${trip.currency}`
+      } — ${trip.childrenPrice} ${trip.currency} p.p.`
     );
   }
 

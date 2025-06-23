@@ -55,7 +55,7 @@ function Cart() {
       <div className="cart__container">
         <div className="cart">
           <div className="cart__left">
-            <h2 className="heading--secondary">Cart</h2>
+            <h4 className="heading--quaternary">Your {trip.typeOfTrip.toLowerCase()} booking</h4>
             <div className="cart__row cart__trip">
               <h5>
                 {trip.startCityName} to {trip.endCityName}
@@ -153,10 +153,12 @@ function Cart() {
               <div>
                 <p>Total</p>
                 <p>
-                  {calculateTotalPrice(trip, passengersCountForBooking)} EUR
+                  <strong>
+                    {calculateTotalPrice(trip, passengersCountForBooking)} 
+                  </strong> {trip.currency}
                 </p>
               </div>
-              <span>All taxes, fees and charges included</span>
+              <span>* All taxes, fees and charges included</span>
             </div>
             <div className="cart__checkout">
               <button onClick={onCheckout} className="btn">

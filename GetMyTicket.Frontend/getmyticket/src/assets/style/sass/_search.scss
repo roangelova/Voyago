@@ -8,18 +8,18 @@
 
     overflow-y: scroll;
 
-    padding: 0px 1rem;
+    padding: 4rem 1rem;
     justify-content: space-around;
-    align-items: center;
+    //align-items: center;
 
     &-map {
-      width: 40%;
-      height: 70%;
-      padding: 2rem;
+      width: 30%;
+      height: 50%;
+      margin-top:4rem;
 
       position: sticky;
-      top: 50%;
-      transform: translate(0, -50%);
+      top: 0%;
+      //transform: translate(0, -50%);
       z-index: 2;
     }
   }

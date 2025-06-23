@@ -102,9 +102,9 @@
   &__grid {
     display: grid;
     grid-template-columns: 60rem 60rem;
-    column-gap: 5rem;
+    column-gap: 10rem;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    row-gap: 5rem;
+    row-gap: 8rem;
   }
 
   &__destination {

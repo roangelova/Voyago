@@ -1,40 +1,55 @@
 import { useLocation } from "react-router-dom";
 import { formatDate } from "../../helpers";
-import { toast } from "react-toastify";
+import SelectPassengersDropdown from "./SelectPassengersDropdown";
 import fallbackLogo from "../../assets/images/fallbackLogo.png";
+import { useEffect, useState } from "react";
+import { Passenger } from "../../services/passengerService";
+import check from "../../assets/icons/check.png";
 
 const userId = sessionStorage.getItem("userId");
 
-const initialState = {
-  tripId: null,
-  userId: userId,
-  passengers: [],
-  trip: {},
-  activeStep: 1,
-};
+//add option to create new passenger
+// make select work and reconnect 'addBooking functionalityy'
+//once we have a working version -> add or remove passenger
 
 function Cart() {
   const location = useLocation();
-  const { trip, passengers } = location.state || {};
+  const { trip, passengers: passengersCountForBooking } = location.state || {};
+  const [userPassengerList, setUserPassengerList] = useState();
+  const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
 
-  console.log(trip, passengers);
+  console.log(trip, passengersCountForBooking);
 
   let imageSrc;
   trip.transportationProviderLogo !== ""
     ? (imageSrc = `data:image/png;base64,${trip.transportationProviderLogo}`)
     : (imageSrc = fallbackLogo);
 
-  //TODO -> Make sure the time zones are correct
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    Passenger.getPassengersForUser(userId).then((data) => {
+      setUserPassengerList(data);
+      console.log(data);
+    });
+  }, []);
+
+  const onCheckout = () => {
+    // Кои условия трябва да са изпълнени, за да замършим резервацията?
+  };
+
   return (
     <>
       <title>Cart | Voyago</title>
       <div className="cart__container">
         <div className="cart">
           <div className="cart__left">
-            <div className="cart__row">
-              <p>
+            <h2 className="heading--secondary">Cart</h2>
+            <div className="cart__row cart__trip">
+              <h5>
                 {trip.startCityName} to {trip.endCityName}
-              </p>
+              </h5>
               <p>Departure: {formatDate(trip.startTime)}</p>
               <p>Arrival:{formatDate(trip.endTime)}</p>
               <div className="cart__provider">
@@ -46,19 +61,53 @@ function Cart() {
             <div className="cart__row">
               <h5>Your fare: Economy</h5>
               <ul>
-                <li>✔️ Carry-on bag included</li>
-                <li>✔️ Free cancelation up to 24h prior to departure</li>
-                <li>✔️ Carry-on bag included</li>
-                <li>✖️ Changes not allowed</li>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>Carry-on bag included</li>
+                </div>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>
+                    Free cancelation up to <strong>24 </strong>hours prior to
+                    departure
+                  </li>
+                </div>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>Carry-on bag included</li>
+                </div>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>Seat reservation</li>
+                </div>
               </ul>
             </div>
             <div className="cart__row">
               <h5>Bags</h5>
               <ul>
-                <li>✔️ Carry-on bag included</li>
-                <li>✔️ 1x 23kg checked-in bag per person</li>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>Carry-on bag included</li>
+                </div>
+                <div>
+                  <img className="cart__checkIcon" src={check} />
+                  <li>
+                    {" "}
+                    <strong>1x 23 kg </strong>checked-in bag per person
+                  </li>
+                </div>
               </ul>
-              <button className="btn">Add bags</button>
+              <button className="btn cart__btn">Add bags</button>
+            </div>
+            <div className="cart_row">
+              <h5>Who's going to travel?</h5>
+              <div className="cart__passengers">
+                <SelectPassengersDropdown
+                  passengersCountForBooking={passengersCountForBooking}
+                  userPassengerList={userPassengerList}
+                  setPassengerIdsForBooking={setPassengerIdsForBooking}
+                />
+              </div>
             </div>
           </div>
 
@@ -66,22 +115,24 @@ function Cart() {
             <h5>Price summary</h5>
 
             <div className="cart__pricePerPersonBreakdown">
-              <span><strong>Traveller 1</strong>:Adult</span>
-              <span> 220.00 EUR</span>
-              <span><strong>Traveller 2</strong>:Adult</span>
-              <span> 220.00 EUR</span>
-              <span><strong>Traveller 3</strong>:Infant</span>
-              <span> 00.00 EUR</span>
+              <ul>
+
+
+
+
+              </ul>
             </div>
             <div className="cart__total">
-             <div>
-              <p>Total</p>
-              <p>440 EUR</p>
+              <div>
+                <p>Total</p>
+                <p>440 EUR</p>
               </div>
               <span>All taxes, fees and charges included</span>
             </div>
             <div className="cart__checkout">
-              <button className="btn">Check out</button>
+              <button onClick={onCheckout} className="btn">
+                Check out
+              </button>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ function SearchResultCard({ trip, passengers }) {
       return;
     }
 
-    navigate("/cart", { state: { trip: trip } });
+    navigate("/cart", { state: { trip: trip, passengers: passengers } });
   };
 
   //TODO -> add support for other data types not just PNG

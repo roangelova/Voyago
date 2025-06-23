@@ -1,5 +1,5 @@
 import Header from "../common/Header";
-import SearchBar from "../services/SearchBar";
+import SearchBar from "../../ui/SearchBar";
 
 import WhyUsSection from "./homepage/WhyUsSection";
 import PopularDestinationsSection from "./homepage/PopularDestinationsSections";

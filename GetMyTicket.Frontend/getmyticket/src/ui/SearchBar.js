@@ -1,14 +1,14 @@
-import { useGetCities } from "../../services/cityService";
+import { useGetCities } from "../services/cityService";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Trips, useGetTrips } from "../../services/tripService";
+import { Trips, useGetTrips } from "../services/tripService";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import Spinner from "../../ui/Spinner";
+import Spinner from "./Spinner";
 import { useQueryClient } from "@tanstack/react-query";
-import SelectPassengerCountDropdown from "../../ui/SelectPassengerCountDropdown";
+import SelectPassengerCountDropdown from "./SelectPassengerCountDropdown";
 
-import arrowDown from "../../assets/icons/arrowDown.png";
+import arrowDown from "../assets/icons/arrowDown.png";
 
 const SearchBar = () => {
   const { cities, error, isPending } = useGetCities();

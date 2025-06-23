@@ -1,6 +1,6 @@
 import Footer from '../common/Footer';
 import NavBar from '../common/NavBar';
-import SearchBar from '../services/SearchBar';
+import SearchBar from '../../ui/SearchBar';
 import SearchResultsPage from './SearchResultsPage';
 
 function SearchByTypePage() {

@@ -155,6 +155,7 @@ namespace GetMyTicket.Service.Services
               Nationality = passenger.Passenger.Nationality,
               PassengerType = Enum.GetName<PassengerType>(passenger.Passenger.PassengerType),
               IsAccountOwner = passenger.IsAccountOwner,
+              DocumentExpirationDate = passenger.Passenger.ExpirationDate
             }).ToList();
       }
 

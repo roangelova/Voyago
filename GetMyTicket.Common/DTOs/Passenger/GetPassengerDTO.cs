@@ -14,6 +14,8 @@
 
         public string DocumentType { get; set; }
 
+        public DateOnly? DocumentExpirationDate { get; set; }
+
         public string DocumentId { get; set; }
 
         public string? Label { get; set; }

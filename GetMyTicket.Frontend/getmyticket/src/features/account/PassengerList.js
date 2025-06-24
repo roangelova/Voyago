@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useAccountContext } from "./AccountContext";
 import { Passenger } from "../../services/passengerService";
 import { getFormattedDob } from "../../helpers";
+import EditPassengerPopup from "./EditPassengerPopup";
 
 export default function PassengerList() {
   const data = useAccountContext();
   const [passengers, setPassengers] = useState([]);
-  console.log(data);
+  const [showEditForm, setShowEditForm] = useState(true);
+  const [passengerToEdit, setPassengerToEdit] = useState(null);
 
   useEffect(() => {
     Passenger.getPassengersForUser(data.userId).then((res) =>
@@ -21,21 +23,45 @@ export default function PassengerList() {
         {passengers.map((p) => (
           <div className="passengers__row">
             <div className="passengers__information">
-              <p className="passengers--name">
-                {p?.firstName} {p?.lastName}
-              </p>
+              <div>
+                <p className="passengers--name">
+                  {p?.firstName} {p?.lastName}
+                </p>
+                {p?.isAccountOwner ? (
+                  <span className="passengers__accountOwner">
+                    Account Owner
+                  </span>
+                ) : null}
+              </div>
+
               <p>
                 <strongs>{p?.passengerType}</strongs>
               </p>
               <p>{getFormattedDob(p?.dob)}</p>
             </div>
             <div className="passengers__actions">
-              <button className="btn">Edit</button>
+              <button
+                className="btn"
+                onClick={() => {
+                  setPassengerToEdit(p);
+                  setShowEditForm(true);
+                }}
+              >
+                Edit
+              </button>
               <button className="btn">Delete</button>
             </div>
           </div>
         ))}
       </div>
+
+      {showEditForm ? (
+        <div className="blur-overlay" onClick={() => setShowEditForm(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <EditPassengerPopup passenger={passengerToEdit} />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

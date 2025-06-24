@@ -7,9 +7,9 @@ function SelectPassengesDropdown({
 }) {
   return (
     <>
-      {[...Array(passengersCountForBooking.adults)].map((_, i) => (
+      {[...Array(passengersCountForBooking.adults -1)].map((_, i ) => (
      <React.Fragment key={i}>
-          <label htmlFor="adults">Adult {i + 1}:</label>
+          <label htmlFor="adults">Adult {i + 2}:</label>
           <select
             name="adults"
             id="adults"
@@ -33,7 +33,7 @@ function SelectPassengesDropdown({
 
       {[...Array(passengersCountForBooking.children)].map((_, i) => (
         <React.Fragment key={i}>
-          <label htmlFor="children">Child {i + 1}:</label>
+          <label htmlFor="children">Child { + 1}:</label>
           <select
             name="children"
             id="chldren"

@@ -18,13 +18,13 @@ function Cart() {
   const { trip, passengers: passengersCountForBooking } = location.state || {};
   const [userPassengerList, setUserPassengerList] = useState();
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
+  const [accountOwner, setAccountOwner] = useState(null);
 
   const navigate = useNavigate();
-  console.log(trip, passengersCountForBooking);
 
   let imageSrc;
   trip.transportationProviderLogo !== ""
-    ? (imageSrc = `data:image/png;base64,${trip.transportationProviderLogo}`)
+    ? (imageSrc = `data:image/png;base64,${trip?.transportationProviderLogo}`)
     : (imageSrc = fallbackLogo);
 
   useEffect(() => {
@@ -33,7 +33,12 @@ function Cart() {
     }
     Passenger.getPassengersForUser(userId).then((data) => {
       setUserPassengerList(data);
-      console.log(data);
+      let filteredOwner = data.filter((x) => x?.isAccountOwner === true)[0];
+      setAccountOwner(filteredOwner);
+      setPassengerIdsForBooking([
+        ...passengerIdsForBooking,
+        filteredOwner?.passengerId,
+      ]);
     });
   }, []);
 
@@ -55,7 +60,9 @@ function Cart() {
       <div className="cart__container">
         <div className="cart">
           <div className="cart__left">
-            <h4 className="heading--quaternary">Your {trip.typeOfTrip.toLowerCase()} booking</h4>
+            <h4 className="heading--quaternary">
+              Your {trip.typeOfTrip.toLowerCase()} booking
+            </h4>
             <div className="cart__row cart__trip">
               <h5>
                 {trip.startCityName} to {trip.endCityName}
@@ -112,6 +119,15 @@ function Cart() {
             <div className="cart_row">
               <h5>Who's going to travel?</h5>
               <div className="cart__passengers">
+                <>
+                  <label>Adult 1: </label>
+                  <select disabled>
+                    <option >
+                      {accountOwner?.firstName} {accountOwner?.lastName}
+                    </option>
+                  </select>
+                </>
+
                 <SelectPassengersDropdown
                   passengersCountForBooking={passengersCountForBooking}
                   userPassengerList={userPassengerList}
@@ -154,8 +170,9 @@ function Cart() {
                 <p>Total</p>
                 <p>
                   <strong>
-                    {calculateTotalPrice(trip, passengersCountForBooking)} 
-                  </strong> {trip.currency}
+                    {calculateTotalPrice(trip, passengersCountForBooking)}
+                  </strong>{" "}
+                  {trip.currency}
                 </p>
               </div>
               <span>* All taxes, fees and charges included</span>

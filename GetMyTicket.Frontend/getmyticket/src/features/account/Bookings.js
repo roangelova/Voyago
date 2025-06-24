@@ -1,4 +1,4 @@
-import { formatDate } from "../../helpers";
+import { formatDate, getFormattedBookingDate } from "../../helpers";
 import { useState, useEffect } from "react";
 import FilterBy from "../../ui/FilterBy.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -92,6 +92,7 @@ function Bookings() {
                 <th>Departure Time</th>
                 <th>Total Price</th>
                 <th>Status</th>
+                <th>Booking Date</th>
                 <th>Actions</th>
               </tr>
             )}
@@ -108,6 +109,7 @@ function Bookings() {
                   {b.totalPrice} {b.currency}
                 </td>
                 <td>{b.status}</td>
+                <td>{getFormattedBookingDate(b.bookingDate)}</td>
                 <td className="bookings__actions">
                   {b.status === "Confirmed" ? (
                     <button className="btn btn--destructive" onClick={() => handleCancelBooking(b.bookingId)}>

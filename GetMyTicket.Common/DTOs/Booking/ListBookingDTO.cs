@@ -16,6 +16,8 @@
 
         public string Status { get; set; }
 
+        public DateTime BookingDate { get; set; }
+
         public Guid TripId { get; set; }
     }
 }

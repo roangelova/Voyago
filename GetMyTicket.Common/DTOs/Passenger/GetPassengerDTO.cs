@@ -21,5 +21,7 @@
         public DateOnly Dob {  get; set; }
 
         public string Nationality { get; set; }
+
+        public bool IsAccountOwner { get; set; }
     }
 }

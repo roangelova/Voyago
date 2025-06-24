@@ -153,7 +153,8 @@ namespace GetMyTicket.Service.Services
               DocumentId = passenger.Passenger.DocumentId,
               Dob = passenger.Passenger.DOB,
               Nationality = passenger.Passenger.Nationality,
-              PassengerType = Enum.GetName<PassengerType>(passenger.Passenger.PassengerType)
+              PassengerType = Enum.GetName<PassengerType>(passenger.Passenger.PassengerType),
+              IsAccountOwner = passenger.IsAccountOwner,
             }).ToList();
       }
 

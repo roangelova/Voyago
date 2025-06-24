@@ -134,7 +134,8 @@ namespace GetMyTicket.Service.Services
                  TotalPrice = b.Booking.TotalPrice,
                  Currency = Enum.GetName(b.Booking.Trip.Currency),
                  Status = Enum.GetName(b.Booking.BookingStatus),
-                 TripId = b.Booking.TripId
+                 TripId = b.Booking.TripId,
+                 BookingDate = b.Booking.CreatedAt
              });
          }
     }

@@ -25,7 +25,7 @@ function BookingDetails() {
     if (booking !== undefined) {
       Passenger.getNameAndAge(booking?.bookingId).then((data) =>
         setPassengers(data)
-      );
+      )
     }
   }, [booking]);
 
@@ -60,7 +60,7 @@ function BookingDetails() {
 
             <ul className="booking__details--list">
             {passengers.map(passenger => 
-              <li key={passenger.name}>{passenger.name}, {passenger.age}</li>
+              <li key={passenger?.name}>{passenger?.name}, {passenger?.age}</li>
             )}
             </ul>
           </div>

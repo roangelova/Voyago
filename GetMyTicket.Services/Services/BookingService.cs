@@ -112,7 +112,9 @@ namespace GetMyTicket.Service.Services
 
             if (passengerId is null)
             {
-                throw new ApplicationError(ResponseConstants.NoBookingsForThisUser);
+                // throw new ApplicationError(ResponseConstants.NoBookingsForThisUser);
+                //TODO: User does not have passenger data yet. Return empty bookings for now  until we decide how we wantg to handle this
+                return new List<ListBookingDTO>();
             }
 
             var data = await unitOfWork.PassengerBookingMap

@@ -7,7 +7,7 @@ import EditPassengerPopup from "./EditPassengerPopup";
 export default function PassengerList() {
   const data = useAccountContext();
   const [passengers, setPassengers] = useState([]);
-  const [showEditForm, setShowEditForm] = useState(true);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [passengerToEdit, setPassengerToEdit] = useState(null);
 
   useEffect(() => {
@@ -20,8 +20,13 @@ export default function PassengerList() {
     <div className="passengers">
       <div className="passengers__content">
         <h4 className="heading--quaternary">Passengers:</h4>
-        {passengers.map((p) => (
-          <div className="passengers__row">
+
+        { passengers?.length === 0 ? 
+          <p className="account__noData">No passengers registered to this account yet</p>
+         : null}
+
+        {passengers?.map((p) => (
+          <div key={p?.passengerId} className="passengers__row">
             <div className="passengers__information">
               <div>
                 <p className="passengers--name">
@@ -35,7 +40,7 @@ export default function PassengerList() {
               </div>
 
               <p>
-                <strongs>{p?.passengerType}</strongs>
+                <strong>{p?.passengerType}</strong>
               </p>
               <p>{getFormattedDob(p?.dob)}</p>
             </div>
@@ -58,7 +63,7 @@ export default function PassengerList() {
       {showEditForm ? (
         <div className="blur-overlay" onClick={() => setShowEditForm(false)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <EditPassengerPopup passenger={passengerToEdit} />
+            <EditPassengerPopup passengertoEdit={passengerToEdit} />
           </div>
         </div>
       ) : null}

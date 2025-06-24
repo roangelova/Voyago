@@ -53,10 +53,10 @@ function App() {
                 />
                 <Route
                   path="paymentMethods"
-                  element={<h1>Payment methods</h1>}
+                  element={<p className="account__noData">No payment methods registered yet</p>}
                 />
                 <Route path="passengers" element={<PassengerList />} />
-                <Route path="notifications" element={<h1>Notifications</h1>} />
+                <Route path="notifications" element={<p className="account__noData">No notifications yet</p>} />
                 <Route path="help" element={<h1>Help</h1>} />
               </Route>
             </Route>

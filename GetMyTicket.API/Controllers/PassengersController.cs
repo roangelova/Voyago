@@ -33,9 +33,9 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditPassenger(EditPassengerDTO data)
+        public async Task<IActionResult> EditPassenger(EditPassengerDTO data, CancellationToken cancellationToken)
         {
-            var updatedPassenger = await passengerService.EditPassenger(data);
+            var updatedPassenger = await passengerService.EditPassenger(data, cancellationToken);
 
             if (updatedPassenger == null)
                 return NotFound();

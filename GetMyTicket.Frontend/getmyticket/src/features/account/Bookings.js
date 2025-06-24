@@ -67,6 +67,7 @@ function Bookings() {
   return (
     <>
       <title>Bookings | Voyago</title>
+      
       <div className="bookings__container">
         <div className="bookings__options">
           <FilterBy
@@ -79,11 +80,9 @@ function Bookings() {
         </div>
         <div className="bookings__tableWrapper">
              <table>
-          <thead>
+          
             {!filteredData || filteredData.length === 0 ? (
-              <tr>
-                <th className="bookings__noData">No bookings</th>
-              </tr>
+              <p className="account__noData">No bookings</p>
             ) : (
               <tr>
                 <th>Booking reference</th>
@@ -96,7 +95,6 @@ function Bookings() {
                 <th>Actions</th>
               </tr>
             )}
-          </thead>
 
           <tbody>
            {filteredData?.map((b) => (

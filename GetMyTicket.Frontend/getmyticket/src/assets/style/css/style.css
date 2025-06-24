@@ -1457,4 +1457,13 @@ input[type=checkbox] {
   margin-top: 2.5rem;
 }
 
+.account__noData {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 3rem 0;
+  background-color: #f9f7f6;
+  font-size: 2rem;
+}
+
 /*# sourceMappingURL=style.css.map */

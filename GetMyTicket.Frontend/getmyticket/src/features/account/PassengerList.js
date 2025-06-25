@@ -11,6 +11,9 @@ export default function PassengerList() {
   const [passengerToEdit, setPassengerToEdit] = useState(null);
 
   useEffect(() => {
+    if (!data.userId) {
+      return;
+    }
     Passenger.getPassengersForUser(data.userId).then((res) =>
       setPassengers(res)
     );
@@ -23,10 +26,8 @@ export default function PassengerList() {
         {passengers?.length === 0 ? (
           <div className="passengers__noPassengers">
             <p>No passengers registered to this account yet.</p>
-          
           </div>
         ) : null}
-
 
         {passengers?.map((p) => (
           <div key={p?.passengerId} className="passengers__row">
@@ -61,19 +62,25 @@ export default function PassengerList() {
             </div>
           </div>
         ))}
-          <button className="btn" onClick={() => {setShowEditForm(true); setPassengerToEdit(null)}}>
-              Add passenger
-            </button>
+        <button
+          className="btn"
+          onClick={() => {
+            setShowEditForm(true);
+            setPassengerToEdit(null);
+          }}
+        >
+          Add passenger
+        </button>
       </div>
 
       {showEditForm ? (
         <div className="blur-overlay" onClick={() => setShowEditForm(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <EditPassengerPopup
-             passengertoEdit={passengerToEdit} 
-             setPassengerToEdit={setPassengerToEdit}
-             setShowEditForm={setShowEditForm}
-             />
+              passengertoEdit={passengerToEdit}
+              setPassengerToEdit={setPassengerToEdit}
+              setShowEditForm={setShowEditForm}
+            />
           </div>
         </div>
       ) : null}

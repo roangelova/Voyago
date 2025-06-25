@@ -49,17 +49,17 @@ function Bookings() {
     if (confirmed) {
       cancelBooking(id);
     }
-   //const updatedBookings = bookings.map((booking) =>
-   //  booking.bookingId === id ? { ...booking, status: "Canceled" } : booking
-   //);
+    //const updatedBookings = bookings.map((booking) =>
+    //  booking.bookingId === id ? { ...booking, status: "Canceled" } : booking
+    //);
 
-   //const filterByParam = searchParams.get(FILTER_PARAM);
-   //let updatedFilteredData = [...updatedBookings];
-   //updatedFilteredData = updatedFilteredData.filter(
-   //  (b) => b.status === filterByParam
-   //);
+    //const filterByParam = searchParams.get(FILTER_PARAM);
+    //let updatedFilteredData = [...updatedBookings];
+    //updatedFilteredData = updatedFilteredData.filter(
+    //  (b) => b.status === filterByParam
+    //);
 
-   //setFilteredData(updatedFilteredData);
+    //setFilteredData(updatedFilteredData);
   }
 
   //TODO -> ADD BOOKING REFERENCES AS WELL TO THE DB AND USE IT HERE
@@ -67,7 +67,7 @@ function Bookings() {
   return (
     <>
       <title>Bookings | Voyago</title>
-      
+
       <div className="bookings__container">
         <div className="bookings__options">
           <FilterBy
@@ -78,11 +78,15 @@ function Bookings() {
             setFilterValue={setFilterValue}
           />
         </div>
+        s
         <div className="bookings__tableWrapper">
-             <table>
-          
+          <table>
             {!filteredData || filteredData.length === 0 ? (
-              <p className="account__noData">No bookings</p>
+              <thead>
+              <tr>
+                <th className="account__noData">No bookings</th>
+              </tr>
+              </thead>
             ) : (
               <tr>
                 <th>Booking reference</th>
@@ -96,39 +100,41 @@ function Bookings() {
               </tr>
             )}
 
-          <tbody>
-           {filteredData?.map((b) => (
-              <tr key={b.bookingId}>
-                <td>XYZ123</td>
-                <td>{b.fromCityName}</td>
-                <td>{b.toCityName}</td>
-                <td>{formatDate(b.departureTime)}</td>
-                <td>
-                  {b.totalPrice} {b.currency}
-                </td>
-                <td>{b.status}</td>
-                <td>{getFormattedBookingDate(b.bookingDate)}</td>
-                <td className="bookings__actions">
-                  {b.status === "Confirmed" ? (
-                    <button className="btn btn--destructive" onClick={() => handleCancelBooking(b.bookingId)}>
-                      Cancel
+            <tbody>
+              {filteredData?.map((b) => (
+                <tr key={b.bookingId}>
+                  <td>XYZ123</td>
+                  <td>{b.fromCityName}</td>
+                  <td>{b.toCityName}</td>
+                  <td>{formatDate(b.departureTime)}</td>
+                  <td>
+                    {b.totalPrice} {b.currency}
+                  </td>
+                  <td>{b.status}</td>
+                  <td>{getFormattedBookingDate(b.bookingDate)}</td>
+                  <td className="bookings__actions">
+                    {b.status === "Confirmed" ? (
+                      <button
+                        className="btn btn--destructive"
+                        onClick={() => handleCancelBooking(b.bookingId)}
+                      >
+                        Cancel
+                      </button>
+                    ) : null}
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        navigate(`/account/bookings/${b.bookingId}`)
+                      }
+                    >
+                      Manage booking
                     </button>
-                  ) : null}
-                  <button className="btn"
-                    onClick={() =>
-                      navigate(`/account/bookings/${b.bookingId}`)
-                    }
-                  >
-                    Manage booking
-                  </button>
-                </td>
-              </tr>
-            ))}
-
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-     
       </div>
     </>
   );

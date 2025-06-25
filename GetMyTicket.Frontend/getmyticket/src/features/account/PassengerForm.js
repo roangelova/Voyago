@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Passenger } from "../../services/passengerService";
 import { toast } from "react-toastify";
+import { isAtLeast18 } from "../../helpers";
 
 function PassengerForm({ passengertoEdit,setShowEditForm }) {
   const [passenger, setPassenger] = useState(passengertoEdit);
@@ -24,32 +25,34 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
     e.preventDefault();
 
     let data = {
-      passengerId: passenger.passengerId,
-      firstName: passenger.firstName,
-      lastName: passenger.lastName,
-      label: passenger.label,
-      nationality: passenger.nationality,
-      documentType: passenger.documentType,
-      documentId: passenger.documentId,
-      documentExpirationDate: passenger.documentExpirationDate,
+      firstName: passenger?.firstName,
+      lastName: passenger?.lastName,
+      label: passenger?.label,
+      nationality: passenger?.nationality,
+      documentType: passenger?.documentType,
+      documentId: passenger?.documentId,
+      documentExpirationDate: passenger?.documentExpirationDate,
     };
 
     if (passenger.passengerId) {
-      Passenger.editPassenger(data)
+      //passenger exists. This is an EDIT operation
+      Passenger.editPassenger({...data, passengerId: passenger.passengerId})
         .then(() => {
           setShowEditForm(false)
           toast.info("Passenger was edited successfully.");
         })
         .catch((err) => toast.error(err));
-      //passenger exists. This is an edit operation
     } else {
-      //create passenger
+      //CREATE passenger
+      if(!isAtLeast18(passenger.dob) && passenger.isAccountOwner)
+        toast.error("Can't register an underage account owner.");
+
       Passenger.createPassenger({
         ...data,
         userId: sessionStorage.getItem("userId"),
         gender: passenger.gender,
         dob: passenger.dob,
-        isAccountOwner: passenger.isAccountOwner,
+        isAccountOwner: passenger.isAccountOwner ?? false,
       })
         .then(() => {
           toast.info("Passenger was created successfully.");
@@ -111,11 +114,11 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
               <label htmlFor="isAccountOwner">
                 Is this passenger the account owner?
               </label>
-              <input type="checkbox" name="isAccountOwner" defaultChecked />
+              <input type="checkbox" name="isAccountOwner" onBlur={handleEditField} />
             </div>
             <div>
               <label htmlFor="dob">Date of birth:</label>
-              <input type="date" name="dob" defaultChecked />
+              <input type="date" name="dob" onBlur={handleEditField}/>
             </div>
           </>
         : null}

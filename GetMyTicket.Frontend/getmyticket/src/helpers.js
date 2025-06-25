@@ -85,3 +85,17 @@ export function calculateTotalPrice(trip, passengers) {
     passengers.children * trip.childrenPrice
   );
 }
+
+
+//Check if the user/passenger with the provided date string is at least 18 years old
+export function isAtLeast18(dobString) {
+  const dob = new Date(dobString);
+  const today = new Date();
+
+  const age = today.getFullYear() - dob.getFullYear();
+  const hasHadBirthdayThisYear =
+    today.getMonth() > dob.getMonth() ||
+    (today.getMonth() === dob.getMonth() && today.getDate() >= dob.getDate());
+
+  return age > 18 || (age === 18 && hasHadBirthdayThisYear);
+}

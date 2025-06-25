@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Passenger } from "../../services/passengerService";
 import { toast } from "react-toastify";
 
-function EditPassengerPopup({ passengertoEdit }) {
+function PassengerForm({ passengertoEdit,setShowEditForm }) {
   const [passenger, setPassenger] = useState(passengertoEdit);
+  const [isEdit, setIsEdit] = useState(!!passengertoEdit);
 
+  //TODO --> ADD VALIDATION
   function handleEditField(e) {
     let fieldToUpdate = e.target.name;
     let newValue = e.target.value;
@@ -15,9 +17,13 @@ function EditPassengerPopup({ passengertoEdit }) {
     }));
   }
 
-  function handleEditPassenger(e) {
+  const titlePage = passenger?.passengerId ? "Edit passenger" : "Add passenger";
+  const titleBtn = passenger?.passengerId ? "Edit" : "Add";
+
+  function handleOnClick(e) {
     e.preventDefault();
-    Passenger.editPassenger({
+
+    let data = {
       passengerId: passenger.passengerId,
       firstName: passenger.firstName,
       lastName: passenger.lastName,
@@ -26,17 +32,37 @@ function EditPassengerPopup({ passengertoEdit }) {
       documentType: passenger.documentType,
       documentId: passenger.documentId,
       documentExpirationDate: passenger.documentExpirationDate,
-    })
-      .then(() => {
-        toast.information("Passenger was edited successful.");
+    };
+
+    if (passenger.passengerId) {
+      Passenger.editPassenger(data)
+        .then(() => {
+          setShowEditForm(false)
+          toast.info("Passenger was edited successfully.");
+        })
+        .catch((err) => toast.error(err));
+      //passenger exists. This is an edit operation
+    } else {
+      //create passenger
+      Passenger.createPassenger({
+        ...data,
+        userId: sessionStorage.getItem("userId"),
+        gender: passenger.gender,
+        dob: passenger.dob,
+        isAccountOwner: passenger.isAccountOwner,
       })
-      .catch((err) => toast.error(err));
+        .then(() => {
+          toast.info("Passenger was created successfully.");
+          setShowEditForm(false)
+        })
+        .catch((err) => toast.error(err));
+    }
   }
 
   return (
-    <div className="editPassenger">
+    <div className={`passengerForm ${!isEdit ?'passengerForm__create' : null}`}>
       <form>
-        <h4 className="heading--quaternary">Edit passenger</h4>
+        <h4 className="heading--quaternary">{titlePage}</h4>
         <div>
           <label htmlFor="firstName">First name:</label>
           <input
@@ -64,6 +90,36 @@ function EditPassengerPopup({ passengertoEdit }) {
             onBlur={handleEditField}
           />
         </div>
+
+        {!isEdit ? 
+          <>
+            <div>
+              <label htmlFor="gender">Gender:</label>
+              <select id="gender" name="gender" onBlur={handleEditField}>
+                <option key={0} value={"Male"}>
+                  Male
+                </option>
+                <option key={1} value={"Female"}>
+                  Female
+                </option>
+                <option key={2} value={"Other"}>
+                  Other
+                </option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="isAccountOwner">
+                Is this passenger the account owner?
+              </label>
+              <input type="checkbox" name="isAccountOwner" defaultChecked />
+            </div>
+            <div>
+              <label htmlFor="dob">Date of birth:</label>
+              <input type="date" name="dob" defaultChecked />
+            </div>
+          </>
+        : null}
+
         <div>
           <label htmlFor="nationality">Nationality:</label>
           <input
@@ -73,12 +129,13 @@ function EditPassengerPopup({ passengertoEdit }) {
             onBlur={handleEditField}
           />
         </div>
+
         <div>
           <label htmlFor="documentType">Document type:</label>
           <select
             defaultValue={passenger?.documentType}
             id="documentType"
-            name="documentTypes"
+            name="documentType"
             onBlur={handleEditField}
           >
             <option key={0} value={null}>
@@ -111,11 +168,13 @@ function EditPassengerPopup({ passengertoEdit }) {
           />
         </div>
         <div>
-          <button onClick={handleEditPassenger} className="btn">Edit</button>
+          <button onClick={handleOnClick} className="btn">
+            {titleBtn}
+          </button>
         </div>
       </form>
     </div>
   );
 }
 
-export default EditPassengerPopup;
+export default PassengerForm;

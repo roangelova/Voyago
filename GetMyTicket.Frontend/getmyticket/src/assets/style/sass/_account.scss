@@ -125,17 +125,46 @@
     padding: 0.5rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
   }
+
+  &__noPassengers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    background-color: $color-grey-light-1;
+    padding: 2rem;
+
+    & p {
+      padding: 3rem 0;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    & button {
+      padding: 1.5rem 3rem;
+      font-size: 1.8rem;
+    }
+  }
 }
 
-.editPassenger {
+.passengerForm {
   background-color: #fff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
   max-width: 60rem;
   width: 60rem;
   height: 70rem;
   max-height: 70rem;
-  padding: 4rem;
   margin: auto 0;
+  padding: 4rem;
+
+  &__radio {
+    width: 100%;
+  }
+
+  &__create{
+    height: 85rem;
+    max-height:85rem;
+  }
 
   & form {
     display: flex;
@@ -147,7 +176,7 @@
 
     & div:not(:last-child) {
       display: grid;
-      grid-template-columns:20rem 20rem;
+      grid-template-columns: 20rem 20rem;
       align-items: center;
 
       & input,
@@ -171,12 +200,11 @@
   }
 }
 
-
-.account__noData{
-    display: block;
-    text-align: center;
-    width: 100%;
-    padding: 3rem 0;
-    background-color: $color-grey-light-1;
-    font-size: 2rem;
-  }
+.account__noData {
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 3rem 0;
+  background-color: $color-grey-light-1;
+  font-size: 2rem;
+}

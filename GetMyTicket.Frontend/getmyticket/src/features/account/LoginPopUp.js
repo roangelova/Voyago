@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { Account } from "../../services/accountService";
 import { setAccessAndRefreshTokenInCookies } from "../../helpers";
 
-function Login({setLoginPopupVisibility}) {
+function Login({ setLoginPopupVisibility }) {
   const Login = (formData) => {
     let email = formData.get("email");
     let password = formData.get("password");
@@ -14,14 +14,12 @@ function Login({setLoginPopupVisibility}) {
 
     Account.login({ email, password })
       .then((res) => {
-       sessionStorage.setItem("userId", res.userId);
-       window.dispatchEvent(new Event("userIdSet"));
-
+        sessionStorage.setItem("userId", res.userId);
+        window.dispatchEvent(new Event("userIdSet"));
         setAccessAndRefreshTokenInCookies(res);
-
         toast.success("You have logged in successfully!");
         //NOTE: we do not navigate. User might want to login after clicking on a trip to book
-        setLoginPopupVisibility(false)
+        setLoginPopupVisibility(false);
       })
       .catch((err) => {
         toast.error(err.response?.data ?? "There was an error logging you in.");

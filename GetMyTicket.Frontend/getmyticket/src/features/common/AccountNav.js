@@ -18,6 +18,7 @@ function AccountNav() {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
     sessionStorage.removeItem("userId");
+    window.dispatchEvent(new Event("refreshUser"));
     navigate("/");
   }
 

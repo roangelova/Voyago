@@ -9,7 +9,7 @@ import LoginPopUp from "../account/LoginPopUp";
 import RegisterPopUp from "../account/RegisterPopUp";
 
 function NavBar() {
-  let isLoggedIn = !!Cookies.get("accessToken");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("accessToken"));
 
   const [LoginPopupVisibility, setLoginPopupVisibility] = useState(false);
   const [RegisterPopupVisibility, setRegisterPopupVisibility] = useState(false);
@@ -22,20 +22,33 @@ function NavBar() {
     setRegisterPopupVisibility(!RegisterPopupVisibility);
   };
 
+  function handleUpdateUserNav() {
+    setIsLoggedIn(!!Cookies.get("accessToken"));
+  }
+
   useEffect(() => {
-    //disables back button on login popup
-    if (LoginPopupVisibility) {
-      window.history.pushState(null, "", window.location.href);
+    window.addEventListener("refreshUser", handleUpdateUserNav);
 
-      const handleBackButton = (e) => {
-        e.preventDefault();
-        console.log("HANDLE BACK BUTTON");
-        window.history.pushState(null, "", window.location.href);
-      };
+    return () => {
+      window.removeEventListener("refreshUser", handleUpdateUserNav);
+    };
+  }, []);
 
-      window.addEventListener("popstate", handleBackButton);
-    }
-  }, [LoginPopupVisibility, setLoginPopupVisibility]);
+  //TODO-> seems to work withut this: why?
+  // useEffect(() => {
+  //   //disables back button on login popup
+  //   if (LoginPopupVisibility) {
+  //     window.history.pushState(null, "", window.location.href);
+  //
+  //     const handleBackButton = (e) => {
+  //       e.preventDefault();
+  //       console.log("HANDLE BACK BUTTON");
+  //       window.history.pushState(null, "", window.location.href);
+  //     };
+  //
+  //     window.addEventListener("popstate", handleBackButton);
+  //   }
+  // }, [LoginPopupVisibility, setLoginPopupVisibility]);
 
   //TODO -> THEY ARE EITHER GONNA BE NAVLINKS OR A -elements; we cant have it both ways;
   const NoUserNav = (

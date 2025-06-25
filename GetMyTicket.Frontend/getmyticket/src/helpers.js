@@ -74,6 +74,8 @@ export function setAccessAndRefreshTokenInCookies(response) {
       sameSite: true,
     }
   );
+
+  window.dispatchEvent(new Event("refreshUser"));
 }
 
 //calculates the total price for the booking

@@ -27,6 +27,28 @@ namespace GetMyTicket.Persistance.Generic_Repository
             DbSet.Remove(entity );
         }
 
+        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool AsNonTracking = false, CancellationToken cancellationToken = default, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = DbSet;
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (AsNonTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.FirstOrDefaultAsync(cancellationToken);
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync(
           Expression<Func<T, bool>>? filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,

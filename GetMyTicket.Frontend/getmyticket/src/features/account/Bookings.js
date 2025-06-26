@@ -78,7 +78,7 @@ function Bookings() {
             setFilterValue={setFilterValue}
           />
         </div>
-        s
+        
         <div className="bookings__tableWrapper">
           <table>
             {!filteredData || filteredData.length === 0 ? (

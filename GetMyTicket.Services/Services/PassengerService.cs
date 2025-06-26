@@ -114,7 +114,7 @@ namespace GetMyTicket.Service.Services
             passenger.ExpirationDate = dto.DocumentExpirationDate ?? dto.DocumentExpirationDate;
             passenger.Nationality = string.IsNullOrWhiteSpace(dto?.Nationality) ? passenger.Nationality : dto.Nationality.Trim();
             userPassengerMap.Label = string.IsNullOrWhiteSpace(dto?.Label) ? userPassengerMap.Label : dto.Label.Trim();
-           
+
 
             if (!string.IsNullOrWhiteSpace(dto.DocumentType))
             {
@@ -186,7 +186,31 @@ namespace GetMyTicket.Service.Services
             return result;
         }
 
-        public static int CalculateAge(DateOnly dob)
+        public async Task DeletePassenger(Guid passengerId, CancellationToken cancellationToken)
+        {
+            var passenger = await unitOfWork.Passengers.GetAsync(x => x.PassengerId == passengerId, false, cancellationToken, x => x.UserPassengerMaps);
+
+            if(passenger.UserPassengerMaps.Any(x => x.IsAccountOwner is true))
+            {
+                throw new ApplicationException(ResponseConstants.CantDeleteAccountOwnersPassengerEntity);
+            }
+
+            passenger.IsDeleted = true;
+            passenger.DeletedAt = DateTime.UtcNow;
+
+            foreach (var x in passenger.UserPassengerMaps)
+            {
+                x.IsDeleted = true;
+                x.DeletedAt = DateTime.UtcNow;
+            }
+
+             unitOfWork.Passengers.Update(passenger);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return;
+        }
+
+        private static int CalculateAge(DateOnly dob)
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
             int age = today.Year - dob.Year;
@@ -197,7 +221,7 @@ namespace GetMyTicket.Service.Services
             return age;
         }
 
-        public static T ParseEnum<T>(string value) where T : struct, Enum
+        private static T ParseEnum<T>(string value) where T : struct, Enum
         {
             if (Enum.TryParse<T>(value, out var result))
             {

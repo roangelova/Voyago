@@ -97,7 +97,7 @@ namespace GetMyTicket.Persistance.Context
                 .HasForeignKey(pb => pb.BookingId);
 
 
-            // ApplyGlobalQueryFilters(builder);
+             ApplyGlobalQueryFilters(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -257,6 +257,7 @@ namespace GetMyTicket.Persistance.Context
                 {
                     entry.Entity.IsDeleted = true;
                     entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                    entry.Entity.DeletedAt = DateTime.UtcNow;
                 }
                 else if (entry.State == EntityState.Modified)
                 {
@@ -288,6 +289,9 @@ namespace GetMyTicket.Persistance.Context
             modelBuilder.Entity<User>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<ApplicationRole>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<BaggageItem>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<PassengerBookingMap>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<UserPassengerMap>().HasQueryFilter(x => x.IsDeleted == false);
+
         }
     }
 }

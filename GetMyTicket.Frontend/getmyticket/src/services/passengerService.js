@@ -4,5 +4,6 @@ export const Passenger = {
     getPassengersForUser: (userId) => api.get(`api/passengers/by-user/${userId}`),
     createPassenger: (data) => api.post('api/passengers', data),
     editPassenger: ( data) => api.put(`api/passengers`, data),
-     getNameAndAge: (bookingId) => api.get(`api/passengers/${bookingId}`)
+     getNameAndAge: (bookingId) => api.get(`api/passengers/${bookingId}`),
+     deletePassenger: (passengerId) => api.delete(`api/passengers/${passengerId}`)
 }

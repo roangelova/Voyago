@@ -188,11 +188,21 @@ namespace GetMyTicket.Service.Services
 
         public async Task DeletePassenger(Guid passengerId, CancellationToken cancellationToken)
         {
-            var passenger = await unitOfWork.Passengers.GetAsync(x => x.PassengerId == passengerId, false, cancellationToken, x => x.UserPassengerMaps);
+            var passenger = await unitOfWork.Passengers.GetAsync(
+                x => x.PassengerId == passengerId, 
+                false, cancellationToken, 
+                x => x.UserPassengerMaps,
+                x=> x.PassengerBookingMaps);
 
             if(passenger.UserPassengerMaps.Any(x => x.IsAccountOwner is true))
             {
                 throw new ApplicationException(ResponseConstants.CantDeleteAccountOwnersPassengerEntity);
+            }
+
+            bool hasActiveBookings = passenger.PassengerBookingMaps.Any(x => !x.IsDeleted);
+            if(hasActiveBookings)
+            {
+                throw new ApplicationException(string.Format(ResponseConstants.CantDeleteXwithActiveY, nameof(Passenger), nameof(Booking)));
             }
 
             passenger.IsDeleted = true;

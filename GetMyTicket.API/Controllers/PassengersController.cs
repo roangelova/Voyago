@@ -49,7 +49,7 @@ namespace GetMyTicket.API.Controllers
             return await passengerService.GetPassengersForBooking(bookingId, cancellationToken);
         }
 
-        [HttpDelete]
+        [HttpDelete("{passengerId}")]
         public async Task DeletePassenger(Guid passengerId, CancellationToken cancellationToken= default)
         {
              await passengerService.DeletePassenger(passengerId, cancellationToken);

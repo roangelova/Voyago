@@ -3,6 +3,7 @@ import { useAccountContext } from "./AccountContext";
 import { Passenger } from "../../services/passengerService";
 import { getFormattedDob } from "../../helpers";
 import EditPassengerPopup from "./PassengerForm";
+import { toast } from "react-toastify";
 
 export default function PassengerList() {
   const data = useAccountContext();
@@ -18,6 +19,16 @@ export default function PassengerList() {
       setPassengers(res)
     );
   }, []);
+
+  function onHandleDelete(passengerId) {
+    Passenger.deletePassenger(passengerId)
+      .then((res) => {
+        toast.success("Passenger deleted successfully");
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }
 
   return (
     <div className="passengers">
@@ -58,7 +69,12 @@ export default function PassengerList() {
               >
                 Edit
               </button>
-              <button className="btn">Delete</button>
+              <button
+                className="btn"
+                onClick={() => onHandleDelete(p?.passengerId)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

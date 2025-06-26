@@ -38,7 +38,7 @@ axios.interceptors.request.use(async (config) => {
     const tokenExpiresIn =
       new Date(JSON.parse(accessTokenCookie).expires) - new Date();
     //refetch if token expires in 60s;
-    if (tokenExpiresIn < 60000) {
+    if (tokenExpiresIn < 120000) {
       await refreshTokens();
     }
   } else {
@@ -53,19 +53,19 @@ axios.interceptors.response.use(
     return response.data;
   },
   function (error) {
-    if (!error.response.status === 401) {
+    if (!error?.response?.status === 401) {
       toast.error("Something went wrong. Please, log in to continue.");
       window.location.href = "/";
-    } else if (error.code === "ERR_NETWORK") {
+    } else if (error?.code === "ERR_NETWORK") {
       toast.error("Network error. Please, try again.");
-    } else if (error.response.status >= 500 && error.response.status <= 599) {
-      toast.error("Something went wrong. Please, try again.");
-    } else if (error.response.status === 404) {
+    } else if (error?.response?.status >= 500 && error?.response?.status <= 599) {
+      throw new Error(error.response.data.detail)
+    } else if (error?.response?.status === 404) {
       window.location.href = "/404";
-    } else if (error.status === 400) {
+    } else if (error?.status === 400) {
       console.error(error);
     } else {
-      console.log("Error:", error.response.data);
+      console.log("Error:", error?.response?.data);
     }
     return Promise.reject(error);
   }

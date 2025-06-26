@@ -86,10 +86,10 @@ namespace GetMyTicket.Persistance.Context
             builder.Entity<PassengerBookingMap>()
                 .HasKey(pb => new { pb.PassengerId, pb.BookingId });
 
-            builder.Entity<PassengerBookingMap> ()
+            builder.Entity<PassengerBookingMap>()
                 .HasOne(pb => pb.Passenger)
-                .WithMany( p => p.PassengerBookingMaps)
-                .HasForeignKey (pb => pb.PassengerId);
+                .WithMany(p => p.PassengerBookingMaps)
+                .HasForeignKey(pb => pb.PassengerId);
 
             builder.Entity<PassengerBookingMap>()
                 .HasOne(pb => pb.Booking)
@@ -236,11 +236,19 @@ namespace GetMyTicket.Persistance.Context
                 if (entry.State == EntityState.Deleted)
                 {
                     entry.Entity.IsDeleted = true;
+                    entry.Entity.IsActive = false;
                     entry.Entity.LastUpdatedAt = DateTime.UtcNow;
                 }
                 else if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                }
+                else if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.LastUpdatedAt = DateTime.UtcNow;
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.IsActive = true;
+                    entry.Entity.IsDeleted = false;
                 }
             }
 

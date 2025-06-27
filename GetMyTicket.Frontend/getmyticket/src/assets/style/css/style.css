@@ -681,6 +681,15 @@ input[type=checkbox] {
 .cart__provider p {
   font-size: 1.8rem;
 }
+.cart__addPassenger {
+  margin-top: 3rem;
+  font-size: 1.8rem;
+}
+.cart__addPassenger span {
+  border-bottom: 1px currentColor solid;
+  cursor: pointer;
+  font-weight: 600;
+}
 .cart__right {
   width: 40rem;
   padding: 6rem 1rem;
@@ -1106,6 +1115,8 @@ input[type=checkbox] {
 
 .bookings__options {
   border-bottom: solid 1px #999;
+  display: flex;
+  gap: 2rem;
 }
 .bookings__tableWrapper {
   width: 100%;

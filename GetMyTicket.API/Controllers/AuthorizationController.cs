@@ -91,6 +91,7 @@ namespace GetMyTicket.API.Controllers
 
             if (userIsLoggedIn)
             {
+                await RedisDb.KeyDeleteAsync(user.Id.ToString());
                 return BadRequest(ResponseConstants.SomethingWentWrong);
             }
 

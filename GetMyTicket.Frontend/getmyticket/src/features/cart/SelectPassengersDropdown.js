@@ -1,14 +1,14 @@
 import React from "react";
 
-function SelectPassengesDropdown({
+function SelectPassengersDropdown({
   passengersCountForBooking,
   userPassengerList,
   setPassengerIdsForBooking,
 }) {
   return (
     <>
-      {[...Array(passengersCountForBooking.adults -1)].map((_, i ) => (
-     <React.Fragment key={i}>
+      {[...Array(passengersCountForBooking.adults - 1)].map((_, i) => (
+        <React.Fragment key={i}>
           <label htmlFor="adults">Adult {i + 2}:</label>
           <select
             name="adults"
@@ -17,6 +17,9 @@ function SelectPassengesDropdown({
               setPassengerIdsForBooking((curr) => [...curr, e.target.value])
             }
           >
+            <option key={null} value={null}>
+              --Select passenger--
+            </option>
             {userPassengerList
               ?.filter((x) => x.passengerType === "Adult")
               .map((passenger) => (
@@ -28,12 +31,12 @@ function SelectPassengesDropdown({
                 </option>
               ))}
           </select>
-          </React.Fragment>
+        </React.Fragment>
       ))}
 
       {[...Array(passengersCountForBooking.children)].map((_, i) => (
         <React.Fragment key={i}>
-          <label htmlFor="children">Child { + 1}:</label>
+          <label htmlFor="children">Child {+1}:</label>
           <select
             name="children"
             id="chldren"
@@ -41,6 +44,9 @@ function SelectPassengesDropdown({
               setPassengerIdsForBooking((curr) => [...curr, e.target.value])
             }
           >
+            <option key={null} value={null}>
+              --Select passenger--
+            </option>
             {userPassengerList
               ?.filter((x) => x.passengerType === "Child")
               .map((passenger) => (
@@ -64,6 +70,9 @@ function SelectPassengesDropdown({
               setPassengerIdsForBooking((curr) => [...curr, e.target.value])
             }
           >
+            <option key={null} value={null}>
+              --Select passenger--
+            </option>
             {userPassengerList
               ?.filter((x) => x.passengerType === "Infant")
               .map((passenger) => (
@@ -81,4 +90,4 @@ function SelectPassengesDropdown({
   );
 }
 
-export default SelectPassengesDropdown;
+export default SelectPassengersDropdown;

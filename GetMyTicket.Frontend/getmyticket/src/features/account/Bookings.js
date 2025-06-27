@@ -1,6 +1,7 @@
 import { formatDate, getFormattedBookingDate } from "../../helpers";
 import { useState, useEffect } from "react";
 import FilterBy from "../../ui/FilterBy.js";
+import SortBy from "../../ui/SortBy.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAccountContext } from "./AccountContext.js";
 import { useCancelBooking } from "../../services/bookingService.js";
@@ -13,13 +14,21 @@ const options = [
   { key: "Canceled", value: "Canceled" },
 ];
 
+const sortOptions = [
+  { key: "Booking date ASC", value: "bookingDateAsc" },
+  { key: "Booking date DESC", value: "bookingDateDesc" },
+];
+
 function Bookings() {
   const navigate = useNavigate();
   const { mutate: cancelBooking } = useCancelBooking();
   const { bookings } = useAccountContext();
 
-  const [filteredData, setFilteredData] = useState([]);
   const [filterValue, setFilterValue] = useState(options[0].value);
+  const [sortValue, setSortValue] = useState(sortOptions[0].value);
+
+  const [sortedAndFilteredData, setSortedAndFilteredData] = useState([]);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   let updatedData = [...bookings];
@@ -27,20 +36,30 @@ function Bookings() {
   useEffect(() => {
     //set default search params
     searchParams.set("bookingStatus", "All");
+    searchParams.set("sortBy", sortOptions[0].value);
     setSearchParams(searchParams);
-    setFilteredData(...bookings);
+    setSortedAndFilteredData(...bookings);
   }, []);
 
   useEffect(() => {
     //////FILTER
+    if(sortValue === sortOptions[0].value){
+      //asc
+      updatedData = updatedData.sort((a,b) => new Date(a.bookingDate) - new Date(b.bookingDate))
+    }else{
+      //desc
+       updatedData = updatedData.sort((a,b) =>  new Date(b.bookingDate) - new Date(a.bookingDate))
+    }
+
     if (filterValue !== "All") {
       updatedData = updatedData.filter((x) => x.status === filterValue);
     }
-    setFilteredData(updatedData);
+    setSortedAndFilteredData(updatedData);
 
     searchParams.set("bookingStatus", filterValue);
+     searchParams.set("sortBy", sortValue);
     setSearchParams(searchParams);
-  }, [filterValue, setFilterValue, bookings]);
+  }, [filterValue, setFilterValue, sortValue, setSortValue, searchParams,  bookings]);
 
   function handleCancelBooking(id) {
     const confirmed = window.confirm(
@@ -77,11 +96,12 @@ function Bookings() {
             filterValue={filterValue}
             setFilterValue={setFilterValue}
           />
+          <SortBy sortOptions={sortOptions} sortValue={sortValue} setSortValue={setSortValue} />
         </div>
         
         <div className="bookings__tableWrapper">
           <table>
-            {!filteredData || filteredData.length === 0 ? (
+            {!sortedAndFilteredData || sortedAndFilteredData.length === 0 ? (
               <thead>
               <tr>
                 <th className="account__noData">No bookings</th>
@@ -101,7 +121,7 @@ function Bookings() {
             )}
 
             <tbody>
-              {filteredData?.map((b) => (
+              {sortedAndFilteredData?.map((b) => (
                 <tr key={b.bookingId}>
                   <td>XYZ123</td>
                   <td>{b.fromCityName}</td>

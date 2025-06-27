@@ -34,11 +34,15 @@ namespace GetMyTicket.Service.Services
                     string.Format(ResponseConstants.NotFoundError, nameof(User), dto.UserId));
             }
 
-            var registeredAccountOwnersForUserId = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == dto.UserId && x.IsAccountOwner == true);
-
-            if (registeredAccountOwnersForUserId.Any())
+            if (dto.IsAccountOwner)
             {
-                throw new ApplicationException(ResponseConstants.DuplicateIsAccountOwnerWhenCreatingPassenger);
+                //If there already is an account owner registered, we cannot register a second one
+                var registeredAccountOwnersForUserId = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == dto.UserId && x.IsAccountOwner == true);
+
+                if (registeredAccountOwnersForUserId.Any())
+                {
+                    throw new ApplicationException(ResponseConstants.DuplicateIsAccountOwnerWhenCreatingPassenger);
+                }
             }
 
             var gender = ParseEnum<Gender>(dto.Gender);
@@ -189,18 +193,18 @@ namespace GetMyTicket.Service.Services
         public async Task DeletePassenger(Guid passengerId, CancellationToken cancellationToken)
         {
             var passenger = await unitOfWork.Passengers.GetAsync(
-                x => x.PassengerId == passengerId, 
-                false, cancellationToken, 
+                x => x.PassengerId == passengerId,
+                false, cancellationToken,
                 x => x.UserPassengerMaps,
-                x=> x.PassengerBookingMaps);
+                x => x.PassengerBookingMaps);
 
-            if(passenger.UserPassengerMaps.Any(x => x.IsAccountOwner is true))
+            if (passenger.UserPassengerMaps.Any(x => x.IsAccountOwner is true))
             {
                 throw new ApplicationException(ResponseConstants.CantDeleteAccountOwnersPassengerEntity);
             }
 
             bool hasActiveBookings = passenger.PassengerBookingMaps.Any(x => !x.IsDeleted);
-            if(hasActiveBookings)
+            if (hasActiveBookings)
             {
                 throw new ApplicationException(string.Format(ResponseConstants.CantDeleteXwithActiveY, nameof(Passenger), nameof(Booking)));
             }
@@ -214,7 +218,7 @@ namespace GetMyTicket.Service.Services
                 x.DeletedAt = DateTime.UtcNow;
             }
 
-             unitOfWork.Passengers.Update(passenger);
+            unitOfWork.Passengers.Update(passenger);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return;

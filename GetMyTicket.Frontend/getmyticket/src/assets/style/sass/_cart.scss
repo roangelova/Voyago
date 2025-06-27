@@ -82,6 +82,17 @@
     }
   }
 
+  &__addPassenger {
+    margin-top: 3rem;
+    font-size: 1.8rem;
+
+    & span {
+      border-bottom: 1px currentColor solid;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+
   &__right {
     width: 40rem;
     padding: 6rem 1rem;

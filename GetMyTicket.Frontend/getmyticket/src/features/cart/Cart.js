@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Passenger } from "../../services/passengerService";
 import check from "../../assets/icons/check.png";
 import { Booking } from "../../services/bookingService";
+import PassengerForm from "../account/PassengerForm";
 
 const userId = sessionStorage.getItem("userId");
 
@@ -20,7 +21,10 @@ function Cart() {
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
   const [accountOwner, setAccountOwner] = useState(null);
 
+  const [showPassengerForm, setShowPassengerForm] = useState(false);
+
   const navigate = useNavigate();
+  console.log(passengerIdsForBooking);
 
   let imageSrc;
   trip.transportationProviderLogo !== ""
@@ -32,9 +36,12 @@ function Cart() {
       return;
     }
     Passenger.getPassengersForUser(userId).then((data) => {
-      setUserPassengerList(data);
+      console.log(data);
       let filteredOwner = data.filter((x) => x?.isAccountOwner === true)[0];
       setAccountOwner(filteredOwner);
+      setUserPassengerList(
+        data.filter((x) => x.passengerId !== filteredOwner.passengerId)
+      );
       setPassengerIdsForBooking([
         ...passengerIdsForBooking,
         filteredOwner?.passengerId,
@@ -70,7 +77,7 @@ function Cart() {
               <p>Departure: {formatDate(trip.startTime)}</p>
               <p>Arrival:{formatDate(trip.endTime)}</p>
               <div className="cart__provider">
-                <img src={imageSrc} />
+                <img alt="icon" src={imageSrc} />
                 <p>{trip.transportationProviderName}</p>
               </div>
             </div>
@@ -79,22 +86,22 @@ function Cart() {
               <h5>Your fare: Economy</h5>
               <ul>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>Carry-on bag included</li>
                 </div>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>
                     Free cancelation up to <strong>24 </strong>hours prior to
                     departure
                   </li>
                 </div>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>Carry-on bag included</li>
                 </div>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>Seat reservation</li>
                 </div>
               </ul>
@@ -103,13 +110,12 @@ function Cart() {
               <h5>Bags</h5>
               <ul>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>Carry-on bag included</li>
                 </div>
                 <div>
-                  <img className="cart__checkIcon" src={check} />
+                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>
-                    {" "}
                     <strong>1x 23 kg </strong>checked-in bag per person
                   </li>
                 </div>
@@ -122,7 +128,7 @@ function Cart() {
                 <>
                   <label>Adult 1: </label>
                   <select disabled>
-                    <option >
+                    <option>
                       {accountOwner?.firstName} {accountOwner?.lastName}
                     </option>
                   </select>
@@ -134,7 +140,24 @@ function Cart() {
                   setPassengerIdsForBooking={setPassengerIdsForBooking}
                 />
               </div>
+              <div className="cart__addPassenger">
+                Want to <span onClick={() => setShowPassengerForm(true)}>add</span> a new passenger instead?
+              </div>
             </div>
+
+            {showPassengerForm ? (
+              <div
+                className="blur-overlay"
+                onClick={() => setShowPassengerForm(false)}
+              >
+                <div onClick={(e) => e.stopPropagation()}>
+                  <PassengerForm
+                    passengertoEdit={null}
+                    setShowEditForm={setShowPassengerForm}
+                  />
+                </div>
+              </div>
+            ) : null}
 
             <div className="cart__important">
               <h4>Important notice!</h4>

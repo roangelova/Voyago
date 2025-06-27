@@ -3,7 +3,7 @@ import { Passenger } from "../../services/passengerService";
 import { toast } from "react-toastify";
 import { isAtLeast18 } from "../../helpers";
 
-function PassengerForm({ passengertoEdit,setShowEditForm }) {
+function PassengerForm({ passengertoEdit, setShowEditForm }) {
   const [passenger, setPassenger] = useState(passengertoEdit);
   const [isEdit, setIsEdit] = useState(!!passengertoEdit);
 
@@ -36,15 +36,15 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
 
     if (passenger.passengerId) {
       //passenger exists. This is an EDIT operation
-      Passenger.editPassenger({...data, passengerId: passenger.passengerId})
+      Passenger.editPassenger({ ...data, passengerId: passenger.passengerId })
         .then(() => {
-          setShowEditForm(false)
+          setShowEditForm(false);
           toast.info("Passenger was edited successfully.");
         })
         .catch((err) => toast.error(err));
     } else {
       //CREATE passenger
-      if(!isAtLeast18(passenger.dob) && passenger.isAccountOwner)
+      if (!isAtLeast18(passenger.dob) && passenger.isAccountOwner)
         toast.error("Can't register an underage account owner.");
 
       Passenger.createPassenger({
@@ -52,23 +52,26 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
         userId: sessionStorage.getItem("userId"),
         gender: passenger.gender,
         dob: passenger.dob,
-        isAccountOwner: passenger.isAccountOwner ?? false,
+        isAccountOwner: passenger.isAccountOwner === "on" ? true : false,
       })
         .then(() => {
           toast.info("Passenger was created successfully.");
-          setShowEditForm(false)
+          setShowEditForm(false);
         })
         .catch((err) => toast.error(err));
     }
   }
 
   return (
-    <div className={`passengerForm ${!isEdit ?'passengerForm__create' : null}`}>
-      <form>
+    <div
+      className={`passengerForm ${!isEdit ? "passengerForm__create" : null}`}
+    >
+      <form onSubmit={handleOnClick}>
         <h4 className="heading--quaternary">{titlePage}</h4>
         <div>
           <label htmlFor="firstName">First name:</label>
           <input
+          required
             type="text"
             name="firstName"
             defaultValue={passenger?.firstName}
@@ -78,6 +81,7 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
         <div>
           <label htmlFor="lastName">Last name:</label>
           <input
+          required
             type="text"
             name="lastName"
             defaultValue={passenger?.lastName}
@@ -94,7 +98,7 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
           />
         </div>
 
-        {!isEdit ? 
+        {!isEdit ? (
           <>
             <div>
               <label htmlFor="gender">Gender:</label>
@@ -114,14 +118,18 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
               <label htmlFor="isAccountOwner">
                 Is this passenger the account owner?
               </label>
-              <input type="checkbox" name="isAccountOwner" onBlur={handleEditField} />
+              <input
+                type="checkbox"
+                name="isAccountOwner"
+                onBlur={handleEditField}
+              />
             </div>
             <div>
               <label htmlFor="dob">Date of birth:</label>
-              <input type="date" name="dob" onBlur={handleEditField}/>
+              <input  required type="date" name="dob" onBlur={handleEditField} />
             </div>
           </>
-        : null}
+        ) : null}
 
         <div>
           <label htmlFor="nationality">Nationality:</label>
@@ -171,7 +179,7 @@ function PassengerForm({ passengertoEdit,setShowEditForm }) {
           />
         </div>
         <div>
-          <button onClick={handleOnClick} className="btn">
+          <button className="btn">
             {titleBtn}
           </button>
         </div>

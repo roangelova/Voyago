@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAccountContext } from "./AccountContext";
 import { Passenger } from "../../services/passengerService";
 import { getFormattedDob } from "../../helpers";
-import EditPassengerPopup from "./PassengerForm";
+import PassengerForm from "./PassengerForm";
 import { toast } from "react-toastify";
 
 export default function PassengerList() {
@@ -92,7 +92,7 @@ export default function PassengerList() {
       {showEditForm ? (
         <div className="blur-overlay" onClick={() => setShowEditForm(false)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <EditPassengerPopup
+            <PassengerForm
               passengertoEdit={passengerToEdit}
               setPassengerToEdit={setPassengerToEdit}
               setShowEditForm={setShowEditForm}

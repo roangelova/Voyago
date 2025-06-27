@@ -16,6 +16,7 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import BookingDetails from "./features/account/BookingDetails";
 import Account from "./features/pages/Account";
 import PassengerList from "./features/account/PassengerList";
+import AccountDashboard from "./features/account/AccountDashboard";
 
 const queryClient = new QueryClient();
 
@@ -28,24 +29,16 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route index path="/" element={<MainPage />} />
-            
-            <Route
-              path="/trains"
-              element={<SearchByTypePage />}
-            />
-            <Route
-              path="/buses"
-              element={<SearchByTypePage />}
-            />
-            <Route
-              path="/flights"
-              element={<SearchByTypePage />}
-            />
+
+            <Route path="/trains" element={<SearchByTypePage />} />
+            <Route path="/buses" element={<SearchByTypePage />} />
+            <Route path="/flights" element={<SearchByTypePage />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="/cart" element={<Cart />} />
               <Route path="/account" element={<Account />}>
+                <Route path="" element={<AccountDashboard />} />
                 <Route path="bookings" element={<Bookings />} />
                 <Route
                   path="bookings/:bookingId"
@@ -53,10 +46,19 @@ function App() {
                 />
                 <Route
                   path="paymentMethods"
-                  element={<p className="account__noData">No payment methods registered yet</p>}
+                  element={
+                    <p className="account__noData">
+                      No payment methods registered yet
+                    </p>
+                  }
                 />
                 <Route path="passengers" element={<PassengerList />} />
-                <Route path="notifications" element={<p className="account__noData">No notifications yet</p>} />
+                <Route
+                  path="notifications"
+                  element={
+                    <p className="account__noData">No notifications yet</p>
+                  }
+                />
                 <Route path="help" element={<h1>Help</h1>} />
               </Route>
             </Route>

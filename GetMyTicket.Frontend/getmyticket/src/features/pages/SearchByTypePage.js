@@ -1,14 +1,12 @@
-import Footer from '../common/Footer';
-import NavBar from '../common/NavBar';
-import SearchBar from '../../ui/SearchBar';
-import SearchResultsPage from './SearchResultsPage';
-
+import SearchBar from "../../ui/SearchBar";
+import Header from "../common/Header";
 function SearchByTypePage() {
-    return (
-        <div className='search__container'>
-            <SearchBar />
-        </div>
-    );
+  return (
+    <div className="searchByType__page">
+      <Header />
+      <SearchBar />
+    </div>
+  );
 }
 
 export default SearchByTypePage;

@@ -9,6 +9,8 @@ function ProtectedRoute({children}) {
 
     useEffect(() => {
         if (!isLoggedIn) {
+            //makes sure we update the navigation. There isn't a user anymore
+            window.dispatchEvent(new Event("refreshUser"));
             navigate('/');
         }
     }, [isLoggedIn, navigate])

@@ -1,33 +1,17 @@
-import { useEffect, useState } from "react";
-import { useAccountContext } from "./AccountContext";
-import { Passenger } from "../../services/passengerService";
+import { useState } from "react";
 import { getFormattedDob } from "../../helpers";
+import { useDeletePassenger } from "../../services/passengerService";
+import { useAccountContext } from "./AccountContext";
 import PassengerForm from "./PassengerForm";
-import { toast } from "react-toastify";
 
 export default function PassengerList() {
-  const data = useAccountContext();
-  const [passengers, setPassengers] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [passengerToEdit, setPassengerToEdit] = useState(null);
-
-  useEffect(() => {
-    if (!data.userId) {
-      return;
-    }
-    Passenger.getPassengersForUser(data.userId).then((res) =>
-      setPassengers(res)
-    );
-  }, []);
+ const { mutate: deletePassenger } = useDeletePassenger();
+  const { passengers } = useAccountContext();
 
   function onHandleDelete(passengerId) {
-    Passenger.deletePassenger(passengerId)
-      .then((res) => {
-        toast.success("Passenger deleted successfully");
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+    deletePassenger(passengerId);
   }
 
   return (

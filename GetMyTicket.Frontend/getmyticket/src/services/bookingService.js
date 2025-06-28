@@ -19,7 +19,7 @@ export function useCancelBooking() {
     mutationFn: (id) => Booking.cancelBooking(id),
     onSuccess: () => {
       toast.success("Booking was canceled successfully!");
-      queryClient.invalidateQueries(["accountData"]);
+      queryClient.invalidateQueries({queryKey: ['bookings'], refetchType:'all'});
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to cancel booking");

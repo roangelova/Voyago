@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Passenger } from "../../services/passengerService";
+import {
+  Passenger,
+  useCreatePassenger,
+  useEditPassenger,
+} from "../../services/passengerService";
 import { toast } from "react-toastify";
 import { isAtLeast18 } from "../../helpers";
 
 function PassengerForm({ passengertoEdit, setShowEditForm }) {
   const [passenger, setPassenger] = useState(passengertoEdit);
   const [isEdit, setIsEdit] = useState(!!passengertoEdit);
+
+  const { mutate: editPassenger } = useEditPassenger();
+  const { mutate: createPassenger } = useCreatePassenger();
 
   //TODO --> ADD VALIDATION
   function handleEditField(e) {
@@ -24,6 +31,8 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
   function handleOnClick(e) {
     e.preventDefault();
 
+    console.log(passenger)
+
     let data = {
       firstName: passenger?.firstName,
       lastName: passenger?.lastName,
@@ -36,29 +45,33 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
 
     if (passenger.passengerId) {
       //passenger exists. This is an EDIT operation
-      Passenger.editPassenger({ ...data, passengerId: passenger.passengerId })
-        .then(() => {
-          setShowEditForm(false);
-          toast.info("Passenger was edited successfully.");
-        })
-        .catch((err) => toast.error(err));
+      editPassenger(
+        { ...data, passengerId: passenger.passengerId },
+        {
+          onSuccess: () => {
+            setShowEditForm(false);
+          },
+        }
+      );
     } else {
       //CREATE passenger
       if (!isAtLeast18(passenger.dob) && passenger.isAccountOwner)
         toast.error("Can't register an underage account owner.");
 
-      Passenger.createPassenger({
-        ...data,
-        userId: sessionStorage.getItem("userId"),
-        gender: passenger.gender,
-        dob: passenger.dob,
-        isAccountOwner: passenger.isAccountOwner === "on" ? true : false,
-      })
-        .then(() => {
-          toast.info("Passenger was created successfully.");
-          setShowEditForm(false);
-        })
-        .catch((err) => toast.error(err));
+      createPassenger(
+        {
+          ...data,
+          userId: sessionStorage.getItem("userId"),
+          gender: passenger.gender ?? 'Male',
+          dob: passenger.dob,
+          isAccountOwner: passenger.isAccountOwner === "on" ? true : false,
+        },
+        {
+          onSuccess: () => {
+            setShowEditForm(false);
+          },
+        }
+      );
     }
   }
 
@@ -71,7 +84,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
         <div>
           <label htmlFor="firstName">First name:</label>
           <input
-          required
+            required
             type="text"
             name="firstName"
             defaultValue={passenger?.firstName}
@@ -81,7 +94,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
         <div>
           <label htmlFor="lastName">Last name:</label>
           <input
-          required
+            required
             type="text"
             name="lastName"
             defaultValue={passenger?.lastName}
@@ -126,7 +139,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
             </div>
             <div>
               <label htmlFor="dob">Date of birth:</label>
-              <input  required type="date" name="dob" onBlur={handleEditField} />
+              <input required type="date" name="dob" onBlur={handleEditField} />
             </div>
           </>
         ) : null}
@@ -179,9 +192,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
           />
         </div>
         <div>
-          <button className="btn">
-            {titleBtn}
-          </button>
+          <button className="btn">{titleBtn}</button>
         </div>
       </form>
     </div>

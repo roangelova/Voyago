@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { GetUserBookings } from "../../services/bookingService";
 import { useQuery } from "@tanstack/react-query";
+import { getUsersPassengers } from "../../services/passengerService";
 
 const AccountContext = createContext();
 
@@ -31,26 +32,29 @@ function AccountProvider({ children }) {
   }, []);
 
   //FETCH ACCOUNT DATA
- const {
-    data,
-    isLoading,
-    error
-  } = useQuery({
-    queryKey: ["accountData", userId],
+  const { data : bookings } = useQuery({
+    queryKey: ["bookings", userId],
     queryFn: GetUserBookings,
     enabled: !!userId,
-    staleTime: 1000 * 60 * 5,
+  //  staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: passengers } = useQuery({
+    queryKey: ["passengers", userId],
+    queryFn: getUsersPassengers,
+    enabled: !!userId,
   });
 
   //TODO -> should also fetch list of PASSENGERS, NOTIFICATIONS and PAYMENT METHODS (currently
   // no entity in the db AND NOT IN USE), associated with user
   return (
-    <AccountContext.Provider  value={{
+    <AccountContext.Provider
+      value={{
         userId,
-      bookings: data || [],
-        isLoading,
-        error
-      }}>
+        bookings: bookings || [],
+        passengers: passengers || []
+      }}
+    >
       {children}
     </AccountContext.Provider>
   );

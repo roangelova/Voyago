@@ -34,7 +34,7 @@ namespace GetMyTicket.Common.Constants
         public const string OwnershipChangeNotAllowed = "Cannot update trip vehicle to another provider. To do so, please cancel the current trip and add a new one.";
 
         public const string CantDeleteAccountOwnersPassengerEntity = "Passenger can't be deleted as he is registered as an account owner. If you wish to proceed with a deletion, close your account instead.";
-        public const string CantDeleteXwithActiveY = "Cannot delete a {0} with active {}";
+        public const string CantDeleteXwithActiveY = "Cannot delete a {0} with active {1}";
 
         public const string InvalidOperation = "Invalid operation.";
         //SUCCESS

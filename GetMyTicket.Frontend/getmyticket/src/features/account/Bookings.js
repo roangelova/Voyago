@@ -43,12 +43,16 @@ function Bookings() {
 
   useEffect(() => {
     //////FILTER
-    if(sortValue === sortOptions[0].value){
+    if (sortValue === sortOptions[0].value) {
       //asc
-      updatedData = updatedData.sort((a,b) => new Date(a.bookingDate) - new Date(b.bookingDate))
-    }else{
+      updatedData = updatedData.sort(
+        (a, b) => new Date(a.bookingDate) - new Date(b.bookingDate)
+      );
+    } else {
       //desc
-       updatedData = updatedData.sort((a,b) =>  new Date(b.bookingDate) - new Date(a.bookingDate))
+      updatedData = updatedData.sort(
+        (a, b) => new Date(b.bookingDate) - new Date(a.bookingDate)
+      );
     }
 
     if (filterValue !== "All") {
@@ -57,9 +61,16 @@ function Bookings() {
     setSortedAndFilteredData(updatedData);
 
     searchParams.set("bookingStatus", filterValue);
-     searchParams.set("sortBy", sortValue);
+    searchParams.set("sortBy", sortValue);
     setSearchParams(searchParams);
-  }, [filterValue, setFilterValue, sortValue, setSortValue, searchParams,  bookings]);
+  }, [
+    filterValue,
+    setFilterValue,
+    sortValue,
+    setSortValue,
+    searchParams,
+    bookings,
+  ]);
 
   function handleCancelBooking(id) {
     const confirmed = window.confirm(
@@ -96,16 +107,20 @@ function Bookings() {
             filterValue={filterValue}
             setFilterValue={setFilterValue}
           />
-          <SortBy sortOptions={sortOptions} sortValue={sortValue} setSortValue={setSortValue} />
+          <SortBy
+            sortOptions={sortOptions}
+            sortValue={sortValue}
+            setSortValue={setSortValue}
+          />
         </div>
-        
+
         <div className="bookings__tableWrapper">
           <table>
             {!sortedAndFilteredData || sortedAndFilteredData.length === 0 ? (
               <thead>
-              <tr>
-                <th className="account__noData">No bookings</th>
-              </tr>
+                <tr>
+                  <th className="account__noData">No bookings</th>
+                </tr>
               </thead>
             ) : (
               <tr>
@@ -134,21 +149,23 @@ function Bookings() {
                   <td>{getFormattedBookingDate(b.bookingDate)}</td>
                   <td className="bookings__actions">
                     {b.status === "Confirmed" ? (
-                      <button
-                        className="btn btn--destructive"
-                        onClick={() => handleCancelBooking(b.bookingId)}
-                      >
-                        Cancel
-                      </button>
+                      <>
+                        <button
+                          className="btn btn--destructive"
+                          onClick={() => handleCancelBooking(b.bookingId)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="btn"
+                          onClick={() =>
+                            navigate(`/account/bookings/${b.bookingId}`)
+                          }
+                        >
+                          Manage booking
+                        </button>
+                      </>
                     ) : null}
-                    <button
-                      className="btn"
-                      onClick={() =>
-                        navigate(`/account/bookings/${b.bookingId}`)
-                      }
-                    >
-                      Manage booking
-                    </button>
                   </td>
                 </tr>
               ))}

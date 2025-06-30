@@ -34,15 +34,13 @@ function AccountProvider({ children }) {
   //FETCH ACCOUNT DATA
   const { data : bookings } = useQuery({
     queryKey: ["bookings", userId],
-    queryFn: GetUserBookings,
-    enabled: !!userId,
+    queryFn: GetUserBookings
   //  staleTime: 1000 * 60 * 5,
   });
 
   const { data: passengers } = useQuery({
     queryKey: ["passengers", userId],
-    queryFn: getUsersPassengers,
-    enabled: !!userId,
+    queryFn: getUsersPassengers
   });
 
   //TODO -> should also fetch list of PASSENGERS, NOTIFICATIONS and PAYMENT METHODS (currently

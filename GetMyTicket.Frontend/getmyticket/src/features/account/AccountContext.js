@@ -35,7 +35,6 @@ function AccountProvider({ children }) {
   const { data : bookings } = useQuery({
     queryKey: ["bookings", userId],
     queryFn: GetUserBookings
-  //  staleTime: 1000 * 60 * 5,
   });
 
   const { data: passengers } = useQuery({

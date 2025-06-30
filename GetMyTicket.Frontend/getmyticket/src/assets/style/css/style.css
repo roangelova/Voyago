@@ -423,6 +423,37 @@ input[type=checkbox] {
   font-size: 18px;
 }
 
+.addBagsForm__container {
+  height: 30rem;
+  width: 50rem;
+  background-color: #fff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.addBagsForm form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.addBagsForm form select {
+  color: #333;
+  background-color: #f9f7f6;
+  padding: 0.5rem 3rem;
+  text-align: center;
+}
+.addBagsForm form p {
+  margin-bottom: 3rem;
+}
+.addBagsForm form button {
+  margin: 0 auto;
+  padding: 1rem 2.5rem;
+}
+
 .searchBar__button {
   padding: 1rem 4rem;
   border-radius: 50px;

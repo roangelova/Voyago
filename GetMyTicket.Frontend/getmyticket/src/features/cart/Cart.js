@@ -7,8 +7,18 @@ import { Passenger } from "../../services/passengerService";
 import check from "../../assets/icons/check.png";
 import { Booking } from "../../services/bookingService";
 import PassengerForm from "../account/PassengerForm";
+import AddBagsForm from "./AddBagsForm";
 
 const userId = sessionStorage.getItem("userId");
+
+const baggageOptions = [
+  { key: "Carry-on", value: 8 },
+  { key: "Small", value: 23 },
+  { key: "Large", value: 32 },
+];
+
+//TODO -? features to implement in the feature: baggage options should be fetched from the backend; Furthermore, each bag size should have a price and it should be added to the total Price
+//TODO -> INCLUDE BAGGAGE OPTIONS IN BOOKING
 
 //add option to create new passenger
 // make select work and reconnect 'addBooking functionalityy'
@@ -20,14 +30,19 @@ function Cart() {
   const [userPassengerList, setUserPassengerList] = useState();
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
   const [accountOwner, setAccountOwner] = useState(null);
+  const [baggage, setBaggage] = useState([
+    { key: baggageOptions[0].key, count: 1 },
+  ]);
 
+  console.log(baggage);
+  //show form popups controls:
   const [showPassengerForm, setShowPassengerForm] = useState(false);
+  const [showAddBags, setAddBags] = useState(false);
 
   const navigate = useNavigate();
-  console.log(passengerIdsForBooking);
 
   let imageSrc;
-  trip.transportationProviderLogo !== ""
+  trip?.transportationProviderLogo !== ""
     ? (imageSrc = `data:image/png;base64,${trip?.transportationProviderLogo}`)
     : (imageSrc = fallbackLogo);
 
@@ -36,7 +51,6 @@ function Cart() {
       return;
     }
     Passenger.getPassengersForUser(userId).then((data) => {
-      console.log(data);
       let filteredOwner = data.filter((x) => x?.isAccountOwner === true)[0];
       setAccountOwner(filteredOwner);
       setUserPassengerList(
@@ -75,7 +89,7 @@ function Cart() {
                 {trip.startCityName} to {trip.endCityName}
               </h5>
               <p>Departure: {formatDate(trip.startTime)}</p>
-              <p>Arrival:{formatDate(trip.endTime)}</p>
+              <p>Arrival: {formatDate(trip.endTime)}</p>
               <div className="cart__provider">
                 <img alt="icon" src={imageSrc} />
                 <p>{trip.transportationProviderName}</p>
@@ -109,18 +123,31 @@ function Cart() {
             <div className="cart__row">
               <h5>Bags</h5>
               <ul>
-                <div>
-                  <img alt="icon" className="cart__checkIcon" src={check} />
-                  <li>Carry-on bag included</li>
-                </div>
-                <div>
-                  <img alt="icon" className="cart__checkIcon" src={check} />
-                  <li>
-                    <strong>1x 23 kg </strong>checked-in bag per person
-                  </li>
-                </div>
+                {baggage.map((b) => (
+                  <div>
+                    <img alt="icon" className="cart__checkIcon" src={check} />
+                    <li>{b.count}x {b.key} {b.count === 1 ?'bag' : 'bags' }</li>
+                  </div>
+                ))}
               </ul>
-              <button className="btn cart__btn">Add bags</button>
+              <button
+                className="btn cart__btn"
+                onClick={() => setAddBags(true)}
+              >
+                Add bags
+              </button>
+
+              {showAddBags ? (
+                <div className="blur-overlay" onClick={() => setAddBags(false)}>
+                  <div onClick={(e) => e.stopPropagation()}>
+                    <AddBagsForm
+                      setBaggage={setBaggage}
+                      setAddBags={setAddBags}
+                      baggageOptions={baggageOptions}
+                    />
+                  </div>
+                </div>
+              ) : null}
             </div>
             <div className="cart_row">
               <h5>Who's going to travel?</h5>
@@ -141,7 +168,9 @@ function Cart() {
                 />
               </div>
               <div className="cart__addPassenger">
-                Want to <span onClick={() => setShowPassengerForm(true)}>add</span> a new passenger instead?
+                Want to{" "}
+                <span onClick={() => setShowPassengerForm(true)}>add</span> a
+                new passenger instead?
               </div>
             </div>
 

@@ -1,4 +1,5 @@
 ﻿using GetMyTicket.Common.Entities.Trackable;
+using GetMyTicket.Common.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +12,7 @@ namespace GetMyTicket.Common.Entities
         public Guid BaggageItemId { get; set; }
 
         [Range(0, MaxBaggageSize)]
-        public int Size { get; set; }
+        public BaggageSize Size { get; set; }
 
         public required Passenger Passenger { get; set; }
 

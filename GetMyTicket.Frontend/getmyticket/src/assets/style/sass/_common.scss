@@ -21,7 +21,7 @@
   transform: translateY(3px);
 }
 
-.btn--destructive{
+.btn--destructive {
   background-color: $color-btn--red;
 }
 
@@ -133,6 +133,44 @@
     select,
     label {
       font-size: 18px;
+    }
+  }
+}
+
+.addBagsForm {
+  &__container {
+    height: 30rem;
+    width: 50rem;
+    background-color: #fff;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    & select {
+      color: #333;
+      background-color: $color-grey-light-1;
+      padding: 0.5rem 3rem;
+      text-align: center;
+    }
+
+    & p {
+      margin-bottom: 3rem;
+    }
+
+    & button {
+      margin: 0 auto;
+      padding: 1rem 2.5rem;
     }
   }
 }

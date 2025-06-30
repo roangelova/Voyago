@@ -6,6 +6,7 @@ import { usePDF } from "@react-pdf/renderer";
 import { useCancelBooking } from "../../services/bookingService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAccountContext } from "./AccountContext";
+import { BaggageItem } from "../../services/baggageItemService";
 
 function BookingDetails() {
   const { mutate: cancelBooking } = useCancelBooking();
@@ -13,6 +14,7 @@ function BookingDetails() {
   const { bookings } = useAccountContext();
   const navigate = useNavigate();
   const [passengers, setPassengers] = useState([]);
+  const [baggage, setBaggage] = useState([]);
   const [instance, updateInstance] = usePDF({ document: BoardingPassPDF });
 
   const booking = bookings.find((b) => b.bookingId === bookingId);
@@ -25,7 +27,10 @@ function BookingDetails() {
     if (booking !== undefined) {
       Passenger.getNameAndAge(booking?.bookingId).then((data) =>
         setPassengers(data)
-      )
+      );
+      BaggageItem.getBaggageForBooking(bookingId).then((baggage) => {
+        setBaggage(baggage);
+      });
     }
   }, [booking]);
 
@@ -59,18 +64,30 @@ function BookingDetails() {
             </span>
 
             <ul className="booking__details--list">
-            {passengers.map(passenger => 
-              <li key={passenger?.name}>{passenger?.name}, {passenger?.age}</li>
-            )}
+              {passengers.map((passenger) => (
+                <li key={passenger?.name}>
+                  {passenger?.name}, {passenger?.age}
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <span>Baggage Details:</span>
             <div className="booking__details--list">
-              <p>2 x Checked Bags &#40;max. 23 kg&#41;</p>
-              <p>1 x Carry-on &#40;max. 9 kg&#41;</p>
+              {baggage?.length === 0 ? <p>No baggage booked</p> : null}
+
+              {baggage?.map((bg) => (
+                <p>
+                  {bg.amount} x {bg.type} &#40;max.
+                  {bg.type === "CarryOn"
+                    ? "8"
+                    : bg.type === "Small"
+                    ? "23"
+                    : "32"}
+                  kg&#41;
+                </p>
+              ))}
             </div>
-            <a className="booking__addBaggageBtn">Modify</a>
           </div>
         </div>
 

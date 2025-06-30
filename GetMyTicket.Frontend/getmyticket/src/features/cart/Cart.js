@@ -8,11 +8,11 @@ import check from "../../assets/icons/check.png";
 import { Booking } from "../../services/bookingService";
 import PassengerForm from "../account/PassengerForm";
 import AddBagsForm from "./AddBagsForm";
-
+import partnerImage from '../../assets/images/partnerImage.png';
 const userId = sessionStorage.getItem("userId");
 
 const baggageOptions = [
-  { key: "Carry-on", value: 8 },
+  { key: "CarryOn", value: 8 },
   { key: "Small", value: 23 },
   { key: "Large", value: 32 },
 ];
@@ -31,7 +31,7 @@ function Cart() {
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
   const [accountOwner, setAccountOwner] = useState(null);
   const [baggage, setBaggage] = useState([
-    { key: baggageOptions[0].key, count: 1 },
+    { type: baggageOptions[0].key, amount: 1 },
   ]);
 
   console.log(baggage);
@@ -70,6 +70,7 @@ function Cart() {
     Booking.bookTrip({
       tripId: trip.tripId,
       passengerIds: passengerIdsForBooking,
+      baggage: baggage,
       userId,
       //TODO - ADD A MUTATE FUNC AND HANDLE ERROR AND SUCCESS
     }).then(navigate("/account/bookings"));
@@ -88,8 +89,8 @@ function Cart() {
               <h5>
                 {trip.startCityName} to {trip.endCityName}
               </h5>
-              <p>Departure: {formatDate(trip.startTime)}</p>
-              <p>Arrival: {formatDate(trip.endTime)}</p>
+              <p>Departure: <strong>{formatDate(trip.startTime)}</strong></p>
+              <p>Arrival: <strong>{formatDate(trip.endTime)}</strong></p>
               <div className="cart__provider">
                 <img alt="icon" src={imageSrc} />
                 <p>{trip.transportationProviderName}</p>
@@ -126,7 +127,7 @@ function Cart() {
                 {baggage.map((b) => (
                   <div>
                     <img alt="icon" className="cart__checkIcon" src={check} />
-                    <li>{b.count}x {b.key} {b.count === 1 ?'bag' : 'bags' }</li>
+                    <li>{b.amount}x {b.type} {b.amount === 1 ?'bag' : 'bags' }</li>
                   </div>
                 ))}
               </ul>
@@ -202,6 +203,10 @@ function Cart() {
                 you will be asked to provide those at the airport. Please note
                 that failure to do may result in denied bording.
               </p>
+            </div>
+
+            <div className="cart_row">
+              <img className="cart__partnerImg" href="#" src={partnerImage} alt="An image that links to a partner website for rent a cars."/>
             </div>
           </div>
 

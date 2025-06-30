@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Service.Contracts;
+﻿using GetMyTicket.Common.DTOs.Baggage;
+using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,12 @@ namespace GetMyTicket.API.Controllers
         public BaggageItemsController(IBaggageItemService baggageItemService)
         {
             this.baggageItemService = baggageItemService;
+        }
+
+        [HttpGet("{bookingId}")]
+        public async Task<List<BaggageItemDTO>> GetBaggageItemsForBooking(Guid bookingId, CancellationToken cancellationToken)
+        {
+            return await baggageItemService.GetBaggageItemsForBooking(bookingId, cancellationToken);
         }
     }
 }

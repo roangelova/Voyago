@@ -55,6 +55,12 @@
     }
   }
 
+  &__partnerImg{
+    max-height: 45rem;
+    filter: grayscale(100);
+    cursor: pointer;
+  }
+
   &__trip {
     background-image: linear-gradient(to right, $color-grey-light-1, #fff);
     padding: 1rem;

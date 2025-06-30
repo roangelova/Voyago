@@ -15,8 +15,8 @@ const options = [
 ];
 
 const sortOptions = [
-  { key: "Booking date ASC", value: "bookingDateAsc" },
   { key: "Booking date DESC", value: "bookingDateDesc" },
+  { key: "Booking date ASC", value: "bookingDateAsc" },
 ];
 
 function Bookings() {
@@ -43,7 +43,7 @@ function Bookings() {
 
   useEffect(() => {
     //////FILTER
-    if (sortValue === sortOptions[0].value) {
+    if (sortValue === sortOptions[1].value) {
       //asc
       updatedData = updatedData.sort(
         (a, b) => new Date(a.bookingDate) - new Date(b.bookingDate)
@@ -138,7 +138,7 @@ function Bookings() {
             <tbody>
               {sortedAndFilteredData?.map((b) => (
                 <tr key={b.bookingId}>
-                  <td>XYZ123</td>
+                  <td>{b.bookingId}</td>
                   <td>{b.fromCityName}</td>
                   <td>{b.toCityName}</td>
                   <td>{formatDate(b.departureTime)}</td>

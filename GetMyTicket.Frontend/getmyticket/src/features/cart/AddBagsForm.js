@@ -10,13 +10,13 @@ function AddBagsForm({ setAddBags, baggageOptions, setBaggage }) {
 
     console.log("select value", selectValue);
     setBaggage((prev) => {
-      const existing = prev.find((b) => b.key === selectValue);
+      const existing = prev.find((b) => b.type === selectValue);
       if (existing) {
         return prev.map((b) =>
-          b.key === selectValue ? { ...b, count: b.count + 1 } : b
+          b.type === selectValue ? { ...b, amount: b.amount + 1 } : b
         );
       } else {
-        return [...prev, { key: selectValue, count: 1 }];
+        return [...prev, { type: selectValue, amount: 1 }];
       }
     });
   }

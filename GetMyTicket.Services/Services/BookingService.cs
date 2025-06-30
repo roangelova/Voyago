@@ -87,6 +87,21 @@ namespace GetMyTicket.Service.Services
                     BookingId = booking.BookingId,
                     PassengerId = passengerId
                 });
+
+                //TODO -> CAN WE REFACTOR ALL OF THIS? 
+                foreach (var bg in bookTripDTO.Baggage)
+                {
+                    for (int i = 0; i < bg.Amount; i++)
+                    {
+                        booking.BaggageItems.Add(new BaggageItem
+                        {
+                            BaggageItemId = Guid.CreateVersion7(),
+                            Passenger = passenger,
+                            Size = Enum.Parse<BaggageSize>(bg.Type),
+                            Trip = trip
+                        });
+                    }
+                }
             }
 
             unitOfWork.Trips.Update(trip);
@@ -97,18 +112,18 @@ namespace GetMyTicket.Service.Services
             return booking.BookingId;
         }
 
-        
-         public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
-         {
-             var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
-        
-             if (user is null)
-             {
-                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
-             }
-        
-             var passengerIds = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == userId & x.IsAccountOwner == true);
-             var passengerId = passengerIds.FirstOrDefault()?.PassengerId;
+
+        public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
+        {
+            var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);
+
+            if (user is null)
+            {
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
+            }
+
+            var passengerIds = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.UserId == userId & x.IsAccountOwner == true);
+            var passengerId = passengerIds.FirstOrDefault()?.PassengerId;
 
             if (passengerId is null)
             {
@@ -126,20 +141,20 @@ namespace GetMyTicket.Service.Services
                  x => x.Booking,
                  x => x.Booking.Trip.StartCity,
                  x => x.Booking.Trip.EndCity);
-         
-             return data.Select(b => new ListBookingDTO()
-             {
-                 BookingId = b.BookingId,
-                 ToCityName = b.Booking.Trip.EndCity.CityName,
-                 FromCityName = b.Booking.Trip.StartCity.CityName,
-                 DepartureTime = b.Booking.Trip.StartTime,
-                 TotalPrice = b.Booking.TotalPrice,
-                 Currency = Enum.GetName(b.Booking.Trip.Currency),
-                 Status = Enum.GetName(b.Booking.BookingStatus),
-                 TripId = b.Booking.TripId,
-                 BookingDate = b.Booking.CreatedAt
-             });
-         }
+
+            return data.Select(b => new ListBookingDTO()
+            {
+                BookingId = b.BookingId,
+                ToCityName = b.Booking.Trip.EndCity.CityName,
+                FromCityName = b.Booking.Trip.StartCity.CityName,
+                DepartureTime = b.Booking.Trip.StartTime,
+                TotalPrice = b.Booking.TotalPrice,
+                Currency = Enum.GetName(b.Booking.Trip.Currency),
+                Status = Enum.GetName(b.Booking.BookingStatus),
+                TripId = b.Booking.TripId,
+                BookingDate = b.Booking.CreatedAt
+            });
+        }
     }
 
 }

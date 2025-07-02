@@ -78,10 +78,10 @@ function BookingDetails() {
 
               {baggage?.map((bg) => (
                 <p>
-                  {bg.amount} x {bg.type} &#40;max.
-                  {bg.type === "CarryOn"
+                  {bg?.amount} x {bg?.type} &#40;max.
+                  {bg?.type === "CarryOn"
                     ? "8"
-                    : bg.type === "Small"
+                    : bg?.type === "Small"
                     ? "23"
                     : "32"}
                   kg&#41;

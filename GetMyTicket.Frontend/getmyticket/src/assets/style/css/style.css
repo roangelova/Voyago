@@ -1428,16 +1428,6 @@ input[type=checkbox] {
   height: 100%;
   overflow-y: scroll;
 }
-.passengers h4 {
-  margin-bottom: 4rem;
-}
-.passengers__row {
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-  padding: 2rem;
-  width: 80rem;
-  display: flex;
-  justify-content: space-between;
-}
 .passengers__content {
   max-width: 120rem;
   margin: 2rem auto;
@@ -1446,41 +1436,14 @@ input[type=checkbox] {
   align-items: center;
   gap: 4rem;
 }
-.passengers__information {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.passengers__information div {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-.passengers--name {
-  font-size: 1.8rem;
-}
-.passengers__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.passengers__actions button {
-  padding: 1rem 2.5rem;
-}
-.passengers__actions :last-child {
-  background-color: #b8372d;
-}
-.passengers__accountOwner {
-  padding: 0.5rem;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+.passengers h4 {
+  margin-bottom: 4rem;
 }
 .passengers__noPassengers {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  align-items: center;
   background-color: #f9f7f6;
   padding: 2rem;
+  text-align: center;
 }
 .passengers__noPassengers p {
   padding: 3rem 0;
@@ -1490,6 +1453,62 @@ input[type=checkbox] {
 .passengers__noPassengers button {
   padding: 1.5rem 3rem;
   font-size: 1.8rem;
+}
+.passengers .passenger__row {
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  width: 80rem;
+  display: flex;
+  flex-direction: column;
+}
+.passengers .passenger__mainInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.passengers .passenger__information {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.passengers .passenger__information div {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.passengers .passenger--name {
+  font-size: 1.8rem;
+}
+.passengers .passenger__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.passengers .passenger__actions button {
+  padding: 1rem 2.5rem;
+}
+.passengers .passenger__actions :last-child {
+  background-color: #b8372d;
+}
+.passengers .passenger__accountOwner {
+  padding: 0.5rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+.passengers .passenger__toggleInfo {
+  margin: 1rem 0 1rem 0;
+  color: #444;
+  font-weight: 600;
+  align-self: flex-start;
+}
+.passengers .passenger__additionalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.6rem;
+}
+.passengers .passenger__additionalInfo span {
+  font-weight: 600;
+  margin-right: 1rem;
 }
 
 .passengerForm {

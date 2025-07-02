@@ -15,6 +15,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
   const { mutate: createPassenger } = useCreatePassenger();
 
   //TODO --> ADD VALIDATION
+  //document expiration date should be in the future
   function handleEditField(e) {
     let fieldToUpdate = e.target.name;
     let newValue = e.target.value;
@@ -165,10 +166,10 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
             <option key={0} value={null}>
               --Choose document--
             </option>
-            <option key={1} value={"idCard"}>
+            <option key={1} value={"IdCard"}>
               National ID
             </option>
-            <option key={2} value={"passport"}>
+            <option key={2} value={"Passport"}>
               Passport
             </option>
           </select>

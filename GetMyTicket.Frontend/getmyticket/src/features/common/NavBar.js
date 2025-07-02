@@ -34,23 +34,6 @@ function NavBar() {
     };
   }, []);
 
-  //TODO-> seems to work withut this: why?
-  // useEffect(() => {
-  //   //disables back button on login popup
-  //   if (LoginPopupVisibility) {
-  //     window.history.pushState(null, "", window.location.href);
-  //
-  //     const handleBackButton = (e) => {
-  //       e.preventDefault();
-  //       console.log("HANDLE BACK BUTTON");
-  //       window.history.pushState(null, "", window.location.href);
-  //     };
-  //
-  //     window.addEventListener("popstate", handleBackButton);
-  //   }
-  // }, [LoginPopupVisibility, setLoginPopupVisibility]);
-
-  //TODO -> THEY ARE EITHER GONNA BE NAVLINKS OR A -elements; we cant have it both ways;
   const NoUserNav = (
     <ul className="navigation__user">
       <li className="navigation__login" onClick={handleLoginToggle}>

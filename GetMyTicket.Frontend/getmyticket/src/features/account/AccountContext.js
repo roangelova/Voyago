@@ -32,14 +32,16 @@ function AccountProvider({ children }) {
   }, []);
 
   //FETCH ACCOUNT DATA
-  const { data : bookings } = useQuery({
+  const { data: bookings } = useQuery({
     queryKey: ["bookings", userId],
-    queryFn: GetUserBookings
+    queryFn: GetUserBookings,
+    enabled: !!userId,
   });
 
   const { data: passengers } = useQuery({
     queryKey: ["passengers", userId],
-    queryFn: getUsersPassengers
+    queryFn: getUsersPassengers,
+    enabled: !!userId,
   });
 
   //TODO -> should also fetch list of PASSENGERS, NOTIFICATIONS and PAYMENT METHODS (currently
@@ -49,7 +51,7 @@ function AccountProvider({ children }) {
       value={{
         userId,
         bookings: bookings || [],
-        passengers: passengers || []
+        passengers: passengers || [],
       }}
     >
       {children}

@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-//  const [baggage, setBaggage] = useState({size: baggageOptions[0].key, count: 1})
-
 function AddBagsForm({ setAddBags, baggageOptions, setBaggage }) {
   const [selectValue, setSelectValue] = useState(null);
 

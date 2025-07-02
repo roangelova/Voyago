@@ -26,7 +26,6 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Booking), bookingId));
             }
 
-            //var smallBaggageAmount = booking.BaggageItems.Where(x => Enum.GetName<BaggageSize>(x.Size) == "Small").Count();
             var grouped = booking.BaggageItems.GroupBy( x=> x.Size).ToList();
 
             var result = new List<BaggageItemDTO>();

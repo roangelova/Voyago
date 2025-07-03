@@ -7,7 +7,7 @@ namespace GetMyTicket.Common.Entities.Contracts
 {
     public abstract class Vehicle : ITrackableEntity
     {
-        public Guid VehicleId { get; set; }
+        public Guid Id { get; set; }
 
         [Range(1, MaxVehicleCapacity)]
         public int Capacity { get; set; }

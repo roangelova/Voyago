@@ -7,7 +7,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class Booking : ITrackableEntity
     {
-        public Guid BookingId { get; set; }
+        public Guid Id { get; set; }
 
         public double TotalPrice { get; set; }
 

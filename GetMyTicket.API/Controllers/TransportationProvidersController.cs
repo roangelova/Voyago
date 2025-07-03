@@ -44,7 +44,7 @@ namespace GetMyTicket.API.Controllers
 
             return CreatedAtAction(
                 nameof(GetById), 
-                new { id = entity.TransportationProviderId.ToString() },
+                new { id = entity.Id.ToString() },
                 new { entity.Name, entity.Email, entity.Description, entity.Address });
         }
 

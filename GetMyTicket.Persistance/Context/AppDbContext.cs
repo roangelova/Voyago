@@ -96,6 +96,11 @@ namespace GetMyTicket.Persistance.Context
                 .WithMany(b => b.PassengerBookingMap)
                 .HasForeignKey(pb => pb.BookingId);
 
+            builder.Entity<BaggagePrice>()
+                .HasOne(x => x.TransportationProvider)
+                .WithMany(x => x.BaggagePrices)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
              ApplyGlobalQueryFilters(builder);
         }
@@ -130,7 +135,7 @@ namespace GetMyTicket.Persistance.Context
 
             var TransportationProvider = new TransportationProvider
             {
-                TransportationProviderId = Guid.CreateVersion7(),
+                Id = Guid.CreateVersion7(),
                 Name = "TransAvia",
                 Address = "Germany, 81539 Munich, Bayerstr. 18",
                 Email = "transavia@gmail.com",
@@ -139,8 +144,8 @@ namespace GetMyTicket.Persistance.Context
 
             var airplane1 = new Airplane
             {
-                VehicleId = Guid.CreateVersion7(),
-                TransportationProviderId = TransportationProvider.TransportationProviderId,
+                Id = Guid.CreateVersion7(),
+                TransportationProviderId = TransportationProvider.Id,
                 AirplaneManufacturer = Common.Enum.AirplaneManufacturer.Airbus,
                 Model = "A-320",
                 Capacity = 180,
@@ -149,8 +154,8 @@ namespace GetMyTicket.Persistance.Context
 
             var OurFirstTrip = new Trip
             {
-                TransportationProviderId = TransportationProvider.TransportationProviderId,
-                VehicleId = airplane1.VehicleId,
+                TransportationProviderId = TransportationProvider.Id,
+                VehicleId = airplane1.Id,
                 StartTime = new DateTime(2025, 5, 18, 18, 00, 00),
                 EndTime = new DateTime(2025, 5, 18, 20, 20, 00),
                 StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
@@ -297,6 +302,7 @@ namespace GetMyTicket.Persistance.Context
             modelBuilder.Entity<User>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<ApplicationRole>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<BaggageItem>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<BaggagePrice>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<PassengerBookingMap>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<UserPassengerMap>().HasQueryFilter(x => x.IsDeleted == false);
 

@@ -14,19 +14,19 @@ namespace GetMyTicket.Service.Services
 
         public BaggageItemService(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;  
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<List<BaggageItemDTO>> GetBaggageItemsForBooking(Guid bookingId, CancellationToken cancellationToken)
         {
-           var booking = await unitOfWork.Bookings.GetAsync(x => x.BookingId ==bookingId, true, cancellationToken, x => x.BaggageItems);
+            var booking = await unitOfWork.Bookings.GetAsync(x => x.Id == bookingId, true, cancellationToken, x => x.BaggageItems);
 
-            if(booking is  null)
+            if (booking is null)
             {
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Booking), bookingId));
             }
 
-            var grouped = booking.BaggageItems.GroupBy( x=> x.Size).ToList();
+            var grouped = booking.BaggageItems.GroupBy(x => x.Size).ToList();
 
             var result = new List<BaggageItemDTO>();
 

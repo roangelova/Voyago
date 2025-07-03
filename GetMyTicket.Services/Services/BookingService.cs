@@ -53,7 +53,7 @@ namespace GetMyTicket.Service.Services
 
             var booking = new Booking()
             {
-                BookingId = Guid.CreateVersion7(),
+                Id = Guid.CreateVersion7(),
                 TotalPrice = 0,
                 BookingStatus = BookingStatus.Confirmed,
                 TripId = bookTripDTO.TripId
@@ -84,7 +84,7 @@ namespace GetMyTicket.Service.Services
 
                 booking.PassengerBookingMap.Add(new PassengerBookingMap
                 {
-                    BookingId = booking.BookingId,
+                    BookingId = booking.Id,
                     PassengerId = passengerId
                 });
 
@@ -95,7 +95,7 @@ namespace GetMyTicket.Service.Services
                     {
                         booking.BaggageItems.Add(new BaggageItem
                         {
-                            BaggageItemId = Guid.CreateVersion7(),
+                            Id = Guid.CreateVersion7(),
                             Passenger = passenger,
                             Size = Enum.Parse<BaggageSize>(bg.Type),
                             Trip = trip
@@ -109,7 +109,7 @@ namespace GetMyTicket.Service.Services
 
             await unitOfWork.SaveChangesAsync();
 
-            return booking.BookingId;
+            return booking.Id;
         }
 
 

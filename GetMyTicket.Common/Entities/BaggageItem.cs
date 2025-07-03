@@ -9,7 +9,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class BaggageItem : ITrackableEntity
     {
-        public Guid BaggageItemId { get; set; }
+        public Guid Id { get; set; }
 
         [Range(0, MaxBaggageSize)]
         public BaggageSize Size { get; set; }

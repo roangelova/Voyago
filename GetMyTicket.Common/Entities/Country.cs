@@ -6,7 +6,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class Country :ITrackableEntity
     {
-        public Guid CountryId { get; set; } = Guid.CreateVersion7();
+        public Guid Id { get; set; } = Guid.CreateVersion7();
 
         [Required]
         [MaxLength(NameMaxLength)]

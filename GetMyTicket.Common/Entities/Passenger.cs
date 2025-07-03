@@ -11,7 +11,7 @@ namespace GetMyTicket.Common.Entities
     /// </summary>
     public class Passenger : ITrackableEntity
     {
-        public Guid PassengerId { get; set; }
+        public Guid Id { get; set; }
 
         public PassengerType PassengerType { get; set; }
 

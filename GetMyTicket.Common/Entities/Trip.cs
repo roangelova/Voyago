@@ -8,7 +8,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class Trip: ITrackableEntity
     {
-        public Guid TripId { get; set; }
+        public Guid Id { get; set; }
 
         public TypeOfTransportation TypeOfTransportation { get; set; }
 

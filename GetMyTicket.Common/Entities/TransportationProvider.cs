@@ -7,7 +7,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class TransportationProvider :ITrackableEntity
     {
-        public Guid TransportationProviderId { get; set; } 
+        public Guid Id { get; set; } 
 
         [MaxLength(NameMaxLength)]
         public required string Name { get; set; }
@@ -25,6 +25,8 @@ namespace GetMyTicket.Common.Entities
 
         public ICollection<Vehicle> Vehicles { get; set; } = [];
         public ICollection<Trip> Trips { get; set; } = [];
+
+        public ICollection<BaggagePrice> BaggagePrices { get; set; } = [];
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

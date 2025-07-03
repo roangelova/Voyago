@@ -6,7 +6,7 @@ namespace GetMyTicket.Common.Entities
 {
     public class City : ITrackableEntity
     {
-        public Guid CityId { get; set; } = Guid.CreateVersion7();
+        public Guid Id { get; set; } = Guid.CreateVersion7();
 
         [MaxLength(NameMaxLength)]
         public required string CityName { get; set; }

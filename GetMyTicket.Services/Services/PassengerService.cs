@@ -49,7 +49,7 @@ namespace GetMyTicket.Service.Services
 
             Passenger passenger = new Passenger()
             {
-                PassengerId = Guid.CreateVersion7(),
+                Id = Guid.CreateVersion7(),
                 FirstName = dto.FirstName.Trim(),
                 LastName = dto.LastName.Trim(),
                 Gender = gender,
@@ -87,7 +87,7 @@ namespace GetMyTicket.Service.Services
             passenger.UserPassengerMaps.Add(new UserPassengerMap()
             {
                 UserId = user.Id,
-                PassengerId = passenger.PassengerId,
+                PassengerId = passenger.Id,
                 Label = string.IsNullOrWhiteSpace(dto.Label) ? null : dto.Label,
                 IsAccountOwner = dto.IsAccountOwner
             });
@@ -95,7 +95,7 @@ namespace GetMyTicket.Service.Services
             await unitOfWork.Passengers.AddAsync(passenger);
             await unitOfWork.SaveChangesAsync();
 
-            return passenger.PassengerId;
+            return passenger.Id;
         }
 
         ///NOTE: Gender, DOB and PassengerType cannot be edited. A passenger cannot be transfered from one profile to another (change of UserId). 
@@ -106,7 +106,7 @@ namespace GetMyTicket.Service.Services
             if (passenger == null)
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Passenger), dto.PassengerId));
 
-            var userPassengerMapResult = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.PassengerId == passenger.PassengerId);
+            var userPassengerMapResult = await unitOfWork.UserPassengerMap.GetAllAsync(x => x.PassengerId == passenger.Id);
             var userPassengerMap = userPassengerMapResult.FirstOrDefault();
 
             if (userPassengerMap == null)
@@ -130,7 +130,7 @@ namespace GetMyTicket.Service.Services
 
             return new GetPassengerDTO
             {
-                PassengerId = passenger.PassengerId,
+                PassengerId = passenger.Id,
                 FirstName = passenger.FirstName,
                 LastName = passenger.LastName,
                 Gender = passenger.Gender.ToString(),
@@ -193,7 +193,7 @@ namespace GetMyTicket.Service.Services
         public async Task DeletePassenger(Guid passengerId, CancellationToken cancellationToken)
         {
             var passenger = await unitOfWork.Passengers.GetAsync(
-                x => x.PassengerId == passengerId,
+                x => x.Id == passengerId,
                 false, cancellationToken,
                 x => x.UserPassengerMaps,
                 x => x.PassengerBookingMaps);

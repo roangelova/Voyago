@@ -33,7 +33,7 @@ namespace GetMyTicket.Service.Services
 
             Train entity = new()
             {
-                VehicleId = Guid.CreateVersion7(),
+                Id = Guid.CreateVersion7(),
                 Capacity = trainDTO.Capacity,
                 HasBistroOnBoard = trainDTO.HasBistroOnBoard,
                 IsAHighspeedTrain = trainDTO.IsAHighspeedTrain,
@@ -47,7 +47,7 @@ namespace GetMyTicket.Service.Services
              return new GetTrainDTO()
             {
                 Capacity = entity.Capacity,
-                TrainId = entity.VehicleId,
+                TrainId = entity.Id,
                 TransportationProviderId = entity.TransportationProviderId,
                 TransportationpProviderName = TransportationProvider.Name
             }; 
@@ -65,7 +65,7 @@ namespace GetMyTicket.Service.Services
             return new GetTrainDTO
             {
                 Capacity = entity.Capacity,
-                TrainId = entity.VehicleId,
+                TrainId = entity.Id,
                 TransportationProviderId = entity.TransportationProviderId
             };
         }

@@ -48,7 +48,7 @@ namespace GetMyTicket.Service.Services
             await unitOfWork.Trips.AddAsync(trip);
             await unitOfWork.SaveChangesAsync();
 
-            return trip.TripId;
+            return trip.Id;
         }
 
         public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO, CancellationToken cancellationToken)
@@ -87,7 +87,7 @@ namespace GetMyTicket.Service.Services
 
             var result = data.Select(x => new TripSearchResultDTO
             {
-                TripId = x.TripId,
+                TripId = x.Id,
                 StartTime = x.StartTime,
                 EndTime = x.EndTime,
                 EndCityName = x.EndCity.CityName,

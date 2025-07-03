@@ -36,7 +36,7 @@ namespace GetMyTicket.Service.Services
 
             var entity = new TransportationProvider
             {
-                TransportationProviderId = Guid.CreateVersion7(),
+                Id = Guid.CreateVersion7(),
                 Name = addTpDTO.Name.Trim(),
                 Description = addTpDTO.Description.Trim(),
                 Address = addTpDTO.Address.Trim(),
@@ -56,7 +56,7 @@ namespace GetMyTicket.Service.Services
 
             return data.Select(x => new GetTransportationProviderDTO(
 
-               x.TransportationProviderId.ToString(),
+               x.Id.ToString(),
                  x.Name,
                 x.Description,
                 Convert.ToBase64String(x.Logo)
@@ -70,7 +70,7 @@ namespace GetMyTicket.Service.Services
             if (entity != null)
             {
                 return new GetTransportationProviderDTO(
-                    entity.TransportationProviderId.ToString(),
+                    entity.Id.ToString(),
                     entity.Name,
                     entity.Description,
                     Convert.ToBase64String(entity.Logo)

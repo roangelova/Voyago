@@ -11,17 +11,17 @@ namespace GetMyTicket.Service.Services
 {
     public class AirplaneService : IAirplaneService
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork UnitOfWork;
 
         public AirplaneService(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            this.UnitOfWork = unitOfWork;
         }
 
         public async Task<Airplane> Add(CreateAirplaneDTO airplaneDTO)
         {
             if (Enum.TryParse<AirplaneManufacturer>(airplaneDTO.Manufacturer,
-                    out AirplaneManufacturer manufacturer))
+                    out AirplaneManufacturer Manufacturer))
             {
 
                 if (airplaneDTO.Capacity <= 0)
@@ -34,20 +34,20 @@ namespace GetMyTicket.Service.Services
                     throw new ApplicationError(string.Format(ResponseConstants.NotSupported, nameof(airplaneDTO.Model)));
                 }
 
-                var entity = new Airplane()
+                var Entity = new Airplane()
                 {
-                    VehicleId = Guid.CreateVersion7(),
+                    Id = Guid.CreateVersion7(),
                     TransportationProviderId = airplaneDTO.TpProviderId,
                     Model = airplaneDTO.Model.Trim(),
                     Capacity = airplaneDTO.Capacity,
                     ManufacturingDate = airplaneDTO.ManufacturingDate,
-                    AirplaneManufacturer = manufacturer
+                    AirplaneManufacturer = Manufacturer
                 };
 
-                await unitOfWork.Vehicles.AddAsync(entity);
-                await unitOfWork.SaveChangesAsync();
+                await UnitOfWork.Vehicles.AddAsync(Entity);
+                await UnitOfWork.SaveChangesAsync();
 
-                return entity;
+                return Entity;
             }
 
             throw new ApplicationError(string.Format(ResponseConstants.NotSupported, nameof(airplaneDTO.Manufacturer)));
@@ -55,15 +55,15 @@ namespace GetMyTicket.Service.Services
 
         public async Task<GetAirplaneDTO> GetById(object id)
         {
-            Airplane entity = (Airplane)await unitOfWork.Vehicles.GetByIdAsync(id);
+            Airplane Entity = (Airplane)await UnitOfWork.Vehicles.GetByIdAsync(id);
 
-            if (entity != null)
+            if (Entity != null)
             {
                 return new GetAirplaneDTO(
-                    entity.TransportationProviderId,
-                    Enum.GetName(entity.AirplaneManufacturer),
-                    entity.Model,
-                    entity.Capacity
+                    Entity.TransportationProviderId,
+                    Enum.GetName(Entity.AirplaneManufacturer),
+                    Entity.Model,
+                    Entity.Capacity
                     );
             }
 

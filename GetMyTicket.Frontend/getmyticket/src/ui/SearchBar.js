@@ -42,8 +42,8 @@ const SearchBar = () => {
 
   useEffect(() => {
     if (cities?.length > 0) {
-      setStart(cities[0].cityId);
-      setDestination(cities[1].cityId);
+      setStart(cities[0].id);
+      setDestination(cities[1].id);
     }
   }, [cities]);
 
@@ -74,10 +74,10 @@ const SearchBar = () => {
   };
 
   const availableCitiesForStart = cities?.filter(
-    (city) => city.cityId !== destination
+    (city) => city.id !== destination
   );
   const availableCitiesForDestination = cities?.filter(
-    (city) => city.cityId !== start
+    (city) => city.id !== start
   );
 
   if (isPending) return <Spinner />;
@@ -91,7 +91,7 @@ const SearchBar = () => {
           onChange={(e) => setStart(e.target.value)}
         >
           {availableCitiesForStart?.map((city) => (
-            <option key={city.cityId} value={city.cityId}>
+            <option key={city.id} value={city.id}>
               {city.cityName}
             </option>
           ))}
@@ -105,7 +105,7 @@ const SearchBar = () => {
           onChange={(e) => setDestination(e.target.value)}
         >
           {availableCitiesForDestination?.map((city) => (
-            <option key={city.cityId} value={city.cityId}>
+            <option key={city.id} value={city.id}>
               {city.cityName}
             </option>
           ))}

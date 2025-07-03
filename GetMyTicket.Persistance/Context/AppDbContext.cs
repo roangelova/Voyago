@@ -102,7 +102,7 @@ namespace GetMyTicket.Persistance.Context
                 .OnDelete(DeleteBehavior.Cascade);
 
 
-             ApplyGlobalQueryFilters(builder);
+            ApplyGlobalQueryFilters(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -139,7 +139,11 @@ namespace GetMyTicket.Persistance.Context
                 Name = "TransAvia",
                 Address = "Germany, 81539 Munich, Bayerstr. 18",
                 Email = "transavia@gmail.com",
-                Description = "TransAvis is a leading airline in Europe, connection more than 400 destinations in 15 countries."
+                Description = "TransAvis is a leading airline in Europe, connection more than 400 destinations in 15 countries.",
+                BaggagePrices = [
+                    new() { BaggageSize = BaggageSize.CarryOn, Price = 0 },
+                    new() { BaggageSize = BaggageSize.Small, Price = 40 },
+                    new() { BaggageSize = BaggageSize.Large, Price = 60 }]
             };
 
             var airplane1 = new Airplane

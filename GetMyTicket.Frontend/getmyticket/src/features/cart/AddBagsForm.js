@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { BaggagePrices } from "../../services/baggagePriceService";
 
-function AddBagsForm({ setAddBags, baggageOptions, setBaggage }) {
+function AddBagsForm({ setAddBags, baggageOptions, setBaggage, baggagePrices }) {
   const [selectValue, setSelectValue] = useState(null);
 
   function onAddClickHandler() {
@@ -27,16 +28,15 @@ function AddBagsForm({ setAddBags, baggageOptions, setBaggage }) {
           <option value={null}>---Select size---</option>
           {baggageOptions.map((x) => (
             <option
-              disabled={x.value === 8}
               key={x.key}
               name={x.key}
               value={x.key}
             >
-              {x.key}, max {x.value}kg.
+              {x.key} bag, max {x.value}kg., {baggagePrices?.find(b => b?.size ===x.key)?.price} EUR
             </option>
           ))}
         </select>
-        <p>Please note that a carry-on is included by default.</p>
+        <p>Please note sizes and prices are individual for every provider.</p>
         <div>
           <button className="btn" type="submit" onClick={onAddClickHandler}>
             Add

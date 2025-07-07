@@ -13,6 +13,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
         IGenericRepository<Booking> Bookings { get; }
         IGenericRepository<Trip> Trips { get; }
         IGenericRepository<BaggageItem> BaggageItems { get; }
+        IGenericRepository<BaggagePrice> BaggagePrices { get; }
         IGenericRepository<City> Cities { get; }
         IGenericRepository<Country> Countries { get; }
         IGenericRepository<User> Users { get; }

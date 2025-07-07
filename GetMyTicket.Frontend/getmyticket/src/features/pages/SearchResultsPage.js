@@ -126,7 +126,7 @@ function SearchResultsPage() {
   //The following effect fetches the longitute and latitude for the trip start and destination. The, the coordinates are used to set markers on the map.
   //Good to know: we make a call to an external API, which allows us up to 1000 calls per month free of charge.
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (data && data?.length > 0) {
       //MONTHLY QUOATA EXCEEDED
       //  CityApi.getCityData(data[0].startCityName)
       //      .then(data => setStartCoordinates([data[0].latitude, data[0].longitude]))

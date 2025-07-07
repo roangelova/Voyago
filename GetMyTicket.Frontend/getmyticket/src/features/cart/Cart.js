@@ -10,6 +10,8 @@ import { Passenger } from "../../services/passengerService";
 import PassengerForm from "../account/PassengerForm";
 import AddBagsForm from "./AddBagsForm";
 import SelectPassengersDropdown from "./SelectPassengersDropdown";
+import { BaggagePrices } from "../../services/baggagePriceService";
+import { CreatePriceSummary } from "./cartHelpers";
 const userId = sessionStorage.getItem("userId");
 
 const baggageOptions = [
@@ -32,9 +34,7 @@ function Cart() {
   const [userPassengerList, setUserPassengerList] = useState();
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
   const [accountOwner, setAccountOwner] = useState(null);
-  const [baggage, setBaggage] = useState([
-    { type: baggageOptions[0].key, amount: 1 },
-  ]);
+  const [baggage, setBaggage] = useState([]);
   const [baggagePrices, setBaggagePrices] = useState(null);
 
   console.log(baggage);
@@ -64,6 +64,15 @@ function Cart() {
         filteredOwner?.passengerId,
       ]);
     });
+
+    if (trip) {
+      BaggagePrices.getPricesForProvider(trip?.transportationProviderId).then(
+        (data) => {
+          console.log(data);
+          setBaggagePrices(data);
+        }
+      );
+    }
   }, []);
 
   const onCheckout = async () => {
@@ -115,10 +124,6 @@ function Cart() {
               <ul>
                 <div>
                   <img alt="icon" className="cart__checkIcon" src={check} />
-                  <li>Carry-on bag included</li>
-                </div>
-                <div>
-                  <img alt="icon" className="cart__checkIcon" src={check} />
                   <li>
                     Free cancelation up to <strong>24 </strong>hours prior to
                     departure
@@ -137,8 +142,11 @@ function Cart() {
             <div className="cart__row">
               <h5>Bags</h5>
               <ul>
+
+                {baggage.length === 0 && <p>No bags added to this booking yet!</p>}
+
                 {baggage.map((b) => (
-                  <div>
+                  <div key={b.type}>
                     <img alt="icon" className="cart__checkIcon" src={check} />
                     <li>
                       {b.amount}x {b.type} {b.amount === 1 ? "bag" : "bags"}
@@ -160,6 +168,7 @@ function Cart() {
                       setBaggage={setBaggage}
                       setAddBags={setAddBags}
                       baggageOptions={baggageOptions}
+                      baggagePrices={baggagePrices}
                     />
                   </div>
                 </div>
@@ -235,9 +244,9 @@ function Cart() {
 
             <div className="cart__pricePerPersonBreakdown">
               <ul>
-                {CreatePriceSummary(trip, passengersCountForBooking).map(
+                {CreatePriceSummary(trip, passengersCountForBooking, baggage, baggagePrices).map(
                   (x) => (
-                    <li>{x}</li>
+                    <li key={x}>{x}</li>
                   )
                 )}
               </ul>
@@ -247,7 +256,7 @@ function Cart() {
                 <p>Total</p>
                 <p>
                   <strong>
-                    {calculateTotalPrice(trip, passengersCountForBooking)}
+                    {calculateTotalPrice(trip, passengersCountForBooking, baggage, baggagePrices)}
                   </strong>{" "}
                   {trip.currency}
                 </p>
@@ -267,33 +276,3 @@ function Cart() {
 }
 
 export default Cart;
-
-function CreatePriceSummary(trip, passengersCountForBooking) {
-  let summary = [];
-
-  if (passengersCountForBooking.adults > 0) {
-    summary.push(
-      `${passengersCountForBooking.adults} Adult ticket${
-        passengersCountForBooking.adults > 1 ? "s" : ""
-      } — ${trip.adultPrice} ${trip.currency} p.p.`
-    );
-  }
-
-  if (passengersCountForBooking.children > 0) {
-    summary.push(
-      `${passengersCountForBooking.children} Child ticket${
-        passengersCountForBooking.children > 1 ? "s" : ""
-      } — ${trip.childrenPrice} ${trip.currency} p.p.`
-    );
-  }
-
-  if (passengersCountForBooking.infants > 0) {
-    summary.push(
-      `${passengersCountForBooking.infants} Infant ticket${
-        passengersCountForBooking.infants > 1 ? "s" : ""
-      } — Free`
-    );
-  }
-
-  return summary;
-}

@@ -94,10 +94,11 @@ namespace GetMyTicket.Service.Services
                 AdultPrice = x.AdultPrice,
                 ChildrenPrice = x.ChildrenPrice,
                 StartCityName = x.StartCity.CityName,
-                TransportationProviderName = x.TransportationProvider.Name,
+                TypeOfTrip = Enum.GetName(x.TypeOfTransportation),
                 Currency = Enum.GetName(x.Currency),
+                TransportationProviderName = x.TransportationProvider.Name,
                 TransportationProviderLogo = x.TransportationProvider?.Logo != null ? Convert.ToBase64String(x.TransportationProvider?.Logo ) : string.Empty ,
-                TypeOfTrip = Enum.GetName(x.TypeOfTransportation)
+                TransportationProviderId = x.TransportationProviderId.ToString(),
             }).ToList();
 
             return result;

@@ -79,13 +79,20 @@ export function setAccessAndRefreshTokenInCookies(response) {
 }
 
 //calculates the total price for the booking
-export function calculateTotalPrice(trip, passengers) {
-  return (
+export function calculateTotalPrice(trip, passengers, baggage, baggagePrices) {
+  let tripPrice =
     passengers.adults * trip.adultPrice +
-    passengers.children * trip.childrenPrice
-  );
-}
+    passengers.children * trip.childrenPrice;
 
+  if (baggage?.length > 0) {
+    baggage.forEach((x) => {
+      tripPrice +=
+        x.amount * baggagePrices.find((bp) => bp.size === x.type).price;
+    });
+  }
+
+  return tripPrice;
+}
 
 //Check if the user/passenger with the provided date string is at least 18 years old
 export function isAtLeast18(dobString) {

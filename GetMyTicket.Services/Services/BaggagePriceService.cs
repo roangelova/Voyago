@@ -13,16 +13,16 @@ namespace GetMyTicket.Service.Services
 
         public BaggagePriceService(IUnitOfWork unitOfWork)
         {
-                this.unitOfWork = unitOfWork;
+            this.unitOfWork = unitOfWork;
         }
 
-        public async Task<List<BaggagePriceDTO>> GetBaggagericesForTransportationProvider(Guid transportationProviderId, CancellationToken cancellationToken)
+        public async Task<List<BaggagePriceDTO>> GetBaggagePricesForTransportationProvider(Guid transportationProviderId, CancellationToken cancellationToken)
         {
             var tp = await unitOfWork.TransportationProviders.GetAsync(x => x.Id == transportationProviderId, true, cancellationToken, x => x.BaggagePrices);
 
-            if (tp is null) 
-            { 
-                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError, nameof(TransportationProvider),  transportationProviderId));
+            if (tp is null)
+            {
+                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError, nameof(TransportationProvider), transportationProviderId));
             }
 
             if (tp.BaggagePrices.Count is 0)
@@ -37,8 +37,42 @@ namespace GetMyTicket.Service.Services
             return tp.BaggagePrices.Select(x => new BaggagePriceDTO
             {
                 Size = Enum.GetName<BaggageSize>(x.BaggageSize),
-                Price = x.Price 
+                Price = x.Price
             }).ToList();
+        }
+
+        public async Task CreateBaggagePricesForTransportationrovider(CreateBaggagePricesDTO createBaggagePricesDTO, CancellationToken cancellationToken)
+        {
+            var tp = await unitOfWork.TransportationProviders.GetByIdAsync(createBaggagePricesDTO.TransportationProviderId);
+
+            if (tp == null)
+            {
+                throw new ApplicationException(string.Format
+                    (ResponseConstants.NotFoundError, nameof(TransportationProvider), createBaggagePricesDTO.TransportationProviderId));
+            }
+
+            var missing = Enum.GetValues<BaggageSize>()
+                .Except(createBaggagePricesDTO.Prices.Keys);
+
+            if (missing.Any())
+            {
+                throw new ApplicationException($"Missing prices for: {string.Join(", ", missing)}");
+            }
+
+            foreach (var key in createBaggagePricesDTO.Prices)
+            {
+                await unitOfWork.BaggagePrices.AddAsync(new BaggagePrice
+                {
+                    Id = Guid.CreateVersion7(),
+                    BaggageSize = key.Key,
+                    Price = key.Value,
+                    Currency = Currency.EUR, //TODO -> implement fix for default currency
+                    TransportationProviderId = createBaggagePricesDTO.TransportationProviderId
+                }, cancellationToken);
+            }
+
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+
         }
     }
 }

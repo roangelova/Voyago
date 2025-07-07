@@ -7,11 +7,11 @@ namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaggagePrice : ControllerBase
+    public class BaggagePricesController : ControllerBase
     {
         private readonly IBaggagePriceService baggagePriceService;
 
-        public BaggagePrice(IBaggagePriceService baggagePriceService)
+        public BaggagePricesController(IBaggagePriceService baggagePriceService)
         {
             this.baggagePriceService = baggagePriceService;
         }
@@ -20,7 +20,13 @@ namespace GetMyTicket.API.Controllers
         [HttpGet("{transportationProviderId}")]
         public async Task<List<BaggagePriceDTO>> GetBaggagePricesForTransportationProvider(Guid transportationProviderId, CancellationToken cancellationToken)
         {
-            return await baggagePriceService.GetBaggagericesForTransportationProvider(transportationProviderId, cancellationToken);
+            return await baggagePriceService.GetBaggagePricesForTransportationProvider(transportationProviderId, cancellationToken);
+        }
+
+        [HttpPost]
+        public async Task CreateBaggagePrices(CreateBaggagePricesDTO createBaggagePricesDTO, CancellationToken cancellationToken)
+        {
+           await baggagePriceService.CreateBaggagePricesForTransportationrovider(createBaggagePricesDTO, cancellationToken);
         }
     }
 }

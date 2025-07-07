@@ -23,6 +23,8 @@ namespace GetMyTicket.Persistance.UnitOfWork
 
         public IGenericRepository<BaggageItem> BaggageItems { get; }
 
+        public IGenericRepository<BaggagePrice> BaggagePrices { get; }
+
         public IGenericRepository<City> Cities { get; }
 
         public IGenericRepository<Country> Countries { get; }
@@ -45,6 +47,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
             Cities = new GenericRepository<City>(AppDbContext);
             Users = new GenericRepository<User>(AppDbContext);
             BaggageItems = new GenericRepository<BaggageItem>(AppDbContext);
+            BaggagePrices = new GenericRepository<BaggagePrice>(AppDbContext);
             PassengerBookingMap = new GenericRepository<PassengerBookingMap>(AppDbContext);
             UserPassengerMap = new GenericRepository<UserPassengerMap>(AppDbContext);
         }

@@ -1,5 +1,5 @@
 import { api } from "../api/api.js";
 
-export const BaggagePrice = {
-    getPricesForProvider: (tpId) => api.get(`api/BaggagePrice/${tpId}`),
+export const BaggagePrices = {
+    getPricesForProvider: (tpId) => api.get(`api/BaggagePrices/${tpId}`),
 }

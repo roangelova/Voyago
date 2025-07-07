@@ -13,6 +13,8 @@ namespace GetMyTicket.Common.DTOs.Trip
         public string StartCityName { get; set; }
         public string TransportationProviderName { get; set; }
 
+        public string TransportationProviderId { get; set; }
+
         public string? TransportationProviderLogo { get; set; }
         public string Currency { get; set; }
 

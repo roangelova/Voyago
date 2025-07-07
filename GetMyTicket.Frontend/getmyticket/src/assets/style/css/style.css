@@ -747,6 +747,7 @@ input[type=checkbox] {
 .cart__pricePerPersonBreakdown uL {
   display: flex;
   flex-direction: column;
+  text-align: center;
   gap: 1.5rem;
   font-size: 2rem;
 }

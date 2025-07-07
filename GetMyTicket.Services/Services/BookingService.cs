@@ -38,7 +38,7 @@ namespace GetMyTicket.Service.Services
 
         public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)
         {
-           var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
+            var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
 
             if (trip is null)
             {
@@ -142,18 +142,19 @@ namespace GetMyTicket.Service.Services
                  x => x.Booking.Trip.StartCity,
                  x => x.Booking.Trip.EndCity);
 
-            return data.Select(b => new ListBookingDTO()
-            {
-                BookingId = b.BookingId,
-                ToCityName = b.Booking.Trip.EndCity.CityName,
-                FromCityName = b.Booking.Trip.StartCity.CityName,
-                DepartureTime = b.Booking.Trip.StartTime,
-                TotalPrice = b.Booking.TotalPrice,
-                Currency = Enum.GetName(b.Booking.Trip.Currency),
-                Status = Enum.GetName(b.Booking.BookingStatus),
-                TripId = b.Booking.TripId,
-                BookingDate = b.Booking.CreatedAt
-            });
+            return data.Where(x => x.Booking.Trip.StartTime > DateTime.UtcNow).
+                Select(b => new ListBookingDTO()
+                {
+                    BookingId = b.BookingId,
+                    ToCityName = b.Booking.Trip.EndCity.CityName,
+                    FromCityName = b.Booking.Trip.StartCity.CityName,
+                    DepartureTime = b.Booking.Trip.StartTime,
+                    TotalPrice = b.Booking.TotalPrice,
+                    Currency = Enum.GetName(b.Booking.Trip.Currency),
+                    Status = Enum.GetName(b.Booking.BookingStatus),
+                    TripId = b.Booking.TripId,
+                    BookingDate = b.Booking.CreatedAt
+                });
         }
     }
 

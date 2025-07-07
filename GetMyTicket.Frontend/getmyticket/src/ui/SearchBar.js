@@ -26,8 +26,8 @@ const SearchBar = () => {
 
   const [start, setStart] = useState("");
   const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("2025-05-10");
-  const [endDate, setEndDate] = useState("2025-05-18");
+  const [startDate, setStartDate] = useState("2026-05-10");
+  const [endDate, setEndDate] = useState("2026-05-18");
 
   let location = useLocation();
   let searchType = location.pathname.slice(1);

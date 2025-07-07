@@ -765,6 +765,7 @@ input[type=checkbox] {
 }
 .cart__checkout button {
   padding: 1.5rem 4rem;
+  font-size: 1.6rem;
 }
 .cart__passengers {
   margin-top: 3rem;

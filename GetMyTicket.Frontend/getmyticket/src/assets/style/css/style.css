@@ -1499,7 +1499,6 @@ input[type=checkbox] {
   color: #444;
   font-weight: 600;
   align-self: flex-start;
-  cursor: pointer;
 }
 .passengers .passenger__additionalInfo {
   display: flex;

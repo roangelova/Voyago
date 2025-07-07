@@ -15,7 +15,7 @@ function SearchResultCard({ trip, passengers }) {
 
     if (!userId) {
       toast.info(
-        "Please log in or register to continue with the booking process."
+        "Please log in to continue with the booking process."
       );
       return;
     }

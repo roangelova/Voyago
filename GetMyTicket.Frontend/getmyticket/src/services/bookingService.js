@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 var userId = sessionStorage.getItem('userId');
 
 export const Booking = {
-    createBooking: (data) => api.post('api/bookings', data),
+    bookTrip: (data) => api.post('api/bookings', data),
     cancelBooking: (id) => api.put(`api/bookings/${id}`)
 }
 
@@ -26,17 +26,5 @@ export function useCancelBooking() {
     onError: (error) => {
       toast.error(error?.message || "Failed to cancel booking");
     },
-  });
-}
-
-export function useCreateBooking() {
-   const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (data) => Booking.createBooking(data),
-    onSuccess: () => {
-      toast.success("Booking was created successfully!");
-      queryClient.invalidateQueries({queryKey: ['bookings', userId], exact:true});
-    }
   });
 }

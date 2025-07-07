@@ -1,4 +1,5 @@
-﻿using GetMyTicket.Common.Entities;
+﻿using GetMyTicket.Common.DTOs.City;
+using GetMyTicket.Common.Entities;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -13,9 +14,16 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<City>> GetAll(bool asNoTracking)
+        public async Task<IEnumerable<CityDTO>> GetAll()
         {
-            return await unitOfWork.Cities.GetAllAsync(AsNonTracking: asNoTracking);
+            var cities = await unitOfWork.Cities.GetAllAsync();
+
+            return cities.Select(x => new CityDTO
+            {
+                CityName = x.CityName,
+                IATA = x.IATA_Code,
+                Id = x.Id
+            }).ToList();
         }
     }
 }

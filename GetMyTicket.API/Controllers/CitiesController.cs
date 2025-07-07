@@ -1,4 +1,4 @@
-﻿using GetMyTicket.Common.Entities;
+﻿using GetMyTicket.Common.DTOs.City;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +16,9 @@ namespace GetMyTicket.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<City>> GetAll() 
+        public async Task<IEnumerable<CityDTO>> GetAll() 
         {
-           var result =  await cityService.GetAll(true);
-
-            return result;
+           return await cityService.GetAll();
         }
 
     }

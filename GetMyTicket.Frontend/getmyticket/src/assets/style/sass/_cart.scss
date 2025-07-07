@@ -55,7 +55,7 @@
     }
   }
 
-  &__partnerImg{
+  &__partnerImg {
     max-height: 45rem;
     filter: grayscale(100);
     cursor: pointer;
@@ -123,11 +123,51 @@
     border-bottom: 0.5px solid rgba(#333, 0.5);
   }
 
+  &__discount {
+    padding-bottom: 4rem;
+    border-bottom: 0.5px solid rgba(#333, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+
+    & label {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    & input {
+      padding: 0.5rem 1rem;
+      text-align: center;
+      outline: none;
+      color: inherit;
+    }
+
+    & div {
+      background-color: #fff;
+      padding: 0.5rem;
+      border-radius: 10px;
+
+      & button {
+        background-color: $color-grey-light-1;
+        padding: 1rem 1.5rem;
+        border-radius: 50px;
+        margin: 0.5rem;
+
+        transition: all 0.4s;
+      }
+
+      & button:hover {
+        transform: translateY(3px);
+      }
+    }
+  }
+
   &__total {
     & div {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
       font-size: 2.4rem;
     }
 

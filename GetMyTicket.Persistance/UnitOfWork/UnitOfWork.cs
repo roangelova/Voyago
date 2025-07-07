@@ -34,6 +34,8 @@ namespace GetMyTicket.Persistance.UnitOfWork
         public IGenericRepository<PassengerBookingMap> PassengerBookingMap { get; }
         public IGenericRepository<UserPassengerMap> UserPassengerMap { get; }
 
+        public IGenericRepository<Discount> Discounts { get; }
+
         public UnitOfWork(AppDbContext appDbContext)
         {
             AppDbContext = appDbContext;

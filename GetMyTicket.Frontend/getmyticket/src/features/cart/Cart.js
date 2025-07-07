@@ -142,8 +142,9 @@ function Cart() {
             <div className="cart__row">
               <h5>Bags</h5>
               <ul>
-
-                {baggage.length === 0 && <p>No bags added to this booking yet!</p>}
+                {baggage.length === 0 && (
+                  <p>No bags added to this booking yet!</p>
+                )}
 
                 {baggage.map((b) => (
                   <div key={b.type}>
@@ -244,19 +245,34 @@ function Cart() {
 
             <div className="cart__pricePerPersonBreakdown">
               <ul>
-                {CreatePriceSummary(trip, passengersCountForBooking, baggage, baggagePrices).map(
-                  (x) => (
-                    <li key={x}>{x}</li>
-                  )
-                )}
+                {CreatePriceSummary(
+                  trip,
+                  passengersCountForBooking,
+                  baggage,
+                  baggagePrices
+                ).map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
               </ul>
+            </div>
+            <div className="cart__discount">
+              <label htmlFor="discount">Have a discount code?</label>
+              <div>
+                <input type="text" placeholder="MYDISCOUNT"></input>
+                <button>Apply</button>
+              </div>
             </div>
             <div className="cart__total">
               <div>
                 <p>Total</p>
                 <p>
                   <strong>
-                    {calculateTotalPrice(trip, passengersCountForBooking, baggage, baggagePrices)}
+                    {calculateTotalPrice(
+                      trip,
+                      passengersCountForBooking,
+                      baggage,
+                      baggagePrices
+                    )}
                   </strong>{" "}
                   {trip.currency}
                 </p>

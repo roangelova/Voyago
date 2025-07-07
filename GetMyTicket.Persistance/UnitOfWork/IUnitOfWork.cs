@@ -21,6 +21,8 @@ namespace GetMyTicket.Persistance.UnitOfWork
         IGenericRepository<PassengerBookingMap> PassengerBookingMap {  get; } 
         IGenericRepository<UserPassengerMap> UserPassengerMap {  get; } 
 
+        IGenericRepository<Discount> Discounts { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

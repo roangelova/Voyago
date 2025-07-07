@@ -11,6 +11,11 @@ namespace GetMyTicket.Common.Entities
 
         public double TotalPrice { get; set; }
 
+        public Discount Discount { get; set; }
+
+        [ForeignKey(nameof(Discount))]
+        public Guid? DiscountId { get; set; }
+
         public Trip Trip { get; set; }
 
         [ForeignKey(nameof(Trip))]

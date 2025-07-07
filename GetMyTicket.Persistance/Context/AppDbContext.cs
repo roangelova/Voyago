@@ -41,6 +41,8 @@ namespace GetMyTicket.Persistance.Context
 
         public DbSet<City> Cities { get; set; }
 
+        public DbSet<Discount> Discounts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -101,6 +103,11 @@ namespace GetMyTicket.Persistance.Context
                 .WithMany(x => x.BaggagePrices)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<Booking>()
+                .HasOne(x => x.Discount)
+                .WithMany(x =>x.Bookings)
+                .HasForeignKey(x => x.DiscountId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             ApplyGlobalQueryFilters(builder);
         }

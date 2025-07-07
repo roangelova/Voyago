@@ -1,8 +1,6 @@
 STAY TUNED. THE APP WILL BE LIVE SOON FOR YOU TO EXPLORE:)
 ----------------------------------------------------------------------------------------------------
 
-A MAJOR redesign is in progress. Have a sneak peak of our homepage: 
-
 ![image](https://github.com/user-attachments/assets/a4631c2b-47a8-455c-87b6-f4755a3bff86)
 
 ![image](https://github.com/user-attachments/assets/8c0f93e8-cdef-4a02-9cdf-8f9d22566e45)
@@ -19,17 +17,20 @@ The aim of this project is to combine my passion for the trasportation industry 
 #### Tech stack
 - DB & Storage: MSSQL, Azure SQL , Redis
 - Frontend: React, HTML, CSS, JS + SASS
-- Backend: .NET 
+- Backend: .NET
+
+  Additional: Axios, TanStack Query, react-leaflet
 
 #### Project description
-The Get My Ticket website aims to provide users with the possibility of booking trips, using a diverse type of transportation. Currently, the following 3 are supported: bus, airplane, train. 
+The VOYAGO website aims to provide users with a platform for booking trips, using a diverse type of transportation. Currently, the following 3 are supported: bus, airplane, train. 
 
-#### Supported features (as of 04.06.2025)
-- login and registration
-- search for trips based on departure/arrival destination, start/end date or type of transportation
-- update passenger data
-- create booking & view current bookings
-- view booking details, cancel booking and download a PDF borading pass
+#### Supported features (as of 07.07.2025)
+- User login and registration. We have now simplified our registration process - a user needs just an email and a password to get started. 
+- Search for trips based on departure/arrival destination, start/end date or type of transportation. Also possible to choose type (adult, child or infant) and count of passengers for each search. Seperate tabs for searching by type of transportation available in the navigation bar. 
+- Update passenger data (add, edit or delete passenger). One passenger is the account owner. 
+- View cart. Add different baggage sizes based on the transportation provider's price list. Select from available passengers or add new ones for the booking. Finally, use a discount code if applicable and finish booking. The price is updated dynamically for full transparency. 
+- View and manage current bookings from the account dashboard. Filter by status (canceled, confirmed) and sort by booking date (descending/ascending). 
+- View booking details (trip data, passengers, baggage details, price summary), cancel booking and/or download a PDF borading pass.
 
  
 IMPORTANT NOTICE: This project aims to adhere to the best practices used in software development. However, this may not always be possible due to lack of resources that can be used free of charge.

@@ -59,7 +59,7 @@ namespace GetMyTicket.Service.Services
                x.Id.ToString(),
                  x.Name,
                 x.Description,
-                Convert.ToBase64String(x.Logo)
+                x?.Logo?.Length > 0 ? Convert.ToBase64String(x?.Logo) : null
             ));
         }
 

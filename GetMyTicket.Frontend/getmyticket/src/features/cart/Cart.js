@@ -1,14 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { calculateTotalPrice, formatDate } from "../../helpers";
-import SelectPassengersDropdown from "./SelectPassengersDropdown";
-import fallbackLogo from "../../assets/images/fallbackLogo.png";
 import { useEffect, useState } from "react";
-import { Passenger } from "../../services/passengerService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import check from "../../assets/icons/check.png";
-import { Booking } from "../../services/bookingService";
+import fallbackLogo from "../../assets/images/fallbackLogo.png";
+import partnerImage from "../../assets/images/partnerImage.png";
+import { calculateTotalPrice, formatDate } from "../../helpers";
+import { useCreateBooking } from "../../services/bookingService";
+import { Passenger } from "../../services/passengerService";
 import PassengerForm from "../account/PassengerForm";
 import AddBagsForm from "./AddBagsForm";
-import partnerImage from '../../assets/images/partnerImage.png';
+import SelectPassengersDropdown from "./SelectPassengersDropdown";
 const userId = sessionStorage.getItem("userId");
 
 const baggageOptions = [
@@ -26,6 +27,7 @@ const baggageOptions = [
 
 function Cart() {
   const location = useLocation();
+  const createBooking = useCreateBooking();
   const { trip, passengers: passengersCountForBooking } = location.state || {};
   const [userPassengerList, setUserPassengerList] = useState();
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
@@ -33,6 +35,7 @@ function Cart() {
   const [baggage, setBaggage] = useState([
     { type: baggageOptions[0].key, amount: 1 },
   ]);
+  const [baggagePrices, setBaggagePrices] = useState(null);
 
   console.log(baggage);
   //show form popups controls:
@@ -63,17 +66,23 @@ function Cart() {
     });
   }, []);
 
-  const onCheckout = () => {
-    // Кои условия трябва да са изпълнени, за да замършим резервацията?
-    //there should always be at least 1 adult per booking
+  const onCheckout = async () => {
+    if (!trip) {
+      toast.error("Something went wrong.");
+      navigate("/");
+    }
 
-    Booking.bookTrip({
-      tripId: trip.tripId,
-      passengerIds: passengerIdsForBooking,
-      baggage: baggage,
-      userId,
-      //TODO - ADD A MUTATE FUNC AND HANDLE ERROR AND SUCCESS
-    }).then(navigate("/account/bookings"));
+    try {
+      await createBooking.mutateAsync({
+        tripId: trip.tripId,
+        passengerIds: passengerIdsForBooking,
+        baggage: baggage,
+        userId,
+      });
+      navigate("/account/bookings");
+    } catch (error) {
+      toast.error(error?.message || "Could not create booking.");
+    }
   };
 
   return (
@@ -89,8 +98,12 @@ function Cart() {
               <h5>
                 {trip.startCityName} to {trip.endCityName}
               </h5>
-              <p>Departure: <strong>{formatDate(trip.startTime)}</strong></p>
-              <p>Arrival: <strong>{formatDate(trip.endTime)}</strong></p>
+              <p>
+                Departure: <strong>{formatDate(trip.startTime)}</strong>
+              </p>
+              <p>
+                Arrival: <strong>{formatDate(trip.endTime)}</strong>
+              </p>
               <div className="cart__provider">
                 <img alt="icon" src={imageSrc} />
                 <p>{trip.transportationProviderName}</p>
@@ -127,7 +140,9 @@ function Cart() {
                 {baggage.map((b) => (
                   <div>
                     <img alt="icon" className="cart__checkIcon" src={check} />
-                    <li>{b.amount}x {b.type} {b.amount === 1 ?'bag' : 'bags' }</li>
+                    <li>
+                      {b.amount}x {b.type} {b.amount === 1 ? "bag" : "bags"}
+                    </li>
                   </div>
                 ))}
               </ul>
@@ -206,7 +221,12 @@ function Cart() {
             </div>
 
             <div className="cart_row">
-              <img className="cart__partnerImg" href="#" src={partnerImage} alt="An image that links to a partner website for rent a cars."/>
+              <img
+                className="cart__partnerImg"
+                href="#"
+                src={partnerImage}
+                alt="An image that links to a partner website for rent a cars."
+              />
             </div>
           </div>
 

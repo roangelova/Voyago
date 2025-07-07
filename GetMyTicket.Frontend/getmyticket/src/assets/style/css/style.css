@@ -751,39 +751,6 @@ input[type=checkbox] {
   gap: 1.5rem;
   font-size: 2rem;
 }
-.cart__discount {
-  padding-bottom: 4rem;
-  border-bottom: 0.5px solid rgba(51, 51, 51, 0.5);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-items: center;
-}
-.cart__discount label {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-}
-.cart__discount input {
-  padding: 0.5rem 1rem;
-  text-align: center;
-  outline: none;
-  color: inherit;
-}
-.cart__discount div {
-  background-color: #fff;
-  padding: 0.5rem;
-  border-radius: 10px;
-}
-.cart__discount div button {
-  background-color: #f9f7f6;
-  padding: 1rem 1.5rem;
-  border-radius: 50px;
-  margin: 0.5rem;
-  transition: all 0.4s;
-}
-.cart__discount div button:hover {
-  transform: translateY(3px);
-}
 .cart__total div {
   display: flex;
   justify-content: space-between;
@@ -832,6 +799,48 @@ input[type=checkbox] {
 .cart__important p,
 .cart__important h4 {
   color: #555;
+}
+
+.discountField {
+  padding-bottom: 4rem;
+  border-bottom: 0.5px solid rgba(51, 51, 51, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+.discountField label {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.discountField input {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  outline: none;
+  color: inherit;
+}
+.discountField div {
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.discountField div button {
+  background-color: #f9f7f6;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  margin: 0.5rem;
+  transition: all 0.4s;
+}
+.discountField div button:hover {
+  transform: translateY(3px);
+}
+.discountField__codeUsed {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+}
+.discountField__codeUsed span {
+  color: #258d2d;
+  font-weight: 600;
 }
 
 .whyUs_container {

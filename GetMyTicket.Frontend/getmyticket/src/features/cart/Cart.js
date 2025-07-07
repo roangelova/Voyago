@@ -4,14 +4,15 @@ import { toast } from "react-toastify";
 import check from "../../assets/icons/check.png";
 import fallbackLogo from "../../assets/images/fallbackLogo.png";
 import partnerImage from "../../assets/images/partnerImage.png";
-import { calculateTotalPrice, formatDate } from "../../helpers";
+import { formatDate } from "../../helpers";
 import { useCreateBooking } from "../../services/bookingService";
 import { Passenger } from "../../services/passengerService";
 import PassengerForm from "../account/PassengerForm";
 import AddBagsForm from "./AddBagsForm";
 import SelectPassengersDropdown from "./SelectPassengersDropdown";
 import { BaggagePrices } from "../../services/baggagePriceService";
-import { CreatePriceSummary } from "./cartHelpers";
+import { calculateTotalPriceForCart, CreatePriceSummary } from "./cartHelpers";
+import DiscountField from "./DiscountFiled";
 const userId = sessionStorage.getItem("userId");
 
 const baggageOptions = [
@@ -20,12 +21,7 @@ const baggageOptions = [
   { key: "Large", value: 32 },
 ];
 
-//TODO -? features to implement in the feature: baggage options should be fetched from the backend; Furthermore, each bag size should have a price and it should be added to the total Price
-//TODO -> INCLUDE BAGGAGE OPTIONS IN BOOKING
-
-//add option to create new passenger
-// make select work and reconnect 'addBooking functionalityy'
-//once we have a working version -> add or remove passenger
+//TODO - split up component; this file is huge!!!
 
 function Cart() {
   const location = useLocation();
@@ -36,6 +32,8 @@ function Cart() {
   const [accountOwner, setAccountOwner] = useState(null);
   const [baggage, setBaggage] = useState([]);
   const [baggagePrices, setBaggagePrices] = useState(null);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
 
   console.log(baggage);
   //show form popups controls:
@@ -249,29 +247,32 @@ function Cart() {
                   trip,
                   passengersCountForBooking,
                   baggage,
-                  baggagePrices
+                  baggagePrices,
+                  discountApplied,
+                  discountCode
                 ).map((x) => (
                   <li key={x}>{x}</li>
                 ))}
               </ul>
             </div>
-            <div className="cart__discount">
-              <label htmlFor="discount">Have a discount code?</label>
-              <div>
-                <input type="text" placeholder="MYDISCOUNT"></input>
-                <button>Apply</button>
-              </div>
-            </div>
+              <DiscountField
+                discountCode={discountCode}
+                setDiscountCode={setDiscountCode}
+                discountApplied={discountApplied}
+                setDiscountApplied={setDiscountApplied}
+              />
+
             <div className="cart__total">
               <div>
-                <p>Total</p>
+                <p>Total:</p>
                 <p>
                   <strong>
-                    {calculateTotalPrice(
+                    {calculateTotalPriceForCart(
                       trip,
                       passengersCountForBooking,
                       baggage,
-                      baggagePrices
+                      baggagePrices,
+                      discountApplied
                     )}
                   </strong>{" "}
                   {trip.currency}

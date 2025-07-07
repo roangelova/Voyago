@@ -2,7 +2,9 @@ export function CreatePriceSummary(
   trip,
   passengersCountForBooking,
   baggage,
-  baggagePrices
+  baggagePrices,
+  discountApplied,
+  discountCode
 ) {
   let summary = [];
 
@@ -30,7 +32,6 @@ export function CreatePriceSummary(
     );
   }
 
-  console.log(baggage, baggagePrices)
   if (baggage?.length > 0) {
     summary.push("--------");
     baggage.forEach((x) => {
@@ -43,4 +44,31 @@ export function CreatePriceSummary(
   }
 
   return summary;
+}
+
+//calculates the total price for the booking
+export function calculateTotalPriceForCart(
+  trip,
+  passengers,
+  baggage,
+  baggagePrices,
+  discountCode
+) {
+  let tripPrice =
+    passengers.adults * trip.adultPrice +
+    passengers.children * trip.childrenPrice;
+
+  if (baggage?.length > 0) {
+    baggage.forEach((x) => {
+      tripPrice +=
+        x.amount * baggagePrices.find((bp) => bp.size === x.type).price;
+    });
+  }
+
+  if (discountCode) {
+    //TODO-> MAKE DYNAMIC; for now, JUST apply a fixed 10% UNTIL WE HAVE SET UP THE be LOGIC
+    return tripPrice * 0.9;
+  }
+
+  return tripPrice;
 }

@@ -63,7 +63,8 @@ axios.interceptors.response.use(
     } else if (error?.response?.status === 404) {
       window.location.href = "/404";
     } else if (error?.status === 400) {
-      console.error(error);
+      console.error(error); // ONLY IN DEV
+      throw new Error(error?.response?.data?.detail)
     } else {
       console.log("Error:", error?.response?.data);
     }

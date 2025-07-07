@@ -38,7 +38,7 @@ namespace GetMyTicket.Service.Services
 
         public async Task<Guid> CreateBooking(CreateBookingDTO bookTripDTO)
         {
-            var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
+           var trip = await unitOfWork.Trips.GetByIdAsync(bookTripDTO.TripId);
 
             if (trip is null)
             {

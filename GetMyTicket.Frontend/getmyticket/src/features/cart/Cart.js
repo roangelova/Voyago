@@ -34,11 +34,10 @@ function Cart() {
   const [baggagePrices, setBaggagePrices] = useState(null);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setdDiscount] = useState(null);
-
+  const total = Object.values(passengersCountForBooking).reduce((a, b) => a + b, 0);
   //show form popups controls:
   const [showPassengerForm, setShowPassengerForm] = useState(false);
   const [showAddBags, setAddBags] = useState(false);
-
   const navigate = useNavigate();
 
   let imageSrc;
@@ -189,11 +188,14 @@ function Cart() {
                   setPassengerIdsForBooking={setPassengerIdsForBooking}
                 />
               </div>
-              <div className="cart__addPassenger">
-                Want to{" "}
-                <span onClick={() => setShowPassengerForm(true)}>add</span> a
-                new passenger instead?
-              </div>
+
+              {total > 1 && (
+                <div className="cart__addPassenger">
+                  Want to{" "}
+                  <span onClick={() => setShowPassengerForm(true)}>create</span> a
+                  new passenger instead?
+                </div>
+              )}
             </div>
 
             {showPassengerForm ? (
@@ -252,12 +254,12 @@ function Cart() {
                 ))}
               </ul>
             </div>
-              <DiscountField
-                discountCode={discountCode}
-                setDiscountCode={setDiscountCode}
-                discount={discount}
-                setDiscount={setdDiscount}
-              />
+            <DiscountField
+              discountCode={discountCode}
+              setDiscountCode={setDiscountCode}
+              discount={discount}
+              setDiscount={setdDiscount}
+            />
 
             <div className="cart__total">
               <div>

@@ -41,7 +41,7 @@ namespace GetMyTicket.Service.Services
 
                 if (registeredAccountOwnersForUserId.Any())
                 {
-                    throw new ApplicationException(ResponseConstants.DuplicateIsAccountOwnerWhenCreatingPassenger);
+                    throw new ApplicationError(ResponseConstants.DuplicateIsAccountOwnerWhenCreatingPassenger);
                 }
             }
 
@@ -200,13 +200,13 @@ namespace GetMyTicket.Service.Services
 
             if (passenger.UserPassengerMaps.Any(x => x.IsAccountOwner is true))
             {
-                throw new ApplicationException(ResponseConstants.CantDeleteAccountOwnersPassengerEntity);
+                throw new ApplicationError(ResponseConstants.CantDeleteAccountOwnersPassengerEntity);
             }
 
             bool hasActiveBookings = passenger.PassengerBookingMaps.Any(x => !x.IsDeleted);
             if (hasActiveBookings)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.CantDeleteXwithActiveY, nameof(Passenger), nameof(Booking)));
+                throw new ApplicationError(string.Format(ResponseConstants.CantDeleteXwithActiveY, nameof(Passenger), nameof(Booking)));
             }
 
             passenger.IsDeleted = true;
@@ -242,7 +242,7 @@ namespace GetMyTicket.Service.Services
                 return result;
             }
 
-            throw new ApplicationException(string.Format(ResponseConstants.NotSupported, value));
+            throw new ApplicationError(string.Format(ResponseConstants.NotSupported, value));
         }
     }
 }

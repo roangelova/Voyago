@@ -4,10 +4,10 @@ namespace GetMyTicket.Service.Contracts
 {
     public interface IDiscountService
     {
-        public Task<GetDiscountDTO> GetDiscount(Guid discountId);
+        public Task<GetDiscountDTO> GetDiscount(string discountName);
 
         public Task<Guid> CreateDiscount(CreateDiscountDTO dto);
 
-        public Task<bool> CanApplyDiscountToBooking(Guid passengerId, Guid discountId);
+        public Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName);
     }
 }

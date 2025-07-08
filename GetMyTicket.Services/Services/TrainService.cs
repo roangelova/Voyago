@@ -1,6 +1,7 @@
 ﻿using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.Vehicle;
 using GetMyTicket.Common.Entities.Vehicles;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -19,14 +20,14 @@ namespace GetMyTicket.Service.Services
         {
             if (trainDTO.Capacity <= 0)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.CantBeNull, nameof(trainDTO.Capacity)));
+                throw new ApplicationError(string.Format(ResponseConstants.CantBeNull, nameof(trainDTO.Capacity)));
             }
 
             var TransportationProvider = await unitOfWork.TransportationProviders.GetByIdAsync(trainDTO.TransportationProviderId);
 
             if (TransportationProvider == null)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError,
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError,
                     nameof(TransportationProvider),
                     trainDTO.TransportationProviderId));
             }

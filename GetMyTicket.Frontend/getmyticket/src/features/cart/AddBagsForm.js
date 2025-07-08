@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { BaggagePrices } from "../../services/baggagePriceService";
 
 function AddBagsForm({ setAddBags, baggageOptions, setBaggage, baggagePrices }) {
   const [selectValue, setSelectValue] = useState(null);
 
-  function onAddClickHandler() {
+  function onAddClickHandler(e) {
+    e.preventDefault();
     setAddBags(false);
 
-    console.log("select value", selectValue);
     setBaggage((prev) => {
       const existing = prev.find((b) => b.type === selectValue);
       if (existing) {

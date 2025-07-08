@@ -1,27 +1,37 @@
 import { toast } from "react-toastify";
+import { Discount } from "../../services/discountService";
+import { useAccountContext } from "../account/AccountContext";
 
 function DiscountField({
   discountCode,
   setDiscountCode,
   discountApplied,
-  setDiscountApplied,
+  setDiscount,
+  discount
 }) {
-  function applyDiscountCode() {
-    let isValid = IsAValidDiscountCode();
+  var { passengers } = useAccountContext();
+  var passengerId = passengers?.find((x) => x?.isAccountOwner)?.passengerId;
 
-    if (!isValid) {
-      toast.error("Invalid discount code!");
-      setDiscountCode("");
-    } else {
-      //apply the discount to the totalPrice
-      toast.success("Discount code applied successfully!");
-      setDiscountApplied(true);
-    }
+  function applyDiscountCode() {
+    Discount.canApplyDiscountToBooking(passengerId, discountCode)
+      .then((isValid) => {
+        if (!isValid) {
+          toast.error("Invalid discount code!");
+          setDiscountCode("");
+        } else {
+          Discount.getByName(discountCode).then((discount) =>
+            setDiscount(discount)
+          //this line will make sure that the code is applied to the total price
+          );
+          toast.success("Discount code applied successfully!");
+        }
+      })
+      .catch((err) => toast.error(err.message));
   }
 
   return (
     <div className="discountField">
-      {!discountApplied && (
+      {!discount && (
         <>
           <label htmlFor="discount">Have a discount code?</label>
           <div>
@@ -32,7 +42,7 @@ function DiscountField({
               placeholder="MY DISCOUNT"
             ></input>
             <button
-              disabled={discountApplied}
+              disabled={discount}
               onClick={() => applyDiscountCode()}
             >
               Apply
@@ -41,9 +51,9 @@ function DiscountField({
         </>
       )}
 
-      {discountApplied && (
+      {discount && (
         <p className="discountField__codeUsed">
-          Code used: <span>WELCOME10</span> for <span>10%</span> off!
+          Code used: <span>{discount.name}</span> for <span>{discount.value} {discount.discountType === "Percent" ? '%' : 'EUR'}</span> off!
         </p>
       )}
     </div>
@@ -51,13 +61,3 @@ function DiscountField({
 }
 
 export default DiscountField;
-
-function IsAValidDiscountCode() {
-  //TODO: should check the following:
-  // - if the user has already used the discount code
-  // - if code is still active
-  //for now, the behavior is static
-  //USER SHOULD NOT BBE ABLE TO USE MORE THAN ONE DISCOUNT CODE PER BOOKING!
-
-  return true;
-}

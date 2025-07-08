@@ -105,9 +105,14 @@ namespace GetMyTicket.Persistance.Context
 
             builder.Entity<Booking>()
                 .HasOne(x => x.Discount)
-                .WithMany(x =>x.Bookings)
+                .WithMany(x => x.Bookings)
                 .HasForeignKey(x => x.DiscountId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Discount>()
+                .HasIndex(x => x.Name)
+                .IsUnique();
+                
 
             ApplyGlobalQueryFilters(builder);
         }

@@ -2,6 +2,7 @@
 using GetMyTicket.Common.DTOs.BaggagePrice;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -22,7 +23,7 @@ namespace GetMyTicket.Service.Services
 
             if (tp is null)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError, nameof(TransportationProvider), transportationProviderId));
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(TransportationProvider), transportationProviderId));
             }
 
             if (tp.BaggagePrices.Count is 0)
@@ -47,7 +48,7 @@ namespace GetMyTicket.Service.Services
 
             if (tp == null)
             {
-                throw new ApplicationException(string.Format
+                throw new ApplicationError(string.Format
                     (ResponseConstants.NotFoundError, nameof(TransportationProvider), createBaggagePricesDTO.TransportationProviderId));
             }
 
@@ -56,7 +57,7 @@ namespace GetMyTicket.Service.Services
 
             if (missing.Any())
             {
-                throw new ApplicationException($"Missing prices for: {string.Join(", ", missing)}");
+                throw new ApplicationError($"Missing prices for: {string.Join(", ", missing)}");
             }
 
             foreach (var key in createBaggagePricesDTO.Prices)

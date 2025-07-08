@@ -15,10 +15,10 @@ namespace GetMyTicket.API.Controllers
             this.discountService = discountService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<GetDiscountDTO> GetDiscount(Guid id)
+        [HttpGet("{discountName}")]
+        public async Task<GetDiscountDTO> GetDiscount(string discountName)
         {
-            return await discountService.GetDiscount(id);
+            return await discountService.GetDiscount(discountName);
         }
 
         [HttpPost]
@@ -26,7 +26,7 @@ namespace GetMyTicket.API.Controllers
         {
             Guid id = await discountService.CreateDiscount(dto);
 
-            return CreatedAtAction(nameof(GetDiscount), new { id}, id);
+            return CreatedAtAction(nameof(GetDiscount), new { discountName = dto.Name.ToUpper() }, id);
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace GetMyTicket.API.Controllers
         /// once per user account and booking. Some discouunt codes also have an expiration date.
         /// </summary>
         /// <param name="passengerId"></param>
-        /// <param name="discountId"></param>
+        /// <param name="discountName></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, Guid discountId)
+        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName)
         {
-            return await discountService.CanApplyDiscountToBooking(passengerId, discountId);
+            return await discountService.CanApplyDiscountToBooking(passengerId, discountName);
         }
     }
 }

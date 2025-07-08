@@ -52,7 +52,7 @@ export function calculateTotalPriceForCart(
   passengers,
   baggage,
   baggagePrices,
-  discountCode
+  discount
 ) {
   let tripPrice =
     passengers.adults * trip.adultPrice +
@@ -65,9 +65,13 @@ export function calculateTotalPriceForCart(
     });
   }
 
-  if (discountCode) {
+  if (discount) {
     //TODO-> MAKE DYNAMIC; for now, JUST apply a fixed 10% UNTIL WE HAVE SET UP THE be LOGIC
-    return tripPrice * 0.9;
+    if(discount.discountType === "Percent"){
+       return tripPrice - (tripPrice * (discount.value / 100));
+    }else{
+      return tripPrice - discount.value
+    }
   }
 
   return tripPrice;

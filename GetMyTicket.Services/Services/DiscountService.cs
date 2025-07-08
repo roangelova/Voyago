@@ -2,6 +2,7 @@
 using GetMyTicket.Common.DTOs.Discount;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Enum;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -16,27 +17,27 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, Guid discountId)
+        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName)
         {
-            var discount = await unitOfWork.Discounts.GetByIdAsync(discountId);
+            var discount = await unitOfWork.Discounts.GetAsync(x => x.Name.ToUpper() == discountName.ToUpper());
 
             if (discount is null)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError, nameof(Discount), discountId));
+                throw new ApplicationError(ResponseConstants.InvalidDiscount);
             }
 
             if(discount.ExpirationDate <  DateTime.UtcNow)
             {
-                throw new ApplicationException(ResponseConstants.DiscountExpired);
+                throw new ApplicationError(ResponseConstants.DiscountExpired);
             }
 
             //TODO -> IF WE ADD GLOBAL QUERY FILTER, REMOVE IT SO THAT WE CAN CHECK EVEN IF PAST BOOKINGS HAVE USED IT 
             var passengerBookings = await unitOfWork.PassengerBookingMap.GetAllAsync(x => x.PassengerId == passengerId, null, false, default, x=> x.Booking);
-            bool HasUsedDiscountCode = passengerBookings.Any( x=> x.Booking.DiscountId == discountId);
+            bool HasUsedDiscountCode = passengerBookings.Any( x=> x.Booking.DiscountId == discount.Id);
 
             if(HasUsedDiscountCode)
             {
-                throw new ApplicationException(ResponseConstants.DiscountHasBeenUsed);
+                throw new ApplicationError(ResponseConstants.DiscountHasBeenUsed);
             }
 
             return true;
@@ -48,12 +49,12 @@ namespace GetMyTicket.Service.Services
 
             if(!IsValidType)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.InvalidType, dto.DiscountType, nameof(DiscountType)));
+                throw new ApplicationError(string.Format(ResponseConstants.InvalidType, dto.DiscountType, nameof(DiscountType)));
             }
 
             var discount = new Discount
             {
-                Name = dto.Name,
+                Name = dto.Name.Trim().ToUpper(),
                 DiscountType = discountType,
                 Value = dto.Value,
                 IsActive = true,
@@ -67,13 +68,13 @@ namespace GetMyTicket.Service.Services
             return discount.Id;
         }
 
-        public async Task<GetDiscountDTO> GetDiscount(Guid discountId)
+        public async Task<GetDiscountDTO> GetDiscount(string discountName)
         {
-            var discount = await unitOfWork.Discounts.GetByIdAsync(discountId);
+            var discount = await unitOfWork.Discounts.GetAsync(x => x.Name.ToUpper() == discountName.ToUpper());
 
-            if(discount is null)
+            if (discount is null)
             {
-                throw new ApplicationException(string.Format(ResponseConstants.NotFoundError,nameof(Discount), discountId));
+                throw new ApplicationError(ResponseConstants.InvalidDiscount);
             }
 
             return new GetDiscountDTO

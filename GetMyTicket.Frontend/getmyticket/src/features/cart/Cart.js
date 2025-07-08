@@ -33,9 +33,8 @@ function Cart() {
   const [baggage, setBaggage] = useState([]);
   const [baggagePrices, setBaggagePrices] = useState(null);
   const [discountCode, setDiscountCode] = useState("");
-  const [discountApplied, setDiscountApplied] = useState(false);
+  const [discount, setdDiscount] = useState(null);
 
-  console.log(baggage);
   //show form popups controls:
   const [showPassengerForm, setShowPassengerForm] = useState(false);
   const [showAddBags, setAddBags] = useState(false);
@@ -66,7 +65,6 @@ function Cart() {
     if (trip) {
       BaggagePrices.getPricesForProvider(trip?.transportationProviderId).then(
         (data) => {
-          console.log(data);
           setBaggagePrices(data);
         }
       );
@@ -248,7 +246,6 @@ function Cart() {
                   passengersCountForBooking,
                   baggage,
                   baggagePrices,
-                  discountApplied,
                   discountCode
                 ).map((x) => (
                   <li key={x}>{x}</li>
@@ -258,8 +255,8 @@ function Cart() {
               <DiscountField
                 discountCode={discountCode}
                 setDiscountCode={setDiscountCode}
-                discountApplied={discountApplied}
-                setDiscountApplied={setDiscountApplied}
+                discount={discount}
+                setDiscount={setdDiscount}
               />
 
             <div className="cart__total">
@@ -272,7 +269,7 @@ function Cart() {
                       passengersCountForBooking,
                       baggage,
                       baggagePrices,
-                      discountApplied
+                      discount
                     )}
                   </strong>{" "}
                   {trip.currency}

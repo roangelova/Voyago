@@ -52,6 +52,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
             BaggagePrices = new GenericRepository<BaggagePrice>(AppDbContext);
             PassengerBookingMap = new GenericRepository<PassengerBookingMap>(AppDbContext);
             UserPassengerMap = new GenericRepository<UserPassengerMap>(AppDbContext);
+            Discounts = new GenericRepository<Discount>(AppDbContext);
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

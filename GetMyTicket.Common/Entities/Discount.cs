@@ -11,6 +11,8 @@ namespace GetMyTicket.Common.Entities
 
         public DiscountType DiscountType { get; set; }
 
+        public double Value { get; set; }
+
         public bool HasExpirationDate { get; set; }
 
         public ICollection<Booking> Bookings { get; set; } = [];

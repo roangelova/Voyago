@@ -37,6 +37,10 @@ namespace GetMyTicket.Common.Constants
         public const string CantDeleteXwithActiveY = "Cannot delete a {0} with active {1}";
 
         public const string InvalidOperation = "Invalid operation.";
+
+        //discount
+        public const string DiscountHasBeenUsed = "Discount code has already been used on a previous booking";
+        public const string DiscountExpired = "Discount code has expired!";
         //SUCCESS
 
         public const string LogoutSuccessful = "Successfully logged out.";

@@ -7,6 +7,9 @@ import { useCancelBooking } from "../../services/bookingService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAccountContext } from "./AccountContext";
 import { BaggageItem } from "../../services/baggageItemService";
+import { Trip } from "../../services/tripService";
+
+//TODO -> LOAD TRIP AND DISPLAY PRICES AND SAVED MONEY
 
 function BookingDetails() {
   const { mutate: cancelBooking } = useCancelBooking();
@@ -16,6 +19,7 @@ function BookingDetails() {
   const [passengers, setPassengers] = useState([]);
   const [baggage, setBaggage] = useState([]);
   const [instance, updateInstance] = usePDF({ document: BoardingPassPDF });
+  const [trip, setTrip] = useState(null);
 
   const booking = bookings.find((b) => b.bookingId === bookingId);
 
@@ -25,11 +29,14 @@ function BookingDetails() {
 
   useEffect(() => {
     if (booking !== undefined) {
-      Passenger.getNameAndAge(booking?.bookingId).then((data) =>
-        setPassengers(data)
-      );
+      Passenger.getNameAndAge(booking?.bookingId).then((data) => {
+        setPassengers(data);
+      });
       BaggageItem.getBaggageForBooking(bookingId).then((baggage) => {
-        setBaggage(baggage);
+       { setBaggage(baggage); console.log(baggage)}
+      });
+      Trip.getById(booking.tripId).then((trip) => {
+        setTrip(trip);
       });
     }
   }, [booking]);
@@ -77,7 +84,7 @@ function BookingDetails() {
               {baggage?.length === 0 ? <p>No baggage booked</p> : null}
 
               {baggage?.map((bg) => (
-                <p>
+                <p key={bg.type}>
                   {bg?.amount} x {bg?.type} &#40;max.
                   {bg?.type === "CarryOn"
                     ? "8"
@@ -115,9 +122,17 @@ function BookingDetails() {
         <div className="booking__priceBreakdown">
           <span>You paid:</span>
           <div className="booking__data">
-            <p>
-              Price per seat: <strong>210 EUR </strong>
-            </p>
+            {passengers.some((x) => x.age >= 18) ? (
+              <p>
+                Price per adult: <strong>{trip?.adultPrice} EUR </strong>
+              </p>
+            ) : null}
+            {passengers.some((x) => x.age < 18 && x.age > 2) ? (
+              <p>
+                Price per child: <strong>{trip?.childrenPrice} EUR </strong>
+              </p>
+            ) : null}
+
             <p>
               Total:{" "}
               <strong>
@@ -125,7 +140,7 @@ function BookingDetails() {
               </strong>
             </p>
             <p className="booking__data--saved">
-              Saved: <strong>40 EUR</strong>{" "}
+              Saved: <strong>{calculateDiscount(trip, passengers, booking)} EUR</strong>{" "}
             </p>
           </div>
         </div>
@@ -149,3 +164,19 @@ function BookingDetails() {
 }
 
 export default BookingDetails;
+
+function calculateDiscount(trip, passengers, booking) {
+  let price = 0;
+
+  if (passengers) {
+    passengers?.forEach((p) => {
+      if (p?.age >= 18) {
+        price += trip?.adultPrice;
+      } else if (p?.age > 2 && p?.age < 18) {
+        price += trip?.childrenPrice;
+      }
+    });
+  }
+
+  return booking?.totalPrice - price;
+}

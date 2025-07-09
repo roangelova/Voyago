@@ -13,6 +13,7 @@ import SelectPassengersDropdown from "./SelectPassengersDropdown";
 import { BaggagePrices } from "../../services/baggagePriceService";
 import { calculateTotalPriceForCart, CreatePriceSummary } from "./cartHelpers";
 import DiscountField from "./DiscountFiled";
+import { useAccountContext } from "../account/AccountContext";
 const userId = sessionStorage.getItem("userId");
 
 const baggageOptions = [
@@ -27,14 +28,20 @@ function Cart() {
   const location = useLocation();
   const createBooking = useCreateBooking();
   const { trip, passengers: passengersCountForBooking } = location.state || {};
-  const [userPassengerList, setUserPassengerList] = useState();
+  const { passengers: passengersFromContext } = useAccountContext();
+  const [userPassengerList, setUserPassengerList] = useState(
+    passengersFromContext
+  );
   const [passengerIdsForBooking, setPassengerIdsForBooking] = useState([]);
   const [accountOwner, setAccountOwner] = useState(null);
   const [baggage, setBaggage] = useState([]);
   const [baggagePrices, setBaggagePrices] = useState(null);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setdDiscount] = useState(null);
-  const total = Object.values(passengersCountForBooking).reduce((a, b) => a + b, 0);
+  const total = Object.values(passengersCountForBooking).reduce(
+    (a, b) => a + b,
+    0
+  );
   //show form popups controls:
   const [showPassengerForm, setShowPassengerForm] = useState(false);
   const [showAddBags, setAddBags] = useState(false);
@@ -51,14 +58,17 @@ function Cart() {
     }
     Passenger.getPassengersForUser(userId).then((data) => {
       let filteredOwner = data.filter((x) => x?.isAccountOwner === true)[0];
-      setAccountOwner(filteredOwner);
-      setUserPassengerList(
-        data.filter((x) => x.passengerId !== filteredOwner.passengerId)
-      );
-      setPassengerIdsForBooking([
-        ...passengerIdsForBooking,
-        filteredOwner?.passengerId,
-      ]);
+      if (filteredOwner) {
+        //account holder has registeres his passenger data
+        setAccountOwner(filteredOwner);
+        setUserPassengerList(
+          data.filter((x) => x.passengerId !== filteredOwner.passengerId)
+        );
+        setPassengerIdsForBooking([
+          ...passengerIdsForBooking,
+          filteredOwner?.passengerId,
+        ]);
+      }
     });
 
     if (trip) {
@@ -70,10 +80,36 @@ function Cart() {
     }
   }, []);
 
+      useEffect(() => {
+      let filteredOwner = passengersFromContext.filter((x) => x?.isAccountOwner === true)[0];
+      if (filteredOwner) {
+        //account holder has registeres his passenger data
+        setAccountOwner(filteredOwner);
+        setUserPassengerList(
+          passengersFromContext.filter((x) => x.passengerId !== filteredOwner.passengerId)
+        );
+        setPassengerIdsForBooking([
+          ...passengerIdsForBooking,
+          filteredOwner?.passengerId,
+        ]);
+      }
+    }, [passengersFromContext]);
+
   const onCheckout = async () => {
     if (!trip) {
       toast.error("Something went wrong.");
       navigate("/");
+    }
+
+    if (total > passengerIdsForBooking.length) {
+      console.log(passengerIdsForBooking);
+      let confirm = window.confirm(
+        "You have not selected all passengers for this booking Do you wish to proceed and book only for the selected passengers? "
+      );
+      if (confirm) {
+        return;
+        //user has terminated the checkout process due to not all passengers added to booking
+      }
     }
 
     try {
@@ -82,6 +118,7 @@ function Cart() {
         passengerIds: passengerIdsForBooking,
         baggage: baggage,
         userId,
+        discountId: discount?.id,
       });
       navigate("/account/bookings");
     } catch (error) {
@@ -174,12 +211,24 @@ function Cart() {
               <h5>Who's going to travel?</h5>
               <div className="cart__passengers">
                 <>
-                  <label>Adult 1: </label>
-                  <select disabled>
-                    <option>
-                      {accountOwner?.firstName} {accountOwner?.lastName}
-                    </option>
-                  </select>
+                  {accountOwner ? (
+                    <>
+                      {" "}
+                      <label>Adult 1: </label>
+                      <select disabled>
+                        <option>
+                          {accountOwner?.firstName} {accountOwner?.lastName}
+                        </option>
+                      </select>
+                    </>
+                  ) : (
+                    <button
+                      className="btn"
+                      onClick={() => setShowPassengerForm(true)}
+                    >
+                      Add your data{" "}
+                    </button>
+                  )}
                 </>
 
                 <SelectPassengersDropdown
@@ -192,8 +241,8 @@ function Cart() {
               {total > 1 && (
                 <div className="cart__addPassenger">
                   Want to{" "}
-                  <span onClick={() => setShowPassengerForm(true)}>create</span> a
-                  new passenger instead?
+                  <span onClick={() => setShowPassengerForm(true)}>create</span>{" "}
+                  a new passenger instead?
                 </div>
               )}
             </div>

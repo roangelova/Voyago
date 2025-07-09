@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../api/api.js";
 
+export const Trip = {
+    getById: (id) => api.get(`api/trips/${id}`),
+}
+
 export function useGetTrips(){
     return useMutation({
         mutationFn: (filter) => 

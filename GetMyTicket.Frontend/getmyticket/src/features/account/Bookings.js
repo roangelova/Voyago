@@ -123,43 +123,45 @@ function Bookings() {
                 </tr>
               </thead>
             ) : (
-              <tr>
-                <th>Booking reference</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Departure Time</th>
-                <th>Total Price</th>
-                <th>Status</th>
-                <th>Booking Date</th>
-                <th>Actions</th>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>Booking reference</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Departure Time</th>
+                  <th>Total Price</th>
+                  <th>Status</th>
+                  <th>Booking Date</th>
+                  <th>Actions</th>
+                </tr>
+              </tbody>
             )}
 
             <tbody>
               {sortedAndFilteredData?.map((b) => (
-                <tr key={b.bookingId}>
-                  <td>{b.bookingId}</td>
-                  <td>{b.fromCityName}</td>
-                  <td>{b.toCityName}</td>
+                <tr key={b?.bookingId}>
+                  <td>{b?.bookingId}</td>
+                  <td>{b?.fromCityName}</td>
+                  <td>{b?.toCityName}</td>
                   <td>{formatDate(b.departureTime)}</td>
                   <td>
-                    {b.totalPrice} {b.currency}
+                    {b?.totalPrice} {b?.currency}
                   </td>
-                  <td>{b.status}</td>
-                  <td>{getFormattedBookingDate(b.bookingDate)}</td>
+                  <td>{b?.status}</td>
+                  <td>{getFormattedBookingDate(b?.bookingDate)}</td>
                   <td className="bookings__actions">
-                    {b.status === "Confirmed" ? (
+                    {b?.status === "Confirmed" ? (
                       <>
                         <button
                           className="btn btn--destructive"
-                          onClick={() => handleCancelBooking(b.bookingId)}
+                          onClick={() => handleCancelBooking(b?.bookingId)}
                         >
                           Cancel
                         </button>
                         <button
                           className="btn"
                           onClick={() =>
-                            navigate(`/account/bookings/${b.bookingId}`)
+                            navigate(`/account/bookings/${b?.bookingId}`)
                           }
                         >
                           Manage booking

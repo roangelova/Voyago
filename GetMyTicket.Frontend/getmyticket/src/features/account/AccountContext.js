@@ -32,13 +32,13 @@ function AccountProvider({ children }) {
   }, []);
 
   //FETCH ACCOUNT DATA
-  const { data: bookings } = useQuery({
+  const bookingsQuery = useQuery({
     queryKey: ["bookings", userId],
     queryFn: GetUserBookings,
     enabled: !!userId,
   });
 
-  const { data: passengers } = useQuery({
+  const passengersQuery = useQuery({
     queryKey: ["passengers", userId],
     queryFn: getUsersPassengers,
     enabled: !!userId,
@@ -50,8 +50,10 @@ function AccountProvider({ children }) {
     <AccountContext.Provider
       value={{
         userId,
-        bookings: bookings || [],
-        passengers: passengers || [],
+        bookings: bookingsQuery.data || [],
+        passengers: passengersQuery.data || [],
+        bookingsQuery,
+        passengersQuery,
       }}
     >
       {children}

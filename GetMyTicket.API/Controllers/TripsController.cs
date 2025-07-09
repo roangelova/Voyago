@@ -16,7 +16,7 @@ namespace GetMyTicket.API.Controllers
             this.tripService = tripService;
         }
 
-        [HttpGet]
+        [HttpGet("{tripId}")]
         public async Task<IActionResult> Get(Guid tripId, CancellationToken cancellationToken = default)
         {
             var trip = await tripService.GetTrip(tripId, cancellationToken);

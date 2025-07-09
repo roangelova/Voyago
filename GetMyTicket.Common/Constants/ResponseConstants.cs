@@ -42,6 +42,7 @@ namespace GetMyTicket.Common.Constants
         public const string DiscountHasBeenUsed = "Discount code has already been used on a previous booking";
         public const string DiscountExpired = "Discount code has expired!";
         public const string InvalidDiscount = "Invalid discount code!";
+        public const string CantApplyDiscount = "Can't apply discount to this booking";
         //SUCCESS
 
         public const string LogoutSuccessful = "Successfully logged out.";

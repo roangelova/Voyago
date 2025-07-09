@@ -53,10 +53,12 @@ namespace GetMyTicket.Service.Services
 
             var booking = new Booking()
             {
+                //booking price is initially set to 0 and then we start adding services based on the passengers on the bookig, their booked baggage,any discount applied etc; 
                 Id = Guid.CreateVersion7(),
                 TotalPrice = 0,
                 BookingStatus = BookingStatus.Confirmed,
-                TripId = bookTripDTO.TripId
+                TripId = bookTripDTO.TripId,
+                DiscountId = bookTripDTO.DiscountId, //each booking keeps a record of the discount used 
             };
 
             foreach (var passengerId in bookTripDTO.PassengerIds)
@@ -88,23 +90,52 @@ namespace GetMyTicket.Service.Services
                     PassengerId = passengerId
                 });
 
-                //TODO -> CAN WE REFACTOR ALL OF THIS? 
-                foreach (var bg in bookTripDTO.Baggage)
+                if (bookTripDTO.Baggage.Count > 0)
                 {
-                    for (int i = 0; i < bg.Amount; i++)
+                    var baggagePricesForProvider = await unitOfWork.BaggagePrices.GetAllAsync(x => x.TransportationProviderId == trip.TransportationProviderId);
+                    if(baggagePricesForProvider.Count() < Enum.GetValues<BaggageSize>().Length)
                     {
-                        booking.BaggageItems.Add(new BaggageItem
-                        {
-                            Id = Guid.CreateVersion7(),
-                            Passenger = passenger,
-                            Size = Enum.Parse<BaggageSize>(bg.Type),
-                            Trip = trip
-                        });
+                        //missing or incorrect baggage prices for provider
+                        throw new ApplicationError(ResponseConstants.SomethingWentWrong);
                     }
+
+                    foreach (var bg in bookTripDTO.Baggage)
+                    {
+                        for (int i = 0; i < bg.Amount; i++)
+                        {
+                            booking.BaggageItems.Add(new BaggageItem
+                            {
+                                Id = Guid.CreateVersion7(),
+                                Passenger = passenger,
+                                Size = Enum.Parse<BaggageSize>(bg.Type),
+                                Trip = trip
+                            });
+                            booking.TotalPrice += baggagePricesForProvider.Where(x => Enum.GetName<BaggageSize>(x.BaggageSize) == bg.Type).First().Price;
+                        }
+                    }
+                }
+
+                //TODO -> CAN WE REFACTOR ALL OF THIS? 
+            }
+
+            //Discount is applied to the total price 
+            //TODO -> DISCOUNT SHOULD NOT BE MORE THANT THE TOTAL PRICE! How do we want to check this?
+            if (bookTripDTO?.DiscountId is not null)
+            {
+                var discount = await unitOfWork.Discounts.GetByIdAsync(bookTripDTO.DiscountId);
+
+                if (Enum.GetName<DiscountType>(discount.DiscountType) == Enum.GetName<DiscountType>(DiscountType.Fixed))
+                {
+                    //aplply if DiscountType is Fixed
+                    booking.TotalPrice -= discount.Value;
+                }
+                else
+                {
+                    //apply if DiscountType is Percent
+                    booking.TotalPrice -= (booking.TotalPrice * (discount.Value / 100));
                 }
             }
 
-            unitOfWork.Trips.Update(trip);
             await unitOfWork.Bookings.AddAsync(booking);
 
             await unitOfWork.SaveChangesAsync();

@@ -21,7 +21,7 @@ function Footer() {
         <div className="footer__section">
           <h4>Quick Links</h4>
           <ul>
-            <li>Help Centre</li>
+            <li>Help</li>
             <li>FAQ</li>
             <li>Legal</li>
             <li>About us</li>

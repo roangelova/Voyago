@@ -26,12 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SeedData\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="SeedData\DestinationsSeed.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SeedData\Logos\deutscheBahn.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SeedData\Logos\flixbus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SeedData\Logos\transavia.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

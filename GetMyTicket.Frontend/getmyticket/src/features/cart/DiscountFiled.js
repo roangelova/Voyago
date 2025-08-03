@@ -6,28 +6,28 @@ function DiscountField({
   discountCode,
   setDiscountCode,
   setDiscount,
-  discount
+  discount,
+  bookingCurrentTotal
 }) {
   var { passengers } = useAccountContext();
   var passengerId = passengers?.find((x) => x?.isAccountOwner)?.passengerId;
 
   function applyDiscountCode() {
-
-    if (discountCode.trim() === "")
-    {
+    if (discountCode.trim() === "") {
       toast.error("Invalid discount code!");
       return;
     }
 
-    Discount.canApplyDiscountToBooking(passengerId, discountCode)
+    //also checks for the minimum amount
+    Discount.canApplyDiscountToBooking(passengerId, discountCode, bookingCurrentTotal)
       .then((isValid) => {
         if (!isValid) {
           toast.error("Invalid discount code!");
           setDiscountCode("");
         } else {
           Discount.getByName(discountCode).then((discount) =>
+            //this line will make sure that the code is applied to the total price
             setDiscount(discount)
-          //this line will make sure that the code is applied to the total price
           );
           toast.success("Discount code applied successfully!");
         }
@@ -48,7 +48,7 @@ function DiscountField({
               placeholder="MY DISCOUNT"
             ></input>
             <button
-              disabled={discountCode === ''}
+              disabled={discountCode === ""}
               onClick={() => applyDiscountCode()}
             >
               Apply
@@ -59,7 +59,11 @@ function DiscountField({
 
       {discount && (
         <p className="discountField__codeUsed">
-          Code used: <span>{discount.name}</span> for <span>{discount.value} {discount.discountType === "Percent" ? '%' : 'EUR'}</span> off!
+          Code used: <span>{discount.name}</span> for{" "}
+          <span>
+            {discount.value} {discount.discountType === "Percent" ? "%" : "EUR"}
+          </span>{" "}
+          off!
         </p>
       )}
     </div>

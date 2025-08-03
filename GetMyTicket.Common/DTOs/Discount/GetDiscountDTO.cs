@@ -10,6 +10,8 @@
 
         public double Value { get; set; }
 
+        public double? MinimumAmount { get; set; }
+
         public bool HasExpirationDate { get; set; }
 
         public DateTime? ExpirationDate { get; set; }

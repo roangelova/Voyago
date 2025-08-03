@@ -308,6 +308,13 @@ function Cart() {
               setDiscountCode={setDiscountCode}
               discount={discount}
               setDiscount={setdDiscount}
+              bookingCurrentTotal ={(calculateTotalPriceForCart(
+                      trip,
+                      passengersCountForBooking,
+                      baggage,
+                      baggagePrices,
+                      discount
+                    ))}
             />
 
             <div className="cart__total">

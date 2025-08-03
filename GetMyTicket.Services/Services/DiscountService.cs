@@ -17,7 +17,7 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName)
+        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, double bookingCurrentTotal)
         {
             var discount = await unitOfWork.Discounts.GetAsync(x => x.Name.ToUpper() == discountName.ToUpper());
 
@@ -29,6 +29,11 @@ namespace GetMyTicket.Service.Services
             if(discount.ExpirationDate <  DateTime.UtcNow)
             {
                 throw new ApplicationError(ResponseConstants.DiscountExpired);
+            }
+
+            if(bookingCurrentTotal <= discount.MinimumAmount)
+            {
+                throw new ApplicationError(ResponseConstants.CantApplyDiscount);
             }
 
             //TODO -> IF WE ADD GLOBAL QUERY FILTER, REMOVE IT SO THAT WE CAN CHECK EVEN IF PAST BOOKINGS HAVE USED IT 
@@ -57,6 +62,7 @@ namespace GetMyTicket.Service.Services
                 Name = dto.Name.Trim().ToUpper(),
                 DiscountType = discountType,
                 Value = dto.Value,
+                MinimumAmount = dto.MinimumAmount,
                 IsActive = true,
                 HasExpirationDate = dto?.ExpirationDate is not null ? true : false,
                 ExpirationDate = dto.ExpirationDate ?? null

@@ -13,6 +13,8 @@ namespace GetMyTicket.Common.Entities
 
         public double Value { get; set; }
 
+        public double? MinimumAmount { get; set; }
+
         public bool HasExpirationDate { get; set; }
 
         public ICollection<Booking> Bookings { get; set; } = [];

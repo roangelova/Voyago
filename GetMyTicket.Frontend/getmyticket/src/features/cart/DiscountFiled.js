@@ -5,7 +5,6 @@ import { useAccountContext } from "../account/AccountContext";
 function DiscountField({
   discountCode,
   setDiscountCode,
-  discountApplied,
   setDiscount,
   discount
 }) {
@@ -13,6 +12,13 @@ function DiscountField({
   var passengerId = passengers?.find((x) => x?.isAccountOwner)?.passengerId;
 
   function applyDiscountCode() {
+
+    if (discountCode.trim() === "")
+    {
+      toast.error("Invalid discount code!");
+      return;
+    }
+
     Discount.canApplyDiscountToBooking(passengerId, discountCode)
       .then((isValid) => {
         if (!isValid) {
@@ -42,7 +48,7 @@ function DiscountField({
               placeholder="MY DISCOUNT"
             ></input>
             <button
-              disabled={discount}
+              disabled={discountCode === ''}
               onClick={() => applyDiscountCode()}
             >
               Apply

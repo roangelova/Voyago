@@ -164,7 +164,7 @@ namespace GetMyTicket.Service.Services
             }
 
             var data = await unitOfWork.PassengerBookingMap
-                 .GetAllAsync(x => x.PassengerId == passengerId,
+                 .GetAllAsync(x => x.PassengerId == passengerId & x.Booking.BookingStatus != BookingStatus.Archived,
                  null,
                  true,
                  cancellationToken,
@@ -173,8 +173,8 @@ namespace GetMyTicket.Service.Services
                  x => x.Booking.Trip.StartCity,
                  x => x.Booking.Trip.EndCity);
 
-            return data.Where(x => x.Booking.Trip.StartTime > DateTime.UtcNow).
-                Select(b => new ListBookingDTO()
+            return data
+                .Select(b => new ListBookingDTO()
                 {
                     BookingId = b.BookingId,
                     ToCityName = b.Booking.Trip.EndCity.CityName,

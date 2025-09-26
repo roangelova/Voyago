@@ -106,7 +106,7 @@ function Cart() {
       let confirm = window.confirm(
         "You have not selected all passengers for this booking Do you wish to proceed and book only for the selected passengers? "
       );
-      if (confirm) {
+      if (!confirm) {
         return;
         //user has terminated the checkout process due to not all passengers added to booking
       }

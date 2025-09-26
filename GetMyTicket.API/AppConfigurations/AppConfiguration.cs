@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System.Configuration;
+using System.Text;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using GetMyTicket.Persistance.Context;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +18,7 @@ namespace GetMyTicket.API.AppConfigurations
             string JwtIssuer = string.Empty;
             string JwtAudience = string.Empty;
             string JwtKey = string.Empty;
+            string hangfireConnection = string.Empty;
 
             //GET VALUES BASED ON ENVIRONMENT 
             if (builder.Environment.IsDevelopment())
@@ -26,6 +29,8 @@ namespace GetMyTicket.API.AppConfigurations
                 JwtIssuer = builder.Configuration["Jwt:Issuer"];
                 JwtAudience = builder.Configuration["Jwt:Audience"];
                 JwtKey = builder.Configuration["Jwt:Key"];
+
+                hangfireConnection = builder.Configuration["ConnectionStrings:Hangfire"];
             }
             else
             {
@@ -44,6 +49,14 @@ namespace GetMyTicket.API.AppConfigurations
                 JwtKey = KeyVaultJwtKey.Value;
                 JwtIssuer = KeyVaultJwtIssuer.Value;
             }
+
+            builder.Services.AddHangfire(configuration =>
+            {
+                configuration
+                    .UseSqlServerStorage(hangfireConnection);
+                    });
+
+            builder.Services.AddHangfireServer();
 
             builder.Services.AddAuthentication(options =>
             {

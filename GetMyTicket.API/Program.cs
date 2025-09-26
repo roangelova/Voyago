@@ -6,6 +6,8 @@ using GetMyTicket.Persistance.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GetMyTicket.API.AppConfigurations;
+using Hangfire;
+using GetMyTicket.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,5 +105,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapIdentityApi<User>();
+
+using (var scope = app.Services.CreateScope())
+{
+    var recurringJobs = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+    recurringJobs.AddOrUpdate<JobService>(
+        "archive-past-bookings",
+        service => service.ArchivePastBookings(),
+        Cron.Hourly
+    );
+}
+
 
 app.Run();

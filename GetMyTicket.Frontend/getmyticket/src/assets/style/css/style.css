@@ -1231,7 +1231,7 @@ input[type=checkbox] {
 .bookings__container table,
 .bookings__container tr,
 .bookings__container td {
-  padding: 2.5rem;
+  padding: 1rem 2.5rem;
   text-align: center;
 }
 .bookings__container table {

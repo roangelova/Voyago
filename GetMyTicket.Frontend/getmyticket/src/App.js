@@ -45,7 +45,7 @@ function App() {
                   element={<BookingDetails />}
                 />
                 <Route
-                  path="paymentMethods"
+                  path="billing"
                   element={
                     <p className="account__noData">
                       No payment methods registered yet

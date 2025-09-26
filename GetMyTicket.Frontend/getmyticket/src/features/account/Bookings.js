@@ -164,7 +164,7 @@ function Bookings() {
                             navigate(`/account/bookings/${b?.bookingId}`)
                           }
                         >
-                          Manage booking
+                          Details
                         </button>
                       </>
                     ) : null}

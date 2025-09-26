@@ -43,7 +43,9 @@ function RegisterPopUp({
           );
 
           setTimeout(() => {
-            window.location.href = "/";
+            setLoginPopupVisibility(true);
+            setRegisterPopupVisibility(false)
+           // window.location.href = "/";
           }, 3000);
         }
       })

@@ -49,9 +49,9 @@ function AccountNav() {
             <img src={passenger} alt="Passengers icon" />
             <span>Passengers</span>
           </NavLink>
-          <NavLink to="/account/paymentMethods" className="account__nav--item">
+          <NavLink to="/account/billing" className="account__nav--item">
             <img src={creditcard} alt="Payment methods icon" />
-            <span>Payment Methods</span>
+            <span>Billing</span>
           </NavLink>
           <NavLink to="/account/notifications" className="account__nav--item">
             <img src={notification} alt="Notifications icon" />

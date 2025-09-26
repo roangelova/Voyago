@@ -751,14 +751,19 @@ input[type=checkbox] {
   gap: 1.5rem;
   font-size: 2rem;
 }
+.cart__total {
+  padding: 0 2rem;
+}
 .cart__total div {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   font-size: 2.4rem;
 }
 .cart__total span {
   color: #666;
+  display: block;
+  text-align: center;
 }
 .cart__checkout {
   margin-top: auto;

@@ -333,7 +333,7 @@ function Cart() {
                   {trip.currency}
                 </p>
               </div>
-              <span>* All taxes, fees and charges included</span>
+              <span>* Prices include all applicable taxes and fees. Final charges may vary and will be confirmed before payment.</span>
             </div>
             <div className="cart__checkout">
               <button onClick={onCheckout} className="btn">

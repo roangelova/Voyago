@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using GetMyTicket.API.AppConfigurations;
 using Hangfire;
 using GetMyTicket.Service.Services;
-using GetMyTicket.Service.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,8 +67,6 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Voyago");
         options.RoutePrefix = string.Empty;
     });
-    var jobService = app.Services.GetRequiredService<IJobService>();
-    BackgroundJob.Enqueue(() => jobService.ArchivePastBookings());
 }
 
 using (var scope = app.Services.CreateScope())
@@ -109,12 +106,15 @@ app.MapControllers();
 
 app.MapIdentityApi<User>();
 
-app.MapHangfireDashboard();
+using (var scope = app.Services.CreateScope())
+{
+    var recurringJobs = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+    recurringJobs.AddOrUpdate<JobService>(
+        "archive-past-bookings",
+        service => service.ArchivePastBookings(),
+        Cron.Hourly
+    );
+}
 
-RecurringJob.AddOrUpdate<JobService>(
-    "archive-past-bookings",   
-    service => service.ArchivePastBookings(), 
-    Cron.Daily
-);
 
 app.Run();

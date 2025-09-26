@@ -126,13 +126,16 @@ namespace GetMyTicket.Service.Services
 
                 if (Enum.GetName<DiscountType>(discount.DiscountType) == Enum.GetName<DiscountType>(DiscountType.Fixed))
                 {
-                    //aplply if DiscountType is Fixed
+                    //apply if DiscountType is Fixed
                     booking.TotalPrice -= discount.Value;
+                    booking.TotalDiscountUsed = discount.Value;
                 }
                 else
                 {
                     //apply if DiscountType is Percent
-                    booking.TotalPrice -= (booking.TotalPrice * (discount.Value / 100));
+                    var discountAmount = booking.TotalPrice * (discount.Value / 100);
+                    booking.TotalPrice -= discountAmount;
+                    booking.TotalDiscountUsed = discountAmount;
                 }
             }
 
@@ -181,6 +184,7 @@ namespace GetMyTicket.Service.Services
                     FromCityName = b.Booking.Trip.StartCity.CityName,
                     DepartureTime = b.Booking.Trip.StartTime,
                     TotalPrice = b.Booking.TotalPrice,
+                    TotalDiscountUsed = b.Booking.TotalDiscountUsed,
                     Currency = Enum.GetName(b.Booking.Trip.Currency),
                     Status = Enum.GetName(b.Booking.BookingStatus),
                     TripId = b.Booking.TripId,

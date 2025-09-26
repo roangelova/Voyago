@@ -1,16 +1,21 @@
 import { toast } from "react-toastify";
 import { Discount } from "../../services/discountService";
 import { useAccountContext } from "../account/AccountContext";
+import { useEffect, useState } from "react";
 
 function DiscountField({
   discountCode,
   setDiscountCode,
   setDiscount,
   discount,
-  bookingCurrentTotal
+  bookingCurrentTotal,
 }) {
   var { passengers } = useAccountContext();
-  var passengerId = passengers?.find((x) => x?.isAccountOwner)?.passengerId;
+  const [passengerId, setPassengerId] = useState();
+
+  useEffect(() => {
+    setPassengerId(passengers?.find((x) => x?.isAccountOwner)?.passengerId);
+  }, [passengers]);
 
   function applyDiscountCode() {
     if (discountCode.trim() === "") {
@@ -18,8 +23,17 @@ function DiscountField({
       return;
     }
 
+    if (!passengerId) {
+      toast.error("Please enter your passenger details first.");
+      return;
+    }
+
     //also checks for the minimum amount
-    Discount.canApplyDiscountToBooking(passengerId, discountCode, bookingCurrentTotal)
+    Discount.canApplyDiscountToBooking(
+      passengerId,
+      discountCode,
+      bookingCurrentTotal
+    )
       .then((isValid) => {
         if (!isValid) {
           toast.error("Invalid discount code!");

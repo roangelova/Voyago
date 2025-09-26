@@ -140,7 +140,7 @@ function BookingDetails() {
               </strong>
             </p>
             <p className="booking__data--saved">
-              Saved: <strong>{calculateDiscount(trip, passengers, booking)} EUR</strong>{" "}
+              Saved: <strong>{booking?.totalDiscountUsed} EUR</strong>{" "}
             </p>
           </div>
         </div>
@@ -164,19 +164,3 @@ function BookingDetails() {
 }
 
 export default BookingDetails;
-
-function calculateDiscount(trip, passengers, booking) {
-  let price = 0;
-
-  if (passengers) {
-    passengers?.forEach((p) => {
-      if (p?.age >= 18) {
-        price += trip?.adultPrice;
-      } else if (p?.age > 2 && p?.age < 18) {
-        price += trip?.childrenPrice;
-      }
-    });
-  }
-
-  return booking?.totalPrice - price;
-}

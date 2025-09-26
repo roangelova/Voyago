@@ -12,6 +12,8 @@
 
         public double TotalPrice { get; set; }
 
+        public double TotalDiscountUsed { get; set; }
+
         public string Currency {  get; set; }
 
         public string Status { get; set; }

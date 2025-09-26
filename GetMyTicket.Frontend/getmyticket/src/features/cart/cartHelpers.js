@@ -68,11 +68,11 @@ export function calculateTotalPriceForCart(
   if (discount) {
     //TODO-> MAKE DYNAMIC; for now, JUST apply a fixed 10% UNTIL WE HAVE SET UP THE be LOGIC
     if(discount.discountType === "Percent"){
-       return tripPrice - (tripPrice * (discount.value / 100));
+       return (tripPrice - (tripPrice * (discount.value / 100))).toFixed(2);
     }else{
-      return tripPrice - discount.value
+      return (tripPrice - discount.value).toFixed(2)
     }
   }
 
-  return tripPrice;
+  return tripPrice.toFixed(2);
 }

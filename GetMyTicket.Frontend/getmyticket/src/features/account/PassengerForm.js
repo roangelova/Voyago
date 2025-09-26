@@ -32,8 +32,6 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
   function handleOnClick(e) {
     e.preventDefault();
 
-    console.log(passenger)
-
     let data = {
       firstName: passenger?.firstName,
       lastName: passenger?.lastName,

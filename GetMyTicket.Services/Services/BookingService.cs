@@ -14,6 +14,8 @@ namespace GetMyTicket.Service.Services
         //DONT FORGET TO SUBSTRACT THE CAPACITY OF THE VEHICLE FOR THE TRIP AFTER MAKING THE BOOKING;
         private readonly IUnitOfWork unitOfWork;
         private readonly IPassengerService passengerService;
+        private const string bookingReferenceAvailableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random;
 
         public BookingService(
             IUnitOfWork unitOfWork,
@@ -21,6 +23,8 @@ namespace GetMyTicket.Service.Services
         {
             this.unitOfWork = unitOfWork;
             this.passengerService = passengerService;
+
+            random = new Random();
         }
 
         public async Task<int> CancelBooking(object bookingId)
@@ -51,10 +55,24 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(ResponseConstants.SoldOut);
             }
 
+            string reference = string.Empty;
+            bool HasDuplicatedRef = true;
+
+            while (HasDuplicatedRef)
+            {
+                reference = GenerateBookingReference();
+                var boookingsWithThisReference = await unitOfWork.Bookings.GetAsync(x => x.Reference == reference);
+                if(boookingsWithThisReference == null)
+                {
+                    HasDuplicatedRef = false;
+                } 
+            }
+
             var booking = new Booking()
             {
                 //booking price is initially set to 0 and then we start adding services based on the passengers on the bookig, their booked baggage,any discount applied etc; 
                 Id = Guid.CreateVersion7(),
+                Reference = reference,
                 TotalPrice = 0,
                 BookingStatus = BookingStatus.Confirmed,
                 TripId = bookTripDTO.TripId,
@@ -93,7 +111,7 @@ namespace GetMyTicket.Service.Services
                 if (bookTripDTO.Baggage.Count > 0)
                 {
                     var baggagePricesForProvider = await unitOfWork.BaggagePrices.GetAllAsync(x => x.TransportationProviderId == trip.TransportationProviderId);
-                    if(baggagePricesForProvider.Count() < Enum.GetValues<BaggageSize>().Length)
+                    if (baggagePricesForProvider.Count() < Enum.GetValues<BaggageSize>().Length)
                     {
                         //missing or incorrect baggage prices for provider
                         throw new ApplicationError(ResponseConstants.SomethingWentWrong);
@@ -180,6 +198,7 @@ namespace GetMyTicket.Service.Services
                 .Select(b => new ListBookingDTO()
                 {
                     BookingId = b.BookingId,
+                    Reference = b.Booking.Reference,
                     ToCityName = b.Booking.Trip.EndCity.CityName,
                     FromCityName = b.Booking.Trip.StartCity.CityName,
                     DepartureTime = b.Booking.Trip.StartTime,
@@ -191,6 +210,13 @@ namespace GetMyTicket.Service.Services
                     BookingDate = b.Booking.CreatedAt
                 });
         }
-    }
 
+        private string GenerateBookingReference()
+        {
+            return new string(Enumerable
+                          .Range(0, EntityConstraintsConstants.BookingReferenceMaxLength)
+                          .Select(_ => bookingReferenceAvailableChars[random.Next(bookingReferenceAvailableChars.Length)])
+                          .ToArray());
+        }
+    }
 }

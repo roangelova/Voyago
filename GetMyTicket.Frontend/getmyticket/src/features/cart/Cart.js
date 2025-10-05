@@ -96,7 +96,7 @@ function Cart() {
     }, [passengersFromContext]);
 
   const onCheckout = async () => {
-    if (!trip) {
+    if (!trip.tripId) {
       toast.error("Something went wrong.");
       navigate("/");
     }

@@ -113,6 +113,9 @@ namespace GetMyTicket.Persistance.Context
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
+            builder.Entity<Booking>()
+                .HasIndex(b => b.Reference)
+                .IsUnique();
 
             ApplyGlobalQueryFilters(builder);
         }

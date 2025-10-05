@@ -107,7 +107,7 @@ function BookingDetails() {
 
       <div className="booking__right">
         <div className="booking__info">
-          <p>Booking Ref: XYZ123 </p>
+          <p>Booking Ref: {booking?.reference} </p>
           <span
             className={
               booking?.status === "Confirmed"

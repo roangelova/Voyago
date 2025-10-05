@@ -140,7 +140,7 @@ function Bookings() {
             <tbody>
               {sortedAndFilteredData?.map((b) => (
                 <tr key={b?.bookingId}>
-                  <td>{b?.bookingId}</td>
+                  <td>{b?.reference}</td>
                   <td>{b?.fromCityName}</td>
                   <td>{b?.toCityName}</td>
                   <td>{formatDate(b.departureTime)}</td>

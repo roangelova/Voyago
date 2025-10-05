@@ -1,13 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Common.Enum;
 using GetMyTicket.Common.Mapping_Tables;
+using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
 namespace GetMyTicket.Common.Entities
 {
     public class Booking : ITrackableEntity
     {
         public Guid Id { get; set; }
+
+        //this is the id of the booking we share with the customers for an easier identification of their booking. 
+        [MaxLength(BookingReferenceMaxLength)]
+        public string Reference { get; set; }
 
         public double TotalPrice { get; set; }
 

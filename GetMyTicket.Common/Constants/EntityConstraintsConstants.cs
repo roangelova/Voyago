@@ -17,5 +17,7 @@
         public const int MaxVehicleCapacity = 999;
 
         public const int MaxPassengerLabelLength = 50;
+
+        public const int BookingReferenceMaxLength = 6;
     }
 }

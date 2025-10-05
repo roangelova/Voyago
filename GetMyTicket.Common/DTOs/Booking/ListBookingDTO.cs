@@ -4,6 +4,8 @@
     {
         public Guid BookingId { get; set; }
 
+        public string Reference {  get; set; }
+
         public string ToCityName { get; set; }
 
         public string FromCityName { get; set; }

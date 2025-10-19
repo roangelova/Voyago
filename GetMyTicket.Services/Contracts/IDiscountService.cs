@@ -8,6 +8,6 @@ namespace GetMyTicket.Service.Contracts
 
         public Task<Guid> CreateDiscount(CreateDiscountDTO dto);
 
-        public Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, double bookingCurrentAmount);
+        public Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, decimal bookingCurrentAmount);
     }
 }

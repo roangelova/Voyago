@@ -10,10 +10,10 @@ namespace GetMyTicket.Common.DTOs.Discount
         public string DiscountType { get; set; }
 
         [Range(1,50)]
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
         [Range(1,1000)]
-        public double? MinimumAmount { get; set; }
+        public decimal? MinimumAmount { get; set; }
 
         public DateTime? ExpirationDate { get; set; }
     }

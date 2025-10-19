@@ -37,7 +37,7 @@ namespace GetMyTicket.API.Controllers
         /// <param name="discountName></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, double bookingCurrentTotal)
+        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, decimal bookingCurrentTotal)
         {
             return await discountService.CanApplyDiscountToBooking(passengerId, discountName, bookingCurrentTotal);
         }

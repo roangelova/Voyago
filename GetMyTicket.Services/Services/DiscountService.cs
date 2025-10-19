@@ -17,7 +17,7 @@ namespace GetMyTicket.Service.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, double bookingCurrentTotal)
+        public async Task<bool> CanApplyDiscountToBooking(Guid passengerId, string discountName, decimal bookingCurrentTotal)
         {
             var discount = await unitOfWork.Discounts.GetAsync(x => x.Name.ToUpper() == discountName.ToUpper());
 

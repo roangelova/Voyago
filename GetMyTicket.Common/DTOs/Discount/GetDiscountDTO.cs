@@ -8,7 +8,7 @@
 
         public string DiscountType { get; set; }
 
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
         public double? MinimumAmount { get; set; }
 

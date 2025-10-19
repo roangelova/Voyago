@@ -11,9 +11,9 @@ namespace GetMyTicket.Common.Entities
 
         public DiscountType DiscountType { get; set; }
 
-        public double Value { get; set; }
+        public decimal Value { get; set; }
 
-        public double? MinimumAmount { get; set; }
+        public decimal? MinimumAmount { get; set; }
 
         public bool HasExpirationDate { get; set; }
 

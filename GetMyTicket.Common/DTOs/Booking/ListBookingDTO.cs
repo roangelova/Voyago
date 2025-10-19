@@ -12,9 +12,9 @@
 
         public DateTime DepartureTime { get; set; }
 
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
-        public double TotalDiscountUsed { get; set; }
+        public decimal TotalDiscountUsed { get; set; }
 
         public string Currency {  get; set; }
 

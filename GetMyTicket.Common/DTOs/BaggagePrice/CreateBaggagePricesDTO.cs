@@ -6,6 +6,6 @@ namespace GetMyTicket.Common.DTOs.BaggagePrice
     {
         public Guid TransportationProviderId { get; set; }
 
-        public Dictionary<BaggageSize, double> Prices { get; set; }
+        public Dictionary<BaggageSize, decimal> Prices { get; set; }
     }
 }

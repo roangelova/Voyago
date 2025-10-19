@@ -15,9 +15,9 @@ namespace GetMyTicket.Common.Entities
         [MaxLength(BookingReferenceMaxLength)]
         public string Reference { get; set; }
 
-        public double TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
-        public double TotalDiscountUsed { get; set; }
+        public decimal TotalDiscountUsed { get; set; }
 
         public Discount Discount { get; set; }
 

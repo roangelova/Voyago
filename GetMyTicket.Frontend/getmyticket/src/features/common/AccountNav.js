@@ -17,7 +17,7 @@ function AccountNav() {
   function UserAfterLogoutCleanUp() {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
-    sessionStorage.removeItem("userId");
+    localStorage.removeItem("userId");
     window.dispatchEvent(new Event("refreshUser"));
     navigate("/");
   }

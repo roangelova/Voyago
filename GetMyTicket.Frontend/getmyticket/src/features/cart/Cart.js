@@ -14,7 +14,7 @@ import { BaggagePrices } from "../../services/baggagePriceService";
 import { calculateTotalPriceForCart, CreatePriceSummary } from "./cartHelpers";
 import DiscountField from "./DiscountFiled";
 import { useAccountContext } from "../account/AccountContext";
-const userId = sessionStorage.getItem("userId");
+const userId = localStorage.getItem("userId");
 
 const baggageOptions = [
   { key: "CarryOn", value: 8 },

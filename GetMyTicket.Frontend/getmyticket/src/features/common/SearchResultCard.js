@@ -11,7 +11,7 @@ function SearchResultCard({ trip, passengers }) {
   const navigate = useNavigate();
 
   const handleBookTrip = () => {
-    const userId = sessionStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
 
     if (!userId) {
       toast.info(

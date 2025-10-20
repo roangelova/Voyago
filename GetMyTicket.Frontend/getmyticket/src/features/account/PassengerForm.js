@@ -60,7 +60,7 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
       createPassenger(
         {
           ...data,
-          userId: sessionStorage.getItem("userId"),
+          userId: localStorage.getItem("userId"),
           gender: passenger.gender ?? 'Male',
           dob: passenger.dob,
           isAccountOwner: passenger.isAccountOwner === "on" ? true : false,

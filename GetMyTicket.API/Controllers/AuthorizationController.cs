@@ -16,34 +16,20 @@ namespace GetMyTicket.API.Controllers
 
     public class AuthorizationController : ControllerBase
     {
-        private readonly ConnectionMultiplexer muxer;
         private readonly IDatabase RedisDb;
         private readonly UserManager<User> userManager;
-        private readonly IConfiguration configuration;
 
         private readonly IAuthorizationService authorizationService;
 
         public AuthorizationController(
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConfiguration configuration)
+            IConnectionMultiplexer redisCnnectionMultiplexer
+            )
         {
             this.authorizationService = authorizationService;
             this.userManager = userManager;
-
-            var redisConfig = configuration.GetSection("Redis");
-
-            muxer = ConnectionMultiplexer.Connect(
-            new ConfigurationOptions
-            {
-                EndPoints = { { redisConfig["EndPoints:0:Host"], int.Parse(redisConfig["EndPoints:0:Port"]) } },
-                User = redisConfig["User"],
-                Password = redisConfig["Password"]
-            }
-            );
-
-            RedisDb = muxer.GetDatabase();
-            this.configuration = configuration;
+            RedisDb = redisCnnectionMultiplexer.GetDatabase();
         }
 
         [HttpPost("refreshToken")]
@@ -61,7 +47,7 @@ namespace GetMyTicket.API.Controllers
 
             if (data?.RefreshToken != refreshTokenDTO.RefreshToken)
             {
-                return BadRequest(ResponseConstants.SomethingWentWrong);
+                return Unauthorized();
             }
 
             var tokenModel = await GenerateTokensAndSetInCache(refreshTokenDTO.UserId);
@@ -76,7 +62,7 @@ namespace GetMyTicket.API.Controllers
 
             if (user == null)
             {
-                return BadRequest(ResponseConstants.InvalidCredentials);
+                return Unauthorized(ResponseConstants.InvalidCredentials);
             }
 
             bool passwordIsCorrect = await userManager.CheckPasswordAsync(
@@ -84,7 +70,7 @@ namespace GetMyTicket.API.Controllers
 
             if (!passwordIsCorrect)
             {
-                return BadRequest(ResponseConstants.InvalidCredentials);
+                return Unauthorized(ResponseConstants.InvalidCredentials);
             }
 
             bool userIsLoggedIn = await RedisDb.KeyExistsAsync(user.Id.ToString());
@@ -136,7 +122,7 @@ namespace GetMyTicket.API.Controllers
             await RedisDb.StringSetAsync(
                 userId.ToString(),
                 JsonSerializer.Serialize(authorizedUser),
-                TimeSpan.FromMinutes(JwtTokenModel._AccessTokenTokenExpiration));
+                TimeSpan.FromMinutes(JwtTokenModel._RefreshTokenTokenExpiration));
 
             return tokenModel;
         }

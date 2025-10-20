@@ -14,7 +14,7 @@ function Login({ setLoginPopupVisibility }) {
 
     Account.login({ email, password })
       .then((res) => {
-        sessionStorage.setItem("userId", res.userId);
+        localStorage.setItem("userId", res.userId);
         window.dispatchEvent(new Event("userIdSet"));
         setAccessAndRefreshTokenInCookies(res);
         toast.success("You have logged in successfully!");

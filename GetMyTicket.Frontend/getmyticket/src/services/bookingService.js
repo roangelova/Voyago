@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../api/api.js";
 import { toast } from "react-toastify";
 
-var userId = sessionStorage.getItem('userId');
+var userId = localStorage.getItem('userId');
 
 export const Booking = {
     createBooking: (data) => api.post('api/bookings', data),

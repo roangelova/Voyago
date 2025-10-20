@@ -4,6 +4,7 @@ using GetMyTicket.Service;
 using GetMyTicket.Service.Contracts;
 using GetMyTicket.Service.Services;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 namespace GetMyTicket.API.ServiceExtensions
 {
@@ -67,6 +68,18 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped<IDiscountService, DiscountService>();
 
             services.AddScoped<IJobService,JobService>();
+
+            //add Redix connection
+            services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>().GetSection("Redis");
+                return ConnectionMultiplexer.Connect(new ConfigurationOptions
+                {
+                    EndPoints = { { config["EndPoints:0:Host"], int.Parse(config["EndPoints:0:Port"]) } },
+                    User = config["User"],
+                    Password = config["Password"]
+                });
+            });
 
             return services;
         }

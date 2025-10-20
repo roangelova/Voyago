@@ -17,13 +17,13 @@ function AccountProvider({ children }) {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const initialId = sessionStorage.getItem("userId");
+    const initialId = localStorage.getItem("userId");
     if (initialId) {
       setUserId(initialId);
     }
 
     const handler = () => {
-      const newId = sessionStorage.getItem("userId");
+      const newId = localStorage.getItem("userId");
       setUserId(newId);
     };
 

@@ -17,6 +17,7 @@ import BookingDetails from "./features/account/BookingDetails";
 import Account from "./features/pages/Account";
 import PassengerList from "./features/account/PassengerList";
 import AccountDashboard from "./features/account/AccountDashboard";
+import Help from "./features/account/Help";
 
 const queryClient = new QueryClient();
 
@@ -59,7 +60,7 @@ function App() {
                     <p className="account__noData">No notifications yet</p>
                   }
                 />
-                <Route path="help" element={<h1>Help</h1>} />
+                <Route path="help" element={<Help/>} />
               </Route>
             </Route>
 

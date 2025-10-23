@@ -16,6 +16,12 @@
   transition: all 0.4s;
 }
 
+.btn[disabled] {
+  transform: none !important;
+  background-color: $color-grey-light-2;
+  color: #333;
+}
+
 .btn:hover,
 .btn:active {
   transform: translateY(3px);

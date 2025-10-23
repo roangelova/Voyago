@@ -1,9 +1,19 @@
 import phone from "../../assets/icons/phone.png";
 import chat from "../../assets/icons/chat.png";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Help() {
   //TODO -> Once message is send, the contact form should disappear, a message should be created into the 'Notifiications' part and  the used
   //should get notified that send was successful and when he can expect an answer
+
+  const [sendClicked, setSendClicked] = useState(false);
+
+ function handleSendMessage(e){
+    e.preventDefault();
+    setSendClicked(true)
+    toast.success("Message sent successfully. We will get back to you as soon as possible. Keep an eye on your notifications.")
+  }
 
   return (
     <div className="help__container">
@@ -15,7 +25,7 @@ export default function Help() {
         </p>
       </div>
       <div className="help__left">
-        <form className="help__contactForm">
+        <form onSubmit={handleSendMessage} className="help__contactForm">
           <h4 className="heading--quaternary">Shoot us an email </h4>
           <textarea
             type="text"
@@ -24,7 +34,7 @@ export default function Help() {
             maxlength="500"
             placeholder="Message"
           />
-          <button className="btn" type="submit">
+          <button disabled={sendClicked}  className="btn" type="submit">
             Send message
           </button>
         </form>

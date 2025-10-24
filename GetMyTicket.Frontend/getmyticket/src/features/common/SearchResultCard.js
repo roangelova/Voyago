@@ -2,10 +2,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import fallbackLogo from "../../assets/images/fallbackLogo.png";
-import bistro from "../../assets/icons/bistro.png";
-import wc from "../../assets/icons/wc.png";
-import highspeed from "../../assets/icons/highspeed.png";
 import { calculateTotalPrice, formatDate } from "../../helpers";
+import Amenities from "./Amenities";
 
 function SearchResultCard({ trip, passengers }) {
   const navigate = useNavigate();
@@ -14,6 +12,7 @@ function SearchResultCard({ trip, passengers }) {
     const userId = localStorage.getItem("userId");
 
     if (!userId) {
+      //TODO -> LOGIN PROMPT
       toast.info(
         "Please log in or register to continue with the booking process."
       );
@@ -60,11 +59,7 @@ function SearchResultCard({ trip, passengers }) {
 
         <div className="resultCard__info">{getPriceNoteString(passengers)}</div>
 
-        <div className="resultCard__amenities">
-          <img src={bistro} alt="Bistro on board" />
-          <img src={highspeed} alt="Highspeed connection" />
-          <img src={wc} alt="WC on board" />
-        </div>
+       <Amenities amenities={{...trip.amenities}}/>
       </div>
       <div className="resultCard__priceAndType">
         <span className="resultCard__priceAndType--price">

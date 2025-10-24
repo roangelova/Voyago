@@ -33,6 +33,7 @@ export default function Help() {
             minlength="10"
             maxlength="500"
             placeholder="Message"
+            disabled={sendClicked}
           />
           <button disabled={sendClicked}  className="btn" type="submit">
             Send message

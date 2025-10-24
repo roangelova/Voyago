@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Text;
+using GetMyTicket.Common.DTOs.Vehicle;
 
 namespace GetMyTicket.Common.DTOs.Trip
 {
@@ -19,5 +20,7 @@ namespace GetMyTicket.Common.DTOs.Trip
         public string Currency { get; set; }
 
         public string TypeOfTrip { get; set; }
+
+        public AmenitiesViewModel Amenities {  get; set; }
     }
 }

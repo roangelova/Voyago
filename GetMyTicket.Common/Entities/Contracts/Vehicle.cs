@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
+using GetMyTicket.Common.DTOs.Vehicle;
 using GetMyTicket.Common.Entities.Trackable;
 using static GetMyTicket.Common.Constants.EntityConstraintsConstants;
 
@@ -27,5 +29,15 @@ namespace GetMyTicket.Common.Entities.Contracts
         public bool IsActive { get; set; } = true;
 
         public DateTime? DeletedAt { get; set; }
+
+        public virtual AmenitiesViewModel GetAmenities()
+        {
+            return new AmenitiesViewModel
+            {
+                IsAHighspeedTrain = true,
+                HasBistroOnBoard = false,
+                HasToiletOnBoard = false,
+            };
+        }
     }
 }

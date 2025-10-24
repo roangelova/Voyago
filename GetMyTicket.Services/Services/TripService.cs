@@ -82,7 +82,8 @@ namespace GetMyTicket.Service.Services
                 cancellationToken,
                x => x.EndCity,
                x => x.StartCity,
-               x => x.TransportationProvider
+               x => x.TransportationProvider,
+               x => x.Vehicle
                 );
 
             var result = data.Select(x => new TripSearchResultDTO
@@ -99,6 +100,7 @@ namespace GetMyTicket.Service.Services
                 TransportationProviderName = x.TransportationProvider.Name,
                 TransportationProviderLogo = x.TransportationProvider?.Logo != null ? Convert.ToBase64String(x.TransportationProvider?.Logo ) : string.Empty ,
                 TransportationProviderId = x.TransportationProviderId.ToString(),
+                Amenities = x.Vehicle.GetAmenities(),
             }).ToList();
 
             return result;

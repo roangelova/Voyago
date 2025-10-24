@@ -5,8 +5,8 @@ import voyago from "../../assets/images/voyago.png";
 
 import Cookies from "js-cookie";
 
-import LoginPopUp from "../account/LoginPopUp";
-import RegisterPopUp from "../account/RegisterPopUp";
+import LoginPopUp from "../account/auth/LoginPopUp";
+import RegisterPopUp from "../account/auth/RegisterPopUp";
 
 function NavBar() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!Cookies.get("accessToken"));

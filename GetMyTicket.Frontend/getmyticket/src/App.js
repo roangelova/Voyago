@@ -11,14 +11,13 @@ import Cart from "./features/cart/Cart";
 import SearchByTypePage from "./features/pages/SearchByTypePage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./ui/AppLayout";
-import Bookings from "./features/account/Bookings";
 import ProtectedRoute from "./ui/ProtectedRoute";
-import BookingDetails from "./features/account/BookingDetails";
 import Account from "./features/pages/Account";
-import PassengerList from "./features/account/PassengerList";
 import AccountDashboard from "./features/account/AccountDashboard";
-import Help from "./features/account/Help";
-
+import BookingDetails from "./features/bookings/BookingDetails";
+import PassengerList from "./features/account/passengers/PassengerList";
+import Help from "./features/account/help/Help";
+import Bookings from "./features/bookings/Bookings";
 const queryClient = new QueryClient();
 
 function App() {

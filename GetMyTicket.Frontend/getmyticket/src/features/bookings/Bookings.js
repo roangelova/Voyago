@@ -1,9 +1,9 @@
-import { formatDate, getFormattedBookingDate } from "../../helpers";
+import { formatDate, getFormattedBookingDate } from "../../helpers.js";
 import { useState, useEffect } from "react";
 import FilterBy from "../../ui/FilterBy.js";
 import SortBy from "../../ui/SortBy.js";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAccountContext } from "./AccountContext.js";
+import { useAccountContext } from "../account/AccountContext.js";
 import { useCancelBooking } from "../../services/bookingService.js";
 
 const FILTER_PARAM = "bookingStatus";

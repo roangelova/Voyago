@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
-import { Account } from "../../services/accountService";
-import { setAccessAndRefreshTokenInCookies } from "../../helpers";
+import { Account } from "../../../services/accountService";
+import { setAccessAndRefreshTokenInCookies } from "../../../helpers";
 
 function Login({ setLoginPopupVisibility }) {
   const Login = (formData) => {

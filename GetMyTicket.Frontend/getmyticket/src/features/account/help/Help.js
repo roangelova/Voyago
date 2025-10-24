@@ -1,5 +1,5 @@
-import phone from "../../assets/icons/phone.png";
-import chat from "../../assets/icons/chat.png";
+import phone from "../../../assets/icons/phone.png";
+import chat from "../../../assets/icons/chat.png";
 import { useState } from "react";
 import { toast } from "react-toastify";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { getFormattedDob } from "../../helpers";
+import { getFormattedDob } from "../../../helpers";
 import PassengerForm from "./PassengerForm";
-import { useDeletePassenger } from "../../services/passengerService";
+import { useDeletePassenger } from "../../../services/passengerService";
 
 function PassengerInfo({
   passenger: p,
@@ -41,14 +41,7 @@ function PassengerInfo({
               <strong>{p?.passengerType}</strong>
             </p>
             <p>{getFormattedDob(p?.dob)}</p>
-            <span
-              className="passenger__toggleInfo"
-              onClick={() =>
-                setShowAdditionalInformation(!showAdditionalInformation)
-              }
-            >
-              {showAdditionalInformation ? "Show less  ^ " : "Show more ∨"}
-            </span>
+          
           </div>
 
           <div className="passenger__actions">
@@ -69,24 +62,22 @@ function PassengerInfo({
             </button>
           </div>
         </div>
-        {showAdditionalInformation && (
           <div className="passenger__additionalInfo">
             <p>
-              <span>Nationality: </span> {p?.nationality || "---"}
+              <span>Nationality: </span> {p?.nationality || "N/A"}
             </p>
             <p>
-              <span>Document type: </span> {p?.documentType || "---"}
+              <span>Document type: </span> {p?.documentType || "N/A"}
             </p>
             <p>
               <span>Document Id: </span>
-              {p?.documentId || "---"}
+              {p?.documentId || "N/A"}
             </p>
             <p>
               <span>Document expires: </span>
-              {p?.documentExpirationDate || "---"}
+              {p?.documentExpirationDate || "N/A"}
             </p>
           </div>
-        )}
       </div>
 
       {showEditForm ? (

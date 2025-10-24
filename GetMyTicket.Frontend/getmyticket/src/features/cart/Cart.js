@@ -7,13 +7,13 @@ import partnerImage from "../../assets/images/partnerImage.png";
 import { formatDate } from "../../helpers";
 import { useCreateBooking } from "../../services/bookingService";
 import { Passenger } from "../../services/passengerService";
-import PassengerForm from "../account/PassengerForm";
 import AddBagsForm from "./AddBagsForm";
 import SelectPassengersDropdown from "./SelectPassengersDropdown";
 import { BaggagePrices } from "../../services/baggagePriceService";
 import { calculateTotalPriceForCart, CreatePriceSummary } from "./cartHelpers";
 import DiscountField from "./DiscountFiled";
 import { useAccountContext } from "../account/AccountContext";
+import PassengerForm from "../account/passengers/PassengerForm";
 const userId = localStorage.getItem("userId");
 
 const baggageOptions = [

@@ -5,7 +5,7 @@ import { BoardingPassPDF } from "../common/BoardingPassPDF";
 import { usePDF } from "@react-pdf/renderer";
 import { useCancelBooking } from "../../services/bookingService";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAccountContext } from "./AccountContext";
+import { useAccountContext } from "../account/AccountContext";
 import { BaggageItem } from "../../services/baggageItemService";
 import { Trip } from "../../services/tripService";
 

@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import googleLogo from "../../assets/icons/google.svg";
+import googleLogo from "../../../assets/icons/google.svg";
 
-import register from "../../assets/images/register.jpg";
-import { Account } from "../../services/accountService";
+import register from "../../../assets/images/register.jpg";
+import { Account } from "../../../services/accountService";
 
 function RegisterPopUp({
   setLoginPopupVisibility,

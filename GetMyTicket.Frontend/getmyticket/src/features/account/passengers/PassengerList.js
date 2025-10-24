@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { getFormattedDob } from "../../helpers";
-import { useDeletePassenger } from "../../services/passengerService";
-import { useAccountContext } from "./AccountContext";
+import { getFormattedDob } from "../../../helpers";
+import { useDeletePassenger } from "../../../services/passengerService";
+import { useAccountContext } from "../AccountContext";
 import PassengerForm from "./PassengerForm";
 import PassengerInfo from "./PassengerInfo";
 

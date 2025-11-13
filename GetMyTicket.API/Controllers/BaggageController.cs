@@ -1,21 +1,31 @@
-﻿using GetMyTicket.Common.DTOs.BaggagePrice;
+﻿using GetMyTicket.Common.DTOs.Baggage;
+using GetMyTicket.Common.DTOs.BaggagePrice;
 using GetMyTicket.Service.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetMyTicket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaggagePricesController : ControllerBase
+    public class BaggageController : ControllerBase
     {
         private readonly IBaggagePriceService baggagePriceService;
+        private readonly IBaggageItemService baggageItemService;
 
-        public BaggagePricesController(IBaggagePriceService baggagePriceService)
+
+        public BaggageController(
+            IBaggagePriceService baggagePriceService, 
+            IBaggageItemService baggageItemService)
         {
             this.baggagePriceService = baggagePriceService;
+            this.baggageItemService = baggageItemService;
         }
 
+        [HttpGet("{bookingId}")]
+        public async Task<List<BaggageItemDTO>> GetBaggageItemsForBooking(Guid bookingId, CancellationToken cancellationToken)
+        {
+            return await baggageItemService.GetBaggageItemsForBooking(bookingId, cancellationToken);
+        }
 
         [HttpGet("{transportationProviderId}")]
         public async Task<List<BaggagePriceDTO>> GetBaggagePricesForTransportationProvider(Guid transportationProviderId, CancellationToken cancellationToken)

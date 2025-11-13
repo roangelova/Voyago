@@ -6,11 +6,11 @@ namespace GetMyTicket.API.Controllers
 {
     [Route("api/trains")]
     [ApiController]
-    public class TrainController : ControllerBase
+    public class TrainsController : ControllerBase
     {
         private readonly ITrainService trainService;
 
-        public TrainController(ITrainService trainService)
+        public TrainsController(ITrainService trainService)
         {
             this.trainService = trainService;
         }

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import voyago from "../../assets/images/voyago.png";
+import account from "../../assets/icons/account.png";
+import hasnotification from "../../assets/icons/hasnotification.png";
 
 import Cookies from "js-cookie";
 
@@ -46,6 +48,18 @@ function NavBar() {
     </ul>
   );
 
+  const userNav = (
+    <ul className="navigation__user">
+        <NavLink to="account/notifications">
+          <img src={hasnotification} alt="Navigate to notifications icon" />
+        </NavLink>
+        <p>|</p>
+        <NavLink to="account">
+          <img src={account} alt="Navigate to account icon" />
+        </NavLink>
+    </ul>
+  );
+
   return (
     <>
       <nav className="navigation">
@@ -66,7 +80,7 @@ function NavBar() {
           </li>
         </ul>
 
-        {isLoggedIn ? <NavLink to="account">Account</NavLink> : NoUserNav}
+        {isLoggedIn ? userNav : NoUserNav}
 
         {LoginPopupVisibility ? (
           <div className="login blur-overlay" onClick={handleLoginToggle}>

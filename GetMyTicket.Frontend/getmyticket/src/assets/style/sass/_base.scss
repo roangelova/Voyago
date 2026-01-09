@@ -126,3 +126,26 @@ input[type="checkbox"] {
   font-family: inherit;
   font-size: inherit;
 }
+
+.muiTable{
+
+  thead{
+    background-color: $color-grey-light-1;
+  }
+
+  th{
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  td{
+    font-size: 1.6rem;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  &__actions{
+    font-size: 2.4rem !important;
+    cursor: pointer;
+  }
+}

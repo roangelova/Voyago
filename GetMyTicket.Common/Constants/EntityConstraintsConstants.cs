@@ -19,5 +19,8 @@
         public const int MaxPassengerLabelLength = 50;
 
         public const int BookingReferenceMaxLength = 6;
+
+        public const int NotificationTitleMaxLength = 50;
+        public const int NotificationContentMaxLength = 1000;    
     }
 }

@@ -12,12 +12,14 @@ import SearchByTypePage from "./features/pages/SearchByTypePage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import BillingPage from './features/account/billing/BillingPage'
 import Account from "./features/pages/Account";
 import AccountDashboard from "./features/account/AccountDashboard";
 import BookingDetails from "./features/bookings/BookingDetails";
 import PassengerList from "./features/account/passengers/PassengerList";
 import Help from "./features/account/help/Help";
 import Bookings from "./features/bookings/Bookings";
+import Notifications from "./features/account/notifications/Notifications";
 const queryClient = new QueryClient();
 
 function App() {
@@ -46,18 +48,12 @@ function App() {
                 />
                 <Route
                   path="billing"
-                  element={
-                    <p className="account__noData">
-                      No payment methods registered yet
-                    </p>
-                  }
+                  element={<BillingPage/>}
                 />
                 <Route path="passengers" element={<PassengerList />} />
                 <Route
                   path="notifications"
-                  element={
-                    <p className="account__noData">No notifications yet</p>
-                  }
+                  element={<Notifications/>}
                 />
                 <Route path="help" element={<Help/>} />
               </Route>

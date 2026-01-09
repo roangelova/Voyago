@@ -96,6 +96,23 @@ input[type=checkbox] {
   font-size: inherit;
 }
 
+.muiTable thead {
+  background-color: #f9f7f6;
+}
+.muiTable th {
+  font-size: 1.8rem;
+  text-align: center;
+}
+.muiTable td {
+  font-size: 1.6rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.muiTable__actions {
+  font-size: 2.4rem !important;
+  cursor: pointer;
+}
+
 .heading--primary {
   line-height: 1.4;
   letter-spacing: 1px;
@@ -380,6 +397,13 @@ input[type=checkbox] {
 .navigation__user li {
   cursor: pointer;
   font-size: 24px;
+}
+.navigation__user p {
+  padding: 0 0.5rem;
+}
+.navigation__user img {
+  height: 75%;
+  filter: contrast(0.75);
 }
 
 .spinner {

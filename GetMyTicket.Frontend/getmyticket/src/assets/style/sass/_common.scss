@@ -79,6 +79,15 @@
       cursor: pointer;
       font-size: 24px;
     }
+
+    & p {
+      padding: 0 0.5rem;
+    }
+
+    & img{
+      height: 75%;
+      filter: contrast(0.75);
+    }
   }
 }
 

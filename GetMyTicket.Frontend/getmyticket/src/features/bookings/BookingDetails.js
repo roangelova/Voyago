@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAccountContext } from "../account/AccountContext";
 import { BaggageItem } from "../../services/baggageItemService";
 import { Trip } from "../../services/tripService";
-
 //TODO -> LOAD TRIP AND DISPLAY PRICES AND SAVED MONEY
 
 function BookingDetails() {
@@ -41,6 +40,7 @@ function BookingDetails() {
     }
   }, [booking]);
 
+  //TODO -> ADD CONFIRM POPUP
   function handleCancelBooking(id) {
     const confirmed = window.confirm(
       "Do you really want to cancel this booking?"

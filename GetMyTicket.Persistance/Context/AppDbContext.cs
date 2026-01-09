@@ -43,6 +43,7 @@ namespace GetMyTicket.Persistance.Context
 
         public DbSet<Discount> Discounts { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -188,6 +189,15 @@ namespace GetMyTicket.Persistance.Context
                 TransportationProviderId = DeutscheBahnId
             };
 
+            var train2 = new Train
+            {
+                Id = Guid.CreateVersion7(),
+                Capacity = 240,
+                HasBistroOnBoard = false,
+                IsAHighspeedTrain = false,
+                TransportationProviderId = DeutscheBahnId
+            };
+
             var trainTrip =
                    new Trip
                    {
@@ -201,6 +211,20 @@ namespace GetMyTicket.Persistance.Context
                        ChildrenPrice = 30,
                        Capacity = train.Capacity
                    };
+
+            var trainTrip2 =
+                  new Trip
+                  {
+                      TransportationProviderId = DeutscheBahnId,
+                      VehicleId = train2.Id,
+                      StartTime = new DateTime(2026, 5, 20, 10, 00, 00),
+                      EndTime = new DateTime(2026, 5, 21, 23, 20, 00),
+                      StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
+                      EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
+                      AdultPrice = 50,
+                      ChildrenPrice = 17.50m,
+                      Capacity = train2.Capacity
+                  };
 
             var airplane1 = new Airplane
             {
@@ -247,6 +271,14 @@ namespace GetMyTicket.Persistance.Context
                 TransportationProviderId = FlixbusId
             };
 
+            var bus2 = new Bus
+            {
+                Id = Guid.CreateVersion7(),
+                HasToiletOnBoard = false,
+                Capacity = 55,
+                TransportationProviderId = FlixbusId
+            };
+
             var busTrip = new Trip
             {
                 TransportationProviderId = FlixbusId,
@@ -260,6 +292,18 @@ namespace GetMyTicket.Persistance.Context
                 Capacity = bus.Capacity
             };
 
+            var busTrip2 = new Trip
+            {
+                TransportationProviderId = FlixbusId,
+                VehicleId = bus2.Id,
+                StartTime = new DateTime(2026, 5, 19, 09, 00, 00),
+                EndTime = new DateTime(2026, 5, 21, 07, 30, 00),
+                StartCityId = Guid.Parse("0195604c-c607-7d2f-8499-5139550bed23"),
+                EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
+                AdultPrice = 130,
+                ChildrenPrice = 33,
+                Capacity = bus2.Capacity
+            };
 
             var User = new User
             {
@@ -282,7 +326,7 @@ namespace GetMyTicket.Persistance.Context
             context.Set<User>().Add(User);
             context.Set<TransportationProvider>().AddRange(TransAvia, DeutscheBahn, FlixBus);
             context.Set<Vehicle>().AddRange(airplane1, train, bus);
-            context.Set<Trip>().AddRange(flight, trainTrip, busTrip);
+            context.Set<Trip>().AddRange(flight, trainTrip, busTrip, trainTrip2, busTrip2);
         }
 
         /// <summary>
@@ -400,7 +444,7 @@ namespace GetMyTicket.Persistance.Context
             modelBuilder.Entity<BaggagePrice>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<PassengerBookingMap>().HasQueryFilter(x => x.IsDeleted == false);
             modelBuilder.Entity<UserPassengerMap>().HasQueryFilter(x => x.IsDeleted == false);
-
+            modelBuilder.Entity<Notification>().HasQueryFilter(x => x.IsDeleted == false);
         }
 
         private static byte[] GetLogoAsByteArray(string fileName)

@@ -66,6 +66,7 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped<IBaggageItemService, BaggageItemService>();
             services.AddScoped<IBaggagePriceService, BaggagePriceService>();
             services.AddScoped<IDiscountService, DiscountService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<IJobService,JobService>();
 

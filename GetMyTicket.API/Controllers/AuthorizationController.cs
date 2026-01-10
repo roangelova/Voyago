@@ -4,10 +4,10 @@ using GetMyTicket.Common.Constants;
 using GetMyTicket.Common.DTOs.User;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.JwtToken;
+using GetMyTicket.Service.Caching;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
 
 namespace GetMyTicket.API.Controllers
 {
@@ -16,36 +16,33 @@ namespace GetMyTicket.API.Controllers
 
     public class AuthorizationController : ControllerBase
     {
-        private readonly IDatabase RedisDb;
+        private readonly ICachingService cachingService;
         private readonly UserManager<User> userManager;
-
         private readonly IAuthorizationService authorizationService;
 
         public AuthorizationController(
             IAuthorizationService authorizationService,
             UserManager<User> userManager,
-            IConnectionMultiplexer redisCnnectionMultiplexer
+            ICachingService cachingService
             )
         {
             this.authorizationService = authorizationService;
             this.userManager = userManager;
-            RedisDb = redisCnnectionMultiplexer.GetDatabase();
+            this.cachingService = cachingService;
         }
 
         [HttpPost("refreshToken")]
         public async Task<IActionResult> RefreshToken(RefreshTokenDTO refreshTokenDTO)
         {
-            var userData = await RedisDb.StringGetAsync(refreshTokenDTO.UserId.ToString());
+            var userData = await cachingService.Get<AuthorizedUserCacheModel>(refreshTokenDTO.UserId.ToString());
 
             //User is not logged in
-            if (userData.IsNull)
+            if (userData == null)
             {
                 return BadRequest(ResponseConstants.SomethingWentWrong);
             }
 
-            var data = JsonSerializer.Deserialize<AuthorizedUserCacheModel>(userData!);
-
-            if (data?.RefreshToken != refreshTokenDTO.RefreshToken)
+            if (userData.RefreshToken != refreshTokenDTO.RefreshToken)
             {
                 return Unauthorized();
             }
@@ -73,11 +70,11 @@ namespace GetMyTicket.API.Controllers
                 return Unauthorized(ResponseConstants.InvalidCredentials);
             }
 
-            bool userIsLoggedIn = await RedisDb.KeyExistsAsync(user.Id.ToString());
+            var userIsLoggedIn = await cachingService.Get<AuthorizedUserCacheModel>(user.Id.ToString());
 
-            if (userIsLoggedIn)
+            if (userIsLoggedIn != null)
             {
-                await RedisDb.KeyDeleteAsync(user.Id.ToString());
+                await cachingService.Remove(user.Id.ToString());
                 return BadRequest(ResponseConstants.SomethingWentWrong);
             }
 
@@ -93,13 +90,10 @@ namespace GetMyTicket.API.Controllers
 
             if (userId is null) return BadRequest(ResponseConstants.SomethingWentWrong);
 
-            var result = await RedisDb.KeyDeleteAsync(userId);
-
-            if (!result) return BadRequest(ResponseConstants.SomethingWentWrong);
+            await cachingService.Remove(userId);
 
             return Ok(ResponseConstants.LogoutSuccessful);
         }
-
 
         /// <summary>
         /// This method generates new access and refresh tokens. Then, using the userId as a key, the data is cached in a RedisD
@@ -119,11 +113,11 @@ namespace GetMyTicket.API.Controllers
                 RefreshToken = tokenModel.RefreshToken
             };
 
-            await RedisDb.StringSetAsync(
+            await cachingService.Set(
                 userId.ToString(),
                 JsonSerializer.Serialize(authorizedUser),
                 TimeSpan.FromMinutes(JwtTokenModel._RefreshTokenTokenExpiration));
-
+           
             return tokenModel;
         }
     }

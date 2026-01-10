@@ -1,16 +1,16 @@
 ﻿using GetMyTicket.Persistance.Generic_Repository;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service;
+using GetMyTicket.Service.Caching;
 using GetMyTicket.Service.Contracts;
 using GetMyTicket.Service.Services;
 using Microsoft.OpenApi.Models;
-using StackExchange.Redis;
 
 namespace GetMyTicket.API.ServiceExtensions
 {
     public static class ServiceExtension
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
             //ADD SWAGGER 
             services.AddSwaggerGen(options =>
@@ -48,6 +48,17 @@ namespace GetMyTicket.API.ServiceExtensions
 
             });
 
+            //Add Redis for production and local cache for development
+            if (builder.Environment.IsProduction())
+            {
+                services.AddSingleton<ICachingService, RedisCachingService>(); 
+            }
+            else
+            {
+                services.AddMemoryCache();
+                services.AddSingleton<ICachingService, MemoryCachingService>();
+            }
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -69,18 +80,6 @@ namespace GetMyTicket.API.ServiceExtensions
             services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<IJobService,JobService>();
-
-            //add Redix connection
-            services.AddSingleton<IConnectionMultiplexer>(sp =>
-            {
-                var config = sp.GetRequiredService<IConfiguration>().GetSection("Redis");
-                return ConnectionMultiplexer.Connect(new ConfigurationOptions
-                {
-                    EndPoints = { { config["EndPoints:0:Host"], int.Parse(config["EndPoints:0:Port"]) } },
-                    User = config["User"],
-                    Password = config["Password"]
-                });
-            });
 
             return services;
         }

@@ -39,7 +39,7 @@ function RegisterPopUp({
       .then((res) => {
         if (res.succeeded) {
           toast.success(
-            "Registration successful.Taking you to login page in 3, 2, 1 .. "
+            "Registration successful. Taking you to login page in 3, 2, 1 .. "
           );
 
           setTimeout(() => {

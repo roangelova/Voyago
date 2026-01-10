@@ -37,12 +37,7 @@ await builder.ConfigureApp();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddApplicationServices();
-
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = builder.Configuration.GetConnectionString("Redis");
-});
+builder.Services.AddApplicationServices(builder);
 
 builder.Services.AddControllers();
 

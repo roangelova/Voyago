@@ -3,8 +3,12 @@
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>disable</Nullable>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\GetMyTicket.Common\GetMyTicket.Common.csproj" />

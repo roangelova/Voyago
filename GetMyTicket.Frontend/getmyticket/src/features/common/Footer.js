@@ -48,6 +48,11 @@ function Footer() {
       </div>
       <footer>
         <span> Copyright &copy; 2025 by VOYAGO. All rights reserved. </span>
+        <span>
+          {" "}
+          Copyright &copy; {new Date().getFullYear()} by VOYAGO. All rights
+          reserved.{" "}
+        </span>
       </footer>
     </section>
   );

@@ -84,7 +84,7 @@
       padding: 0 0.5rem;
     }
 
-    & img{
+    & img {
       height: 75%;
       filter: contrast(0.75);
     }
@@ -187,5 +187,27 @@
       margin: 0 auto;
       padding: 1rem 2.5rem;
     }
+  }
+}
+
+.termsAndConditions {
+  display: flex;
+  width: 80rem;
+  margin: 2rem auto;
+  flex-direction: column;
+  gap: 1rem;
+
+  & h4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  & ul, p {
+    margin-bottom: 1rem;
+  }
+
+  & li {
+    list-style:circle;
+    margin-left: 1rem;
+    list-style-position: inside;
   }
 }

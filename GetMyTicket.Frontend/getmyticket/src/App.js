@@ -20,6 +20,7 @@ import PassengerList from "./features/account/passengers/PassengerList";
 import Help from "./features/account/help/Help";
 import Bookings from "./features/bookings/Bookings";
 import Notifications from "./features/account/notifications/Notifications";
+import TermsAndConditions from "./features/pages/common/TermsAndConditions";
 const queryClient = new QueryClient();
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
             </Route>
 
             <Route path="404" element={<NotFoundPage />} />
+            <Route path='termsAndConditions' element={<TermsAndConditions/>}/>
             <Route path="*" element={<Navigate to="/404" />} />
           </Route>
         </Routes>

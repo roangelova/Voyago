@@ -1,12 +1,13 @@
 ﻿
+using GetMyTicket.Common.Entities.Trackable;
 using GetMyTicket.Persistance.Context;
+using GetMyTicket.Persistance.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Linq;
 
 namespace GetMyTicket.Persistance.Generic_Repository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, ITrackableEntity
     {
         public AppDbContext Context;
         public DbSet<T> DbSet;
@@ -24,7 +25,7 @@ namespace GetMyTicket.Persistance.Generic_Repository
 
         public void Delete(T entity)
         {
-            DbSet.Remove(entity );
+            DbSet.Remove(entity);
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool AsNonTracking = false, CancellationToken cancellationToken = default, params Expression<Func<T, object>>[] includes)
@@ -77,7 +78,7 @@ namespace GetMyTicket.Persistance.Generic_Repository
             {
                 query = query.AsNoTracking();
             }
-            
+
 
             return await query.ToListAsync();
         }
@@ -90,6 +91,26 @@ namespace GetMyTicket.Persistance.Generic_Repository
         public void Update(T entity)
         {
             DbSet.Update(entity);
+        }
+
+        public virtual async Task<IEnumerable<T>> GetAllAsync(BaseFilter filter, CancellationToken cancellationToken = default)
+        {
+            IQueryable<T> query = DbSet;
+
+            if (filter.Page.HasValue && filter.PageSize.HasValue)
+            {
+                return await query
+                               .Where(T => T.IsActive == filter.IsDeleted)
+                               .Skip((filter.Page.Value - 1) * filter.PageSize.Value)
+                               .Take(filter.PageSize.Value)
+                               .ToListAsync(cancellationToken);
+            }
+            else
+            {
+                return await query
+               .Where(T => T.IsActive == filter.IsDeleted)
+               .ToListAsync();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.Context;
 using GetMyTicket.Persistance.Generic_Repository;
+using GetMyTicket.Persistance.Repositories;
 
 namespace GetMyTicket.Persistance.UnitOfWork
 {
@@ -19,7 +20,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
 
         public IGenericRepository<Booking> Bookings { get; }
 
-        public IGenericRepository<Trip> Trips { get; }
+        public TripRepository Trips { get; }
 
         public IGenericRepository<BaggageItem> BaggageItems { get; }
 
@@ -44,7 +45,7 @@ namespace GetMyTicket.Persistance.UnitOfWork
             Passengers = new GenericRepository<Passenger>(AppDbContext);
             Vehicles = new GenericRepository<Vehicle>(AppDbContext);
             Bookings = new GenericRepository<Booking>(AppDbContext);
-            Trips = new GenericRepository<Trip>(AppDbContext);
+            Trips = new TripRepository(AppDbContext);
             Countries = new GenericRepository<Country>(AppDbContext);
             Cities = new GenericRepository<City>(AppDbContext);
             Users = new GenericRepository<User>(AppDbContext);

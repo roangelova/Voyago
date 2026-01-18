@@ -3,6 +3,7 @@ using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
 using GetMyTicket.Common.Entities.Contracts;
 using GetMyTicket.Common.ErrorHandling;
+using GetMyTicket.Persistance.Filters;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
 
@@ -51,40 +52,43 @@ namespace GetMyTicket.Service.Services
             return trip.Id;
         }
 
-        public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO searchTripsDTO, CancellationToken cancellationToken)
+        public async Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(TripFilter tripFilter, CancellationToken cancellationToken)
         {
+            //TODO --> HOW DO WE WANT TO HANDLE VALIDATION??
+           
             //parse dates
-            bool parseDepartureTime = DateOnly.TryParse(searchTripsDTO.StartDate, out DateOnly tripStartTime);
-            bool parseArrvalTime = DateOnly.TryParse(searchTripsDTO.EndDate, out DateOnly tripEndTime);
-
-            if (!parseArrvalTime || !parseDepartureTime)
-            {
-                throw new ApplicationError(ResponseConstants.InvalidDateFormat);
-            }
-
-            //prepare dates for filter function 
-
-            DateTime DepartureStartTime = tripStartTime.ToDateTime(TimeOnly.MinValue);
-            DateTime DepartureEndTime = tripStartTime.ToDateTime(TimeOnly.MaxValue);
-
-            DateTime ArrivalStartTime = tripEndTime.ToDateTime(TimeOnly.MinValue);
-            DateTime ArrivalEndTime = tripEndTime.ToDateTime(TimeOnly.MaxValue);
+          // bool parseDepartureTime = DateOnly.TryParse(searchTripsDTO.StartDate, out DateOnly tripStartTime);
+          // bool parseArrvalTime = DateOnly.TryParse(searchTripsDTO.EndDate, out DateOnly tripEndTime);
+          //
+          // if (!parseArrvalTime || !parseDepartureTime)
+          // {
+          //     throw new ApplicationError(ResponseConstants.InvalidDateFormat);
+          // }
+          //
+          // //prepare dates for filter function 
+          //
+          // DateTime DepartureStartTime = tripStartTime.ToDateTime(TimeOnly.MinValue);
+          // DateTime DepartureEndTime = tripStartTime.ToDateTime(TimeOnly.MaxValue);
+          //
+          // DateTime ArrivalStartTime = tripEndTime.ToDateTime(TimeOnly.MinValue);
+          // DateTime ArrivalEndTime = tripEndTime.ToDateTime(TimeOnly.MaxValue);
 
             //FOR TESTING PURPOSES -> RETURN ALL TRIPS SO WE HAVE MORE DATA TO WORK WITH
-            var data = await unitOfWork.Trips.GetAllAsync(
-               // x => x.StartCityId == searchTripsDTO.StartCityId &&
-               //  x.EndCityId == searchTripsDTO.EndCityId &&
-               // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
-               // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
-               searchTripsDTO.Type != "all" ? x => x.TypeOfTransportation.ToString() == searchTripsDTO.Type : null,
-               x => x.OrderByDescending(t => t.AdultPrice),
-                true,
-                cancellationToken,
-               x => x.EndCity,
-               x => x.StartCity,
-               x => x.TransportationProvider,
-               x => x.Vehicle
-                );
+          // var data = await unitOfWork.Trips.GetAllAsync(
+          //    // x => x.StartCityId == searchTripsDTO.StartCityId &&
+          //    //  x.EndCityId == searchTripsDTO.EndCityId &&
+          //    // x.StartTime >= DepartureStartTime && x.StartTime <= DepartureEndTime &&
+          //    // x.EndTime >= ArrivalStartTime && x.EndTime <= ArrivalEndTime,
+          //    searchTripsDTO.Type != "all" ? x => x.TypeOfTransportation.ToString() == searchTripsDTO.Type : null,
+          //    x => x.OrderByDescending(t => t.AdultPrice),
+          //     true,
+          //     cancellationToken,
+          //    x => x.EndCity,
+          //    x => x.StartCity,
+          //    x => x.TransportationProvider,
+          //    x => x.Vehicle
+          //     );
+
 
             var result = data.Select(x => new TripSearchResultDTO
             {

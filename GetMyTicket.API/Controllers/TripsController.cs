@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Persistance.Filters;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,9 +34,9 @@ namespace GetMyTicket.API.Controllers
 
         [HttpGet("search")]
         //CURRENTLY, THE APP IGNORES TIMES ZONES TO SIMPLIFY THE DEVELOPMENT AT THIS STAGE OF DEVELOPMENT. THIS IS HOWEVER PLANNED IN THE NEAR FUTURE
-        public async Task<IActionResult> GetAllTrips([FromQuery] SearchTripsDTO searchTripsDTO, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllTrips([FromQuery] TripFilter filter, CancellationToken cancellationToken)
         {
-            var trips = await tripService.GetAllSearchResultTrips(searchTripsDTO, cancellationToken);
+            var trips = await tripService.GetAllSearchResultTrips(filter, cancellationToken);
 
             return Ok(trips);
         }

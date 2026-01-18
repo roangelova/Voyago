@@ -1,8 +1,10 @@
-﻿using System.Linq.Expressions;
+﻿using GetMyTicket.Common.Entities.Trackable;
+using GetMyTicket.Persistance.Filters;
+using System.Linq.Expressions;
 
 namespace GetMyTicket.Persistance.Generic_Repository
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T> where T : class, ITrackableEntity
     {
         public Task<T> GetByIdAsync(object id, CancellationToken cancellationToken = default);
 
@@ -12,7 +14,8 @@ namespace GetMyTicket.Persistance.Generic_Repository
 
         public void Delete(T entity);
 
-        Task<T> GetAsync(Expression<Func<T, bool>>? filter = null,
+        Task<T> GetAsync(
+          Expression<Func<T, bool>>? filter = null,
           bool AsNonTracking = false,
           CancellationToken cancellationToken = default,
           params Expression<Func<T, object>>[] includes);
@@ -24,5 +27,9 @@ namespace GetMyTicket.Persistance.Generic_Repository
           CancellationToken cancellationToken = default,
           params Expression<Func<T, object>>[] includes
         );
+
+         Task<IEnumerable<T>> GetAllAsync(
+            BaseFilter filter,
+            CancellationToken cancellationToken = default);
     }
 }

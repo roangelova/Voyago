@@ -1,5 +1,6 @@
 ﻿using GetMyTicket.Common.DTOs.Trip;
 using GetMyTicket.Common.Entities;
+using GetMyTicket.Persistance.Filters;
 
 namespace GetMyTicket.Service.Contracts
 {
@@ -12,7 +13,7 @@ namespace GetMyTicket.Service.Contracts
         /// </summary>
         /// <param name="searchTripsDTO">The data to filter the trips by</param>
         /// <returns>List of trips that match the search criteria</returns>
-        public Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(SearchTripsDTO data, CancellationToken cancellationToken = default);
+        public Task<List<TripSearchResultDTO>> GetAllSearchResultTrips(TripFilter filter, CancellationToken cancellationToken = default);
 
         public Task<Guid> CreateTrip (CreateTripDTO dto);
 

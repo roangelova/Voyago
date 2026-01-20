@@ -334,10 +334,21 @@ namespace GetMyTicket.Persistance.Context
 
             User.PasswordHash = hashed;
 
+            var Welcome10Discount = new Discount
+            {
+                Id = Guid.CreateVersion7(),
+                DiscountType = DiscountType.Percent,
+                MinimumAmount = 100,
+                Value = 10,
+                Name = "Welcome 10",
+                HasExpirationDate = false
+            };
+
             context.Set<User>().Add(User);
             context.Set<TransportationProvider>().AddRange(TransAvia, DeutscheBahn, FlixBus);
             context.Set<Vehicle>().AddRange(airplane1, train, train2, bus, bus2);
             context.Set<Trip>().AddRange(flight, trainTrip, busTrip, trainTrip2, busTrip2);
+            context.Set<Discount>().Add(Welcome10Discount);
         }
 
         /// <summary>

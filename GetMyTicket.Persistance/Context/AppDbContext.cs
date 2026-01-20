@@ -110,6 +110,12 @@ namespace GetMyTicket.Persistance.Context
                 .HasForeignKey(x => x.DiscountId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Booking>()
+               .HasOne(x => x.User)
+               .WithMany()
+               .IsRequired()
+               .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Discount>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
@@ -154,7 +160,7 @@ namespace GetMyTicket.Persistance.Context
 
             var TransAvia = new TransportationProvider
             {
-                Id = Guid.CreateVersion7(),
+                Id = TransAviaId,
                 Name = "TransAvia",
                 Address = "Germany, 81539 Munich, Bayerstr. 18",
                 Email = "transavia@gmail.com",
@@ -209,7 +215,8 @@ namespace GetMyTicket.Persistance.Context
                        EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                        AdultPrice = 130,
                        ChildrenPrice = 30,
-                       Capacity = train.Capacity
+                       Capacity = train.Capacity,
+                       TypeOfTransportation = TypeOfTransportation.Train
                    };
 
             var trainTrip2 =
@@ -223,7 +230,8 @@ namespace GetMyTicket.Persistance.Context
                       EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                       AdultPrice = 50,
                       ChildrenPrice = 17.50m,
-                      Capacity = train2.Capacity
+                      Capacity = train2.Capacity,
+                      TypeOfTransportation = TypeOfTransportation.Train
                   };
 
             var airplane1 = new Airplane
@@ -246,7 +254,8 @@ namespace GetMyTicket.Persistance.Context
                 EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                 AdultPrice = 220,
                 ChildrenPrice = 100,
-                Capacity = airplane1.Capacity
+                Capacity = airplane1.Capacity,
+                TypeOfTransportation = TypeOfTransportation.Flight
             };
 
             var FlixBus = new TransportationProvider
@@ -289,7 +298,8 @@ namespace GetMyTicket.Persistance.Context
                 EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                 AdultPrice = 150,
                 ChildrenPrice = 50,
-                Capacity = bus.Capacity
+                Capacity = bus.Capacity,
+                TypeOfTransportation= TypeOfTransportation.Bus
             };
 
             var busTrip2 = new Trip
@@ -302,7 +312,8 @@ namespace GetMyTicket.Persistance.Context
                 EndCityId = Guid.Parse("0195604c-c607-799a-b23c-038c1bd24f08"),
                 AdultPrice = 130,
                 ChildrenPrice = 33,
-                Capacity = bus2.Capacity
+                Capacity = bus2.Capacity,
+                TypeOfTransportation = TypeOfTransportation.Bus
             };
 
             var User = new User
@@ -325,7 +336,7 @@ namespace GetMyTicket.Persistance.Context
 
             context.Set<User>().Add(User);
             context.Set<TransportationProvider>().AddRange(TransAvia, DeutscheBahn, FlixBus);
-            context.Set<Vehicle>().AddRange(airplane1, train, bus);
+            context.Set<Vehicle>().AddRange(airplane1, train, train2, bus, bus2);
             context.Set<Trip>().AddRange(flight, trainTrip, busTrip, trainTrip2, busTrip2);
         }
 

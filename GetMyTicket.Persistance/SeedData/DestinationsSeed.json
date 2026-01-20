@@ -6,7 +6,7 @@
             {
                 "CityName": "Munich",
                 "IATA_Code": "MUC",
-                "CityId": "0195604c-c607-7d2f-8499-5139550bed23"
+                "Id": "0195604c-c607-7d2f-8499-5139550bed23"
             },
             {
                 "CityName": "Berlin",
@@ -34,7 +34,7 @@
             {
                 "CityName": "Varna",
                 "IATA_Code": "VAR",
-                "CityId": "0195604c-c607-799a-b23c-038c1bd24f08"
+                "Id": "0195604c-c607-799a-b23c-038c1bd24f08"
             },
             {
                 "CityName": "Burgas",

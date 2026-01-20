@@ -21,13 +21,13 @@ namespace GetMyTicket.API.Controllers
             this.baggageItemService = baggageItemService;
         }
 
-        [HttpGet("{bookingId}")]
+        [HttpGet("booking/{bookingId}")]
         public async Task<List<BaggageItemDTO>> GetBaggageItemsForBooking(Guid bookingId, CancellationToken cancellationToken)
         {
             return await baggageItemService.GetBaggageItemsForBooking(bookingId, cancellationToken);
         }
 
-        [HttpGet("{transportationProviderId}")]
+        [HttpGet("tp/{transportationProviderId}")]
         public async Task<List<BaggagePriceDTO>> GetBaggagePricesForTransportationProvider(Guid transportationProviderId, CancellationToken cancellationToken)
         {
             return await baggagePriceService.GetBaggagePricesForTransportationProvider(transportationProviderId, cancellationToken);

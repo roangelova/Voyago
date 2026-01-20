@@ -15,8 +15,6 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
   const { mutate: editPassenger } = useEditPassenger();
   const { mutate: createPassenger } = useCreatePassenger();
 
-
-
   //TODO --> ADD VALIDATION
   //document expiration date should be in the future
   function handleEditField(e) {
@@ -60,22 +58,25 @@ function PassengerForm({ passengertoEdit, setShowEditForm }) {
       if (!isAtLeast18(passenger.dob) && passenger.isAccountOwner)
         toast.error("Can't register an underage account owner.");
 
-        createPassengerSchema.validate(passenger).then(()=> console.log("Success")).catch(err =>toast.error(err.message))
-     
-     //createPassenger(
-     //  {
-     //    ...data,
-     //    userId: localStorage.getItem("userId"),
-     //    gender: passenger.gender ?? 'Male',
-     //    dob: passenger.dob,
-     //    isAccountOwner: passenger.isAccountOwner === "on" ? true : false,
-     //  },
-     //  {
-     //    onSuccess: () => {
-     //      setShowEditForm(false);
-     //    },
-     //  }
-     //);
+      createPassengerSchema
+        .validate(passenger)
+        .then(() => console.log("Success"))
+        .catch((err) => toast.error(err.message));
+
+      createPassenger(
+        {
+          ...data,
+          userId: localStorage.getItem("userId"),
+          gender: passenger.gender ?? "Male",
+          dob: passenger.dob,
+          isAccountOwner: passenger.isAccountOwner === "on" ? true : false,
+        },
+        {
+          onSuccess: () => {
+            setShowEditForm(false);
+          },
+        }
+      );
     }
   }
 

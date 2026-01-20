@@ -9,11 +9,11 @@ import { useCreateBooking } from "../../services/bookingService";
 import { Passenger } from "../../services/passengerService";
 import AddBagsForm from "./AddBagsForm";
 import SelectPassengersDropdown from "./SelectPassengersDropdown";
-import { BaggagePrices } from "../../services/baggagePriceService";
 import { calculateTotalPriceForCart, CreatePriceSummary } from "./cartHelpers";
 import DiscountField from "./DiscountFiled";
 import { useAccountContext } from "../account/AccountContext";
 import PassengerForm from "../account/passengers/PassengerForm";
+import { Baggage } from "../../services/baggageService";
 const userId = localStorage.getItem("userId");
 
 const baggageOptions = [
@@ -27,7 +27,8 @@ const baggageOptions = [
 function Cart() {
   const location = useLocation();
   const createBooking = useCreateBooking();
-  const { trip, passengers: passengersCountForBooking } = location.state || {};
+  const { trip, passengers: passengersCountRequestedForBooking } =
+    location.state || {};
   const { passengers: passengersFromContext } = useAccountContext();
   const [userPassengerList, setUserPassengerList] = useState(
     passengersFromContext
@@ -38,7 +39,7 @@ function Cart() {
   const [baggagePrices, setBaggagePrices] = useState(null);
   const [discountCode, setDiscountCode] = useState("");
   const [discount, setdDiscount] = useState(null);
-  const total = Object.values(passengersCountForBooking).reduce(
+  const total = Object.values(passengersCountRequestedForBooking).reduce(
     (a, b) => a + b,
     0
   );
@@ -72,7 +73,7 @@ function Cart() {
     });
 
     if (trip) {
-      BaggagePrices.getPricesForProvider(trip?.transportationProviderId).then(
+      Baggage.getPricesForProvider(trip?.transportationProviderId).then(
         (data) => {
           setBaggagePrices(data);
         }
@@ -80,20 +81,24 @@ function Cart() {
     }
   }, []);
 
-      useEffect(() => {
-      let filteredOwner = passengersFromContext.filter((x) => x?.isAccountOwner === true)[0];
-      if (filteredOwner) {
-        //account holder has registeres his passenger data
-        setAccountOwner(filteredOwner);
-        setUserPassengerList(
-          passengersFromContext.filter((x) => x.passengerId !== filteredOwner.passengerId)
-        );
-        setPassengerIdsForBooking([
-          ...passengerIdsForBooking,
-          filteredOwner?.passengerId,
-        ]);
-      }
-    }, [passengersFromContext]);
+  useEffect(() => {
+    let filteredOwner = passengersFromContext.filter(
+      (x) => x?.isAccountOwner === true
+    )[0];
+    if (filteredOwner) {
+      //account holder has registeres his passenger data
+      setAccountOwner(filteredOwner);
+      setUserPassengerList(
+        passengersFromContext.filter(
+          (x) => x.passengerId !== filteredOwner.passengerId
+        )
+      );
+      setPassengerIdsForBooking([
+        ...passengerIdsForBooking,
+        filteredOwner?.passengerId,
+      ]);
+    }
+  }, [passengersFromContext]);
 
   const onCheckout = async () => {
     if (!trip.tripId) {
@@ -101,10 +106,14 @@ function Cart() {
       navigate("/");
     }
 
+    if (passengerIdsForBooking.length === 0) {
+      toast.error("Please enter passenger data to finish this booking.");
+      return;
+    }
+
     if (total > passengerIdsForBooking.length) {
-      console.log(passengerIdsForBooking);
       let confirm = window.confirm(
-        "You have not selected all passengers for this booking Do you wish to proceed and book only for the selected passengers? "
+        "You have not selected all passengers for this booking. Do you wish to proceed and book only for the selected passengers? "
       );
       if (!confirm) {
         return;
@@ -232,7 +241,9 @@ function Cart() {
                 </>
 
                 <SelectPassengersDropdown
-                  passengersCountForBooking={passengersCountForBooking}
+                  passengersCountRequestedForBooking={
+                    passengersCountRequestedForBooking
+                  }
                   userPassengerList={userPassengerList}
                   setPassengerIdsForBooking={setPassengerIdsForBooking}
                 />
@@ -294,7 +305,7 @@ function Cart() {
               <ul>
                 {CreatePriceSummary(
                   trip,
-                  passengersCountForBooking,
+                  passengersCountRequestedForBooking,
                   baggage,
                   baggagePrices,
                   discountCode
@@ -308,13 +319,13 @@ function Cart() {
               setDiscountCode={setDiscountCode}
               discount={discount}
               setDiscount={setdDiscount}
-              bookingCurrentTotal ={(calculateTotalPriceForCart(
-                      trip,
-                      passengersCountForBooking,
-                      baggage,
-                      baggagePrices,
-                      discount
-                    ))}
+              bookingCurrentTotal={calculateTotalPriceForCart(
+                trip,
+                passengersCountRequestedForBooking,
+                baggage,
+                baggagePrices,
+                discount
+              )}
             />
 
             <div className="cart__total">
@@ -324,7 +335,7 @@ function Cart() {
                   <strong>
                     {calculateTotalPriceForCart(
                       trip,
-                      passengersCountForBooking,
+                      passengersCountRequestedForBooking,
                       baggage,
                       baggagePrices,
                       discount
@@ -333,7 +344,10 @@ function Cart() {
                   {trip.currency}
                 </p>
               </div>
-              <span>* Prices include all applicable taxes and fees. Final charges may vary and will be confirmed before payment.</span>
+              <span>
+                * Prices include all applicable taxes and fees. Final charges
+                may vary and will be confirmed before payment.
+              </span>
             </div>
             <div className="cart__checkout">
               <button onClick={onCheckout} className="btn">

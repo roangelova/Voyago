@@ -9,8 +9,8 @@ import { useCancelBooking } from "../../services/bookingService.js";
 const FILTER_PARAM = "bookingStatus";
 
 const options = [
-  { key: "All", value: "All" },
   { key: "Confirmed", value: "Confirmed" },
+  { key: "All", value: "All" },
   { key: "Canceled", value: "Canceled" },
 ];
 
@@ -35,7 +35,7 @@ function Bookings() {
 
   useEffect(() => {
     //set default search params
-    searchParams.set("bookingStatus", "All");
+    searchParams.set("bookingStatus", "Confirmed");
     searchParams.set("sortBy", sortOptions[0].value);
     setSearchParams(searchParams);
     setSortedAndFilteredData(...bookings);

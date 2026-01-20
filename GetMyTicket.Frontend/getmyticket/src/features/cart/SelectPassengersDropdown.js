@@ -1,13 +1,13 @@
 import React from "react";
 
 function SelectPassengersDropdown({
-  passengersCountForBooking,
+  passengersCountRequestedForBooking,
   userPassengerList,
   setPassengerIdsForBooking,
 }) {
   return (
     <>
-      {[...Array(passengersCountForBooking.adults - 1)].map((_, i) => (
+      {[...Array(passengersCountRequestedForBooking.adults - 1)].map((_, i) => (
         <React.Fragment key={i}>
           <label htmlFor="adults">Adult {i + 2}:</label>
           <select
@@ -34,7 +34,7 @@ function SelectPassengersDropdown({
         </React.Fragment>
       ))}
 
-      {[...Array(passengersCountForBooking.children)].map((_, i) => (
+      {[...Array(passengersCountRequestedForBooking.children)].map((_, i) => (
         <React.Fragment key={i}>
           <label htmlFor="children">Child {+1}:</label>
           <select
@@ -60,7 +60,7 @@ function SelectPassengersDropdown({
           </select>
         </React.Fragment>
       ))}
-      {[...Array(passengersCountForBooking.infants)].map((_, i) => (
+      {[...Array(passengersCountRequestedForBooking.infants)].map((_, i) => (
         <React.Fragment key={i}>
           <label htmlFor="infants">Infant {i + 1}:</label>
           <select

@@ -6,10 +6,11 @@ using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Common.Mapping_Tables;
 using GetMyTicket.Persistance.UnitOfWork;
 using GetMyTicket.Service.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace GetMyTicket.Service.Services
 {
-    public class BookingService : IBookingService
+    public class BookingService : BaseService, IBookingService
     {
         //DONT FORGET TO SUBSTRACT THE CAPACITY OF THE VEHICLE FOR THE TRIP AFTER MAKING THE BOOKING;
         private readonly IUnitOfWork unitOfWork;
@@ -19,7 +20,8 @@ namespace GetMyTicket.Service.Services
 
         public BookingService(
             IUnitOfWork unitOfWork,
-            IPassengerService passengerService)
+            IPassengerService passengerService,
+            IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
             this.passengerService = passengerService;
@@ -49,6 +51,14 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(Trip), bookTripDTO.TripId));
             }
 
+            var userId = GetCurrentUserId();
+            var userBookingsForThisTrip = await unitOfWork.Bookings.GetAllAsync(x => x.UserId == userId && x.TripId == bookTripDTO.TripId);
+
+            if (userBookingsForThisTrip.Any())
+            {
+                throw new ApplicationError(ResponseConstants.SameTripAlredyBooked);
+            }
+
             //TODO -> HOW DO WE WANT TO HANDLE CAPACITY AVAILABILITY CHECKS? BOTH CLIENT- AND SERVER-SIDE
             if (trip.Capacity == 0)
             {
@@ -76,7 +86,8 @@ namespace GetMyTicket.Service.Services
                 TotalPrice = 0,
                 BookingStatus = BookingStatus.Confirmed,
                 TripId = bookTripDTO.TripId,
-                DiscountId = bookTripDTO.DiscountId, //each booking keeps a record of the discount used 
+                DiscountId = bookTripDTO.DiscountId, //each booking keeps a record of the discount used,
+                UserId = userId
             };
 
             foreach (var passengerId in bookTripDTO.PassengerIds)
@@ -165,6 +176,7 @@ namespace GetMyTicket.Service.Services
         }
 
 
+        //TODO -> NOW REFACTOR SINCE WE HAVE ADDED USERID TO BOOKING
         public async Task<IEnumerable<ListBookingDTO>> GetUserBookings(Guid userId, CancellationToken cancellationToken = default)
         {
             var user = await unitOfWork.Users.GetByIdAsync(userId, cancellationToken);

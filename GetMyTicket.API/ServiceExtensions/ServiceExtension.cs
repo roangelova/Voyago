@@ -59,6 +59,7 @@ namespace GetMyTicket.API.ServiceExtensions
                 services.AddSingleton<ICachingService, MemoryCachingService>();
             }
 
+            services.AddHttpContextAccessor();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

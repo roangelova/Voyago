@@ -38,6 +38,8 @@ namespace GetMyTicket.Common.Constants
 
         public const string InvalidOperation = "Invalid operation.";
 
+        public const string SameTripAlredyBooked = "Can't book this trip as it'a already booked";
+
         //discount
         public const string DiscountHasBeenUsed = "Discount code has already been used on a previous booking";
         public const string DiscountExpired = "Discount code has expired!";

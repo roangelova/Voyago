@@ -6,7 +6,7 @@ import { usePDF } from "@react-pdf/renderer";
 import { useCancelBooking } from "../../services/bookingService";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAccountContext } from "../account/AccountContext";
-import { BaggageItem } from "../../services/baggageItemService";
+import { Baggage } from "../../services/baggageService";
 import { Trip } from "../../services/tripService";
 //TODO -> LOAD TRIP AND DISPLAY PRICES AND SAVED MONEY
 
@@ -31,7 +31,7 @@ function BookingDetails() {
       Passenger.getNameAndAge(booking?.bookingId).then((data) => {
         setPassengers(data);
       });
-      BaggageItem.getBaggageForBooking(bookingId).then((baggage) => {
+      Baggage.getBaggageForBooking(bookingId).then((baggage) => {
        { setBaggage(baggage); console.log(baggage)}
       });
       Trip.getById(booking.tripId).then((trip) => {

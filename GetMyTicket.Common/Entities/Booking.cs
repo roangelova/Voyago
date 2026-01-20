@@ -29,6 +29,11 @@ namespace GetMyTicket.Common.Entities
         [ForeignKey(nameof(Trip))]
         public Guid TripId { get; set; }
 
+        public Guid UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public User User { get; set; }
+
         public BookingStatus BookingStatus { get; set; }
 
         public ICollection<BaggageItem> BaggageItems { get; set; } = [];

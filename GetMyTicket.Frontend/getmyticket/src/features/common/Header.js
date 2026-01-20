@@ -1,4 +1,5 @@
 import "../../assets/style/css/style.css";
+import SearchBar from "../../ui/SearchBar";
 
 function Header() {
   return (
@@ -10,6 +11,7 @@ function Header() {
             All backed by our guarantee to give you the best experience possible
           </p>
         </div>
+        <SearchBar/>
       </div>
     </div>
   );

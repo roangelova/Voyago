@@ -98,7 +98,6 @@ li {
   list-style-type: none;
 }
 
-
 input::placeholder {
   color: $color-grey-dark-1 !important;
   padding: 3px;
@@ -117,6 +116,7 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  height: 100vh;
 }
 
 

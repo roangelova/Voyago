@@ -11,7 +11,6 @@ const MainPage = () => {
     return (
         <>
             <Header />
-            <SearchBar />
             <PartnerLogos/>
             <CustomerReviews/>
             <WhyUsSection />

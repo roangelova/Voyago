@@ -1,6 +1,6 @@
-import address from '../../assets/icons/address.png'
-import email from '../../assets/icons/email.png'
-import phone from '../../assets/icons/phone.png'
+import address from "../../assets/icons/address.png";
+import email from "../../assets/icons/email.png";
+import phone from "../../assets/icons/phone.png";
 
 //TODO: add list and <a> effect when links are added
 
@@ -21,10 +21,18 @@ function Footer() {
         <div className="footer__section">
           <h4>Quick Links</h4>
           <ul>
-            <li>Help</li>
-            <li>FAQ</li>
-            <li>Legal</li>
-            <li>About us</li>
+            <li>
+              <a href="#">Help</a>
+            </li>
+            <li>
+              <a href="#QnA">FAQ</a>
+            </li>
+            <li>
+              <a href="/termsAndConditions">Terms and Conditions</a>
+            </li>
+            <li>
+              <a href="privacy">Privacy Policy</a>
+            </li>
           </ul>
         </div>
 
@@ -32,22 +40,21 @@ function Footer() {
           <h4>Contact Info</h4>
           <ul>
             <li>
-              <img src={address} alt='Icon'/>
+              <img src={address} alt="Icon" />
               <span>9000 Varna, Bulgaria</span>
             </li>
             <li>
-               <img src={phone} alt='Icon'/>
+              <img src={phone} alt="Icon" />
               <span>+359 893 000123 </span>
             </li>
             <li>
-               <img src={email} alt='Icon'/>
+              <img src={email} alt="Icon" />
               <span>info@example.com</span>
             </li>
           </ul>
         </address>
       </div>
       <footer>
-        <span> Copyright &copy; 2025 by VOYAGO. All rights reserved. </span>
         <span>
           {" "}
           Copyright &copy; {new Date().getFullYear()} by VOYAGO. All rights

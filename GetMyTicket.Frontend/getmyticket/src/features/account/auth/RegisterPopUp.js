@@ -115,7 +115,7 @@ function RegisterPopUp({
             </div>
             <button type="submit">Join</button>
             <p className="register__agreement">
-              By joining, you agree to our <a href="/termsAndConditions">Terms and Conditions</a> and <a>Privacy Policy</a>
+              By joining, you agree to our <a href="/termsAndConditions">Terms and Conditions</a>
             </p>
           </form>
         </div>

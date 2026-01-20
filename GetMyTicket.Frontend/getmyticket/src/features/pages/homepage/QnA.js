@@ -39,7 +39,7 @@ function QnA() {
   };
 
   return (
-    <section className="QnA">
+    <section className="QnA" id="QnA">
       <h3 className="heading--tertiary">Need Help? Start Here!</h3>
       <ul>
         {questions.map((item, index) => (

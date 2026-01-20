@@ -8,7 +8,6 @@ import NotFoundPage from "./features/common/NotFoundPage";
 import MainPage from "./features/pages/MainPage";
 import SearchResultsPage from "./features/pages/SearchResultsPage";
 import Cart from "./features/cart/Cart";
-import SearchByTypePage from "./features/pages/SearchByTypePage";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
@@ -33,9 +32,6 @@ function App() {
           <Route element={<AppLayout />}>
             <Route index path="/" element={<MainPage />} />
 
-            <Route path="/trains" element={<SearchByTypePage />} />
-            <Route path="/buses" element={<SearchByTypePage />} />
-            <Route path="/flights" element={<SearchByTypePage />} />
             <Route path="/search-results" element={<SearchResultsPage />} />
 
             <Route element={<ProtectedRoute />}>

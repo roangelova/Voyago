@@ -68,17 +68,6 @@ function NavBar() {
             <img src={voyago} alt="Site logo and name" />
           </NavLink>
         </div>
-        <ul className="navigation__browse">
-          <li>
-            <NavLink to="/trains">Trains</NavLink>
-          </li>
-          <li>
-            <NavLink to="/buses">Buses</NavLink>
-          </li>
-          <li>
-            <NavLink to="/flights">Flights</NavLink>
-          </li>
-        </ul>
 
         {isLoggedIn ? userNav : NoUserNav}
 

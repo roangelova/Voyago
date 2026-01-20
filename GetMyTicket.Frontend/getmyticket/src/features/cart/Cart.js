@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import check from "../../assets/icons/check.png";
 import fallbackLogo from "../../assets/images/fallbackLogo.png";
-import partnerImage from "../../assets/images/partnerImage.png";
 import { formatDate } from "../../helpers";
 import { useCreateBooking } from "../../services/bookingService";
 import { Passenger } from "../../services/passengerService";
@@ -288,14 +287,6 @@ function Cart() {
               </p>
             </div>
 
-            <div className="cart_row">
-              <img
-                className="cart__partnerImg"
-                href="#"
-                src={partnerImage}
-                alt="An image that links to a partner website for rent a cars."
-              />
-            </div>
           </div>
 
           <div className="cart__right">

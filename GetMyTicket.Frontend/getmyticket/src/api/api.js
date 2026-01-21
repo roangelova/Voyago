@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { toast } from "react-toastify";
 import { setAccessAndRefreshTokenInCookies } from "../helpers";
 
 //used by refreshTokens() to avoid recursive calling
@@ -19,8 +18,7 @@ let tokenIsRefreshing = false;
 axios.interceptors.request.use(
   async function (config) {
     const accessTokenCookie = Cookies.get("accessToken");
-    let isLoggedIn = true;//!!accessTokenCookie;
-
+    let isLoggedIn = !!accessTokenCookie;
     if (isLoggedIn) {
       try {
         let accessToken = JSON.parse(accessTokenCookie);
@@ -32,7 +30,7 @@ axios.interceptors.request.use(
         //refetch if token expires in 20s;
         if (tokenExpiresIn < 20000) {
           tokenIsRefreshing = true;
-         await refreshTokens();
+          await refreshTokens();
         }
       } catch {
         Cookies.remove("accessToken"); //clear cookies if there is an issue
@@ -43,37 +41,16 @@ axios.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 //TODO -> IMPLEMENT A REQ QUEUE
 
-axios.interceptors.response.use(
-  function (response) {
+axios.interceptors.response.use(function onFulfilled(response) {
     return response.data;
-  },
-  function (error) {
-    if (error?.response?.status === 401) {
-      toast.error("Something went wrong. Please, log in to continue.");
-      window.location.href = "/";
-    } else if (error?.code === "ERR_NETWORK") {
-      toast.error("Network error. Please, try again.");
-    } else if (
-      error?.response?.status >= 500 &&
-      error?.response?.status <= 599
-    ) {
-      throw new Error(error.response.data.detail);
-    } else if (error?.response?.status === 404) {
-      window.location.href = "/404";
-    } else if (error?.status === 400) {
-      console.error(error); // ONLY IN DEV
-      throw new Error(error?.response?.data?.detail);
-    } else {
-      console.log("Error:", error?.response?.data);
-    }
-    return Promise.reject(error);
-  }
-);
+  }, function onRejected(error) {
+    return Promise.reject( error.response?.data?.detail ??  "An error occurred.");
+  });
 
 export const api = {
   get: (url) => axios.get(url),
@@ -90,7 +67,7 @@ async function refreshTokens() {
 
   const { data } = await axiosNoInterceptors.post(
     "/api/authorization/refreshToken",
-    { refreshToken, userId }
+    { refreshToken, userId },
   );
 
   setAccessAndRefreshTokenInCookies(data);

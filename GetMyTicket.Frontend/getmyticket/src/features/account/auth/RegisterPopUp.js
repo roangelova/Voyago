@@ -23,7 +23,7 @@ function RegisterPopUp({
 
     if (email == "") {
       toast.error(
-        "All fields are required for registration! Please, try again."
+        "All fields are required for registration! Please, try again.",
       );
       return;
     }
@@ -36,26 +36,17 @@ function RegisterPopUp({
     let checkboxValue = newsletterSubscribtion === "on" ? true : false;
 
     Account.register({ email, password, checkboxValue })
-      .then((res) => {
-        if (res.succeeded) {
-          toast.success(
-            "Registration successful. Taking you to login page in 3, 2, 1 .. "
-          );
+      .then(() => {
+        toast.success(
+          "Registration successful.",
+        );
 
-          setTimeout(() => {
-            setLoginPopupVisibility(true);
-            setRegisterPopupVisibility(false)
-           // window.location.href = "/";
-          }, 3000);
-        }
+        setTimeout(() => {
+          setRegisterPopupVisibility(false);
+          window.location.href = "/";
+        }, 3000);
       })
       .catch((err) => {
-        console.log(err);
-        let errorMessage = "";
-        err.response.data.forEach((error) => {
-          errorMessage += error.description;
-          errorMessage += " ";
-        });
         toast.error(err);
       });
   }
@@ -115,7 +106,8 @@ function RegisterPopUp({
             </div>
             <button type="submit">Join</button>
             <p className="register__agreement">
-              By joining, you agree to our <a href="/termsAndConditions">Terms and Conditions</a>
+              By joining, you agree to our{" "}
+              <a href="/termsAndConditions">Terms and Conditions</a>
             </p>
           </form>
         </div>

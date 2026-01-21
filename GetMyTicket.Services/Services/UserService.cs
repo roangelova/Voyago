@@ -26,6 +26,12 @@ namespace GetMyTicket.Service.Services
                 throw new ApplicationError(ResponseConstants.AllFieldsRequired);
             }
 
+            var userWithSameEmail = await userManager.FindByEmailAsync(registerUserDTO.Email);
+            if (userWithSameEmail != null)
+            {
+                throw new ApplicationError(ResponseConstants.UserWithThisEmailExist);
+            }
+
             var user = new User()
             {
                 Email = registerUserDTO.Email.Trim(),
@@ -33,7 +39,22 @@ namespace GetMyTicket.Service.Services
                 UserName = registerUserDTO.Email.Trim()
             };
 
-             return await userManager.CreateAsync(user, registerUserDTO.Password);
+            return await userManager.CreateAsync(user, registerUserDTO.Password);
+        }
+        public async Task CloseAccount(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new ApplicationError(string.Format(ResponseConstants.NotFoundError, nameof(User), userId));
+            }
+
+            user.IsActive = false;
+            user.IsDeleted = true;
+            user.DeletedAt = DateTime.UtcNow;
+
+            await userManager.UpdateAsync(user);
         }
     }
 }

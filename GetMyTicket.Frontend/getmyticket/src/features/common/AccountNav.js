@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import logout from "../../assets/icons/logout.png";
 import booking from "../../assets/icons/booking.png";
@@ -6,22 +6,12 @@ import creditcard from "../../assets/icons/creditcard.png";
 import passenger from "../../assets/icons/passenger.png";
 import help from "../../assets/icons/help.png";
 import notification from "../../assets/icons/notification.png";
+import settings from "../../assets/icons/settings.png";
 
-import { Account } from "../../services/accountService";
+import { Account, cleanUpAfterUserLogout } from "../../services/accountService";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie";
 
 function AccountNav() {
-  const navigate = useNavigate();
-
-  function UserAfterLogoutCleanUp() {
-    Cookies.remove("accessToken");
-    Cookies.remove("refreshToken");
-    localStorage.removeItem("userId");
-    window.dispatchEvent(new Event("refreshUser"));
-    navigate("/");
-  }
-
   function handleLogout() {
     Account.logout()
       .then((res) => {
@@ -33,7 +23,7 @@ function AccountNav() {
         );
       })
       .finally(() => {
-        setTimeout(UserAfterLogoutCleanUp, 1000);
+        setTimeout(cleanUpAfterUserLogout, 1000);
       });
   }
 
@@ -60,6 +50,10 @@ function AccountNav() {
           <NavLink to="/account/help" className="account__nav--item">
             <img src={help} alt="Help icon" />
             <span>Help</span>
+          </NavLink>
+           <NavLink to="/account/settings" className="account__nav--item">
+            <img src={settings} alt="Help icon" />
+            <span>Settings</span>
           </NavLink>
           <li className="account__nav--item" onClick={handleLogout}>
             <img src={logout} alt="Logout icon" />

@@ -750,11 +750,6 @@ input[type=checkbox] {
   gap: 2rem;
   align-items: center;
 }
-.cart__partnerImg {
-  max-height: 45rem;
-  filter: grayscale(100);
-  cursor: pointer;
-}
 .cart__trip {
   background-image: linear-gradient(to right, #f9f7f6, #fff);
   padding: 1rem;

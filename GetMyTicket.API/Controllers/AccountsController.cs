@@ -22,5 +22,13 @@ namespace GetMyTicket.API.Controllers
 
             return Ok(userId);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> CloseAccount(string userId)
+        {
+            await userService.CloseAccount(userId);
+
+            return NoContent();
+        }
     }
 }

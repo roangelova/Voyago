@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+﻿using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace GetMyTicket.Common.Constants
 {
@@ -14,6 +15,7 @@ namespace GetMyTicket.Common.Constants
         public const string InvalidDateFormat = "The provided date format was incorrect";
 
         public const string NotFoundError = "{0} with Id {1} was not found.";
+        public const string UserNotFound = "User was not found.";
         public const string NoBookingsForThisUser = "No bookings were found for this user";
 
         public const string DuplicateIsAccountOwnerWhenCreatingPassenger = "There already is a registered account owner. Could not create passenger. To create an account for this passenger, please proceed to register.";
@@ -48,5 +50,12 @@ namespace GetMyTicket.Common.Constants
         //SUCCESS
 
         public const string LogoutSuccessful = "Successfully logged out.";
+
+        //INACTIVE OR DELETED STATE
+        public const string AccountDeactivated = "Account has been deactivated.";
+
+        //VALIDATION
+
+        public const string UserWithThisEmailExist = "An account with this email already exists.";
     }
 }

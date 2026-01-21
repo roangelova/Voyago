@@ -8,6 +8,8 @@ using GetMyTicket.Service.Caching;
 using GetMyTicket.Service.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace GetMyTicket.API.Controllers
 {
@@ -55,20 +57,28 @@ namespace GetMyTicket.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO data)
         {
-            var user = await userManager.FindByEmailAsync(data.Email);
+              var user = await userManager.Users
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(u => u.NormalizedEmail == userManager.NormalizeEmail(data.Email));
 
             if (user == null)
             {
-                return Unauthorized(ResponseConstants.InvalidCredentials);
+                return NotFound(ResponseConstants.UserNotFound);
+            }
+
+            if (user.IsDeleted)
+            {
+                return NotFound(ResponseConstants.AccountDeactivated);
             }
 
             bool passwordIsCorrect = await userManager.CheckPasswordAsync(
-                user, data.Password);
+                           user, data.Password);
 
             if (!passwordIsCorrect)
             {
                 return Unauthorized(ResponseConstants.InvalidCredentials);
             }
+
 
             var userIsLoggedIn = await cachingService.Get<AuthorizedUserCacheModel>(user.Id.ToString());
 
@@ -117,7 +127,7 @@ namespace GetMyTicket.API.Controllers
                 userId.ToString(),
                 JsonSerializer.Serialize(authorizedUser),
                 TimeSpan.FromMinutes(JwtTokenModel._RefreshTokenTokenExpiration));
-           
+
             return tokenModel;
         }
     }

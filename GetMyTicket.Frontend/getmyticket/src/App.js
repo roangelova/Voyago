@@ -11,7 +11,7 @@ import Cart from "./features/cart/Cart";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
-import BillingPage from './features/account/billing/BillingPage'
+import BillingPage from "./features/account/billing/BillingPage";
 import Account from "./features/pages/Account";
 import AccountDashboard from "./features/account/AccountDashboard";
 import BookingDetails from "./features/bookings/BookingDetails";
@@ -20,6 +20,7 @@ import Help from "./features/account/help/Help";
 import Bookings from "./features/bookings/Bookings";
 import Notifications from "./features/account/notifications/Notifications";
 import TermsAndConditions from "./features/pages/common/TermsAndConditions";
+import Settings from "./features/account/Settings/Settings";
 const queryClient = new QueryClient();
 
 function App() {
@@ -43,21 +44,16 @@ function App() {
                   path="bookings/:bookingId"
                   element={<BookingDetails />}
                 />
-                <Route
-                  path="billing"
-                  element={<BillingPage/>}
-                />
+                <Route path="billing" element={<BillingPage />} />
                 <Route path="passengers" element={<PassengerList />} />
-                <Route
-                  path="notifications"
-                  element={<Notifications/>}
-                />
-                <Route path="help" element={<Help/>} />
+                <Route path="notifications" element={<Notifications />} />
+                <Route path="help" element={<Help />} />
+                <Route path="settings" element={<Settings />} />
               </Route>
             </Route>
 
             <Route path="404" element={<NotFoundPage />} />
-            <Route path='termsAndConditions' element={<TermsAndConditions/>}/>
+            <Route path="termsAndConditions" element={<TermsAndConditions />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Route>
         </Routes>

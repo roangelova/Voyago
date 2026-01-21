@@ -22,7 +22,7 @@ function Login({ setLoginPopupVisibility }) {
         setLoginPopupVisibility(false);
       })
       .catch((err) => {
-        toast.error(err.response?.data ?? "There was an error logging you in.");
+        toast.error(err ?? "There was an error logging you in.");
       });
   };
 

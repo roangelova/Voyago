@@ -45,7 +45,7 @@ The VOYAGO website aims to provide users with a platform for booking trips, usin
   
  5. Account Management
 - Access to contact form and billing information
-- Close account [COMING SOON]
+- Close account 
 
 
 

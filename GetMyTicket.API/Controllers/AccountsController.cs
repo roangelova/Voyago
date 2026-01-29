@@ -1,6 +1,11 @@
-﻿using GetMyTicket.Common.DTOs.User;
+﻿using GetMyTicket.Common.Constants;
+using GetMyTicket.Common.DTOs.User;
+using GetMyTicket.Common.ErrorHandling;
 using GetMyTicket.Service.Contracts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
+using static GetMyTicket.Common.Constants.ResponseConstants;
 
 namespace GetMyTicket.API.Controllers
 {
@@ -18,9 +23,17 @@ namespace GetMyTicket.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserDTO registerUserDTO)
         {
-            var userId = await userService.CreateUserAsync(registerUserDTO);
+            var result = await userService.CreateUserAsync(registerUserDTO);
 
-            return Ok(userId);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                throw new ApplicationError(string.Join(" ", result.Errors.Select(x => x.Description)));
+            }
         }
 
         [HttpDelete]

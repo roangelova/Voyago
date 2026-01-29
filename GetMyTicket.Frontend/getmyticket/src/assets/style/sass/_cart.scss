@@ -119,7 +119,7 @@
 
   &__total {
     padding: 0 2rem;
-    
+
     & div {
       display: flex;
       justify-content: space-between;
@@ -232,6 +232,50 @@
     & span {
       color: $color-success--green;
       font-weight: 600;
+    }
+  }
+}
+
+.timer {
+  padding: 1rem 2rem;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  border: solid 1px #333;
+
+  & p {
+    font-size: 1.8rem;
+  }
+
+  &_content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &_part {
+    display: flex;
+    flex-direction: column;
+    color: #222;
+    justify-items: center;
+    align-items: center;
+    padding: 1rem;
+
+    &--text {
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+      color: #222 !important;
+    }
+
+    &--time {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #333 !important;
     }
   }
 }

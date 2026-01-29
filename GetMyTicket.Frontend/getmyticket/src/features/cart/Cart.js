@@ -13,6 +13,7 @@ import DiscountField from "./DiscountFiled";
 import { useAccountContext } from "../account/AccountContext";
 import PassengerForm from "../account/passengers/PassengerForm";
 import { Baggage } from "../../services/baggageService";
+import Timer from "../../ui/Timer";
 const userId = localStorage.getItem("userId");
 
 const baggageOptions = [
@@ -340,6 +341,7 @@ function Cart() {
                 may vary and will be confirmed before payment.
               </span>
             </div>
+            <Timer />
             <div className="cart__checkout">
               <button onClick={onCheckout} className="btn">
                 Check out

@@ -53,6 +53,7 @@ namespace GetMyTicket.Service.Services
             user.IsActive = false;
             user.IsDeleted = true;
             user.DeletedAt = DateTime.UtcNow;
+            user.LastUpdatedAt = DateTime.UtcNow;
 
             await userManager.UpdateAsync(user);
         }

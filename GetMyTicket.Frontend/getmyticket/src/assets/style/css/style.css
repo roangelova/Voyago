@@ -636,12 +636,6 @@ input[type=checkbox] {
 
 .resultCard {
   transition: all 0.3s;
-}
-.resultCard:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
-.resultCard {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   max-width: 100%;
   max-height: 30vh;
@@ -650,6 +644,10 @@ input[type=checkbox] {
   padding: 2rem;
   line-height: 1.5;
   border-radius: 10px;
+}
+.resultCard:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }
 .resultCard:not(:last-child) {
   margin-bottom: 1rem;
@@ -704,6 +702,14 @@ input[type=checkbox] {
   font-weight: 600;
 }
 
+.cart {
+  width: 140rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5rem;
+  margin-top: 4rem;
+}
 .cart__container {
   display: flex;
   align-items: center;
@@ -721,14 +727,6 @@ input[type=checkbox] {
   font-size: 2rem;
   margin-bottom: 2rem;
   color: #555;
-}
-.cart {
-  width: 140rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5rem;
-  margin-top: 4rem;
 }
 .cart__left {
   display: flex;
@@ -789,16 +787,16 @@ input[type=checkbox] {
   align-items: center;
   gap: 3rem;
 }
+.cart__pricePerPersonBreakdown {
+  padding-bottom: 4rem;
+  border-bottom: 0.5px solid rgba(51, 51, 51, 0.5);
+}
 .cart__pricePerPersonBreakdown uL {
   display: flex;
   flex-direction: column;
   text-align: center;
   gap: 1.5rem;
   font-size: 2rem;
-}
-.cart__pricePerPersonBreakdown {
-  padding-bottom: 4rem;
-  border-bottom: 0.5px solid rgba(51, 51, 51, 0.5);
 }
 .cart__total {
   padding: 0 2rem;
@@ -896,6 +894,45 @@ input[type=checkbox] {
 .discountField__codeUsed span {
   color: #258d2d;
   font-weight: 600;
+}
+
+.timer {
+  padding: 1rem 2rem;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 1rem;
+  border: solid 1px #333;
+}
+.timer p {
+  font-size: 1.8rem;
+}
+.timer_content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.timer_part {
+  display: flex;
+  flex-direction: column;
+  color: #222;
+  justify-items: center;
+  align-items: center;
+  padding: 1rem;
+}
+.timer_part--text {
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  color: #222 !important;
+}
+.timer_part--time {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333 !important;
 }
 
 .whyUs_container {
